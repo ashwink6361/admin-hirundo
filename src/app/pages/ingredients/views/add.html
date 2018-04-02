@@ -1,0 +1,78 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="ingredientmsg"></div>
+            <div class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal" name="form" novalidate>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'IngredientKey.Name' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" name="IngredientName" ng-model="Ingredient.name" class="form-control" placeholder="{{'IngredientKey.Name' | translate}}"
+                                    required />
+                                <span class="alert color-red" ng-show="form.IngredientName.$dirty &&  form.IngredientName.$error.required">{{'IngredientKey.nameRequired' | translate}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'IngredientKey.Description' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <textarea type="text" class="form-control" name="Description" ng-model="Ingredient.description" placeholder="{{'IngredientKey.Description' | translate}}"
+                                    autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'IngredientKey.Price' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <div class="input-group">
+                                    <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
+                                    <input type="text" float-number ng-model="Ingredient.price" class="form-control" name="price" placeholder="{{'IngredientKey.Price' | translate}}"
+                                        required />
+                                    <span class="alert color-red" ng-show="form.price.$dirty &&  form.price.$error.required">{{'IngredientKey.priceRequired' | translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'IngredientKey.Unit' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <select class="form-control" data-ng-options="unit.name as unit.name for unit in units" ng-model="Ingredient.unit">
+                                    <option value="?" selected="selected">Select Unit</option>
+                                </select>
+                                <button type="button" class="text-btn mt-10" ng-click="addNewUnit()">Add new unit</button>
+                                <div class="input-group" ng-if="showNewInput">
+                                    <input type="text" class="form-control" placeholder="Add new unit" ng-model="Unit.name">
+                                    <span class="input-group-addon input-group-addon-success cursor-pointer" ng-click="addUnit()"><i class="ion-plus-round"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'IngredientKey.Provider' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" name="provider" ng-model="Ingredient.provider" class="form-control" placeholder="{{'IngredientKey.Provider' | translate}}"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                            </label>
+                            <div class="col-sm-5">
+                                <button type="button" ng-show="ingredientId" class="btn bg-success" ng-click="editIngredient()" ng-disabled="form.$invalid||ingredientAddRequest">{{'IngredientKey.Update' | translate}}</button>
+                                <button type="button" ng-show="!ingredientId" class="btn bg-success" ng-click="addIngredient()" ng-disabled="form.$invalid||ingredientAddRequest">{{'IngredientKey.Add' | translate}}</button>
+                                <button type="button" class="btn btn-default" ui-sref="editormenu">{{'IngredientKey.Cancel' | translate}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

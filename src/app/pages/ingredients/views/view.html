@@ -1,0 +1,70 @@
+<div ba-panel>
+    <form class="form-horizontal">
+        <div id="ingredientlistmsg"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="name" class="col-sm-3 control-label">
+                        <strong>{{'IngredientKey.Name' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{ingredientDetail.name}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">
+                        <strong>{{'IngredientKey.Description' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{ingredientDetail.description}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">
+                        <strong>{{'IngredientKey.Price' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">€{{ingredientDetail.price}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">
+                        <strong>{{'IngredientKey.Unit' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{ingredientDetail.unit}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">
+                        <strong>{{'IngredientKey.Provider' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{ingredientDetail.provider}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="created_at" class="col-sm-3 control-label">
+                        <strong>{{'IngredientKey.createdAt' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{ingredientDetail.created_at | date : 'dd/MM/yyyy'}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="updated_at" class="col-sm-3 control-label">
+                        <strong>{{'IngredientKey.updatedAt' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{ingredientDetail.updated_at | date : 'dd/MM/yyyy'}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-right">
+                <a class="btn btn-primary" ui-sref="editormenu">{{'IngredientKey.Back' | translate}}</a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,50 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancelAddRoom()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Add Room</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" name="form" novalidate>
+            <div class="form-group">
+                <label for="input01" class="col-sm-4 control-label">
+                    <strong>Name</strong>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="name" ng-model="Room.name" placeholder="Name" required />
+                    <span class="alert color-red" ng-show="form.name.$dirty &&  form.name.$error.required">Name is required</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input01" class="col-sm-4 control-label">
+                    <strong>Number Of Tables</strong>
+                </label>
+                <div class="col-sm-5">
+                    <input type="number" min="0" class="form-control" name="capacity" ng-model="Room.numberOfTable" placeholder="Number Of Table"
+                        autocomplete="off" required />
+                    <span class="alert color-red" ng-show="form.capacity.$dirty &&  form.capacity.$error.required">Number Of Table is required</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input01" class="col-sm-4 control-label">
+                    <strong>Start Number</strong>
+                </label>
+                <div class="col-sm-5">
+                    <input type="number" min="0" class="form-control" name="startNumber" ng-model="Room.startNumber" placeholder="For Example: 1"
+                        autocomplete="off" required />
+                    <span class="alert color-red" ng-show="form.startNumber.$dirty &&  form.startNumber.$error.required">Start Number is required</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input01" class="col-sm-4 control-label">
+                </label>
+                <div class="col-sm-5">
+                    <button type="button" class="btn btn-secondary" ng-click="addRoom();cancelAddRoom()" ng-disabled="form.$invalid||roomAddRequest">Add</button>
+                    <button type="button" class="btn btn-default" ng-click="cancelAddRoom()">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,112 @@
+<div class="profile-page panel">
+  <div id="profilemsg"></div>
+  <div class="panel-body">
+    <h3 class="with-line">{{Profile.adminType==1?'Profile':'Restaurant'}} Information</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label for="inputFirstName" class="col-sm-3 control-label">{{Profile.adminType==1?'Profile Picture':'Restaurant Logo'}}</label>
+
+          <div class="col-sm-9">
+            <div class="userpic">
+              <div class="userpic-wrapper">
+                <img ng-if="image1.compressed.dataURL" ng-src="{{ image1.compressed.dataURL }}">
+                <img ng-if="!image1.compressed.dataURL && !Profile.picture.original" ng-src="assets/img/profile-pic.jpg"/>
+                <img ng-if="!image1.compressed.dataURL &&  Profile.picture.original" ng-src="{{Profile.picture.original}}"/>
+              </div>
+            </div>
+            <div class="d-flex justify-space-between">
+              <div class="fileuploadouter">
+                <div class="attach-lable">Select Image</div>
+                <input type="file" class="fileuploadinput" ng-model="image1" image="image1" accept="image/*" value="Choose Image" id="uploadFile" resize-max-height="800" resize-max-width="800" resize-quality="0.7" resize-type="image/jpg" ng-image-compress />
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary" ng-click="uploadProfilePic()" ng-disabled="uploadPicRequest">Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="form-horizontal" name="form" novalidate>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group row clearfix">
+            <label for="inputFirstName" class="col-sm-3 control-label">{{Profile.adminType==1?'First ':''}}Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="firstName" id="inputFirstName" ng-model="Profile.firstName" placeholder="{{Profile.adminType==1?'First ':''}}Name"
+                required />
+              <span class="alert color-red" ng-show="form.firstName.$dirty &&  form.firstName.$error.required">{{Profile.adminType==1?'First ':''}}Name is required</span>
+            </div>
+          </div>
+          <div class="form-group row clearfix" ng-if="Profile.adminType==1">
+            <label for="inputLastName" class="col-sm-3 control-label">Last Name</label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="lastName" id="inputLastName" ng-model="Profile.lastName" placeholder="Last Name"
+                required />
+              <span class="alert color-red" ng-show="form.lastName.$dirty &&  form.lastName.$error.required">Last Name is required</span>
+            </div>
+          </div>
+          <div class="form-group row clearfix" ng-controller="datepickerpopupCtrl" ng-if="Profile.adminType==1">
+            <label for="inputLastName" class="col-sm-3 control-label">DOB</label>
+            <div class="col-sm-9">
+              <div class="uib-datepicker-wrap">
+                  <p class="input-group">
+                      <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options" ng-model="Profile.dob" id="input03" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                  </p>
+              </div>
+          </div>
+
+          </div>
+          <div class="form-group row clearfix" ng-if="Profile.adminType==1">
+            <label for="input01" class="col-sm-3 control-label">Gender</label>
+            <div class="col-sm-5">
+              <label>
+                <input type="radio" name="gender" value="M" ng-model="Profile.gender"> Male
+              </label>
+              <label>
+                <input type="radio" name="gender" value="F" ng-model="Profile.gender"> Female
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="with-line">Contact Information</h3>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group row clearfix">
+            <label for="inputPhone" class="col-sm-3 control-label">Mobile</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="mobile" id="inputPhone" ng-model="Profile.mobile" placeholder="+1 (23) 456 7890"
+                required />
+              <span class="alert color-red" ng-show="form.mobile.$dirty &&  form.mobile.$error.required">Mobile number is required</span>
+            </div>
+          </div>
+          <div class="form-group row clearfix" ng-if="Profile.adminType==2">
+              <label for="inputPhone" class="col-sm-3 control-label">Contact Number</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="contact" id="inputPhone" ng-model="Profile.contactNumber" placeholder="+1 (23) 456 7890"
+                  required />
+                <span class="alert color-red" ng-show="form.contact.$dirty &&  form.contact.$error.required">Contact number is required</span>
+              </div>
+            </div>
+          <div class="form-group row clearfix">
+            <label for="inputEmail3" class="col-sm-3 control-label">Address</label>
+            <div class="col-sm-9">
+              <input type="text" gm-places-autocomplete ng-model="Profile.address" class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <button type="button" class="btn btn-primary btn-with-icon save-profile" ng-click="updateProfile()" ng-disabled="form.$invalid||updateRequest">
+      <i class="ion-android-checkmark-circle"></i>Update Profile
+    </button>
+  </div>
+</div>

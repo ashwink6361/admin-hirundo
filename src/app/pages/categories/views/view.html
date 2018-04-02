@@ -1,0 +1,90 @@
+<div class="categories">
+    <div id="subcategorylistmsg"></div>
+    <div class="widgets">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div>
+                    <div class="d-flex search-item justify-space-between">
+                        <div class="search-category">
+                            <!-- <input type="text" ng-model="searchText" class="form-control" placeholder="Search Category" auto-complete="autoCompleteOptions"
+                            /> -->
+                            <angucomplete-alt id="ex1" placeholder="Search Category" pause="100" selected-object="selectedCategory" local-data="categorySearchData"
+                                search-fields="name" input-changed="inputChanged" title-field="name" minlength="1" input-class="form-control form-control-small" />
+                            <!-- <input type="text" placeholder="Search Category" class="form-control" ng-model="searchText" /> -->
+                            <!-- <div class="category">
+                                <ul>
+                                    <li>Search Items</li>
+                                </ul>
+                            </div> -->
+                        </div>
+                        <span>
+                            <a ng-click="articleEdit()" class="btn btn-secondary btn-icon">
+                                <i class="ion-edit"></i>
+                            </a>
+                            <a class="btn bg-success linkbutton" ui-sref="editormenu">
+                                <i class="ion-chevron-left"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="panel with-scroll table-panel mh-500 animated zoomIn" ng-if="categoryItems.length<1">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"></h3>
+                            <span class="back-btn">
+                                <a class="btn btn-primary linkbutton" ui-sref="editormenu">
+                                    <i class="ion-chevron-left"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="subcategory-container">
+                                <div class="add-subcategory">
+                                    <div class="category-content">
+                                        <i class="icon-plus" ng-click="addArticle()"></i>
+                                        <div class="name">
+                                            Add
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel with-scroll table-panel mh-500 animated zoomIn subcategory-panel {{selectedItem}}" ng-repeat="item in categoryItems | filter: {category : {name: (selectedItem || '')}}">
+                        <div class="panel-heading" ng-style="{'background-color':item.category.color}">
+                            <h3 class="panel-title">{{item.category.name}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="subcategory-container">
+                                <h4 class="subcategory-name">{{item.items.length?item.items[0].subCategory:''}}</h4>
+                                <div ng-repeat="article in item.items" class="subcategory" ng-style="{'background-color':article.category.color}"
+                                    ng-click="updateArticle(article, article._id)">
+                                    <img ng-if="!article.logo.small && article.category.isIcon" class="icon-img" ng-src="{{article.category.icon}}" alt="" />
+                                    <img ng-if="!article.logo.small && !article.category.isIcon && article.category.logo.small" ng-src="{{article.category.logo.small}}" alt="Category Logo" />
+                                    <img ng-if="article.logo.small" ng-src="{{article.logo.small}}" alt="Item Logo" />
+                                    <div class="category-content">
+                                        <div class="name">
+                                            {{article.name}}
+                                        </div>
+                                    </div>
+                                    <div class="edit-category" ng-show="isArticleEdit" ng-click="updateArticle(article, article._id)">
+                                        <i class="ion-edit"></i>
+                                    </div>
+                                    <button type="button" class="remove-category" ng-show="isArticleEdit" ng-click="removeArticle(article._id)">
+                                        <i class="ion-trash-b"></i>
+                                    </button>
+                                </div>
+                                <div class="add-subcategory" ng-click="addArticle()">
+                                    <div class="category-content">
+                                        <i class="icon-plus"></i>
+                                        <div class="name">
+                                            Add
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

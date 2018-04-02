@@ -1,0 +1,53 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel3">Create New Order</h4>
+    </div>
+    <div class="modal-body">
+            <div id="createOrderMsg"></div>
+        <form class="form-horizontal" name="form" novalidate>
+            <div class="form-group">
+                <label for="input01" class="col-sm-4 control-label">
+                    <strong>Room</strong>
+                </label>
+                <label for="input01" class="col-sm-5 control-label">
+                    <strong>{{roomData.name}}</strong>
+                </label>
+                <!-- <div class="col-sm-5">
+                    <input type="text" class="form-control" name="description" ng-model="Table.description" placeholder="Description" />
+                </div> -->
+            </div>
+            <div class="form-group">
+                <label for="input01" class="col-sm-4 control-label">
+                    <strong>Table</strong>
+                </label>
+                <label for="input01" class="col-sm-5 control-label">
+                    <strong>{{tableData.name}}</strong>
+                </label>
+                <!-- <div class="col-sm-5">
+                    <input type="text" class="form-control" name="description" ng-model="Table.description" placeholder="Description" />
+                </div> -->
+            </div>
+            <div class="form-group">
+                <label for="input01" class="col-sm-4 control-label">
+                    <strong>Number Of Person</strong>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" float-number name="numberOfPerson" ng-model="Order.numberOfPerson" placeholder="Number Of Person"
+                        autocomplete="off" required />
+                    <span class="alert color-red" ng-show="form.numberOfPerson.$dirty && form.numberOfPerson.$error.required">Number Of Person is required</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input01" class="col-sm-4 control-label">
+                </label>
+                <div class="col-sm-5">
+                    <button type="button" class="btn btn-default" ng-click="cancelCreateOrder()">Cancel</button>                    
+                    <button type="button" class="btn btn-primary" ng-click="createOrderNext()" ng-disabled="form.$invalid">Next</button>                   
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

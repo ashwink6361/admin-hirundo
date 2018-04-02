@@ -1,0 +1,32 @@
+<div ba-panel ba-panel-class="with-scroll table-panel mh-500">
+    <span class="add-btn">
+        <a ui-sref="addingredient" class="btn btn-secondary btn-icon">
+            <i class="ion-plus-round"></i>
+        </a>
+    </span>
+    <table class="table ingredient-table">
+        <thead>
+            <tr>
+                <th>{{'IngredientKey.Name' | translate}}</th>
+                <th>{{'IngredientKey.Price' | translate}}</th>
+                <th>{{'IngredientKey.Unit' | translate}}</th>
+                <th class="action-btn">{{'IngredientKey.Action' | translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ingredient in ingredients">
+                <td>{{ingredient.name}}</td>
+                <td>€{{ingredient.price}}</td>
+                <td>{{ingredient.unit}}</td>
+                <td class="action-btn">
+                    <a class="btn btn-secondary btn-icon" ng-click="updateIngredient(ingredient,ingredient._id)">
+                        <i class="icon-pencil"></i>
+                    </a>
+                    <a class="btn bg-red btn-icon" ng-click="removeIngredient(ingredient._id)">
+                        <i class="ion-trash-b"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

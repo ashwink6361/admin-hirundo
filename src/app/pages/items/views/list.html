@@ -1,0 +1,36 @@
+<div class="items">
+    <div id="itemlistmsg"></div>
+    <div class="widgets">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div ba-panel ba-panel-class="with-scroll table-panel mh-500">
+                    <span class="add-btn">
+                        <a ng-click="itemEdit()" class="btn btn-primary btn-icon">
+                            <i class="ion-edit"></i>
+                        </a>
+                    </span>
+                    <div>
+                        <div class="item-container">
+                            <div class="item" ng-repeat="item in items">
+                                <img ng-if="!item.logo.small" ng-src="assets/img/item-placeholder.jpg" alt="Item image" />
+                                <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item image" />
+                                <div class="name">{{item.name}}</div>
+                                <button type="button" ng-show="itemEditBtn" class="remove-items" ng-click="removeItem(item._id)">
+                                    <i class="icon-close"></i>
+                                </button>
+                                <button type="button" ng-show="itemEditBtn" class="edit-items" ng-click="updateItem(item, item._id)">
+                                    <i class="ion-edit"></i>
+                                </button>
+                            </div>
+                            <a class="item add-item" ui-sref="additem">
+                                <i class="icon-plus"></i>
+                                <div class="name">{{'ItemKey.Add' | translate}}</div>
+                            </a>
+                        </div>
+                        <item-pagination></item-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

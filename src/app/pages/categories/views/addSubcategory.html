@@ -1,0 +1,39 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="subcategorymsg"></div>
+            <div class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal" name="subcategoryForm" id="subcategoryForm" novalidate>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>Name</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="name" name="name" ng-model="Subcategory.name" placeholder="Name" required />
+                                <span class="alert color-red" ng-show="subcategoryForm.name.$dirty &&  subcategoryForm.name.$error.required">Name is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>Description</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <textarea class="form-control" id="description" name="description" ng-model="Subcategory.description" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                            </label>
+                            <div class="col-sm-5 text-center">
+                                <button ng-show="subCategoryId" type="button" class="btn btn-primary" ng-click="editSubCategory()" ng-disabled="subcategoryForm.$invalid||subcategoryAddRequest">Update Sub Category</button>
+                                <button ng-show="!subCategoryId" type="button" class="btn btn-primary" ng-click="addSubCategory()" ng-disabled="subcategoryForm.$invalid||subcategoryAddRequest">Add Sub Category</button>
+                                <button type="button" class="btn btn-default" ui-sref="viewcategory">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

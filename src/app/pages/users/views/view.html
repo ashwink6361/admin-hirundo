@@ -1,0 +1,111 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel" ba-panel-title="User Detail" ba-panel-class="with-scroll">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title">User Detail</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Name</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.firstName}}<span ng-if="userDetail.lastName">&nbsp;{{userDetail.lastName}}</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Username</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.userName}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Email</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.email}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Address</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.address}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>DOB</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.dob | date : 'dd/MM/yyyy'}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Gender</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.gender == 'M'?'Male':userDetail.gender == 'F'?'Female':''}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Mobile</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.mobile}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Created At</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.created_at | date : 'dd/MM/yyyy'}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Updated At</strong>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>{{userDetail.updated_at | date : 'dd/MM/yyyy'}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">
+                                        <strong>Image</strong>
+                                    </label>
+                                    <div class="col-sm-9 user-image">
+                                        <img ng-if="userDetail.activePicture == 'N' && !userDetail.picture.normal.original" ng-src="assets/img/profile-pic.jpg" alt="User image"
+                                        />
+                                        <img ng-if="userDetail.activePicture == 'N' && userDetail.picture.normal.original" ng-src="{{userDetail.picture.normal.original}}"
+                                            alt="User image" />
+                                        <img ng-if="userDetail.activePicture == 'F'" ng-src="{{userDetail.picture.facebook}}" alt="User image" />
+                                        <img ng-if="userDetail.activePicture == 'G'" ng-src="{{userDetail.picture.google}}" alt="User image" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" ui-sref="users">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

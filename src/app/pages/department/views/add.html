@@ -1,0 +1,70 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="departmentmsg"></div>
+            <div class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal" name="form" novalidate>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'DepartmentKey.Name' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="name" ng-model="Department.firstName" placeholder="{{'DepartmentKey.Name' | translate}}" required />
+                                <span class="alert color-red" ng-show="form.name.$dirty &&  form.name.$error.required">{{'DepartmentKey.nameRequired' | translate}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'DepartmentKey.Username' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="userName" ng-model="Department.userName" placeholder="{{'DepartmentKey.Username' | translate}}" autocomplete="off" ng-readonly="departmentId" ng-required="!departmentId" />
+                                <span class="alert color-red" ng-show="form.userName.$dirty &&  form.userName.$error.required">{{'DepartmentKey.usernameRequired' | translate}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'DepartmentKey.Category' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <select class="form-control" data-ng-options="category._id as category.name for category in categories" ng-model="Department.category">
+                                    <option value="?" selected="selected">Select Category</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'DepartmentKey.Password' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="password" name="uPassword" class="form-control" ng-model="Department.password" placeholder="{{'DepartmentKey.Password' | translate}}" autocomplete="off" ng-readonly="departmentId" ng-required="!departmentId">
+                                <span class="alert color-red" ng-show="form.uPassword.$dirty &&  form.uPassword.$error.required">{{'DepartmentKey.passwordRequired' | translate}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'DepartmentKey.confirmPassword' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="password" name="ucPassword" class="form-control" ng-model="Department.confirmPassword" placeholder="{{'DepartmentKey.confirmPassword' | translate}}"
+                                    autocomplete="off" ng-readonly="departmentId" ng-required="!departmentId"/>
+                                <span class="alert color-red" ng-show="form.ucPassword.$dirty &&  form.ucPassword.$error.required">{{'DepartmentKey.confirmPasswordRequired' | translate}}</span>
+                                <span class="alert color-red" ng-show="(form.uPassword.$dirty && form.ucPassword.$dirty) && (Department.password != Department.confirmPassword)">{{'DepartmentKey.pwdDontMatch' | translate}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                            </label>
+                            <div class="col-sm-5">
+                                <button type="button" ng-show="departmentId" class="btn bg-success" ng-click="editDepartment()" ng-disabled="form.$invalid||departmentAddRequest">{{'DepartmentKey.Update' | translate}}</button>
+                                <button type="button" ng-show="!departmentId" class="btn bg-success" ng-click="addDepartment()" ng-disabled="form.$invalid||departmentAddRequest">{{'DepartmentKey.Add' | translate}}</button>                                
+                                <button type="button" class="btn btn-default" ui-sref="staff">{{'DepartmentKey.Cancel' | translate}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

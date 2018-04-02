@@ -1,0 +1,69 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="adminmsg"></div>
+            <div class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal" name="form" novalidate>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>Restaurant Name</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="firstName" ng-model="Admin.firstName" placeholder="Restaurant Name" required />
+                                <span class="alert color-red" ng-show="form.firstName.$dirty &&  form.firstName.$error.required">Restaurant name is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>Username</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="userName" ng-model="Admin.userName" placeholder="Username" autocomplete="off" ng-readonly="adminId" ng-required="!adminId" />
+                                <span class="alert color-red" ng-show="form.userName.$dirty &&  form.userName.$error.required">Username is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>Email</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="email" ng-model="Admin.email" placeholder="Email" autocomplete="off" ng-readonly="adminId" ng-required="!adminId" />
+                                <span class="alert color-red" ng-show="form.email.$dirty &&  form.email.$error.required">Email is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>Password</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="password" name="uPassword" class="form-control" ng-model="Admin.password" placeholder="Password" autocomplete="off" ng-readonly="adminId" ng-required="!adminId">
+                                <span class="alert color-red" ng-show="form.uPassword.$dirty &&  form.uPassword.$error.required">Password is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>Confirm Password</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="password" name="ucPassword" class="form-control" ng-model="Admin.confirmPassword" placeholder="Confirm Password"
+                                    autocomplete="off" ng-readonly="adminId" ng-required="!adminId"/>
+                                <span class="alert color-red" ng-show="form.ucPassword.$dirty &&  form.ucPassword.$error.required">Confirm Password is required</span>
+                                <span class="alert color-red" ng-show="(form.uPassword.$dirty && form.ucPassword.$dirty) && (Admin.password != Admin.confirmPassword)">Sorry, the passwords don't match.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                            </label>
+                            <div class="col-sm-5">
+                                <button type="button" ng-show="adminId" class="btn btn-primary" ng-click="editAdmin()" ng-disabled="form.$invalid||adminAddRequest">Update</button>
+                                <button type="button" ng-show="!adminId" class="btn btn-primary" ng-click="addAdmin()" ng-disabled="form.$invalid||adminAddRequest">Add</button>                                
+                                <button type="button" class="btn btn-default" ui-sref="admins">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

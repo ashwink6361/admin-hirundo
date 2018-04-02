@@ -1,0 +1,75 @@
+<div ba-panel ba-panel-title="{{'WaiterKey.viewTitle' | translate}}">
+    <form class="form-horizontal">
+        <div id="brandsmsg"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="name" class="col-sm-3 control-label">
+                        <strong>{{'WaiterKey.Name' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{waiterDetail.firstName+' '+waiterDetail.lastName}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">
+                        <strong>{{'WaiterKey.Username' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{waiterDetail.userName}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="col-sm-3 control-label">
+                        <strong>{{'WaiterKey.Mobile' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{waiterDetail.mobile}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-sm-3 control-label">
+                        <strong>{{'WaiterKey.Address' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{waiterDetail.address}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="created_at" class="col-sm-3 control-label">
+                        <strong>{{'WaiterKey.createdAt' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{waiterDetail.created_at | date : 'dd/MM/yyyy'}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="updated_at" class="col-sm-3 control-label">
+                        <strong>{{'WaiterKey.updatedAt' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-8">
+                        <label class="col-sm-8">{{waiterDetail.updated_at | date : 'dd/MM/yyyy'}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="user_img" class="col-sm-2 control-label">
+                        <strong>{{'WaiterKey.Image' | translate}}</strong>
+                    </label>
+                    <div class="col-sm-10 user-image">
+                        <img ng-if="waiterDetail.activePicture == 'N' && !waiterDetail.picture.normal.original" ng-src="assets/img/profile-pic.jpg" alt="User image" />
+                        <img ng-if="waiterDetail.activePicture == 'N' && waiterDetail.picture.normal.original" ng-src="{{waiterDetail.picture.normal.original}}" alt="User image" />
+                        <img ng-if="waiterDetail.activePicture == 'F'" ng-src="{{waiterDetail.picture.facebook}}" alt="User image" />
+                        <img ng-if="waiterDetail.activePicture == 'G'" ng-src="{{waiterDetail.picture.google}}" alt="User image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-right">
+                <a class="btn btn-primary" ui-sref="staff">{{'WaiterKey.Back' | translate}}</a>
+            </div>
+        </div>
+    </form>
+</div>

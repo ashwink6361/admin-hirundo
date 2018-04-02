@@ -1,0 +1,139 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="categorymsg"></div>
+            <div class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal" name="categoryForm" id="categoryForm" novalidate>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'CategoryKey.Name' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="name" name="name" ng-model="Category.name" placeholder="{{'CategoryKey.Name' | translate}}"
+                                    required />
+                                <span class="alert color-red" ng-show="categoryForm.name.$dirty &&  categoryForm.name.$error.required">{{'CategoryKey.nameRequired' | translate}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'CategoryKey.Description' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <textarea class="form-control" id="description" name="description" ng-model="Category.description" placeholder="{{'CategoryKey.Description' | translate}}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'CategoryKey.chooseTitle' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5 d-flex lh-40 align-item-center">
+                                <p class="m-0 mr-10">
+                                    <input type="radio" id="test1" name="radio-group" ng-model="isIcon" ng-value="true" ng-change="chooseIcon()">
+                                    <label for="test1">Icon</label>
+                                </p>
+                                <p class="m-0">
+                                    <input type="radio" id="test2" name="radio-group" ng-model="isIcon" ng-value="false" ng-change="chooseImg()">
+                                    <label for="test2">Image</label>
+                                </p>
+                                <!-- <button type="button" class="btn btn-primary btn-light" ng-click="chooseIcon()" ng-class="{active : isIcon}">{{'CategoryKey.chooseIcon' | translate}}</button>
+                                
+                                <button type="button" class="btn btn-primary btn-light" ng-click="chooseImg()" ng-class="{active : !isIcon}">{{'CategoryKey.chooseLogo' | translate}}</button> -->
+                            </div>
+                        </div>
+                        <div ng-show="isIcon">
+                            <div class="form-group">
+                                <label for="input01" class="col-sm-2 control-label">
+                                    <strong>{{'CategoryKey.chooseIcon' | translate}}</strong>
+                                </label>
+                                <div class="col-sm-5 d-flex-category flex-row">
+                                    <div class="icon-preview" ng-if="isIcon">
+                                        <img ng-src="{{selectedIconImage}}" />
+                                    </div>
+                                    <div class="category-icon-container">
+                                        <button type="button" class="form-control" ng-click="categoryIcon()">
+                                            <span>{{'CategoryKey.selectIcon' | translate}}</span>
+                                        </button>
+                                        <div class="icon-popup" ng-show="showCategoryIcon">
+                                            <div class="icon-container" ng-repeat="icon in icons">
+                                                <div ng-click="selectedIcon(icon)">
+                                                    <img ng-src="{{icon.image}}" alt="">
+                                                    <p>{{icon.name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input01" class="col-sm-2 control-label">
+                                    <strong>{{'CategoryKey.chooseColor' | translate}}</strong>
+                                </label>
+                                <div class="col-sm-5 color-picker">
+                                    <color-picker options="{'format':'hex'}" ng-model="Category.color" api="api"></color-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="!isIcon">
+                            <label for="logo" class="col-sm-2 control-label">
+                                <strong>{{'CategoryKey.categoryLogo' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-8">
+                                <div class="fileuploadouter">
+                                    <div class="attach-lable">{{'CategoryKey.selectImage' | translate}}</div>
+                                    <input class="fileuploadinput" type="file" id="uploadFile" img-cropper-fileread image="cropper.sourceImage" ng-file-select="onFileSelect($files)">
+                                </div>
+                                <div class="mt-3 row">
+                                    <div class="col-sm-6">
+                                        <div ng-show="cropper.sourceImage">
+                                            <div>
+                                                <canvas width="300" height="300" id="canvas" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage"
+                                                    crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+                                            </div>
+                                            <div>({{'CategoryKey.Left' | translate}}: {{bounds.left}} {{'CategoryKey.Right' |
+                                                translate}}: {{bounds.right}} {{'CategoryKey.Top' | translate}}: {{bounds.top}}
+                                                {{'CategoryKey.Bottom' | translate}}: {{bounds.bottom}})</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="userpic" ng-show="categoryPicture">
+                                            <i class="ion-ios-close-outline" ng-click="removeCategoryPicture()"></i>
+                                            <div class="userpic-wrapper">
+                                                <img ng-src="{{cropper.croppedImage||categoryPicture}}" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group subcategory-control">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>{{'CategoryKey.subCategory' | translate}}</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <fieldset data-ng-repeat="subCategory in subCategories track by $index" class="howtouse">
+                                    <input type="text" placeholder="{{'CategoryKey.subCategory' | translate}}" class="form-control" ng-model="subCategories[$index]"
+                                    />
+                                    <button class="remove" ng-if="$index > 0" ng-click="removeSubCategory($index, subCategory)">
+                                        <i class="ion-minus-round"></i>
+                                    </button>
+                                </fieldset>
+                                <button class="text-btn" ng-click="addNewSubCategory()">{{'CategoryKey.addSubCategory' | translate}}</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                            </label>
+                            <div class="col-sm-5 text-center">
+                                <button ng-show="categoryId" type="button" class="btn bg-success" ng-click="editCategory()" ng-disabled="categoryForm.$invalid||categoryAddRequest">{{'CategoryKey.updateCategory' | translate}}</button>
+                                <button ng-show="!categoryId" type="button" class="btn bg-success" ng-click="addCategory()" ng-disabled="categoryForm.$invalid||categoryAddRequest">{{'CategoryKey.addCategory' | translate}}</button>
+                                <button type="button" class="btn btn-default" ui-sref="editormenu">{{'CategoryKey.Cancel' | translate}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
