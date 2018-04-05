@@ -88,27 +88,17 @@
         $scope.categorySearchData = [];
         CategoryService.getCategoryWithItems().then(function (data) {
             $scope.categoryItems = data.data;
-            console.log('data', data);
             for(var i=0;i<$scope.categoryItems.length;i++){
-                console.log('$scope.categoryItems', $scope.categoryItems);
                 $scope.categorySearchData.push({
                     _id: $scope.categoryItems[i].category._id,
                     name: $scope.categoryItems[i].category.name,
                 });
             }
-            console.log('$scope.categorySearchData', $scope.categorySearchData);
             
         }).catch(function (error) {
             AlertService.error('subcategorylistmsg', error.message, 4000);
             $state.go('editormenu');
         })
-        // CategoryService.getCategoryDetail(id).then(function (data) {
-        //     $scope.categoryDetail = data.data;
-        //     console.log('$scope.categoryDetail',$scope.categoryDetail);
-        // }).catch(function (error) {
-        //     AlertService.error('subcategorylistmsg', error.message, 4000);
-        //     $state.go('editormenu');
-        // });
 
         $scope.articleEdit = function () {
             $scope.isArticleEdit = !$scope.isArticleEdit;
@@ -123,7 +113,6 @@
                     AlertService.success('subcategorylistmsg', data.message, 4000);
                     CategoryService.getCategoryWithItems().then(function (data) {
                         $scope.categoryItems = data.data;
-                        console.log('data', data);
                     }).catch(function (error) {
                         AlertService.error('subcategorylistmsg', error.message, 4000);
                         $state.go('editormenu');
@@ -191,7 +180,6 @@
 
         $scope.selectedCategory = function ($item) {
             if ($item) {
-                console.log('$item', $item.originalObject);
                 $scope.selectedItem = $item.originalObject.name; // the actual object which was selected
             }
         }
@@ -237,12 +225,10 @@
         $q.all([
             CategoryService.getIcons('', 0, 100)
         ]).then(function (data) {
-            console.log('data', data);
             $scope.icons = data[0].data;
         });
 
         $scope.addNewSubCategory = function () {
-            console.log('add addNewSubCategory');
             $scope.subCategories[$scope.subCategories.length] = '';
         };
 

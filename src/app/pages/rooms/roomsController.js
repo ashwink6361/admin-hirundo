@@ -22,15 +22,27 @@
         $scope.editRoom = {};
         $scope.editForm = {};
         $scope.Order = {};
+        $scope.rooms = [];
         //Fetch Room list
+        RoomService.getRooms().then(function(data) {
+            $scope.rooms = RoomService.listRoom();
+            console.log("$scope.rooms ", $scope.rooms);
+        }).catch(function(error) {
+            console.log("Error ", error);
+        });
         $scope.getRoomList = function () {
-            RoomService.getRooms().then(function (data) {
-                $scope.rooms = data.data;
-            }).catch(function (error) {
-                $scope.rooms = [];
+            RoomService.getRooms().then(function(data) {
+                $scope.rooms = RoomService.listRoom();
+            }).catch(function(error) {
+                console.log("Error ", error);
             });
+            // RoomService.getRooms().then(function (data) {
+            //     $scope.rooms = data.data;
+            // }).catch(function (error) {
+            //     $scope.rooms = [];
+            // });
         };
-        $scope.getRoomList();
+        // $scope.getRoomList();
 
         $scope.switchTableOption = function(option) {
             $scope.isMultiple = option;
