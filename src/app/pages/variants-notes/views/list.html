@@ -1,0 +1,32 @@
+<div ba-panel ba-panel-class="with-scroll table-panel mh-500">
+    <span class="add-btn">
+        <a ui-sref="addvariant" class="btn btn-secondary btn-icon">
+            <i class="ion-plus-round"></i>
+        </a>
+    </span>
+    <table class="table ingredient-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Notes</th>
+                <th class="action-btn">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="variant in variants">
+                <td>{{variants.name}}</td>
+                <td>€{{variants.price}}</td>
+                <td>{{variants.notes}}</td>
+                <td class="action-btn">
+                    <a class="btn btn-secondary btn-icon" ng-click="updateVariant(variant,variant._id)">
+                        <i class="icon-pencil"></i>
+                    </a>
+                    <a class="btn bg-red btn-icon" ng-click="removeVariant(variant._id)">
+                        <i class="ion-trash-b"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

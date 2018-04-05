@@ -18,7 +18,7 @@ angular.module('BlurAdmin.pages', [
     'BlurAdmin.pages.ingredient',
     // 'BlurAdmin.pages.users',
     'BlurAdmin.pages.items',
-    // 'BlurAdmin.pages.menu',
+    'BlurAdmin.pages.variants',
     'BlurAdmin.pages.admins'
   ]).config(routeConfig);
 
