@@ -1,0 +1,47 @@
+<uib-tabset active="activeTab">
+        <uib-tab heading="{{'Category' | translate}}" index="0" ng-click="selectTab(0)">
+                <div ba-panel ba-panel-class="table-panel-container mh-500" ng-show="activeTab == 0">
+                        <span class="add-btn">
+                            <a ng-click="categoryEdit()" class="btn btn-secondary btn-icon">
+                                <i class="ion-edit"></i>
+                            </a>
+                        </span>
+                        <div class="category-container">
+                            <div ng-repeat="category in categories" class="category">
+                                <div class="category-content" ng-click="viewCategory(category._id)" ng-style="{'background-color': category.color}">
+                                    <img ng-if="!category.isIcon" ng-src="{{category.logo.small}}" alt="" />
+                                    <img ng-if="category.isIcon" ng-src="{{category.icon}}" alt="" />
+                                    <div class="name">
+                                        {{category.name}}
+                                    </div>
+                                    <div class="edit-category" ng-show="showOptions" ng-click="updateCategory(category._id)">
+                                        <i class="ion-edit"></i>
+                                    </div>
+                                    <button type="button" class="remove-category" ng-show="showOptions" ng-click="removeCategory(category._id, $event)">
+                                        <i class="ion-trash-b"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <a ui-sref="addcategory">
+                                <div class="add-category">
+                                    <i class="icon-plus"></i>
+                                    <div class="name">
+                                        {{'CategoryKey.Add' | translate}}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+        </uib-tab>
+        <uib-tab heading="{{'Articles' | translate}}" index="1" ng-click="selectTab(1);viewCategory()">
+            <!-- <items-list></items-list> -->
+        </uib-tab>
+        <uib-tab heading="{{'variantsAndNotes' | translate}}" index="2" ng-click="selectTab(2)">
+            <div ba-panel ba-panel-class="table-panel-container mh-500" ng-show="activeTab == 2">
+                Variants and Notes
+            </div>
+        </uib-tab>
+        <uib-tab heading="{{'Ingredients' | translate}}" index="3" ng-click="selectTab(3)">
+            <ingredient-list ng-show="activeTab == 3"></ingredient-list>
+        </uib-tab>
+    </uib-tabset>
