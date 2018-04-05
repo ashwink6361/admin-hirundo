@@ -23,19 +23,19 @@
             .state('addcategory', {
                 url: '/category/add/:id',
                 templateUrl: 'app/pages/categories/views/add.html',
-                title: 'Add Category',
+                title: 'Editor menu',
                 controller: 'AddCategoryController',
             })
             .state('addsubcategory', {
                 url: '/subcategory/add/:id',
                 templateUrl: 'app/pages/categories/views/addSubcategory.html',
-                title: 'Add Sub Category',
+                title: 'Editor menu',
                 controller: 'AddSubCategoryController',
             })
             .state('viewcategory', {
                 url: '/category',
                 templateUrl: 'app/pages/categories/views/view.html',
-                title: 'View Sub Category',
+                title: 'Editor menu',
                 controller: 'ViewCategoryController',
             });
     }

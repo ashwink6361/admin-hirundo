@@ -76,6 +76,7 @@
 
         $scope.selectTab = function (tab) {
             CategoryService.setActiveTab(tab);
+            $scope.activeTab = tab;
         };
     }
 
