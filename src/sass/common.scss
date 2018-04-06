@@ -9,6 +9,7 @@
     text-align: center;
 }
 
+
 .flex-row {
     flex-direction: row !important;
 }
@@ -104,7 +105,11 @@
 }
 
 .m-0 {
-    margin: 0;
+    margin: 0 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
 }
 
 .search-item {
@@ -1136,17 +1141,25 @@
 
 .menu-tabs {
     list-style: none;
-    padding: 0;
+    padding: 0px 0;
     margin: 0;
+    margin-bottom: 10px;
+    background-color: #fdab01;
+    border-radius: 5px 5px 0px 0;
+    overflow: hidden;
     li {
         display: inline-block;
         &.active {
             a {
-                color: $secondry;
+                color: #fff;
+                background: green;
+                font-weight: bold;
             }
         }
         a {
-            padding: 5px 15px;
+            padding: 10px 15px;
+            display: inline-block;
+            text-transform: uppercase;
         }
     }
 }
