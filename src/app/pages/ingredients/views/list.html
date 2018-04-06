@@ -5,7 +5,10 @@
             <i class="ion-plus-round"></i>
         </a>
     </span>
-    <table class="table ingredient-table">
+    <div class="text-center" ng-show="!(ingredients && ingredients.length)" style="float:left;width: 100%;">
+        No Ingredient Created Yet
+    </div>
+    <table class="table ingredient-table" ng-show="ingredients && ingredients.length">
         <thead>
             <tr>
                 <th>{{'IngredientKey.Name' | translate}}</th>

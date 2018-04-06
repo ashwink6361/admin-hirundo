@@ -82,6 +82,16 @@ function VariantService($q, $http) {
         setVariantDetails: function(data) {
             _variantDetails = data;
         },
+        getVariantDetail: function(id) {
+            var def = $q.defer();
+            var url = '/api/variant/'+id;
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        }
     };
 }
 })();

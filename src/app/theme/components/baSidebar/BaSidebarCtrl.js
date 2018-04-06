@@ -9,7 +9,7 @@
     .controller('BaSidebarCtrl', BaSidebarCtrl);
 
   /** @ngInject */
-  function BaSidebarCtrl($scope,$rootScope, ProfileService, baSidebarService) {
+  function BaSidebarCtrl($scope,$rootScope, ProfileService, baSidebarService, CategoryService) {
 
     $scope.menuItems = baSidebarService.getMenuItems();
     $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
@@ -28,6 +28,10 @@
     });
     $scope.accessLevel = JSON.parse(localStorage.getItem('adminUser')).adminType;
 
+    $scope.selectedTab = function () {
+      CategoryService.setActiveTab(0);
+    }
+    
     ProfileService.getDetails().then(function (data) {
       $scope.adminProfile = data.data;
     }).catch(function (error) { });
