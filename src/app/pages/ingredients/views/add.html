@@ -51,7 +51,7 @@
                                 <button type="button" class="text-btn mt-10" ng-click="addNewUnit()">Add new unit</button>
                                 <div class="add-unit d-flex justify-space-between" ng-if="showNewInput">
                                     <input type="text" class="form-control" placeholder="Add new unit" ng-model="Unit.name">
-                                    <input type="text" class="form-control" placeholder="Add quantity" ng-model="Unit.name">
+                                    <input type="text" float-number class="form-control" placeholder="Add quantity" ng-model="Unit.quantity">
                                     <button type="button" class="btn btn-icon btn-success cursor-pointer" ng-click="addUnit()"><i class="ion-plus-round"></i></button>
                                 </div>
                             </div>

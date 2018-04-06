@@ -78,7 +78,8 @@
             $scope.ingredientId = $stateParams.id;
             $scope.Ingredient = {};
             $scope.Unit = {
-                name: ''
+                name: '',
+                quantity: ''
             };
             $scope.showNewInput = false;
             if ($scope.ingredientId) {
@@ -99,13 +100,20 @@
                     AlertService.error('ingredientmsg', "Please enter unit", 4000);
                     return false;
                 }
+                if ($scope.Unit.quantity == '') {
+                    AlertService.error('ingredientmsg', "Please enter quantity", 4000);
+                    return false;
+                }
                 var opts = {
-                    name : $scope.Unit.name
+                    name : $scope.Unit.name,
+                    quantity : $scope.Unit.quantity
                 }
                 IngredientService.addUnit(opts).then(function (data) {
+                    AlertService.success('ingredientmsg', data.message, 4000);                    
                     IngredientService.getUnits().then(function(data){
                         $scope.Ingredient.unit = '';
                         $scope.Unit.name = '';
+                        $scope.Unit.quantity = '';                        
                         $scope.units = data.data;
                     })
                 }).catch(function (error) {
@@ -158,6 +166,7 @@
             $scope.addNewUnit = function () {
                 $scope.showNewInput = !$scope.showNewInput;
                 $scope.Unit.name = '';
+                $scope.Unit.quantity = '';
             }
         }
     })();
