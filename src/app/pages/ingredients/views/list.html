@@ -15,7 +15,7 @@
             <tr>
                 <th>{{'IngredientKey.Name' | translate}}</th>
                 <th>{{'IngredientKey.Price' | translate}}</th>
-                <th>{{'IngredientKey.Unit' | translate}}</th>
+                <th>{{'IngredientKey.Unit' | translate}}(Quantity)</th>
                 <th class="action-btn">{{'IngredientKey.Action' | translate}}</th>
             </tr>
         </thead>
@@ -23,7 +23,7 @@
             <tr ng-repeat="ingredient in ingredients">
                 <td>{{ingredient.name}}</td>
                 <td>€{{ingredient.price}}</td>
-                <td>{{ingredient.unit}}</td>
+                <td>{{ingredient.unit}}<span ng-if="ingredient.quantity>1">({{ingredient.quantity}})</span></td>
                 <td class="action-btn">
                     <a class="btn btn-secondary btn-icon" ng-click="updateIngredient(ingredient,ingredient._id)">
                         <i class="icon-pencil"></i>
