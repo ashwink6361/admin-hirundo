@@ -49,7 +49,7 @@ function VariantService($q, $http) {
             var def = $q.defer();
             var url = '/api/variant';
             console.log(opts);
-            doPostWithImage($q, $http, url, opts).then(function(data) {
+            doPost($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
                 def.reject(error);
@@ -59,7 +59,7 @@ function VariantService($q, $http) {
         updateVariant: function(id, opts) {
             var def = $q.defer();
             var url = '/api/variant/'+id;
-            doPutWithImage($q, $http, url, opts).then(function(data) {
+            doPut($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
                 def.reject(error);
