@@ -71,7 +71,7 @@
             var id = $stateParams.id;
             $scope.ingredientDetail = IngredientService.getIngredientDetails();
             if(!$scope.ingredientDetail)
-                $state.go('editormenu');
+                $state.go('ingredient');
         }
     
         function AddIngredientController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, IngredientService, AlertService) {
@@ -84,7 +84,7 @@
             if ($scope.ingredientId) {
                 $scope.Ingredient = IngredientService.getIngredientDetails();
                 if(!$scope.Ingredient)
-                    $state.go('editormenu');
+                    $state.go('ingredient');
             }
 
             $q.all([
@@ -130,7 +130,7 @@
                 $scope.ingredientAddRequest = true;
                 IngredientService.addIngredient(opts).then(function (data) {
                     $scope.ingredientAddRequest = false;
-                    $state.go('editormenu');
+                    $state.go('ingredient');
                 }).catch(function (error) {
                     $scope.ingredientAddRequest = false;
                     AlertService.error('ingredientmsg', error.message, 4000);
@@ -148,7 +148,7 @@
                 $scope.ingredientAddRequest = true;
                 IngredientService.updateIngredient($scope.ingredientId, opts).then(function (data) {
                     $scope.ingredientAddRequest = false;
-                    $state.go('editormenu');
+                    $state.go('ingredient');
                 }).catch(function (error) {
                     $scope.ingredientAddRequest = false;
                     AlertService.error('ingredientmsg', error.message, 4000);

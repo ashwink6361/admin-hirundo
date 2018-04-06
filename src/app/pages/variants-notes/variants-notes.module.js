@@ -24,7 +24,7 @@
             })
             .state('viewvariant', {
                 url: '/variant/{id}',
-                templateUrl: 'app/pages/items/variants-notes/view.html',
+                templateUrl: 'app/pages/variants-notes/views/view.html',
                 title: 'View Variant',
                 controller: 'ViewVariantController',
             });

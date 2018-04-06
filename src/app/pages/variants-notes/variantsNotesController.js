@@ -51,8 +51,7 @@
             };
         
             //View Variant
-            $scope.viewVariant = function (data, id) {
-                VariantService.setVariantDetails(data);
+            $scope.viewVariant = function (id) {
                 $state.go('viewvariant', {
                     'id': id
                 });
@@ -69,9 +68,15 @@
     
         function ViewVariantController($scope, $stateParams, $state, VariantService, AlertService) {
             var id = $stateParams.id;
-            $scope.variantDetail = VariantService.getVariantDetails();
-            if(!$scope.variantDetail)
-                $state.go('editormenu');
+            // $scope.variantDetail = VariantService.getVariantDetails();
+            // if(!$scope.variantDetail)
+            //     $state.go('variant');
+
+                VariantService.getVariantDetail(id).then(function(data) {
+                    $scope.variantDetail = data.data;
+                }).catch(function (error) {
+                    $state.go('variant');
+                });
         }
     
         function AddVariantController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, VariantService, AlertService) {
@@ -87,12 +92,27 @@
                 for (var i = 0; i < $scope.categories.length; i++) {
                     $scope.sub[$scope.categories[i]._id] = $scope.categories[i].subCategory;
                 }
+                // if ($scope.variantId) {
+                //     $scope.Variant = VariantService.getVariantDetails();
+                // console.log('$scope.Variant',$scope.Variant);
+                    
+                //     $scope.Variant.category = $scope.Variant.category._id;
+                //     $scope.subCategories = $scope.sub[$scope.Variant.category];
+                //     if(!$scope.Variant)
+                //     $state.go('variant');
+                // }
+
+
                 if ($scope.variantId) {
-                    $scope.Variant = VariantService.getVariantDetails();
-                    $scope.Variant.category = $scope.Variant.category._id;
-                    $scope.subCategories = $scope.sub[$scope.Variant.category];
-                    if(!$scope.Variant)
-                    $state.go('editormenu');
+                    VariantService.getVariantDetail($scope.variantId).then(function (data) {
+                        $scope.Variant = data.data;
+                console.log('$scope.Variant',$scope.Variant);
+                        
+                        $scope.Variant.category = $scope.Variant.category._id;
+                        $scope.subCategories = $scope.sub[$scope.Variant.category];
+                    }).catch(function (error) {
+                        $state.go('variant');
+                    });
                 }
             });
 
@@ -114,7 +134,7 @@
                 $scope.variantAddRequest = true;
                 VariantService.addVariant(opts).then(function (data) {
                     $scope.variantAddRequest = false;
-                    $state.go('editormenu');
+                    $state.go('variant');
                 }).catch(function (error) {
                     $scope.variantAddRequest = false;
                     AlertService.error('variantmsg', error.message, 4000);
@@ -132,7 +152,7 @@
                 $scope.variantAddRequest = true;
                 VariantService.updateVariant($scope.variantId, opts).then(function (data) {
                     $scope.variantAddRequest = false;
-                    $state.go('editormenu');
+                    $state.go('variant');
                 }).catch(function (error) {
                     $scope.variantAddRequest = false;
                     AlertService.error('variantmsg', error.message, 4000);

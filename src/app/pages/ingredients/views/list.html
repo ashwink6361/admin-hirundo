@@ -1,11 +1,16 @@
-<div ba-panel ba-panel-class="with-scroll table-panel mh-500">
+<div ba-panel ba-panel-class="with-scroll table-panel m-0">
     <menu-tabs></menu-tabs>
+</div>
+<div ba-panel ba-panel-class="with-scroll table-panel mh-500">
     <span class="add-btn">
         <a ui-sref="addingredient" class="btn btn-secondary btn-icon">
             <i class="ion-plus-round"></i>
         </a>
     </span>
-    <table class="table ingredient-table">
+    <div class="text-center" ng-show="!(ingredients && ingredients.length)" style="float:left;width: 100%;">
+        No Ingredient Created Yet
+    </div>
+    <table class="table ingredient-table" ng-show="ingredients && ingredients.length">
         <thead>
             <tr>
                 <th>{{'IngredientKey.Name' | translate}}</th>

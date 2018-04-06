@@ -1,11 +1,17 @@
-<div ba-panel ba-panel-class="with-scroll table-panel mh-500">
+<div ba-panel ba-panel-class="with-scroll table-panel m-0">
     <menu-tabs></menu-tabs>
+</div>
+<div ba-panel ba-panel-class="with-scroll table-panel mh-500">
+    
     <span class="add-btn">
         <a ui-sref="addvariant" class="btn btn-secondary btn-icon">
             <i class="ion-plus-round"></i>
         </a>
     </span>
-    <table class="table ingredient-table">
+    <div class="text-center" ng-show="!(variants && variants.length)" style="float:left;width: 100%;">
+        No Variant Created Yet
+    </div>
+    <table class="table ingredient-table" ng-show="variants && variants.length">
         <thead>
             <tr>
                 <th>Name</th>
@@ -16,9 +22,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="variant in variants">
-                <td>{{variants.name}}</td>
-                <td>€{{variants.price}}</td>
-                <td>{{variants.notes}}</td>
+                <td ng-click="viewVariant(variant._id)">{{variant.name}}</td>
+                <td ng-click="viewVariant(variant._id)">€{{variant.price}}</td>
+                <td ng-click="viewVariant(variant._id)">{{variant.notes}}</td>
                 <td class="action-btn">
                     <a class="btn btn-secondary btn-icon" ng-click="updateVariant(variant,variant._id)">
                         <i class="icon-pencil"></i>

@@ -1157,9 +1157,19 @@
             }
         }
         a {
+            color: #fff;
             padding: 10px 15px;
             display: inline-block;
             text-transform: uppercase;
+            &:hover,  &:active{
+                color: #fff;
+            }
         }
+    }
+}
+
+.add-unit{
+    .form-control{
+        width: 45%;
     }
 }
