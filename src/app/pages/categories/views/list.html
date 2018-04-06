@@ -14,7 +14,7 @@
                             </span>
                             <div class="category-container">
                                 <div ng-repeat="category in categories" class="category">
-                                    <div class="category-content" ng-click="viewCategory()" ng-style="{'background-color': category.color}">
+                                    <div class="category-content" ng-click="viewCategory(); TabController.selectTab(0)" ng-style="{'background-color': category.color}">
                                         <img ng-if="!category.isIcon" ng-src="{{category.logo.small}}" alt="" />
                                         <img ng-if="category.isIcon" ng-src="{{category.icon}}" alt="" />
                                         <div class="name">

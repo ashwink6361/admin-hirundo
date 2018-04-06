@@ -76,8 +76,7 @@
         };
 
         // $scope.selectTab = function (tab) {
-        //     console.log('in select',tab);
-        //     $state.go('editormenu');
+        //     console.log('in select++++',tab);
         //     CategoryService.setActiveTab(tab);
         // };
     }
@@ -90,13 +89,13 @@
         $scope.categorySearchData = [];
         CategoryService.getCategoryWithItems().then(function (data) {
             $scope.categoryItems = data.data;
-            for(var i=0;i<$scope.categoryItems.length;i++){
+            for (var i = 0; i < $scope.categoryItems.length; i++) {
                 $scope.categorySearchData.push({
                     _id: $scope.categoryItems[i].category._id,
                     name: $scope.categoryItems[i].category.name,
                 });
             }
-            
+
         }).catch(function (error) {
             AlertService.error('subcategorylistmsg', error.message, 4000);
             $state.go('editormenu');
@@ -106,6 +105,7 @@
             $scope.isArticleEdit = !$scope.isArticleEdit;
         };
 
+        
 
         //Delete Article
         $scope.removeArticle = function (id) {
@@ -438,12 +438,26 @@
 
     function TabController($scope, $state, $http, $timeout, CategoryService, AlertService) {
         console.log('in+++++++++++++++');
+        $scope.articleActive = false;
         $scope.activeTab = CategoryService.getActiveTab();
         console.log('$scope.activeTab', $scope.activeTab);
 
+        $scope.articleTab = function (){
+
+            $scope.articleActive = true;
+        }
+
         $scope.selectTab = function (tab) {
             console.log('in select', tab);
-            CategoryService.setActiveTab(tab);
+            if(tab == 1){
+                $scope.articleActive = true;
+                CategoryService.setActiveTab == 0;
+            }
+            else{
+                $scope.articleActive = false;
+                CategoryService.setActiveTab(tab);
+            }
+            
         };
     }
 })();

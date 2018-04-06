@@ -170,8 +170,10 @@ function CategoryService($q, $http) {
         },
         setActiveTab: function(tab) {
             _activeTab = tab;
+            console.log('ServiceActive' , _activeTab )
         },
         getActiveTab: function() {
+            console.log('ServiceActive+++++++' , _activeTab )
             return _activeTab;
         },
         removeItem: function(id) {
