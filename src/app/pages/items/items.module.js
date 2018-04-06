@@ -23,13 +23,13 @@
         .state('additem', {
             url: '/item/add/:id',
             templateUrl: 'app/pages/items/views/add.html',
-            title: 'Add Item',
+            title: 'Editor Menu',
             controller: 'AddItemController',
       })
       .state('viewitem', {
             url: '/item/{id}',
             templateUrl: 'app/pages/items/views/view.html',
-            title: 'View Item',
+            title: 'Editor Menu',
             controller: 'ViewItemController',
       });
     }

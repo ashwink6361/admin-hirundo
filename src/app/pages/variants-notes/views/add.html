@@ -2,17 +2,20 @@
     <div class="row">
         <div class="col-md-12">
             <div id="variantmsg"></div>
+            <div ba-panel ba-panel-class="with-scroll table-panel m-0">
+                <menu-tabs></menu-tabs>
+            </div>
+            <div ba-panel ba-panel-class="with-scroll table-panel m-0">
+            </div>
             <div class="panel">
                 <div class="panel-body">
-                    <menu-tabs></menu-tabs>
                     <form class="form-horizontal" name="form" novalidate>
                         <div class="form-group">
                             <label for="input01" class="col-sm-2 control-label">
                                 <strong>Name</strong>
                             </label>
                             <div class="col-sm-5">
-                                <input type="text" name="VariantName" ng-model="Variant.name" class="form-control" placeholder="Name"
-                                    required />
+                                <input type="text" name="VariantName" ng-model="Variant.name" class="form-control" placeholder="Name" required />
                                 <span class="alert color-red" ng-show="form.VariantName.$dirty &&  form.VariantName.$error.required">Name is required.</span>
                             </div>
                         </div>
@@ -23,8 +26,7 @@
                             <div class="col-sm-5">
                                 <div class="input-group">
                                     <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
-                                    <input type="text" float-number ng-model="Variant.price" class="form-control" name="price" placeholder="Price"
-                                        required />
+                                    <input type="text" float-number ng-model="Variant.price" class="form-control" name="price" placeholder="Price" required />
                                     <span class="alert color-red" ng-show="form.price.$dirty &&  form.price.$error.required">Price is required.</span>
                                 </div>
                             </div>
@@ -34,8 +36,7 @@
                                 <strong>Notes</strong>
                             </label>
                             <div class="col-sm-5">
-                                <input type="text" name="notes" ng-model="Variant.notes" class="form-control" placeholder="notes"
-                                />
+                                <input type="text" name="notes" ng-model="Variant.notes" class="form-control" placeholder="notes" />
                             </div>
                         </div>
                         <div class="form-group">

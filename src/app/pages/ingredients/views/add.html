@@ -2,9 +2,11 @@
     <div class="row">
         <div class="col-md-12">
             <div id="ingredientmsg"></div>
+            <div ba-panel ba-panel-class="with-scroll table-panel m-0">
+                <menu-tabs></menu-tabs>
+            </div>
             <div class="panel">
                 <div class="panel-body">
-                    <menu-tabs></menu-tabs>
                     <form class="form-horizontal" name="form" novalidate>
                         <div class="form-group">
                             <label for="input01" class="col-sm-2 control-label">
@@ -47,9 +49,10 @@
                                     <option value="?" selected="selected">Select Unit</option>
                                 </select>
                                 <button type="button" class="text-btn mt-10" ng-click="addNewUnit()">Add new unit</button>
-                                <div class="input-group" ng-if="showNewInput">
+                                <div class="add-unit d-flex justify-space-between" ng-if="showNewInput">
                                     <input type="text" class="form-control" placeholder="Add new unit" ng-model="Unit.name">
-                                    <span class="input-group-addon input-group-addon-success cursor-pointer" ng-click="addUnit()"><i class="ion-plus-round"></i></span>
+                                    <input type="text" class="form-control" placeholder="Add quantity" ng-model="Unit.name">
+                                    <button type="button" class="btn btn-icon btn-success cursor-pointer" ng-click="addUnit()"><i class="ion-plus-round"></i></button>
                                 </div>
                             </div>
                         </div>
