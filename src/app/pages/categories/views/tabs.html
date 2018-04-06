@@ -43,9 +43,9 @@
             <ingredient-list ng-show="activeTab == 3"></ingredient-list>
         </uib-tab>
     </uib-tabset> -->
-<ul>
-    <li ng-click="selectTab(0)"><a ui-sref="editormenu">Category</a></li>
-    <li ng-click="selectTab(1)"><a ui-sref="viewcategory">Articles</a></li>
-    <li ng-click="selectTab(2)"><a  ui-sref="variant">Variants And Notes</a></li>
-    <li ng-click="selectTab(3)"><a  ui-sref="ingredient">Ingredients</a></li>    
+<ul class="menu-tabs">
+    <li ng-click="selectTab(0)" ng-class="{'active':activeTab == 0}"><a ui-sref="editormenu">Category</a></li>
+    <li ng-click="selectTab(1)" ng-class="{'active':activeTab == 1}"><a ui-sref="viewcategory">Articles</a></li>
+    <li ng-click="selectTab(2)" ng-class="{'active':activeTab == 2}"><a  ui-sref="variant">Variants And Notes</a></li>
+    <li ng-click="selectTab(3)" ng-class="{'active':activeTab == 3}"><a  ui-sref="ingredient">Ingredients</a></li>    
 </ul>
