@@ -69,12 +69,6 @@
         $scope.categoryEdit = function () {
             $scope.showOptions = !$scope.showOptions;
         };
-
-        // $scope.selectTab = function (tab) {
-        //     console.log('in select',tab);
-        //     $state.go('editormenu');
-        //     CategoryService.setActiveTab(tab);
-        // };
     }
 
     function ViewCategoryController($scope, $stateParams, $state, CategoryService, AlertService) {
@@ -91,7 +85,6 @@
                     name: $scope.categoryItems[i].category.name,
                 });
             }
-            
         }).catch(function (error) {
             AlertService.error('subcategorylistmsg', error.message, 4000);
             $state.go('editormenu');
@@ -100,7 +93,6 @@
         $scope.articleEdit = function () {
             $scope.isArticleEdit = !$scope.isArticleEdit;
         };
-
 
         //Delete Article
         $scope.removeArticle = function (id) {
@@ -132,30 +124,6 @@
                 'id': id
             });
         }
-
-
-        $scope.addSubCategory = function (data, subCategoryId) {
-            CategoryService.setCategoryDetails($scope.categoryDetail);
-            CategoryService.setSubCategoryDetails(data);
-            $state.go('addsubcategory', {
-                'id': subCategoryId
-            });
-        }
-
-        $scope.subCategoryOptions = function () {
-            $scope.showSubCategoryOptions = !$scope.showSubCategoryOptions;
-        }
-
-        //Edit Sub Category
-        $scope.updateSubCategory = function (data, subCategoryId) {
-            CategoryService.setCategoryDetails($scope.categoryDetail);
-            CategoryService.setSubCategoryDetails(data);
-            $state.go('addsubcategory', {
-                'id': subCategoryId
-            });
-        }
-
-
 
         //Delete Sub Category
         $scope.removeSubCategory = function (subCategoryId) {
@@ -311,7 +279,6 @@
                     opts.logo = $scope.categoryLogo,
                     opts.logoBounds = JSON.stringify($scope.bounds)
             }
-
             console.log(opts);
             $scope.categoryAddRequest = true;
             CategoryService.addCategory(opts).then(function (data) {
@@ -381,13 +348,9 @@
     }
 
     function TabController($scope, $state, $http, $timeout, CategoryService, AlertService) {
-        console.log('in+++++++++++++++');
         $scope.activeTab = CategoryService.getActiveTab();
-        console.log('$scope.activeTab', $scope.activeTab);
-
         $scope.selectTab = function (tab) {
-            console.log('in select', tab);
-            if(tab == 1){
+            if (tab == 1) {
                 $state.reload();
             }
             CategoryService.setActiveTab(tab);

@@ -9,17 +9,9 @@
                             <menu-tabs></menu-tabs>
                             <div class="d-flex search-item justify-space-between  w-100">
                                 <div class="search-category">
-                                    <!-- <input type="text" ng-model="searchText" class="form-control" placeholder="Search Category" auto-complete="autoCompleteOptions"
-                            /> -->
                                     <angucomplete-alt id="ex1" placeholder="Search Category" pause="100" selected-object="selectedCategory" local-data="categorySearchData"
                                         search-fields="name" input-changed="inputChanged" title-field="name" minlength="1" input-class="form-control form-control-small"
                                     />
-                                    <!-- <input type="text" placeholder="Search Category" class="form-control" ng-model="searchText" /> -->
-                                    <!-- <div class="category">
-                                <ul>
-                                    <li>Search Items</li>
-                                </ul>
-                            </div> -->
                                 </div>
                                 <span>
                                     <a ng-click="articleEdit()" class="btn btn-secondary btn-icon">
