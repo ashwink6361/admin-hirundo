@@ -71,7 +71,7 @@
             var id = $stateParams.id;
             $scope.variantDetail = VariantService.getVariantDetails();
             if(!$scope.variantDetail)
-                $state.go('editormenu');
+                $state.go('variant');
         }
     
         function AddVariantController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, VariantService, AlertService) {
@@ -92,7 +92,7 @@
                     $scope.Variant.category = $scope.Variant.category._id;
                     $scope.subCategories = $scope.sub[$scope.Variant.category];
                     if(!$scope.Variant)
-                    $state.go('editormenu');
+                    $state.go('variant');
                 }
             });
 
@@ -114,7 +114,7 @@
                 $scope.variantAddRequest = true;
                 VariantService.addVariant(opts).then(function (data) {
                     $scope.variantAddRequest = false;
-                    $state.go('editormenu');
+                    $state.go('variant');
                 }).catch(function (error) {
                     $scope.variantAddRequest = false;
                     AlertService.error('variantmsg', error.message, 4000);
@@ -132,7 +132,7 @@
                 $scope.variantAddRequest = true;
                 VariantService.updateVariant($scope.variantId, opts).then(function (data) {
                     $scope.variantAddRequest = false;
-                    $state.go('editormenu');
+                    $state.go('variant');
                 }).catch(function (error) {
                     $scope.variantAddRequest = false;
                     AlertService.error('variantmsg', error.message, 4000);
