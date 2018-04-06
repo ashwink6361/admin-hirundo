@@ -19,13 +19,13 @@
             .state('addvariant', {
                 url: '/variant/add/:id',
                 templateUrl: 'app/pages/variants-notes/views/add.html',
-                title: 'Add Variant',
+                title: 'Editor Menu',
                 controller: 'AddVariantController',
             })
             .state('viewvariant', {
                 url: '/variant/{id}',
                 templateUrl: 'app/pages/variants-notes/views/view.html',
-                title: 'View Variant',
+                title: 'Editor Menu',
                 controller: 'ViewVariantController',
             });
     }

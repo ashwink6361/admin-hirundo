@@ -7,7 +7,6 @@
     angular.module('BlurAdmin.pages.categories')
         .controller('CategoryController', CategoryController)
         .controller('AddCategoryController', AddCategoryController)
-        .controller('AddSubCategoryController', AddSubCategoryController)
         .controller('ViewCategoryController', ViewCategoryController)
         .controller('TabController', TabController)
 
@@ -18,11 +17,7 @@
         $scope.itemsPerPage = 10;
         $scope.currentPage = 1;
         $scope.showOptions = false;
-        // $scope.activeTab = CategoryService.getActiveTab();
-        // console.log('$scope.activeTab',$scope.activeTab);
-        // if ($scope.activeTab == 1) {
-        //     $scope.activeTab = 0;
-        // }
+
         //Fetch Category list
         $scope.getCategoryList = function (name, offset, itemsPerPage) {
             CategoryService.getCategories(name, offset, itemsPerPage).then(function (data) {
@@ -74,11 +69,6 @@
         $scope.categoryEdit = function () {
             $scope.showOptions = !$scope.showOptions;
         };
-
-        // $scope.selectTab = function (tab) {
-        //     console.log('in select++++',tab);
-        //     CategoryService.setActiveTab(tab);
-        // };
     }
 
     function ViewCategoryController($scope, $stateParams, $state, CategoryService, AlertService) {
@@ -95,7 +85,6 @@
                     name: $scope.categoryItems[i].category.name,
                 });
             }
-
         }).catch(function (error) {
             AlertService.error('subcategorylistmsg', error.message, 4000);
             $state.go('editormenu');
@@ -104,8 +93,6 @@
         $scope.articleEdit = function () {
             $scope.isArticleEdit = !$scope.isArticleEdit;
         };
-
-        
 
         //Delete Article
         $scope.removeArticle = function (id) {
@@ -137,30 +124,6 @@
                 'id': id
             });
         }
-
-
-        $scope.addSubCategory = function (data, subCategoryId) {
-            CategoryService.setCategoryDetails($scope.categoryDetail);
-            CategoryService.setSubCategoryDetails(data);
-            $state.go('addsubcategory', {
-                'id': subCategoryId
-            });
-        }
-
-        $scope.subCategoryOptions = function () {
-            $scope.showSubCategoryOptions = !$scope.showSubCategoryOptions;
-        }
-
-        //Edit Sub Category
-        $scope.updateSubCategory = function (data, subCategoryId) {
-            CategoryService.setCategoryDetails($scope.categoryDetail);
-            CategoryService.setSubCategoryDetails(data);
-            $state.go('addsubcategory', {
-                'id': subCategoryId
-            });
-        }
-
-
 
         //Delete Sub Category
         $scope.removeSubCategory = function (subCategoryId) {
@@ -316,7 +279,6 @@
                     opts.logo = $scope.categoryLogo,
                     opts.logoBounds = JSON.stringify($scope.bounds)
             }
-
             console.log(opts);
             $scope.categoryAddRequest = true;
             CategoryService.addCategory(opts).then(function (data) {
@@ -385,79 +347,13 @@
         }
     }
 
-    function AddSubCategoryController($scope, $http, $stateParams, $q, $state, $timeout, fileReader, CategoryService, AlertService) {
-        $scope.categoryData = CategoryService.getCategoryDetails();
-        $scope.categoryId = $scope.categoryData._id;
-        $scope.subCategoryId = $stateParams.id;
-        $scope.Subcategory = {};
-        if ($scope.subCategoryId) {
-            $scope.Subcategory = CategoryService.getSubCategoryDetails();
-            if (!$scope.Subcategory) {
-                $state.go('viewcategory', {
-                    'id': $scope.categoryId
-                });
-            }
-        }
-
-        $scope.subCategoryAddRequest = false;
-        $scope.addSubCategory = function () {
-            var opts = {
-                name: $scope.Subcategory.name,
-                description: $scope.Subcategory.description ? $scope.Subcategory.description : '',
-            };
-            console.log(opts);
-            $scope.subCategoryAddRequest = true;
-            CategoryService.addSubCategory($scope.categoryId, opts).then(function (data) {
-                $scope.subCategoryAddRequest = false;
-                $state.go('viewcategory', {
-                    'id': $scope.categoryId
-                });
-            }).catch(function (error) {
-                $scope.subCategoryAddRequest = false;
-                AlertService.error('subcategorymsg', error.message, 4000);
-            });
-        };
-
-        $scope.editSubCategory = function () {
-            var opts = {
-                name: $scope.Subcategory.name,
-                description: $scope.Subcategory.description ? $scope.Subcategory.description : '',
-            };
-            $scope.subCategoryAddRequest = true;
-            CategoryService.updateSubCategory($scope.categoryId, $scope.subCategoryId, opts).then(function (data) {
-                $scope.subCategoryAddRequest = false;
-                $state.go('viewcategory', {
-                    'id': $scope.categoryId
-                });
-            }).catch(function (error) {
-                $scope.subCategoryAddRequest = false;
-                AlertService.error('subcategorymsg', error.message, 4000);
-            });
-        };
-    }
-
     function TabController($scope, $state, $http, $timeout, CategoryService, AlertService) {
-        console.log('in+++++++++++++++');
-        $scope.articleActive = false;
         $scope.activeTab = CategoryService.getActiveTab();
-        console.log('$scope.activeTab', $scope.activeTab);
-
-        $scope.articleTab = function (){
-
-            $scope.articleActive = true;
-        }
-
         $scope.selectTab = function (tab) {
-            console.log('in select', tab);
-            if(tab == 1){
-                $scope.articleActive = true;
-                CategoryService.setActiveTab == 0;
+            if (tab == 1) {
+                $state.reload();
             }
-            else{
-                $scope.articleActive = false;
-                CategoryService.setActiveTab(tab);
-            }
-            
+            CategoryService.setActiveTab(tab);
         };
     }
 })();

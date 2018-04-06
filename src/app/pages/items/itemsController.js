@@ -123,7 +123,6 @@
             });
 
             $scope.selectIngredient = function (ingredient) {
-                console.log("Select", ingredient);
                 if ($scope.selectedIngredients.indexOf(ingredient.selected._id) === -1) {
                     $scope.selectedIngredients.push(ingredient.selected._id);
                     $scope.itms.push({
@@ -154,7 +153,6 @@
             };
 
             $scope.priceUpdate = function (){
-                console.log('price',$scope.Item.price);
                 $scope.profit = $scope.Item.price - $scope.Item.foodCost;
             }
             $scope.allergenIcon = function () {
@@ -234,7 +232,6 @@
                     AlertService.error('itemmsg', "Please select category", 4000);
                     return false;
                 }
-                // var fc = 0;
                 var fitems = [];
                 if($scope.itms.length) {
                     for(var i=0;i<$scope.itms.length;i++){
@@ -251,11 +248,9 @@
                                 priceOfQuantity: $scope.itms[i].priceOfQuantity,
                                 unit: $scope.itms[i].unit
                             });
-                            // fc += $scope.itms[i].price;
                         }
                     }
                 }
-                // $scope.Item.foodCost = fc;
                 var opts = {
                     name: $scope.Item.name,
                     description: $scope.Item.description ? $scope.Item.description : '',
@@ -286,7 +281,6 @@
                     AlertService.error('itemmsg', "Please select category", 4000);
                     return false;
                 }
-                // var fc = 0;
                 var fitems = [];
                 if($scope.itms.length) {
                     for(var i=0;i<$scope.itms.length;i++){
@@ -304,10 +298,7 @@
                                 unit: $scope.itms[i].unit
                             });
                         }
-                       
-                        // fc += $scope.itms[i].price;
                     }
-                    // $scope.Item.foodCost = fc;
                 }
                 var opts = {
                     name: $scope.Item.name,

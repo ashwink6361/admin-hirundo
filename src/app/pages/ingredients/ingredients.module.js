@@ -16,13 +16,13 @@
       .state('addingredient', {
         url: '/ingredient/add/:id',
         templateUrl: 'app/pages/ingredients/views/add.html',
-        title: 'Add Ingredient',
+        title: 'Editor Menu',
         controller: 'AddIngredientController',
       })
       .state('viewingredient', {
         url: '/ingredient/{id}',
         templateUrl: 'app/pages/ingredients/views/view.html',
-        title: 'View Ingredient',
+        title: 'Editor Menu',
         controller: 'ViewIngredientController',
       });
   }
