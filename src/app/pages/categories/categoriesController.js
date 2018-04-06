@@ -9,7 +9,7 @@
         .controller('AddCategoryController', AddCategoryController)
         .controller('AddSubCategoryController', AddSubCategoryController)
         .controller('ViewCategoryController', ViewCategoryController)
-
+        .controller('TabController', TabController)
 
     /** @ngInject */
     function CategoryController($scope, $state, $http, $timeout, CategoryService, AlertService) {
@@ -18,10 +18,11 @@
         $scope.itemsPerPage = 10;
         $scope.currentPage = 1;
         $scope.showOptions = false;
-        $scope.activeTab = CategoryService.getActiveTab();
-        if ($scope.activeTab == 1) {
-            $scope.activeTab = 0;
-        }
+        // $scope.activeTab = CategoryService.getActiveTab();
+        // console.log('$scope.activeTab',$scope.activeTab);
+        // if ($scope.activeTab == 1) {
+        //     $scope.activeTab = 0;
+        // }
         //Fetch Category list
         $scope.getCategoryList = function (name, offset, itemsPerPage) {
             CategoryService.getCategories(name, offset, itemsPerPage).then(function (data) {
@@ -74,10 +75,11 @@
             $scope.showOptions = !$scope.showOptions;
         };
 
-        $scope.selectTab = function (tab) {
-            CategoryService.setActiveTab(tab);
-            $scope.activeTab = tab;
-        };
+        // $scope.selectTab = function (tab) {
+        //     console.log('in select',tab);
+        //     $state.go('editormenu');
+        //     CategoryService.setActiveTab(tab);
+        // };
     }
 
     function ViewCategoryController($scope, $stateParams, $state, CategoryService, AlertService) {
@@ -431,6 +433,17 @@
                 $scope.subCategoryAddRequest = false;
                 AlertService.error('subcategorymsg', error.message, 4000);
             });
+        };
+    }
+
+    function TabController($scope, $state, $http, $timeout, CategoryService, AlertService) {
+        console.log('in+++++++++++++++');
+        $scope.activeTab = CategoryService.getActiveTab();
+        console.log('$scope.activeTab', $scope.activeTab);
+
+        $scope.selectTab = function (tab) {
+            console.log('in select', tab);
+            CategoryService.setActiveTab(tab);
         };
     }
 })();

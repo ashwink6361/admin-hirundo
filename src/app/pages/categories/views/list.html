@@ -6,6 +6,41 @@
                 <div ba-panel ba-panel-class="with-scroll table-panel mh-500">
                     <div>
                         <menu-tabs></menu-tabs>
+                        <div ba-panel ba-panel-class="table-panel-container mh-500" ng-show="activeTab == 0">
+                            <span class="add-btn">
+                                <a ng-click="categoryEdit()" class="btn btn-secondary btn-icon">
+                                    <i class="ion-edit"></i>
+                                </a>
+                            </span>
+                            <div class="category-container">
+                                <div ng-repeat="category in categories" class="category">
+                                    <div class="category-content" ng-click="viewCategory()" ng-style="{'background-color': category.color}">
+                                        <img ng-if="!category.isIcon" ng-src="{{category.logo.small}}" alt="" />
+                                        <img ng-if="category.isIcon" ng-src="{{category.icon}}" alt="" />
+                                        <div class="name">
+                                            {{category.name}} 
+                                         </div>
+                                        <div class="edit-category" ng-show="showOptions" ng-click="updateCategory(category._id)">
+                                            <i class="ion-edit"></i>
+                                        </div>
+                                        <button type="button" class="remove-category" ng-show="showOptions" ng-click="removeCategory(category._id, $event)">
+                                            <i class="ion-trash-b"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <a ui-sref="addcategory">
+                                    <div class="add-category">
+                                        <i class="icon-plus"></i>
+                                        <div class="name">
+                                            {{'CategoryKey.Add' | translate}}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- <variants-list></variants-list>               -->
+                        <!-- <ingredient-list></ingredient-list>               -->
+
                     </div>
                 </div>
             </div>

@@ -10,6 +10,12 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
+        .state('variant', {
+            url: '/variant',
+            templateUrl: 'app/pages/variants-notes/views/list.html',
+            title: 'Editor Menu',
+            controller: 'VariantController',
+        })
             .state('addvariant', {
                 url: '/variant/add/:id',
                 templateUrl: 'app/pages/variants-notes/views/add.html',

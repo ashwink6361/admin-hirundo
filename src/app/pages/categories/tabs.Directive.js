@@ -9,7 +9,7 @@
         function menuTabs() {
             return {
                 restrict: 'EA',
-                controller: 'CategoryController',
+                controller: 'TabController',
                 templateUrl: 'app/pages/categories/views/tabs.html'
             };
         }

@@ -1,4 +1,4 @@
-<uib-tabset active="activeTab">
+<!-- <uib-tabset active="activeTab">
         <uib-tab heading="{{'Category' | translate}}" index="0" ng-click="selectTab(0)">
                 <div ba-panel ba-panel-class="table-panel-container mh-500" ng-show="activeTab == 0">
                         <span class="add-btn">
@@ -8,12 +8,12 @@
                         </span>
                         <div class="category-container">
                             <div ng-repeat="category in categories" class="category">
-                                <div class="category-content" ng-click="viewCategory(category._id)" ng-style="{'background-color': category.color}">
+                                <div class="category-content" ng-click="viewCategory()" ng-style="{'background-color': category.color}">
                                     <img ng-if="!category.isIcon" ng-src="{{category.logo.small}}" alt="" />
                                     <img ng-if="category.isIcon" ng-src="{{category.icon}}" alt="" />
                                     <div class="name">
-                                        {{category.name}}
-                                    </div>
+                                        {{category.name}} -->
+                                    <!-- </div>
                                     <div class="edit-category" ng-show="showOptions" ng-click="updateCategory(category._id)">
                                         <i class="ion-edit"></i>
                                     </div>
@@ -33,13 +33,19 @@
                         </div>
                     </div>
         </uib-tab>
-        <uib-tab heading="{{'Articles' | translate}}" index="1" ng-click="selectTab(1);viewCategory()">
+        <uib-tab heading="{{'Articles' | translate}}" index="1" ng-click="selectTab(1);viewCategory()"> -->
             <!-- <items-list></items-list> -->
-        </uib-tab>
+        <!-- </uib-tab>
         <uib-tab heading="{{'variantsAndNotes' | translate}}" index="2" ng-click="selectTab(2)">
             <variants-list></variants-list>              
         </uib-tab>
         <uib-tab heading="{{'Ingredients' | translate}}" index="3" ng-click="selectTab(3)">
             <ingredient-list ng-show="activeTab == 3"></ingredient-list>
         </uib-tab>
-    </uib-tabset>
+    </uib-tabset> -->
+<ul>
+    <li ng-click="selectTab(0)"><a ui-sref="editormenu">Category</a></li>
+    <li ng-click="selectTab(1)"><a ui-sref="viewcategory">Articles</a></li>
+    <li ng-click="selectTab(2)"><a  ui-sref="variant">Variants And Notes</a></li>
+    <li ng-click="selectTab(3)"><a  ui-sref="ingredient">Ingredients</a></li>    
+</ul>
