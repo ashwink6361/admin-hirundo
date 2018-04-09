@@ -115,7 +115,8 @@
         };
 
         // Add Article
-        $scope.addArticle = function () {
+        $scope.addArticle = function (category) {
+            CategoryService.setItemCategoryDetails(category);
             $state.go('additem');
         }
 

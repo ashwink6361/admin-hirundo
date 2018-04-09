@@ -7,6 +7,7 @@
 angular.module('BlurAdmin.pages.categories').service('CategoryService', CategoryService);
 function CategoryService($q, $http) {
     var _categoryDetails = {};
+    var _itemCategoryDetails = {};
     var _subCategoryDetails = {};
     var _activeTab = 0;
     return {
@@ -168,6 +169,12 @@ function CategoryService($q, $http) {
         setSubCategoryDetails: function(data) {
             _subCategoryDetails = data;
         },
+        getItemCategoryDetails: function() {
+            return _itemCategoryDetails;
+        },
+        setItemCategoryDetails: function(data) {
+            _itemCategoryDetails = data;
+        },       
         setActiveTab: function(tab) {
             _activeTab = tab;
             console.log('ServiceActive' , _activeTab )

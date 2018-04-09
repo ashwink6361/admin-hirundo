@@ -80,7 +80,7 @@
             });
         }
 
-        function AddItemController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, ItemService, AlertService) {
+        function AddItemController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, ItemService, AlertService,CategoryService) {
             $scope.itemId = $stateParams.id;
             $scope.itms = [];
             $scope.Item = {};
@@ -89,6 +89,9 @@
             $scope.showAllergenIcon = false;
             $scope.Item = { allergens: [], foodCost: 0 };
             $scope.subCategories = [];
+            var categoryData = CategoryService.getItemCategoryDetails();
+            $scope.Item.category = categoryData._id;
+            $scope.subCategories = categoryData.subCategory;
             $q.all([
                 ItemService.getIngredients(),
                 ItemService.getCategories(),
@@ -143,7 +146,7 @@
                 if ($scope.itms.length) {
                     for (var i = 0; i < $scope.itms.length; i++) {
                         if($scope.itms[i].price){
-                            fc += parseInt($scope.itms[i].price);
+                            fc += Number($scope.itms[i].price);
                         }
                       
                     }
