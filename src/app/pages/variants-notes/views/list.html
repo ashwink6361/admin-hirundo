@@ -20,7 +20,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Notes</th>
                         <th class="action-btn">Action</th>
                     </tr>
                 </thead>
@@ -28,7 +27,6 @@
                     <tr ng-repeat="variant in variants">
                         <td ng-click="viewVariant(variant._id)">{{variant.name}}</td>
                         <td ng-click="viewVariant(variant._id)">€{{variant.price}}</td>
-                        <td ng-click="viewVariant(variant._id)">{{variant.notes}}</td>
                         <td class="action-btn">
                             <a class="btn btn-secondary btn-icon" ng-click="updateVariant(variant._id)">
                                 <i class="ion-edit"></i>

@@ -145,7 +145,6 @@
         $scope.addVariant = function () {
             var opts = {
                 name: $scope.Variant.name,
-                notes: $scope.Variant.notes ? $scope.Variant.notes : '',
                 price: $scope.Variant.price,
                 category: $scope.Variant.category ? $scope.Variant.category : '',
                 subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : ''
@@ -164,7 +163,6 @@
         $scope.editVariant = function () {
             var opts = {
                 name: $scope.Variant.name,
-                notes: $scope.Variant.notes ? $scope.Variant.notes : '',
                 price: $scope.Variant.price,
                 category: $scope.Variant.category ? $scope.Variant.category : '',
                 subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : ''
