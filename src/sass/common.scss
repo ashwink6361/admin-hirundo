@@ -14,6 +14,11 @@
     flex-direction: row !important;
 }
 
+.ph-0{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
 .pt-r-50 {
     right: 50px !important;
 }
@@ -1144,7 +1149,7 @@
     padding: 0px 0;
     margin: 0;
     margin-bottom: 10px;
-    background-color: #fdab01;
+    background-color: #dedede;
     border-radius: 5px 5px 0px 0;
     overflow: hidden;
     li {
@@ -1152,17 +1157,20 @@
         &.active {
             a {
                 color: #fff;
-                background: green;
+                background: $secondry ;
                 font-weight: bold;
+                &:hover{
+                    color: #fff;
+                }
             }
         }
         a {
-            color: #fff;
+            color: #333;
             padding: 10px 15px;
             display: inline-block;
             text-transform: uppercase;
             &:hover,  &:active{
-                color: #fff;
+                color: #333;
             }
         }
     }
@@ -1171,5 +1179,11 @@
 .add-unit{
     .form-control{
         width: 45%;
+    }
+}
+
+.varient-container{
+    .add-btn{
+        top: -20px !important;
     }
 }

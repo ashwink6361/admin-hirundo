@@ -10,12 +10,12 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-        .state('variant', {
-            url: '/variant',
-            templateUrl: 'app/pages/variants-notes/views/list.html',
-            title: 'Editor Menu',
-            controller: 'VariantController',
-        })
+            .state('variant', {
+                url: '/variant',
+                templateUrl: 'app/pages/variants-notes/views/list.html',
+                title: 'Editor Menu',
+                controller: 'VariantController',
+            })
             .state('addvariant', {
                 url: '/variant/add/:id',
                 templateUrl: 'app/pages/variants-notes/views/add.html',
@@ -27,6 +27,18 @@
                 templateUrl: 'app/pages/variants-notes/views/view.html',
                 title: 'Editor Menu',
                 controller: 'ViewVariantController',
+            })
+            .state('addnote', {
+                url: '/note/add/:id',
+                templateUrl: 'app/pages/variants-notes/views/addnote.html',
+                title: 'Editor Menu',
+                controller: 'AddNoteController',
+            })
+            .state('viewnote', {
+                url: '/note/{id}',
+                templateUrl: 'app/pages/variants-notes/views/viewnote.html',
+                title: 'Editor Menu',
+                controller: 'ViewNoteController',
             });
     }
 })();
