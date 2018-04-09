@@ -79,6 +79,7 @@
         $scope.categorySearchData = [];
         CategoryService.getCategoryWithItems().then(function (data) {
             $scope.categoryItems = data.data;
+            console.log('$scope.categoryItems',$scope.categoryItems);
             for (var i = 0; i < $scope.categoryItems.length; i++) {
                 $scope.categorySearchData.push({
                     _id: $scope.categoryItems[i].category._id,
