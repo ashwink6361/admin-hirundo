@@ -8,26 +8,10 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="name" class="col-sm-3 control-label">
-                        <strong>Name</strong>
-                    </label>
-                    <div class="col-sm-8">
-                        <label class="col-sm-8">{{variantDetail.name}}</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="col-sm-3 control-label">
                         <strong>Notes</strong>
                     </label>
                     <div class="col-sm-8">
-                        <label class="col-sm-8">{{variantDetail.notes}}</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="col-sm-3 control-label">
-                        <strong>Price</strong>
-                    </label>
-                    <div class="col-sm-8">
-                        <label class="col-sm-8">€{{variantDetail.price}}</label>
+                        <label class="col-sm-8">{{noteDetail.notes}}</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -35,7 +19,7 @@
                         <strong>Category</strong>
                     </label>
                     <div class="col-sm-8">
-                        <label class="col-sm-8">{{variantDetail.category.name}}</label>
+                        <label class="col-sm-8">{{noteDetail.category.name}}</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,7 +27,7 @@
                         <strong>Sub Category</strong>
                     </label>
                     <div class="col-sm-8">
-                        <label class="col-sm-8">{{variantDetail.subCategory}}</label>
+                        <label class="col-sm-8">{{noteDetail.subCategory}}</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -51,7 +35,7 @@
                         <strong>Created At</strong>
                     </label>
                     <div class="col-sm-8">
-                        <label class="col-sm-8">{{variantDetail.created_at | date : 'dd/MM/yyyy'}}</label>
+                        <label class="col-sm-8">{{noteDetail.created_at | date : 'dd/MM/yyyy'}}</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -59,7 +43,7 @@
                         <strong>Updated At</strong>
                     </label>
                     <div class="col-sm-8">
-                        <label class="col-sm-8">{{variantDetail.updated_at | date : 'dd/MM/yyyy'}}</label>
+                        <label class="col-sm-8">{{noteDetail.updated_at | date : 'dd/MM/yyyy'}}</label>
                     </div>
                 </div>
             </div>

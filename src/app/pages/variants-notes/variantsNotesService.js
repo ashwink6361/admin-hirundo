@@ -35,6 +35,34 @@ function VariantService($q, $http) {
             });
             return def.promise;
         },
+
+        getNotes: function(name, offset, limit) {
+            var def = $q.defer();
+            var url = '/api/note';
+            if(name) {
+                url += '?name='+name;
+            }
+            if(offset) {
+                if(url.indexOf("?") > -1) {
+                    url += '&offset='+offset;
+                } else {
+                    url += '?offset='+offset;
+                }
+            }
+            if(limit) {
+                if(url.indexOf("?") > -1) {
+                    url += '&limit='+limit;
+                } else {
+                    url += '?limit='+limit;
+                }
+            }
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
         getCategories: function() {
             var def = $q.defer();
             var url = '/api/category';            
@@ -56,6 +84,19 @@ function VariantService($q, $http) {
             });
             return def.promise;
         },
+
+        addNote: function(opts) {
+            var def = $q.defer();
+            var url = '/api/note';
+            console.log(opts);
+            doPost($q, $http, url, opts).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+
         updateVariant: function(id, opts) {
             var def = $q.defer();
             var url = '/api/variant/'+id;
@@ -66,9 +107,32 @@ function VariantService($q, $http) {
             });
             return def.promise;
         },
+
+        updateNote: function(id, opts) {
+            var def = $q.defer();
+            var url = '/api/note/'+id;
+            doPut($q, $http, url, opts).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+        
         removeVariant: function(id) {
             var def = $q.defer();
             var url = '/api/variant/'+id;
+            doDelete($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+
+        removeNote: function(id) {
+            var def = $q.defer();
+            var url = '/api/note/'+id;
             doDelete($q, $http, url).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
@@ -82,9 +146,25 @@ function VariantService($q, $http) {
         setVariantDetails: function(data) {
             _variantDetails = data;
         },
+        getNoteDetails: function() {
+            return _noteDetails;
+        },
+        setNoteDetails: function(data) {
+            _noteDetails = data;
+        },
         getVariantDetail: function(id) {
             var def = $q.defer();
             var url = '/api/variant/'+id;
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+        getNoteDetail: function(id) {
+            var def = $q.defer();
+            var url = '/api/note/'+id;
             doGet($q, $http, url).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
