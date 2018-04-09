@@ -79,11 +79,16 @@
             $scope.Ingredient = {};
             $scope.Unit = {
                 name: '',
-                quantity: ''
+                quantity: 1
             };
+            $scope.showConfezioneQty = false;
             $scope.showNewInput = false;
             if ($scope.ingredientId) {
                 $scope.Ingredient = IngredientService.getIngredientDetails();
+                $scope.Ingredient.unitData = {
+                    name: $scope.Ingredient.unit,
+                    quantity: $scope.Ingredient.quantity
+                }
                 if(!$scope.Ingredient)
                     $state.go('ingredient');
             }
@@ -93,6 +98,16 @@
             ]).then(function(data) {
                 $scope.units = data[0].data;
             });
+
+            $scope.unitChanged = function (data) {
+                console.log('data',data);
+                if(data.name.toLowerCase() == 'confezione'){
+                    $scope.showConfezioneQty = true;
+                }
+                else{
+                    $scope.showConfezioneQty = false;
+                }
+            }
     
             $scope.addUnit = function () {
                 console.log('unit', $scope.Unit.name);
@@ -100,20 +115,18 @@
                     AlertService.error('ingredientmsg', "Please enter unit", 4000);
                     return false;
                 }
-                if ($scope.Unit.quantity == '') {
-                    AlertService.error('ingredientmsg', "Please enter quantity", 4000);
-                    return false;
-                }
                 var opts = {
                     name : $scope.Unit.name,
-                    quantity : $scope.Unit.quantity
+                    quantity : $scope.Unit.quantity ? $scope.Unit.quantity : 1
                 }
                 IngredientService.addUnit(opts).then(function (data) {
                     AlertService.success('ingredientmsg', data.message, 4000);                    
                     IngredientService.getUnits().then(function(data){
-                        $scope.Ingredient.unit = '';
+                        $scope.showNewInput = false; 
+                        $scope.showConfezioneQty = false;                       
+                        $scope.Ingredient.unitData = {};
                         $scope.Unit.name = '';
-                        $scope.Unit.quantity = '';                        
+                        $scope.Unit.quantity = 1;                        
                         $scope.units = data.data;
                     })
                 }).catch(function (error) {
@@ -123,7 +136,8 @@
 
             $scope.ingredientAddRequest = false;
             $scope.addIngredient = function () {
-                if (typeof($scope.Ingredient.unit) == 'undefined') {
+                console.log('Ingredient.unitData',$scope.Ingredient.unitData);
+                if (typeof($scope.Ingredient.unitData) == 'undefined') {
                     AlertService.error('ingredientmsg', "Please select unit", 4000);
                     return false;
                 }
@@ -131,8 +145,9 @@
                     name: $scope.Ingredient.name,
                     description: $scope.Ingredient.description? $scope.Ingredient.description : '',
                     price: $scope.Ingredient.price,                
-                    unit: $scope.Ingredient.unit,
-                    provider: $scope.Ingredient.provider? $scope.Ingredient.provider : '',    
+                    unit: $scope.Ingredient.unitData.name,
+                    provider: $scope.Ingredient.provider? $scope.Ingredient.provider : '',
+                    quantity: $scope.Ingredient.unitData.quantity     
                 };
                 console.log('opts',opts);
                 $scope.ingredientAddRequest = true;
@@ -146,12 +161,14 @@
             };
     
             $scope.editIngredient = function () {
+                console.log('Ingredient.unitData',$scope.Ingredient.unitData);                
                 var opts = {
                     name: $scope.Ingredient.name,
                     description: $scope.Ingredient.description? $scope.Ingredient.description : '',
                     price: $scope.Ingredient.price,                
-                    unit: $scope.Ingredient.unit,  
-                    provider: $scope.Ingredient.provider? $scope.Ingredient.provider : '', 
+                    unit: $scope.Ingredient.unitData.name,  
+                    provider: $scope.Ingredient.provider? $scope.Ingredient.provider : '',
+                    quantity: $scope.Ingredient.unitData.quantity                     
                 };
                 $scope.ingredientAddRequest = true;
                 IngredientService.updateIngredient($scope.ingredientId, opts).then(function (data) {
@@ -166,7 +183,9 @@
             $scope.addNewUnit = function () {
                 $scope.showNewInput = !$scope.showNewInput;
                 $scope.Unit.name = '';
-                $scope.Unit.quantity = '';
+                $scope.Unit.quantity = 1;
+                $scope.showConfezioneQty = false;
+                
             }
         }
     })();
