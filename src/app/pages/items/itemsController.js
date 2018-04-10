@@ -116,6 +116,8 @@
                         }
                         for (var i = 0; i < $scope.Item.ingredients.length; i++) {
                             $scope.selectedIngredients.push($scope.Item.ingredients[i].id);
+                            console.log('$scope.Item.ingredients[i]',$scope.Item.ingredients[i]);
+                            $scope.Item.ingredients[i].priceOfQuantity = Number(Math.round(($scope.Item.ingredients[i].priceOfQuantity / $scope.Item.ingredients[i].quantity) + 'e2') + 'e-2')
                             $scope.itms.push($scope.Item.ingredients[i]);
                         }
                         $scope.profit = Number(Math.round((Number($scope.Item.price) - $scope.Item.foodCost) + 'e2') + 'e-2');
@@ -134,7 +136,7 @@
                         ingredientQuantity: '',
                         quantity: ingredient.selected.quantity,
                         price: '',
-                        priceOfQuantity: ingredient.selected.price,
+                        priceOfQuantity: Number(Math.round((ingredient.selected.price / ingredient.selected.quantity) + 'e2') + 'e-2'),
                         unit: ingredient.selected.unit
                     });
                 }
@@ -255,7 +257,7 @@
                                 name: $scope.itms[i].name,
                                 ingredientQuantity: $scope.itms[i].ingredientQuantity,
                                 price: $scope.itms[i].price,
-                                priceOfQuantity: $scope.itms[i].priceOfQuantity,
+                                priceOfQuantity: $scope.itms[i].priceOfQuantity * $scope.itms[i].quantity,
                                 unit: $scope.itms[i].unit,
                                 quantity: $scope.itms[i].quantity
                             });
@@ -305,7 +307,7 @@
                                 name: $scope.itms[i].name,
                                 ingredientQuantity: $scope.itms[i].ingredientQuantity,
                                 price: $scope.itms[i].price,
-                                priceOfQuantity: $scope.itms[i].priceOfQuantity,
+                                priceOfQuantity: $scope.itms[i].priceOfQuantity * $scope.itms[i].quantity,
                                 unit: $scope.itms[i].unit,
                                 quantity: $scope.itms[i].quantity                                
                             });
