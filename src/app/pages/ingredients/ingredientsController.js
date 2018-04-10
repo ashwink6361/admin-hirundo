@@ -146,7 +146,7 @@
                 price: $scope.Ingredient.price,
                 unit: $scope.Ingredient.unitData.name,
                 provider: $scope.Ingredient.provider ? $scope.Ingredient.provider : '',
-                quantity: $scope.Ingredient.unitData.quantity
+                quantity: Number($scope.Ingredient.unitData.quantity)
             };
             console.log('opts', opts);
             $scope.ingredientAddRequest = true;
@@ -166,7 +166,7 @@
                 price: $scope.Ingredient.price,
                 unit: $scope.Ingredient.unitData.name,
                 provider: $scope.Ingredient.provider ? $scope.Ingredient.provider : '',
-                quantity: $scope.Ingredient.unitData.quantity
+                quantity: Number($scope.Ingredient.unitData.quantity)
             };
             $scope.ingredientAddRequest = true;
             IngredientService.updateIngredient($scope.ingredientId, opts).then(function (data) {
