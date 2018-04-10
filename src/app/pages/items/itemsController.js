@@ -131,7 +131,8 @@
                     $scope.itms.push({
                         id: ingredient.selected._id,
                         name: ingredient.selected.name,
-                        quantity: '',
+                        ingredientQuantity: '',
+                        quantity: ingredient.selected.quantity,
                         price: '',
                         priceOfQuantity: ingredient.selected.price,
                         unit: ingredient.selected.unit
@@ -140,7 +141,7 @@
             };
 
             $scope.getQuantity = function (item) {
-                var price = (item.quantity * item.priceOfQuantity);
+                var price = (item.ingredientQuantity * item.priceOfQuantity);
                 item.price = Number(Math.round(price+'e2')+'e-2');
                 var fc = 0;
                 if ($scope.itms.length) {
@@ -238,7 +239,7 @@
                 var fitems = [];
                 if($scope.itms.length) {
                     for(var i=0;i<$scope.itms.length;i++){
-                        if($scope.itms[i].quantity == '' || typeof($scope.itms[i].quantity) === "undefined"){
+                        if($scope.itms[i].ingredientQuantity == '' || typeof($scope.itms[i].ingredientQuantity) === "undefined"){
                             AlertService.error('qtymsg', "Please enter ingredient quantity", 4000);
                             return false;
                         }
@@ -246,10 +247,11 @@
                             fitems.push({
                                 id: $scope.itms[i].id,
                                 name: $scope.itms[i].name,
-                                quantity: $scope.itms[i].quantity,
+                                ingredientQuantity: $scope.itms[i].ingredientQuantity,
                                 price: $scope.itms[i].price,
                                 priceOfQuantity: $scope.itms[i].priceOfQuantity,
-                                unit: $scope.itms[i].unit
+                                unit: $scope.itms[i].unit,
+                                quantity: $scope.itms[i].quantity
                             });
                         }
                     }
@@ -287,7 +289,7 @@
                 var fitems = [];
                 if($scope.itms.length) {
                     for(var i=0;i<$scope.itms.length;i++){
-                        if($scope.itms[i].quantity == '' || typeof($scope.itms[i].quantity) === "undefined"){
+                        if($scope.itms[i].ingredientQuantity == '' || typeof($scope.itms[i].ingredientQuantity) === "undefined"){
                             AlertService.error('qtymsg', "Please enter ingredient quantity", 4000);
                             return false;
                         }
@@ -295,10 +297,11 @@
                             fitems.push({
                                 id: $scope.itms[i].id,
                                 name: $scope.itms[i].name,
-                                quantity: $scope.itms[i].quantity,
+                                ingredientQuantity: $scope.itms[i].ingredientQuantity,
                                 price: $scope.itms[i].price,
                                 priceOfQuantity: $scope.itms[i].priceOfQuantity,
-                                unit: $scope.itms[i].unit
+                                unit: $scope.itms[i].unit,
+                                quantity: $scope.itms[i].quantity                                
                             });
                         }
                     }
