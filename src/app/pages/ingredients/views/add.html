@@ -55,7 +55,7 @@
                                 <strong ng-show="showConfezioneQty">Enter Quantity</strong>
                             </label>
                             <div class="col-sm-5">
-                                <input type="text" class="mt-10 form-control" ng-show="showConfezioneQty" ng-model="Ingredient.unitData.quantity" />
+                                <input type="text" class="form-control" ng-show="showConfezioneQty" ng-model="Ingredient.unitData.quantity" />
                                 <button type="button" class="text-btn mt-10" ng-click="addNewUnit()">Add new unit</button>
                                 <div class="add-unit d-flex justify-space-between" ng-if="showNewInput">
                                     <input type="text" class="form-control" placeholder="Add new unit" ng-model="Unit.name">
