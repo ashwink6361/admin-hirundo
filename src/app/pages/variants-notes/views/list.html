@@ -49,25 +49,21 @@
                     <i class="ion-plus-round"></i>
                 </a>
             </span>
-            <div class="text-center" ng-show="!(variants && variants.length)" style="float:left;width: 100%;">
+            <div class="text-center" ng-show="!(notes && notes.length)" style="float:left;width: 100%;">
                 No Variant Created Yet
             </div>
-            <table class="table ingredient-table" ng-show="variants && variants.length">
+            <table class="table ingredient-table" ng-show="notes && notes.length">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Price</th>
                         <th>Notes</th>
                         <th class="action-btn">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="variant in variants">
-                        <td ng-click="viewVariant(variant._id)">{{variant.name}}</td>
-                        <td ng-click="viewVariant(variant._id)">€{{variant.price}}</td>
-                        <td ng-click="viewVariant(variant._id)">{{variant.notes}}</td>
+                    <tr ng-repeat="note in notes">
+                        <td ng-click="viewNote(note._id)">{{note.notes}}</td>
                         <td class="action-btn">
-                            <a class="btn btn-secondary btn-icon" ng-click="updateNote(variant._id)">
+                            <a class="btn btn-secondary btn-icon" ng-click="updateNote(note._id)">
                                 <i class="ion-edit"></i>
                             </a>
                             <a class="btn bg-red btn-icon" ng-click="removeNote(note._id)">
