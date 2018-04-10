@@ -11,31 +11,16 @@
 
     /** @ngInject */
     function WaiterController($scope, $state, $http, $timeout, WaiterService, AlertService) {
-        $scope.name = '';
-        $scope.offset = 0;
-        $scope.itemsPerPage = 10;
-        $scope.currentPage = 1;
         //Fetch Waiter list
-        $scope.getWaiterList = function (name, offset, itemsPerPage) {
-            WaiterService.getWaiters(name, offset, itemsPerPage).then(function (data) {
+        $scope.getWaiterList = function () {
+            WaiterService.getWaiters().then(function (data) {
                 $scope.waiters = data.data;
-                $scope.totalCount = data.totalCount;
-                $scope.totalPageCount = Math.ceil(data.totalCount / itemsPerPage);
             }).catch(function (error) {
                 $scope.waiters = [];
             });
         };
 
-        $scope.goToPage = function (pageNumber) {
-            $scope.currentPage = pageNumber;
-            $scope.getWaiterList($scope.name, (pageNumber - 1) * $scope.itemsPerPage, $scope.itemsPerPage);
-        };
-
-        $scope.searchCategories = function (name) {
-            $scope.getWaiterList(name, $scope.offset, $scope.itemsPerPage);
-        };
-
-        $scope.getWaiterList($scope.name, $scope.offset, $scope.itemsPerPage);
+        $scope.getWaiterList();
 
         //Delete Waiter
         $scope.removeWaiter = function (id) {

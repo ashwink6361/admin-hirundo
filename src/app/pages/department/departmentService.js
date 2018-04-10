@@ -8,26 +8,9 @@ angular.module('BlurAdmin.pages.department').service('DepartmentService', Depart
 function DepartmentService($q, $http) {
     var _departmentDetails = {};
     return {
-        getDepartments: function(name, offset, limit) {
+        getDepartments: function() {
             var def = $q.defer();
             var url = '/api/department';
-            if(name) {
-                url += '?name='+name;
-            }
-            if(offset) {
-                if(url.indexOf("?") > -1) {
-                    url += '&offset='+offset;
-                } else {
-                    url += '?offset='+offset;
-                }
-            }
-            if(limit) {
-                if(url.indexOf("?") > -1) {
-                    url += '&limit='+limit;
-                } else {
-                    url += '?limit='+limit;
-                }
-            }
             doGet($q, $http, url).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {

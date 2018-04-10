@@ -175,7 +175,74 @@
                 $scope.selectedIconImage.push(icon.image);
             }
             $scope.showAllergenIcon = false;
-        };
+            $scope.Item = { allergens: [], foodCost: 0 };
+            $scope.subCategories = [];
+            var categoryData = CategoryService.getItemCategoryDetails();
+            $scope.Item.category = categoryData._id;
+            $scope.subCategories = categoryData.subCategory;
+            $q.all([
+                ItemService.getIngredients(),
+                ItemService.getCategories(),
+                ItemService.getAllergens()
+            ]).then(function (data) {
+                $scope.ingredients = data[0].data;
+                $scope.categories = data[1].data;
+                $scope.allergens = data[2].data;
+                $scope.sub = [];
+                for (var i = 0; i < $scope.categories.length; i++) {
+                    $scope.sub[$scope.categories[i]._id] = $scope.categories[i].subCategory;
+                }
+                if ($scope.itemId) {
+                    ItemService.getItemDetail($scope.itemId).then(function (data) {
+                        $scope.Item = data.data;
+                        $scope.Item.preparationTime = parseInt($scope.Item.preparationTime);
+                        $scope.Item.category = $scope.Item.category._id;
+                        $scope.subCategories = $scope.sub[$scope.Item.category];
+                        $scope.itemPicture = $scope.Item.logo.original ? $scope.Item.logo.original : '';
+                        for (var i = 0; i < $scope.Item.allergens.length; i++) {
+                            $scope.selectedIconImage.push($scope.Item.allergens[i]);
+                        }
+                        for (var i = 0; i < $scope.Item.ingredients.length; i++) {
+                            $scope.selectedIngredients.push($scope.Item.ingredients[i].id);
+                            $scope.itms.push($scope.Item.ingredients[i]);
+                        }
+                        $scope.profit = $scope.Item.price - $scope.Item.foodCost;
+                    }).catch(function (error) {
+                        $scope.items = [];
+                    });
+                }
+            });
+
+            $scope.selectIngredient = function (ingredient) {
+                if ($scope.selectedIngredients.indexOf(ingredient.selected._id) === -1) {
+                    $scope.selectedIngredients.push(ingredient.selected._id);
+                    $scope.itms.push({
+                        id: ingredient.selected._id,
+                        name: ingredient.selected.name,
+                        ingredientQuantity: '',
+                        quantity: ingredient.selected.quantity,
+                        price: '',
+                        priceOfQuantity: ingredient.selected.price,
+                        unit: ingredient.selected.unit
+                    });
+                }
+            };
+
+            $scope.getQuantity = function (item) {
+                var price = (item.ingredientQuantity * item.priceOfQuantity);
+                item.price = Number(Math.round(price+'e2')+'e-2');
+                var fc = 0;
+                if ($scope.itms.length) {
+                    for (var i = 0; i < $scope.itms.length; i++) {
+                        if($scope.itms[i].price){
+                            fc += Number($scope.itms[i].price);
+                        }
+                      
+                    }
+                }
+                $scope.Item.foodCost = fc;
+                $scope.profit = $scope.Item.price - $scope.Item.foodCost;
+            };
 
         $scope.removeIngredient = function (indx, item) {
             if ($scope.selectedIngredients.indexOf(item.id) > -1) {
@@ -260,6 +327,47 @@
                         });
                     }
                 }
+            };
+
+            $scope.removeCategoryPicture = function () {
+                $scope.itemPicture = '';
+                $scope.itemLogo = '';
+                $scope.cropper = {};
+                $scope.cropper.sourceImage = null;
+                $scope.cropper.croppedImage = null;
+                $scope.bounds = {};
+                $scope.bounds.left = 0;
+                $scope.bounds.right = 0;
+                $scope.bounds.top = 0;
+                $scope.bounds.bottom = 0;
+            };
+
+            $scope.itemAddRequest = false;
+            $scope.addItem = function () {
+                if ( !$scope.Item.category ) {
+                    AlertService.error('itemmsg', "Please select category", 4000);
+                    return false;
+                }
+                var fitems = [];
+                if($scope.itms.length) {
+                    for(var i=0;i<$scope.itms.length;i++){
+                        if($scope.itms[i].ingredientQuantity == '' || typeof($scope.itms[i].ingredientQuantity) === "undefined"){
+                            AlertService.error('qtymsg', "Please enter ingredient quantity", 4000);
+                            return false;
+                        }
+                        else{
+                            fitems.push({
+                                id: $scope.itms[i].id,
+                                name: $scope.itms[i].name,
+                                ingredientQuantity: $scope.itms[i].ingredientQuantity,
+                                price: $scope.itms[i].price,
+                                priceOfQuantity: $scope.itms[i].priceOfQuantity,
+                                unit: $scope.itms[i].unit,
+                                quantity: $scope.itms[i].quantity
+                            });
+                        }
+                    }
+                }
             }
             var opts = {
                 name: $scope.Item.name,
@@ -286,26 +394,29 @@
             });
         };
 
-        $scope.editItem = function () {
-            if (!$scope.Item.category) {
-                AlertService.error('itemmsg', "Please select category", 4000);
-                return false;
-            }
-            var fitems = [];
-            if ($scope.itms.length) {
-                for (var i = 0; i < $scope.itms.length; i++) {
-                    if ($scope.itms[i].quantity == '' || typeof ($scope.itms[i].quantity) === "undefined") {
-                        AlertService.error('qtymsg', "Please enter ingredient quantity", 4000);
-                        return false;
-                    } else {
-                        fitems.push({
-                            id: $scope.itms[i].id,
-                            name: $scope.itms[i].name,
-                            quantity: $scope.itms[i].quantity,
-                            price: $scope.itms[i].price,
-                            priceOfQuantity: $scope.itms[i].priceOfQuantity,
-                            unit: $scope.itms[i].unit
-                        });
+            $scope.editItem = function () {
+                if ( !$scope.Item.category ) {
+                    AlertService.error('itemmsg', "Please select category", 4000);
+                    return false;
+                }
+                var fitems = [];
+                if($scope.itms.length) {
+                    for(var i=0;i<$scope.itms.length;i++){
+                        if($scope.itms[i].ingredientQuantity == '' || typeof($scope.itms[i].ingredientQuantity) === "undefined"){
+                            AlertService.error('qtymsg', "Please enter ingredient quantity", 4000);
+                            return false;
+                        }
+                        else{
+                            fitems.push({
+                                id: $scope.itms[i].id,
+                                name: $scope.itms[i].name,
+                                ingredientQuantity: $scope.itms[i].ingredientQuantity,
+                                price: $scope.itms[i].price,
+                                priceOfQuantity: $scope.itms[i].priceOfQuantity,
+                                unit: $scope.itms[i].unit,
+                                quantity: $scope.itms[i].quantity                                
+                            });
+                        }
                     }
                 }
             }
