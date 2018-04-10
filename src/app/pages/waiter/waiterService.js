@@ -8,26 +8,9 @@ angular.module('BlurAdmin.pages.waiter').service('WaiterService', WaiterService)
 function WaiterService($q, $http) {
     var _waiterDetails = {};
     return {
-        getWaiters: function(name, offset, limit) {
+        getWaiters: function() {
             var def = $q.defer();
             var url = '/api/waiter';
-            if(name) {
-                url += '?name='+name;
-            }
-            if(offset) {
-                if(url.indexOf("?") > -1) {
-                    url += '&offset='+offset;
-                } else {
-                    url += '?offset='+offset;
-                }
-            }
-            if(limit) {
-                if(url.indexOf("?") > -1) {
-                    url += '&limit='+limit;
-                } else {
-                    url += '?limit='+limit;
-                }
-            }
             doGet($q, $http, url).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {

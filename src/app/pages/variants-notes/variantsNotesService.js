@@ -8,26 +8,9 @@ angular.module('BlurAdmin.pages.variants').service('VariantService', VariantServ
 function VariantService($q, $http) {
     var _variantDetails = {};
     return {
-        getVariants: function(name, offset, limit) {
+        getVariants: function() {
             var def = $q.defer();
             var url = '/api/variant';
-            if(name) {
-                url += '?name='+name;
-            }
-            if(offset) {
-                if(url.indexOf("?") > -1) {
-                    url += '&offset='+offset;
-                } else {
-                    url += '?offset='+offset;
-                }
-            }
-            if(limit) {
-                if(url.indexOf("?") > -1) {
-                    url += '&limit='+limit;
-                } else {
-                    url += '?limit='+limit;
-                }
-            }
             doGet($q, $http, url).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
@@ -36,26 +19,9 @@ function VariantService($q, $http) {
             return def.promise;
         },
 
-        getNotes: function(name, offset, limit) {
+        getNotes: function() {
             var def = $q.defer();
             var url = '/api/note';
-            if(name) {
-                url += '?name='+name;
-            }
-            if(offset) {
-                if(url.indexOf("?") > -1) {
-                    url += '&offset='+offset;
-                } else {
-                    url += '?offset='+offset;
-                }
-            }
-            if(limit) {
-                if(url.indexOf("?") > -1) {
-                    url += '&limit='+limit;
-                } else {
-                    url += '?limit='+limit;
-                }
-            }
             doGet($q, $http, url).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {

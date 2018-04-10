@@ -11,31 +11,20 @@
 
     /** @ngInject */
     function DepartmentController($scope, $state, $http, $timeout, DepartmentService, AlertService) {
-        $scope.name = '';
-        $scope.offset = 0;
-        $scope.itemsPerPage = 100;
-        $scope.currentPage = 1;
         //Fetch Department list
-        $scope.getDepartmentList = function (name, offset, itemsPerPage) {
-            DepartmentService.getDepartments(name, offset, itemsPerPage).then(function (data) {
+        $scope.getDepartmentList = function () {
+            DepartmentService.getDepartments().then(function (data) {
                 $scope.departments = data.data;
-                $scope.totalCount = data.totalCount;
-                $scope.totalPageCount = Math.ceil(data.totalCount / itemsPerPage);
             }).catch(function (error) {
                 $scope.departments = [];
             });
         };
 
-        $scope.goToPage = function (pageNumber) {
-            $scope.currentPage = pageNumber;
-            $scope.getDepartmentList($scope.name, (pageNumber - 1) * $scope.itemsPerPage, $scope.itemsPerPage);
+        $scope.searchCategories = function () {
+            $scope.getDepartmentList();
         };
 
-        $scope.searchCategories = function (name) {
-            $scope.getDepartmentList(name, $scope.offset, $scope.itemsPerPage);
-        };
-
-        $scope.getDepartmentList($scope.name, $scope.offset, $scope.itemsPerPage);
+        $scope.getDepartmentList();
 
         //Delete Department
         $scope.removeDepartment = function (id) {

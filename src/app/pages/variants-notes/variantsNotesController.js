@@ -13,42 +13,25 @@
     
         /** @ngInject */
     function VariantController($scope, $state, $http, $timeout, VariantService, AlertService) {
-        $scope.name = '';
-        $scope.offset = 0;
-        $scope.itemsPerPage = 10;
-        $scope.currentPage = 1;
         //Fetch Variant list
-        $scope.getVariantList = function (name, offset, itemsPerPage) {
-            VariantService.getVariants(name, offset, itemsPerPage).then(function (data) {
+        $scope.getVariantList = function () {
+            VariantService.getVariants().then(function (data) {
                 $scope.variants = data.data;
-                $scope.totalCount = data.totalCount;
-                $scope.totalPageCount = Math.ceil(data.totalCount / itemsPerPage);
             }).catch(function (error) {
                 $scope.variants = [];
             });
         };
 
-        $scope.getNoteList = function (name, offset, itemsPerPage) {
-            VariantService.getNotes(name, offset, itemsPerPage).then(function (data) {
+        $scope.getNoteList = function () {
+            VariantService.getNotes().then(function (data) {
                 $scope.notes = data.data;
-                $scope.totalCount = data.totalCount;
-                $scope.totalPageCount = Math.ceil(data.totalCount / itemsPerPage);
             }).catch(function (error) {
                 $scope.variants = [];
             });
         };
 
-        $scope.goToPage = function (pageNumber) {
-            $scope.currentPage = pageNumber;
-            $scope.getVariantList($scope.name, (pageNumber - 1) * $scope.itemsPerPage, $scope.itemsPerPage);
-        };
-
-        $scope.searchCategories = function (name) {
-            $scope.getVariantList(name, $scope.offset, $scope.itemsPerPage);
-        };
-
-        $scope.getVariantList($scope.name, $scope.offset, $scope.itemsPerPage);
-        $scope.getNoteList($scope.name, $scope.offset, $scope.itemsPerPage);
+        $scope.getVariantList();
+        $scope.getNoteList();
 
         //Delete Variant
         $scope.removeVariant = function (id) {
@@ -206,9 +189,10 @@
             }
             if ($scope.noteId) {
                 VariantService.getNoteDetail($scope.noteId).then(function (data) {
-                    console.log(data, '++++++++++');
                     $scope.Note = data.data;
-                    $scope.Note.category = $scope.Note.category._id;
+                    if($scope.Note.category){
+                        $scope.Note.category = $scope.Note.category._id;
+                    }
                     $scope.subCategories = $scope.sub[$scope.Note.category];
                 }).catch(function (error) {
                     $state.go('variant');
@@ -224,7 +208,7 @@
         $scope.noteAddRequest = false;
         $scope.addNote = function () {
             var opts = {
-                notes: $scope.Notes.notes
+                notes: $scope.Note.notes
             };
             if($scope.Note.category){
                 opts.category = $scope.Note.category
@@ -245,7 +229,7 @@
 
         $scope.editNote = function () {
             var opts = {
-                notes: $scope.Notes.notes
+                notes: $scope.Note.notes
             };
             if($scope.Note.category){
                 opts.category = $scope.Note.category
