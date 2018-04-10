@@ -139,7 +139,6 @@
                                         placeholder="{{'ItemKey.prepTime' | translate}}" />
                                     <span class="input-group-addon addon-right input-group-addon-secondry">Min</span>
                                 </div>
-
                             </div>
                         </div>
 
@@ -148,7 +147,7 @@
                             <div class="col-sm-5">
                                 <div ng-show="itms.length">
                                     <span class="label-ingredient" ng-repeat="itm in itms">
-                                        <span class="ingredient-name"><strong>{{itm.name}}</strong> <span>(Unit Price - €{{itm.priceOfQuantity}}/{{itm.unit}})</span></span>
+                                        <span class="ingredient-name"><strong>{{itm.name}}(Quantity - {{itm.quantity}})</strong> <span>(Unit Price - €{{itm.priceOfQuantity}}/{{itm.unit}})</span></span>
                                         <span><input type="text" float-number ng-change="getQuantity(itm)" ng-model="itm.quantity" placeholder="Quantity" />({{itm.unit}})</span>
                                         <label><span ng-show="itm.price">€</span>{{itm.price}}</label>
                                         <span class="label-remove" ng-click="removeIngredient($index, itm)">X</span>

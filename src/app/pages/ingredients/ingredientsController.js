@@ -182,7 +182,6 @@
             $scope.showNewInput = !$scope.showNewInput;
             $scope.Unit.name = '';
             $scope.Unit.quantity = 1;
-            $scope.showConfezioneQty = false;
         }
     }
 })();
