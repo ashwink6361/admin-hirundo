@@ -82,7 +82,6 @@
 
         //Edit Notes
         $scope.updateNote = function (id) {
-            console.log(id, '++++');
             $state.go('addnote', {
                 'id': id
             });
@@ -111,7 +110,8 @@
         $scope.variantId = $stateParams.id;
         $scope.Variant = {};
         $scope.subCategories = [];
-
+        $scope.itms = [];
+        $scope.selectedCategories = [];
         $q.all([
             VariantService.getCategories(),
         ]).then(function (data) {
@@ -123,8 +123,11 @@
             if ($scope.variantId) {
                 VariantService.getVariantDetail($scope.variantId).then(function (data) {
                     $scope.Variant = data.data;
-                    $scope.Variant.category = $scope.Variant.category._id;
                     $scope.subCategories = $scope.sub[$scope.Variant.category];
+                    for (var i = 0; i < $scope.Variant.category.length; i++) {
+                        $scope.selectedCategories.push($scope.Variant.category[i]._id);
+                        $scope.itms.push($scope.Variant.category[i]);
+                    }
                 }).catch(function (error) {
                     $state.go('variant');
                 });
@@ -141,8 +144,9 @@
             var opts = {
                 name: $scope.Variant.name,
                 price: $scope.Variant.price,
-                category: $scope.Variant.category ? $scope.Variant.category : '',
-                subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : ''
+                // subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : '',
+                category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : '',
+
             };
             console.log('opts', opts);
             $scope.variantAddRequest = true;
@@ -159,9 +163,10 @@
             var opts = {
                 name: $scope.Variant.name,
                 price: $scope.Variant.price,
-                category: $scope.Variant.category ? $scope.Variant.category : '',
-                subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : ''
+                // subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : ''
+                category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : '',                
             };
+            console.log('opts', opts);            
             $scope.variantAddRequest = true;
             VariantService.updateVariant($scope.variantId, opts).then(function (data) {
                 $scope.variantAddRequest = false;
@@ -171,6 +176,23 @@
                 AlertService.error('variantmsg', error.message, 4000);
             });
         };
+
+        $scope.selectCategory = function (category) {
+            if ($scope.selectedCategories.indexOf(category.selected._id) === -1) {
+                $scope.selectedCategories.push(category.selected._id);
+                $scope.itms.push({
+                    _id: category.selected._id,
+                    name: category.selected.name
+                });
+            }
+        };
+
+        $scope.removeCategory = function (indx, item) {
+            if ($scope.selectedCategories.indexOf(item._id) > -1) {
+                $scope.selectedCategories.splice(indx, 1);
+                $scope.itms.splice(indx, 1);
+            }
+        };
     }
 
 
@@ -178,7 +200,8 @@
         $scope.noteId = $stateParams.id;
         $scope.Note = {};
         $scope.subCategories = [];
-
+        $scope.itms = [];
+        $scope.selectedCategories = [];
         $q.all([
             VariantService.getCategories(),
         ]).then(function (data) {
@@ -190,10 +213,11 @@
             if ($scope.noteId) {
                 VariantService.getNoteDetail($scope.noteId).then(function (data) {
                     $scope.Note = data.data;
-                    if($scope.Note.category){
-                        $scope.Note.category = $scope.Note.category._id;
-                    }
                     $scope.subCategories = $scope.sub[$scope.Note.category];
+                    for (var i = 0; i < $scope.Note.category.length; i++) {
+                        $scope.selectedCategories.push($scope.Note.category[i]._id);
+                        $scope.itms.push($scope.Note.category[i]);
+                    }
                 }).catch(function (error) {
                     $state.go('variant');
                 });
@@ -208,15 +232,12 @@
         $scope.noteAddRequest = false;
         $scope.addNote = function () {
             var opts = {
-                notes: $scope.Note.notes
+                notes: $scope.Note.notes,
+                category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : ''                
             };
-            if($scope.Note.category){
-                opts.category = $scope.Note.category
-            }
-            if($scope.Note.subCategory){
-                opts.subCategory = $scope.Note.subCategory
-            }
-            console.log('opts', opts);
+            // if($scope.Note.subCategory){
+            //     opts.subCategory = $scope.Note.subCategory
+            // }
             $scope.noteAddRequest = true;
             VariantService.addNote(opts).then(function (data) {
                 $scope.noteAddRequest = false;
@@ -229,14 +250,12 @@
 
         $scope.editNote = function () {
             var opts = {
-                notes: $scope.Note.notes
+                notes: $scope.Note.notes,
+                category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : ''                
             };
-            if($scope.Note.category){
-                opts.category = $scope.Note.category
-            }
-            if($scope.Note.subCategory){
-                opts.subCategory = $scope.Note.subCategory
-            };
+            // if($scope.Note.subCategory){
+            //     opts.subCategory = $scope.Note.subCategory
+            // };
             $scope.noteAddRequest = true;
             VariantService.updateNote($scope.noteId, opts).then(function (data) {
                 $scope.noteAddRequest = false;
@@ -245,6 +264,23 @@
                 $scope.noteAddRequest = false;
                 AlertService.error('variantmsg', error.message, 4000);
             });
+        };
+
+        $scope.selectCategory = function (category) {
+            if ($scope.selectedCategories.indexOf(category.selected._id) === -1) {
+                $scope.selectedCategories.push(category.selected._id);
+                $scope.itms.push({
+                    _id: category.selected._id,
+                    name: category.selected.name
+                });
+            }
+        };
+
+        $scope.removeCategory = function (indx, item) {
+            if ($scope.selectedCategories.indexOf(item._id) > -1) {
+                $scope.selectedCategories.splice(indx, 1);
+                $scope.itms.splice(indx, 1);
+            }
         };
     }
 })();
