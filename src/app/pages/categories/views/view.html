@@ -44,7 +44,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="subcategory-container">
-                                <h4 class="subcategory-name">{{item.items.length?item.items[0].subCategory:''}}</h4>
+                                <h4 class="subcategory-name" ng-if="item.category.subCategory.length"><span ng-repeat="subcategory in item.category.subCategory">{{subcategory}}<font ng-show="!$last">,&nbsp;</font></span></h4>
                                 <div ng-repeat="article in item.items" class="subcategory" ng-style="{'background-color':article.category.color}" ng-click="updateArticle(article, article._id)">
                                     <img ng-if="!article.logo.small && article.category.isIcon" class="icon-img" ng-src="{{article.category.icon}}" alt="" />
                                     <img ng-if="!article.logo.small && !article.category.isIcon && article.category.logo.small" ng-src="{{article.category.logo.small}}"
