@@ -4,7 +4,7 @@
  */
 (function () {
 'use strict';
-angular.module('BlurAdmin.pages.rooms').service('RoomService', RoomService);
+angular.module('BlurAdmin.pages.rooms').factory('RoomService', RoomService);
 function RoomService($q, $http) {
     var _roomDetails = {};
     var _rooms = [];
@@ -12,20 +12,14 @@ function RoomService($q, $http) {
     var socket = io.connect(SOCKETURL);
     if(socket.connected)
     console.log("Socket Connection Done");
-    socket.on('tablestatus', function(data) {
-        console.log('data',data);
-        if(data.who != 'admin') {
-            for(var i=0; i<_rooms.length; i++) {
-                for(var j=0; j<_rooms[i].tables.length; j++) {
-                    if(data.id === _rooms[i].tables[j]._id) {
-                        console.log(' _rooms[i].tables[j]._id', _rooms[i].tables[j]._id);
+    socket.on('tablestatus', function (data) {
+        for (var i = 0; i < _rooms.length; i++) {
+            if (data.room == _rooms[i]._id) {
+                for (var j = 0; j < _rooms[i].tables.length; j++) {
+                    if (data.table == _rooms[i].tables[j]._id) {
                         _rooms[i].tables[j].status = data.status;
                     }
                 }
-                console.log(' _rooms[i].tables[j].status', _rooms[i].tables[j].status);
-                // if(data.id === _rooms[i]._id) {
-                //     _rooms[i].status = data.status;
-                // }
             }
         }
     });
