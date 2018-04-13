@@ -233,7 +233,7 @@
         $scope.addNote = function () {
             var opts = {
                 notes: $scope.Note.notes,
-                category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : ''                
+                category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : []                
             };
             // if($scope.Note.subCategory){
             //     opts.subCategory = $scope.Note.subCategory
@@ -251,7 +251,7 @@
         $scope.editNote = function () {
             var opts = {
                 notes: $scope.Note.notes,
-                category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : ''                
+                category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : []                
             };
             // if($scope.Note.subCategory){
             //     opts.subCategory = $scope.Note.subCategory
