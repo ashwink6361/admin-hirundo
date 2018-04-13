@@ -90,8 +90,10 @@
             $scope.Item = { allergens: [], foodCost: 0 };
             $scope.subCategories = [];
             var categoryData = CategoryService.getItemCategoryDetails();
-            $scope.Item.category = categoryData._id;
-            $scope.subCategories = categoryData.subCategory;
+            if(categoryData && categoryData._id){
+                $scope.Item.category = categoryData._id;
+                $scope.subCategories = categoryData.subCategory;
+            }           
             $q.all([
                 ItemService.getIngredients(),
                 ItemService.getCategories(),
