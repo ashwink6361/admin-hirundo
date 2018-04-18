@@ -30,8 +30,7 @@
                                             </a>
                                         </span>
                                         <div class="room-container" ng-init="tableIndex = ($index+1)-1">
-                                                <!-- ng-style="table.status == 0 && {'background-color':'green'}" -->
-                                            <div ng-repeat="table in room.tables" class="table-container" ng-style="table.status == 0 ? {'background-color':'green'} : table.status == 1 ? {'background-color':'yellow'} : {'background-color':'red'}">
+                                            <div ng-repeat="table in room.tables" class="table-container" ng-style="table.status == 0 ? {'background-color':'green'} : table.status == 1 ? {'background-color':'red'} : {'background-color':'yellow'}">
                                                 <div class="room-table" ng-click="openCreateOrder(table,room,'app/pages/rooms/views/createOrder.html', 'md')">
                                                     <div class="table-name">
                                                         {{table.name}}

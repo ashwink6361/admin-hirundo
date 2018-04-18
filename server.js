@@ -68,7 +68,11 @@ app.use('/api/*', function (req, res, next) {    
         
     var method = req.method;    
     var uri = app.get('adminApiUrl') + path;     //POST INTERCEPTOR
-    if (method == 'POST') {        
+console.log('method',method);
+    
+    if (method == 'POST') {  
+console.log('in 1',method);
+              
         if (_.isEmpty(req.files)) {            
             request.post({                
                 url: uri,
@@ -98,7 +102,9 @@ app.use('/api/*', function (req, res, next) {    
         }    
     }     //PUT INTERCEPTOR
         
-    if (method == 'PUT') {        
+    if (method == 'PUT') {
+console.log('in 2',method);
+                
         if (_.isEmpty(req.files)) {            
             request.put({                
                 url: uri,
@@ -129,7 +135,9 @@ app.use('/api/*', function (req, res, next) {    
 
          //GET INTERCEPTOR
         
-    if (method == 'GET') {        
+    if (method == 'GET') {  
+console.log('in 3',method);
+              
         request.get({            
             url: uri,
             headers: headers        
