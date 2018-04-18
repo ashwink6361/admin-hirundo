@@ -259,6 +259,10 @@
             $scope.Order = {};
         };
 
+        $scope.makeOrder = function () {
+            
+        }
+
     }
 
     function ViewRoomsController($scope, $stateParams, $state, RoomService, AlertService) {
