@@ -77,10 +77,11 @@
     function AddIngredientController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, IngredientService, AlertService) {
         $scope.ingredientId = $stateParams.id;
         $scope.Ingredient = {};
-        $scope.Unit = {
-            name: '',
-            quantity: 1
-        };
+        $scope.Ingredient.quantity = 1;
+        // $scope.Unit = {
+        //     name: '',
+        //     quantity: 1
+        // };
         $scope.showConfezioneQty = false;
         $scope.showNewInput = false;
         $q.all([
@@ -89,21 +90,21 @@
             $scope.units = data[0].data;
             if ($scope.ingredientId) {
                 $scope.Ingredient = IngredientService.getIngredientDetails();
-                for (var i = 0; i < $scope.units.length; i++) {
-                    if ($scope.units[i].name == $scope.Ingredient.unit) {
-                        $scope.Ingredient.unitData = $scope.units[i];
-                        if ($scope.Ingredient.unitData.name.toLowerCase() == 'confezione') {
+                // for (var i = 0; i < $scope.units.length; i++) {
+                    // if ($scope.units[i].name == $scope.Ingredient.unit) {
+                        // $scope.Ingredient.unitData = $scope.units[i];
+                        if ($scope.Ingredient.unit == 'Confezione') {
                             $scope.showConfezioneQty = true;
                         }
-                    }
-                }
+                    // }
+                // }
                 if (!$scope.Ingredient)
                     $state.go('ingredient');
             }
         });
 
         $scope.unitChanged = function (data) {
-            if (data.name.toLowerCase() == 'confezione') {
+            if (data == 'Confezione') {
                 $scope.showConfezioneQty = true;
             } else {
                 $scope.showConfezioneQty = false;
@@ -136,7 +137,7 @@
 
         $scope.ingredientAddRequest = false;
         $scope.addIngredient = function () {
-            if (typeof ($scope.Ingredient.unitData) == 'undefined') {
+            if (typeof ($scope.Ingredient.unit) == 'undefined') {
                 AlertService.error('ingredientmsg', "Please select unit", 4000);
                 return false;
             }
@@ -144,9 +145,9 @@
                 name: $scope.Ingredient.name,
                 description: $scope.Ingredient.description ? $scope.Ingredient.description : '',
                 price: $scope.Ingredient.price,
-                unit: $scope.Ingredient.unitData.name,
+                unit: $scope.Ingredient.unit,
                 provider: $scope.Ingredient.provider ? $scope.Ingredient.provider : '',
-                quantity: Number($scope.Ingredient.unitData.quantity)
+                quantity: Number($scope.Ingredient.quantity)
             };
             console.log('opts', opts);
             $scope.ingredientAddRequest = true;
@@ -164,9 +165,9 @@
                 name: $scope.Ingredient.name,
                 description: $scope.Ingredient.description ? $scope.Ingredient.description : '',
                 price: $scope.Ingredient.price,
-                unit: $scope.Ingredient.unitData.name,
+                unit: $scope.Ingredient.unit,
                 provider: $scope.Ingredient.provider ? $scope.Ingredient.provider : '',
-                quantity: Number($scope.Ingredient.unitData.quantity)
+                quantity: Number($scope.Ingredient.quantity)
             };
             $scope.ingredientAddRequest = true;
             IngredientService.updateIngredient($scope.ingredientId, opts).then(function (data) {
