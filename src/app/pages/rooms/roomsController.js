@@ -23,6 +23,7 @@
         $scope.editForm = {};
         $scope.Order = {};
         $scope.rooms = [];
+        $scope.activeTab = [false,false,false];
         //Fetch Room list
         RoomService.getRooms().then(function(data) {
             $scope.rooms = RoomService.listRoom();
@@ -242,6 +243,7 @@
         };
 
         $scope.openCreateOrder = function (table, room, page, size) {
+            $scope.activeTab[0] = true;
             $scope.roomData = angular.copy(room);
             $scope.tableData = angular.copy(table);
             $scope.createOrderInstance = $uibModal.open({
