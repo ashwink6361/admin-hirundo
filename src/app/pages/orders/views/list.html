@@ -31,6 +31,7 @@
                             <td>{{order.created_at | date:'hh:mm a'}}</td>
                             <td>{{getOrderStatus(order.status)}}</td>
                             <td><button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button></td>
+                            <td><button type="button" class="text-btn" ng-click="checkout(order.room._id,order.table)">Checkout</button></td>                        
                         </tr>
                     </tbody>
                 </table>

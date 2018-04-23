@@ -117,9 +117,9 @@
                             $scope.selectedIconImage.push($scope.Item.allergens[i]);
                         }
                         for (var i = 0; i < $scope.Item.ingredients.length; i++) {
-                            $scope.selectedIngredients.push($scope.Item.ingredients[i].id);
-                            console.log('$scope.Item.ingredients[i]',$scope.Item.ingredients[i]);
-                            $scope.Item.ingredients[i].priceOfQuantity = Number(Math.round(($scope.Item.ingredients[i].priceOfQuantity / $scope.Item.ingredients[i].quantity) + 'e2') + 'e-2')
+                            $scope.selectedIngredients.push($scope.Item.ingredients[i].id._id);
+                            $scope.Item.ingredients[i].priceOfQuantity = Number(Math.round(($scope.Item.ingredients[i].id.price / $scope.Item.ingredients[i].id.quantity) + 'e2') + 'e-2')
+                            $scope.Item.ingredients[i].price = Number(Math.round(($scope.Item.ingredients[i].priceOfQuantity * $scope.Item.ingredients[i].ingredientQuantity) + 'e2') + 'e-2')
                             $scope.itms.push($scope.Item.ingredients[i]);
                         }
                         $scope.profit = Number(Math.round((Number($scope.Item.price) - $scope.Item.foodCost) + 'e2') + 'e-2');
@@ -133,13 +133,23 @@
                 if ($scope.selectedIngredients.indexOf(ingredient.selected._id) === -1) {
                     $scope.selectedIngredients.push(ingredient.selected._id);
                     $scope.itms.push({
-                        id: ingredient.selected._id,
-                        name: ingredient.selected.name,
+                        // id: ingredient.selected._id,
+                        // name: ingredient.selected.name,
+                        // ingredientQuantity: '',
+                        // quantity: ingredient.selected.quantity,
+                        // price: '',
+                        // priceOfQuantity: Number(Math.round((ingredient.selected.price / ingredient.selected.quantity) + 'e2') + 'e-2'),
+                        // unit: ingredient.selected.unit
+                        id: {
+                            _id: ingredient.selected._id,
+                            name: ingredient.selected.name,
+                            price: ingredient.selected.price,
+                            quantity: ingredient.selected.quantity,
+                            unit: ingredient.selected.unit                                                        
+                        },
                         ingredientQuantity: '',
-                        quantity: ingredient.selected.quantity,
                         price: '',
                         priceOfQuantity: Number(Math.round((ingredient.selected.price / ingredient.selected.quantity) + 'e2') + 'e-2'),
-                        unit: ingredient.selected.unit
                     });
                 }
             };
@@ -181,7 +191,7 @@
             };
 
             $scope.removeIngredient = function (indx, item) {
-                if ($scope.selectedIngredients.indexOf(item.id) > -1) {
+                if ($scope.selectedIngredients.indexOf(item.id._id) > -1) {
                     $scope.selectedIngredients.splice(indx, 1);
                     $scope.itms.splice(indx, 1);
                     $scope.Item.foodCost = $scope.Item.foodCost - item.price;
@@ -255,13 +265,13 @@
                         }
                         else{
                             fitems.push({
-                                id: $scope.itms[i].id,
-                                name: $scope.itms[i].name,
+                                id: $scope.itms[i].id._id,
+                                // name: $scope.itms[i].name,
                                 ingredientQuantity: $scope.itms[i].ingredientQuantity,
-                                price: $scope.itms[i].price,
-                                priceOfQuantity: $scope.itms[i].priceOfQuantity * $scope.itms[i].quantity,
-                                unit: $scope.itms[i].unit,
-                                quantity: $scope.itms[i].quantity
+                                // price: $scope.itms[i].price,
+                                // priceOfQuantity: $scope.itms[i].priceOfQuantity * $scope.itms[i].ingredientQuantity,
+                                // unit: $scope.itms[i].unit,
+                                // quantity: $scope.itms[i].quantity
                             });
                         }
                     }
@@ -305,13 +315,13 @@
                         }
                         else{
                             fitems.push({
-                                id: $scope.itms[i].id,
-                                name: $scope.itms[i].name,
+                                id: $scope.itms[i].id._id,
+                                // name: $scope.itms[i].name,
                                 ingredientQuantity: $scope.itms[i].ingredientQuantity,
-                                price: $scope.itms[i].price,
-                                priceOfQuantity: $scope.itms[i].priceOfQuantity * $scope.itms[i].quantity,
-                                unit: $scope.itms[i].unit,
-                                quantity: $scope.itms[i].quantity                                
+                                // price: $scope.itms[i].price,
+                                // priceOfQuantity: $scope.itms[i].priceOfQuantity * $scope.itms[i].ingredientQuantity,
+                                // unit: $scope.itms[i].unit,
+                                // quantity: $scope.itms[i].quantity                                
                             });
                         }
                     }
