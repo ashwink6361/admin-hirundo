@@ -4,11 +4,12 @@
             <div ba-panel ba-panel-title="Todays Orders" ba-panel-class="with-scroll table-panel mh-500">
                 <div class="" style="right: 21px;margin-top: -42px;position: absolute;">Current Time: {{ clock | date:'HH:mm:ss'}}</div>
                 <div ng-show="ordersList.length<1" class="text-center">
-                        No order available
+                    No order available
                 </div>
                 <table class="table" ng-show="ordersList.length">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Name</th>
                             <th>Waiter</th>
                             <th>Department</th>
@@ -20,17 +21,32 @@
                             <th>Action</th>
                         </tr>
                     </thead>
+                    <uib-accordion>
+                        <uib-accordion-group heading="Static Header, initially expanded" panel-class="bootstrap-panel accordion-panel panel-default">
+                            This content is straight in the template.
+                        </uib-accordion-group>
+                    </uib-accordion>
                     <tbody>
                         <tr ng-repeat="order in ordersList | orderBy: '-created_at'">
+                            <td ng-click="showOrderDetail()">
+                                <i class="fa fa-plus"></i>
+                            </td>
                             <td>{{order.item.name}}</td>
                             <td>{{order.waiter.firstName}}</td>
-                            <td>{{order.category.name}}</th>
+                            <td>{{order.category.name}}</td>
                             <td>{{order.room.name}}</td>
                             <td>{{order.table.name}}</td>
                             <td>{{order.quantity}}</td>
                             <td>{{order.created_at | date:'hh:mm a'}}</td>
                             <td>{{getOrderStatus(order.status)}}</td>
-                            <td><button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button></td>
+                            <td>
+                                <button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button>
+                            </td>
+                            <td ng-show="showItemDetail">
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

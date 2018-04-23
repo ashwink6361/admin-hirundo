@@ -14,7 +14,7 @@
     function CategoryController($scope, $state, $http, $timeout, CategoryService, AlertService) {
         $scope.name = '';
         $scope.offset = 0;
-        $scope.itemsPerPage = 10;
+        $scope.itemsPerPage = 100;
         $scope.currentPage = 1;
         $scope.showOptions = false;
 

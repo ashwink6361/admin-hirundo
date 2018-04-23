@@ -1,131 +1,134 @@
-<div class="modal-content">
+<div class="modal-content" ng-show="activeTab[0]">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
             <em class="ion-ios-close-empty sn-link-close"></em>
         </button>
-        <h4 class="modal-title" id="myModalLabel3">Create New Order</h4>
+        <h4 class="modal-title" id="myModalLabel3">Make a Reservation</h4>
     </div>
     <div class="modal-body">
         <div id="createOrderMsg"></div>
-<!-- 
-        <ba-wizard>
-            <ba-wizard-step title="Personal info"> -->
-                    <div class="row" ng-if="activeTab[0]">
-                        <div class="col-md-6">
-                            <div class="form-group has-feedback">
-                                <label for="exampleUsername1">{{roomData.name}}</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{{tableData.name}}</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Number of Person</label>
-                                <input type="number" class="form-control" placeholder="Number of Person" ng-model="Order.noOfPeople"
-                                    required>
-                                <span class="help-block error-block basic-block">Required</span>
-                            </div>
-                        </div>
-                    <button type="button" class="btn btn-primary" ng-click="makeOrder()">Make an order</button>                                                               
-                    </div>
-            <!-- </ba-wizard-step>
-            <ba-wizard-step title="Product Info" form="vm.productInfoForm">
-                <form name="vm.productInfoForm" novalidate> -->
-                    <div class="row"  ng-if="activeTab[1]">
-                        <div class="col-md-6">
-                            <div class="form-group has-feedback" ng-class="{'has-error': vm.productInfoForm.productName.$invalid && (vm.productInfoForm.productName.$dirty || vm.productInfoForm.$submitted)}">
-                                <label for="productName">Product name</label>
-                                <input type="text" class="form-control" id="productName" name="productName" placeholder="Product name" ng-model="vm.productInfo.productName"
-                                    required>
-                                <span class="help-block error-block basic-block">Required</span>
-                            </div>
-                            <div class="form-group" ng-class="{'has-error': vm.productInfoForm.productId.$invalid && (vm.productInfoForm.productId.$dirty || vm.productInfoForm.$submitted)}">
-                                <label for="productId">Product id</label>
-                                <input type="text" class="form-control" id="productId" name="productId" placeholder="productId" ng-model="vm.productInfo.productId"
-                                    required>
-                                <span class="help-block error-block basic-block">Required</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="productName">Category</label>
-                                <select class="form-control" title="Category" selectpicker>
-                                    <option selected>Electronics</option>
-                                    <option>Toys</option>
-                                    <option>Accessories</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                <!-- </form>
-            </ba-wizard-step>
-            <ba-wizard-step title="Shipment" form="vm.addressForm"> -->
-                <!-- <form name="vm.addressForm" novalidate> -->
-                    <div class="row"  ng-if="activeTab[2]">
-                        <div class="col-md-6">
-                            <div class="form-group has-feedback" ng-class="{'has-error': vm.addressForm.address.$invalid && (vm.addressForm.address.$dirty || vm.addressForm.$submitted)}">
-                                <label for="productName">Shipment address</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="Shipment address" ng-model="vm.shipment.address"
-                                    required>
-                                <span class="help-block error-block basic-block">Required</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="productName">Shipment method</label>
-                                <select class="form-control" title="Category" selectpicker>
-                                    <option selected>Fast & expensive</option>
-                                    <option>Cheap & free</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                <!-- </form>
-            </ba-wizard-step>
-            <ba-wizard-step title="Finish">
-                <form class="form-horizontal" name="vm.finishForm" novalidate>
-                    Congratulations! You have successfully filled the form!
-                </form>
-            </ba-wizard-step>
-        </ba-wizard> -->
-
-
-        <!-- <form class="form-horizontal" name="form" novalidate>
-            <div class="form-group">
-                <label for="input01" class="col-sm-4 control-label">
-                    <strong>Room</strong>
-                </label>
-                <label for="input01" class="col-sm-5 control-label">
-                    <strong>{{roomData.name}}</strong>
-                </label>
-            </div>
-            <div class="form-group">
-                <label for="input01" class="col-sm-4 control-label">
-                    <strong>Table</strong>
-                </label>
-                <label for="input01" class="col-sm-5 control-label">
-                    <strong>{{tableData.name}}</strong>
-                </label>
-            </div>
-            <div class="form-group">
-                <label for="input01" class="col-sm-4 control-label">
-                    <strong>Number Of Person</strong>
-                </label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" float-number name="numberOfPerson" ng-model="Order.numberOfPerson" placeholder="Number Of Person"
-                        autocomplete="off" required />
-                    <span class="alert color-red" ng-show="form.numberOfPerson.$dirty && form.numberOfPerson.$error.required">Number Of Person is required</span>
+        <div class="row">
+            <div class="col-md-12 d-flex justify-space-between">
+                <div class="form-group">
+                    <label>{{roomData.name}}</label>
+                </div>
+                <div class="form-group">
+                    <label>{{tableData.name}}</label>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="input01" class="col-sm-4 control-label">
-                </label>
-                <div class="col-sm-5">
-                    <button type="button" class="btn btn-default" ng-click="cancelCreateOrder()">Cancel</button>                    
-                    <button type="button" class="btn btn-primary" ng-click="createOrderNext()" ng-disabled="form.$invalid">Next</button>                   
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Number of Person</label>
+                    <input type="number" class="form-control" placeholder="Number of Person" ng-model="Order.noOfPeople" required>
+                    <span class="help-block error-block basic-block">Required</span>
                 </div>
             </div>
-        </form> -->
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary" ng-click="makeOrder(1)">Make an order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-content" ng-show="activeTab[1]">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel3">Choose Category</h4>
+    </div>
+    <div class="modal-body">
+        <div id="createOrderMsg"></div>
+        <div class="row">
+            <div class="col-sm-12 d-flex catogory-container">
+                <div class="category" ng-click="makeOrder(2)" ng-repeat="category in categories" ng-style="{'background-color' : category.color}">
+                    <img ng-src="{{category.icon}}">
+                    <p class="name">{{category.name}}</p>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary" ng-click="makeOrder(0)">
+                    Back
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-content" ng-show="activeTab[2]">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel3">Choose Item</h4>
+    </div>
+    <div class="modal-body">
+        <div id="createOrderMsg"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="category">
+                    <img ng-src="assets/img/">
+                    <p class="name"></p>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary" ng-click="makeOrder(1)">
+                    Back
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-content" ng-show="activeTab[3]">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel3">Choose Varient</h4>
+    </div>
+    <div class="modal-body">
+        <div id="createOrderMsg"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="category">
+                    <img ng-src="assets/img/">
+                    <p class="name"></p>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary">
+                    Back
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-content" ng-show="activeTab[4]">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel3">Create Order</h4>
+    </div>
+    <div class="modal-body">
+        <div id="createOrderMsg"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="category">
+                    <img ng-src="assets/img/">
+                    <p class="name"></p>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary">
+                    Create Order
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Cancle
+                </button>
+            </div>
+        </div>
     </div>
 </div>

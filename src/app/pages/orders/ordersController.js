@@ -9,6 +9,7 @@
     /** @ngInject */
     function OrderController($scope, $uibModal, $state, $http, $timeout, $interval, OrderService, AlertService) {
         $scope.ordersList = [];
+        $scope.showItemDetail = false;
         OrderService.getOrders().then(function(data) {
             $scope.ordersList = OrderService.listOrder();
         }).catch(function(error) {
@@ -59,6 +60,10 @@
         }
         tick();
         $interval(tick, 1000);
+
+        $scope.showOrderDetail = function() {
+            $scope.showItemDetail = true;
+        }
     }
 
 })();

@@ -9,7 +9,7 @@
         .controller('ViewRoomsController', ViewRoomsController);
 
     /** @ngInject */
-    function RoomsController($scope, $uibModal, $state, $http, $translate, $timeout, RoomService, AlertService) {
+    function RoomsController($scope, $uibModal, $state, $http, $translate, $timeout, RoomService, AlertService, ItemService, $q) {
         console.log($translate.instant('Rooms'));
         $scope.tableModal = false;
         $scope.editTableModal = false;
@@ -23,7 +23,17 @@
         $scope.editForm = {};
         $scope.Order = {};
         $scope.rooms = [];
-        $scope.activeTab = [false,false,false];
+        $scope.activeTab = [true,false,false,false,false];
+        $scope.showCategory = false;
+
+        $q.all([            
+            ItemService.getCategories()
+        ]).then(function (data) {
+            $scope.categories = data[0].data;
+            console.log($scope.categories)
+        });
+
+
         //Fetch Room list
         RoomService.getRooms().then(function(data) {
             $scope.rooms = RoomService.listRoom();
@@ -242,8 +252,7 @@
             });
         };
 
-        $scope.openCreateOrder = function (table, room, page, size) {
-            $scope.activeTab[0] = true;
+        $scope.openCreateOrder = function (table, room, page, size) {            
             $scope.roomData = angular.copy(room);
             $scope.tableData = angular.copy(table);
             $scope.createOrderInstance = $uibModal.open({
@@ -257,10 +266,19 @@
         $scope.cancelCreateOrder = function () {
             $scope.createOrderInstance.dismiss('cancel');
             $scope.Order = {};
+            $scope.activeTab = [true,false,false,false,false];
+
         };
 
-        $scope.makeOrder = function () {
-            
+        $scope.makeOrder = function (tab) {
+            console.log($scope.activeTab,'$scope.activeTab+++++')
+            $scope.activeTab[tab] = true;
+            for(var i = 0; i<$scope.activeTab.length; i++){
+                if(i != tab){
+                    $scope.activeTab[i] = false;
+                }
+            }
+            console.log($scope.activeTab, '$scope.activeTab')
         }
 
     }
