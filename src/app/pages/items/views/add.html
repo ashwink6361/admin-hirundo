@@ -147,8 +147,8 @@
                             <div class="col-sm-5">
                                 <div ng-show="itms.length">
                                     <span class="label-ingredient" ng-repeat="itm in itms">
-                                        <span class="ingredient-name"><strong>{{itm.name}}</strong><span ng-show="itm.quantity>1">(Qty - {{itm.quantity}})</span> <span>(Unit Price - €{{itm.priceOfQuantity}}/{{itm.unit}})</span></span>
-                                        <span><input type="text" float-number ng-change="getQuantity(itm)" ng-model="itm.ingredientQuantity" placeholder="Quantity" />({{itm.unit}})</span>
+                                        <span class="ingredient-name"><strong>{{itm.id.name}}</strong><span ng-show="itm.id.quantity>1">(Qty - {{itm.id.quantity}})</span> <span>(Unit Price - €{{itm.priceOfQuantity}}/{{itm.id.unit}})</span></span>
+                                        <span><input type="text" float-number ng-change="getQuantity(itm)" ng-model="itm.ingredientQuantity" placeholder="Quantity" />({{itm.id.unit}})</span>
                                         <label><span ng-show="itm.price">€</span>{{itm.price}}</label>
                                         <span class="label-remove" ng-click="removeIngredient($index, itm)">X</span>
                                     </span>

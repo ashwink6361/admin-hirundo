@@ -61,8 +61,12 @@
         tick();
         $interval(tick, 1000);
 
-        $scope.showOrderDetail = function() {
-            $scope.showItemDetail = true;
+        $scope.checkout = function (roomid,tableid) {
+            OrderService.checkoutTable(roomid, tableid).then(function(data) {
+                console.log("Order table updated", data);
+            }).catch(function(error) {
+                console.log("Order table error", error);
+            });
         }
     }
 

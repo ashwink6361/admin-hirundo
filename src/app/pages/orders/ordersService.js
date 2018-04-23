@@ -58,7 +58,17 @@
                     def.reject(error);
                 });
                 return def.promise;
-            }
+            },
+            checkoutTable: function(roomid, tableid) {
+                var def = $q.defer();
+                var url = '/api/orders/checkout/'+roomid+'/'+tableid;
+                doGet($q, $http, url).then(function(data) {
+                    def.resolve(data);
+                }).catch(function(error) {
+                    def.reject(error);
+                });
+                return def.promise;
+            }            
         };
     }
 })();

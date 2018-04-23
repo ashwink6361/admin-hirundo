@@ -9,7 +9,7 @@
                 <table class="table" ng-show="ordersList.length">
                     <thead>
                         <tr>
-                            <th></th>
+                            <!-- <th></th> -->
                             <th>Name</th>
                             <th>Waiter</th>
                             <th>Department</th>
@@ -28,9 +28,9 @@
                     </uib-accordion> -->
                     <tbody>
                         <tr ng-repeat="order in ordersList | orderBy: '-created_at'">
-                            <td ng-click="showOrderDetail()">
+                            <!-- <td>
                                 <i class="fa fa-plus"></i>
-                            </td>
+                            </td> -->
                             <td>{{order.item.name}}</td>
                             <td>{{order.waiter.firstName}}</td>
                             <td>{{order.category.name}}</td>
@@ -39,14 +39,8 @@
                             <td>{{order.quantity}}</td>
                             <td>{{order.created_at | date:'hh:mm a'}}</td>
                             <td>{{getOrderStatus(order.status)}}</td>
-                            <td>
-                                <button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button>
-                            </td>
-                            <td ng-show="showItemDetail">
-                                <tr>
-                                    <td></td>
-                                </tr>
-                            </td>
+                            <td><button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button></td>
+                            <td><button type="button" class="text-btn" ng-click="checkout(order.room._id,order.table)">Checkout</button></td>                        
                         </tr>
                     </tbody>
                 </table>
