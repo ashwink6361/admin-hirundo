@@ -21,11 +21,11 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <uib-accordion>
+                    <!-- <uib-accordion>
                         <uib-accordion-group heading="Static Header, initially expanded" panel-class="bootstrap-panel accordion-panel panel-default">
                             This content is straight in the template.
                         </uib-accordion-group>
-                    </uib-accordion>
+                    </uib-accordion> -->
                     <tbody>
                         <tr ng-repeat="order in ordersList | orderBy: '-created_at'">
                             <td ng-click="showOrderDetail()">
@@ -35,7 +35,7 @@
                             <td>{{order.waiter.firstName}}</td>
                             <td>{{order.category.name}}</td>
                             <td>{{order.room.name}}</td>
-                            <td>{{order.table.name}}</td>
+                            <td>{{order.tableName}}</td>
                             <td>{{order.quantity}}</td>
                             <td>{{order.created_at | date:'hh:mm a'}}</td>
                             <td>{{getOrderStatus(order.status)}}</td>
