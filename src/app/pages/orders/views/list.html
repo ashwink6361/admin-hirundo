@@ -9,38 +9,31 @@
                 <table class="table" ng-show="ordersList.length">
                     <thead>
                         <tr>
-                            <!-- <th></th> -->
-                            <th>Name</th>
+                            <th></th>
                             <th>Waiter</th>
-                            <th>Department</th>
                             <th>Room</th>
                             <th>Table</th>
-                            <th>Quantity</th>
                             <th>Order Time</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <!-- <uib-accordion>
-                        <uib-accordion-group heading="Static Header, initially expanded" panel-class="bootstrap-panel accordion-panel panel-default">
-                            This content is straight in the template.
-                        </uib-accordion-group>
-                    </uib-accordion> -->
                     <tbody>
-                        <tr ng-repeat="order in ordersList | orderBy: '-created_at'">
-                            <!-- <td>
-                                <i class="fa fa-plus"></i>
-                            </td> -->
-                            <td>{{order.item.name}}</td>
+                        <tr ng-repeat-start="order in ordersList | orderBy: '-created_at'">
+                            <td>
+                                <button ng-if="order.expanded" ng-click="order.expanded = false"><i class="fa fa-minus"></i></button>
+                                <button ng-if="!order.expanded" ng-click="order.expanded = true"><i class="fa fa-plus"></i></button>
+                            </td>
                             <td>{{order.waiter.firstName}}</td>
-                            <td>{{order.category.name}}</td>
                             <td>{{order.room.name}}</td>
                             <td>{{order.tableName}}</td>
-                            <td>{{order.quantity}}</td>
                             <td>{{order.created_at | date:'hh:mm a'}}</td>
                             <td>{{getOrderStatus(order.status)}}</td>
                             <td><button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button></td>
                             <td><button type="button" class="text-btn" ng-click="checkout(order.room._id,order.table)">Checkout</button></td>                        
+                        </tr>
+                        <tr ng-if="order.expanded" ng-repeat-end="">
+                            <td>{{order.item}}</td>
                         </tr>
                     </tbody>
                 </table>

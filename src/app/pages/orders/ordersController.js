@@ -64,6 +64,7 @@
         $scope.checkout = function (roomid,tableid) {
             OrderService.checkoutTable(roomid, tableid).then(function(data) {
                 console.log("Order table updated", data);
+                AlertService.success('checkoutmsg', data.message, 4000);
             }).catch(function(error) {
                 console.log("Order table error", error);
             });
