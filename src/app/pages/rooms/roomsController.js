@@ -248,6 +248,11 @@
         $scope.cancelCreateOrder = function () {
             $scope.createOrderInstance.dismiss('cancel');
             $scope.Order = {};
+            $scope.Order = {
+                errorMsg: '',
+                error: false,
+                selectedItems: []
+            };
             $scope.activeTab = [true,false,false,false,false];
         };
 

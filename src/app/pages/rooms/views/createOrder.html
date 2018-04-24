@@ -135,28 +135,31 @@
     </div>
     <div class="modal-body">
         <div id="createOrderMsg"></div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="category" ng-repeat="item in Order.selectedItems">
+        <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Add</div>
+        <div ng-if="Order.selectedItems && Order.selectedItems.length">
+            <div class="order-item-container d-flex justify-space-between" ng-repeat="item in Order.selectedItems">
+                <div class="img" ng-style="{'background-color' : item.category.color}">
                     <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
                     <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
                         alt="Category Logo" />
                     <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
-                    <span class="item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
-                    <p class="name">{{item.name}}</p>
-                    <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
-                        Delete
-                    </button>
+                    <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
                 </div>
-            </div>
-            <div class="col-sm-12">
-                <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
-                    Back
-                </button>
-                <button type="submit" class="btn btn-primary" ng-click="createOrder()">
-                    Create Order
+                <div class="order-item-detail">
+                    <p class="name">{{item.name}}</p>
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
+                    Delete
                 </button>
             </div>
+        </div>
+        <div class="footer-btn">
+            <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
+                Back
+            </button>
+            <button type="submit" class="btn btn-primary" ng-click="createOrder()">
+                Create Order
+            </button>
         </div>
     </div>
 </div>
