@@ -37,12 +37,12 @@
         </button>
         <h4 class="modal-title" id="myModalLabel3">Choose Category</h4>
     </div>
-    <div class="modal-body">
+    <div class="modal-body pt-0">
         <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-sm-12 d-flex catogory-container">
                 <input class="form-control" ng-model="searchText" type="text" placeholder="Search Category" />
-                <div class="category" ng-repeat="category in categories | filter : searchText"  ng-click="showItems(category)" ng-style="{'background-color' : category.color}">
+                <div class="category" ng-repeat="category in categories | filter : searchText" ng-click="showItems(category)" ng-style="{'background-color' : category.color}">
                     <img ng-src="{{category.icon}}">
                     <p class="name">{{category.name}}</p>
                 </div>
@@ -63,39 +63,44 @@
         </button>
         <h4 class="modal-title" id="myModalLabel3">Choose Item</h4>
     </div>
-    <div class="modal-body">
+    <div class="modal-body pt-0">
         <div id="createOrderMsg"></div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div ng-if="!Order.categoryItems.length">
-                    No Item Found
+        <div ng-if="!Order.categoryItems.length">
+            No Item Found
+        </div>
+        <div ng-if="Order.categoryItems.length">
+            <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
+            <div class="order-item-container" ng-repeat="item in Order.categoryItems | filter : searchItem">
+                <div class="img" ng-style="{'background-color' : category.color}">
+                    <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
+                    <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
+                        alt="Category Logo" />
+                    <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
+                    <span class="item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
                 </div>
-                <div ng-if="Order.categoryItems.length">
-                    <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
-                    <div class="category" ng-repeat="item in Order.categoryItems | filter : searchItem">
-                        <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
-                        <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
-                            alt="Category Logo" />
-                        <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
-                        <span class="item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
-                        <p class="name">{{item.name}}</p>
-                        <button type="button" ng-click="decreaseValue(item)" value="Decrease Value">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" ng-click="increaseValue(item)" value="Increase Value">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
+                <div>
+                    <p class="name">{{item.name}}</p>
+                </div>
+                <div class="order-btn">
+                    <button type="button" ng-click="decreaseValue(item)" value="Decrease Value">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" ng-click="increaseValue(item)" value="Increase Value">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button type="button" ng-click="changeTab(3)" value="Increase Value">
+                        <i class="fa fa-edit"></i>
+                    </button>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <button type="button" class="btn btn-primary" ng-click="changeTab(1)">
-                    Back
-                </button>
-                <button type="button" class="btn btn-primary" ng-click="changeTab(4)">
-                    Cart
-                </button>
-            </div>
+        </div>
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-primary" ng-click="changeTab(1)">
+                Back
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="changeTab(4)">
+                Cart
+            </button>
         </div>
     </div>
 </div>
@@ -117,7 +122,7 @@
                 </div>
             </div>
             <div class="col-sm-12">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
                     Back
                 </button>
             </div>
@@ -136,7 +141,7 @@
         <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="category" ng-repeat="item in Order.selectedItems" >
+                <div class="category" ng-repeat="item in Order.selectedItems">
                     <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
                     <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
                         alt="Category Logo" />

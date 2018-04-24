@@ -9,12 +9,11 @@
     text-align: center;
 }
 
-
 .flex-row {
     flex-direction: row !important;
 }
 
-.ph-0{
+.ph-0 {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
@@ -23,11 +22,11 @@
     right: 50px !important;
 }
 
-.w-180{
+.w-180 {
     width: 180px;
 }
 
-.w-50{
+.w-50 {
     width: 50px;
 }
 
@@ -48,7 +47,7 @@
     background-color: red;
 }
 
-.btn-expand{
+.btn-expand {
     background: transparent;
     border: 2px solid #4b473f;
     border-radius: 50%;
@@ -105,6 +104,10 @@
 
 .d-flex {
     display: flex;
+}
+
+.pt-0{
+    padding-top: 0;
 }
 
 .justify-space-between {
@@ -1172,9 +1175,9 @@
         &.active {
             a {
                 color: #fff;
-                background: $secondry ;
+                background: $secondry;
                 font-weight: bold;
-                &:hover{
+                &:hover {
                     color: #fff;
                 }
             }
@@ -1184,34 +1187,40 @@
             padding: 10px 15px;
             display: inline-block;
             text-transform: uppercase;
-            &:hover,  &:active{
+            &:hover,
+            &:active {
                 color: #333;
             }
         }
     }
 }
 
-.add-unit{
-    .form-control{
+.add-unit {
+    .form-control {
         width: 45%;
     }
 }
 
-
-.catogory-container{
+.catogory-container {
     display: flex;
     flex-wrap: wrap;
-    .category{
+    .form-control {
+        margin-bottom: 10px;
+    }
+    .category {
         width: 135px;
         height: 135px;
         position: relative;
         margin-right: 10px;
         margin-bottom: 10px;
         cursor: pointer;
-        img{
-            max-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+            max-width: 40%;
         }
-        p.name{
+        p.name {
             position: absolute;
             bottom: 0;
             width: 100%;
@@ -1219,10 +1228,33 @@
             padding: 5px 0;
             background-color: rgba(0, 0, 0, .5);
             color: #fff !important;
+            margin: 0;
+            text-align: center;
         }
     }
 }
 
-.table>tbody>tr>td:first-child, .table>thead>tr>th:first-child{
+.table>tbody>tr>td:first-child,
+.table>thead>tr>th:first-child {
     text-align: left !important;
 }
+
+.order-item-container{
+    display: flex;
+    .img{
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;      
+        img{
+            max-width: 100%;
+        }  
+    }
+    .name{
+        max-width: 60%;
+        width: 100%;
+    }
+    .order-btn{
+        
+    }
+}
+
