@@ -9,7 +9,7 @@
         .controller('ViewRoomsController', ViewRoomsController);
 
     /** @ngInject */
-    function RoomsController($scope, $uibModal, $state, $http, $translate, $timeout, RoomService, AlertService, ItemService, $q) {
+    function RoomsController($scope, $uibModal, $state, $http, $translate, $timeout, RoomService, CategoryService, AlertService, ItemService, $q) {
         console.log($translate.instant('Rooms'));
         $scope.tableModal = false;
         $scope.editTableModal = false;
@@ -267,20 +267,153 @@
             $scope.createOrderInstance.dismiss('cancel');
             $scope.Order = {};
             $scope.activeTab = [true,false,false,false,false];
-
         };
 
-        $scope.makeOrder = function (tab) {
-            console.log($scope.activeTab,'$scope.activeTab+++++')
+        $scope.changeTab = function (tab) {
             $scope.activeTab[tab] = true;
             for(var i = 0; i<$scope.activeTab.length; i++){
                 if(i != tab){
                     $scope.activeTab[i] = false;
                 }
             }
-            console.log($scope.activeTab, '$scope.activeTab')
         }
 
+        $scope.Order = {
+            errorMsg: '',
+            error: false,
+            selectedItems: []
+        };
+        $scope.makeOrder = function () {
+            if ($scope.Order.noOfPeople) {
+                // var data = {
+                //     roomId: $scope.roomData["_id"],
+                //     tableId: $scope.tableData["_id"],
+                //     noOfPeople: $scope.Order.noOfPeople,
+                //     selectedItems: []
+                // }
+                // console.log('datadatadatadata', data);
+                // RoomService.setOrderData(data);
+                $scope.changeTab(1);
+            }
+            else {
+                console.log('in');                
+                $scope.Order.error = true;
+                $scope.Order.errorMsg = 'Please choose number of person';
+                $timeout(function () {
+                    $scope.Order.error = false;
+                    $scope.Order.errorMsg = '';
+                }, 4000);
+            }
+        }
+
+        $scope.showItems = function (category) {
+            $scope.Order.selectedCategory = category;
+            $scope.Order.categoryItems = [];
+            CategoryService.getCategoryWithItems().then(function (data) {
+                console.log('data', data);
+                for (var i = 0; i < data.data.length; i++) {
+                    if (data.data[i].category._id == category._id) {
+                        $scope.Order.categoryItems = data.data[i].items;
+                    }
+                }
+                $scope.changeTab(2);
+                $scope.goToItems();
+            })
+                .catch(function (error) {
+                    console.log('error', error);
+                });
+        }
+
+        $scope.goToItems = function () {
+            console.log('$scope.Order', $scope.Order);            
+            if ($scope.Order.categoryItems) {
+                for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
+                    if ($scope.Order.selectedItems.length) {
+                        for (var j = 0; j < $scope.Order.selectedItems.length; j++) {
+                            if ($scope.Order.selectedItems[j]._id == $scope.Order.categoryItems[i]._id) {
+                                $scope.Order.categoryItems[i].quantity = $scope.Order.selectedItems[j].quantity;
+                            }
+                        }
+                    }
+                }
+                //   this.selectedSubcategory[-1] = true;
+            }
+        }
+
+        $scope.increaseValue = function (item) {
+            var value = item.quantity;
+            value = isNaN(value) ? 0 : value;
+            value++;
+            item.quantity = value;
+            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+                if ($scope.Order.selectedItems[i]._id == item._id) {
+                    $scope.Order.selectedItems.splice(i, 1);
+                }
+            }
+            $scope.Order.selectedItems.push(item);
+            console.log('$scope.Order+++++++++++++', $scope.Order);                        
+        }
+        
+        $scope.decreaseValue = function (item) {
+            var value = item.quantity;
+            value = isNaN(value) ? 0 : value;
+            value < 1 ? value = 1 : '';
+            value--;
+            item.quantity = value;
+            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+                if ($scope.Order.selectedItems[i]._id == item._id) {
+                    $scope.Order.selectedItems.splice(i, 1);
+                }
+            }
+            if (item.quantity > 0) {
+                $scope.Order.selectedItems.push(item);
+            }
+            else if (item.quantity == 0) {
+                for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
+                    if ($scope.Order.categoryItems[i]._id == item._id) {
+                        delete $scope.Order.categoryItems[i].quantity;
+                    }
+                }
+            }
+            console.log('$scope.Order---------------------', $scope.Order);                        
+        }
+
+        $scope.deleteItemFromCart = function (item) {
+            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+              if ($scope.Order.selectedItems[i]._id == item._id) {
+                $scope.Order.selectedItems.splice(i, 1);
+              }
+            }
+          }
+
+         $scope.createOrder = function () {
+            var itemarray = [];
+            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+              var item = {
+                id: $scope.Order.selectedItems[i]._id,
+                category: $scope.Order.selectedItems[i].category._id,
+                quantity: $scope.Order.selectedItems[i].quantity,
+                price: $scope.Order.selectedItems[i].price,
+                notes: '',
+                variant: []
+              }
+              itemarray.push(item);
+            }
+            var createorder = {
+              room: $scope.Order.roomId,
+              table: $scope.Order.tableId,
+              noOfPeople: $scope.Order.noOfPeople,
+              item: itemarray
+            }
+            console.log('createorder', createorder);
+            RoomService.createOrder(createorder)
+              .then(function(data) {
+                console.log('createorder data', data);
+              })
+              .catch(function(error) {
+                console.log('createorder error', error);
+              });
+          }
     }
 
     function ViewRoomsController($scope, $stateParams, $state, RoomService, AlertService) {

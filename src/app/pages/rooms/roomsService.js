@@ -104,6 +104,16 @@ function RoomService($q, $http) {
                 def.reject(error);
             });
             return def.promise;
+        },
+        createOrder: function(opts) {
+            var def = $q.defer();
+            var url = '/api/order';
+            doPost($q, $http, url, opts).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
         }
     };
 }
