@@ -131,7 +131,8 @@
     <div class="modal-body">
         <div id="createOrderMsg"></div>
         <div class="row">
-            <div class="col-sm-6">
+            <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Add</div>
+            <div class="col-sm-6" ng-if="Order.selectedItems && Order.selectedItems.length">
                 <div class="category" ng-repeat="item in Order.selectedItems" >
                     <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
                     <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
