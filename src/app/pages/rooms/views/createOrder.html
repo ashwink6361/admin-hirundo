@@ -6,7 +6,6 @@
         <h4 class="modal-title" id="myModalLabel3">Make a Reservation</h4>
     </div>
     <div class="modal-body">
-        <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-md-12 d-flex justify-space-between">
                 <div class="form-group">
@@ -38,7 +37,6 @@
         <h4 class="modal-title" id="myModalLabel3">Choose Category</h4>
     </div>
     <div class="modal-body">
-        <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-sm-12 d-flex catogory-container">
                 <input class="form-control" ng-model="searchText" type="text" placeholder="Search Category" />
@@ -64,7 +62,6 @@
         <h4 class="modal-title" id="myModalLabel3">Choose Item</h4>
     </div>
     <div class="modal-body">
-        <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-sm-6">
                 <div ng-if="!Order.categoryItems.length">
@@ -108,7 +105,6 @@
         <h4 class="modal-title" id="myModalLabel3">Choose Varient</h4>
     </div>
     <div class="modal-body">
-        <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="category">
@@ -149,11 +145,11 @@
                 </div>
             </div>
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary">
-                    Create Order
+                <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
+                    Back
                 </button>
-                <button type="button" class="btn btn-primary">
-                    Cancle
+                <button type="submit" class="btn btn-primary" ng-click="createOrder()">
+                    Create Order
                 </button>
             </div>
         </div>
