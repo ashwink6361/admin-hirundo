@@ -23,6 +23,14 @@
     right: 50px !important;
 }
 
+.w-180{
+    width: 180px;
+}
+
+.w-50{
+    width: 50px;
+}
+
 .input-group-addon-secondry {
     background: #adadad;
     color: #fff;
@@ -38,6 +46,13 @@
 
 .bg-danger {
     background-color: red;
+}
+
+.btn-expand{
+    background: transparent;
+    border: 2px solid #4b473f;
+    border-radius: 50%;
+    color: #fcab00;
 }
 
 .input-group-addon-success {
@@ -1206,4 +1221,8 @@
             color: #fff !important;
         }
     }
+}
+
+.table>tbody>tr>td:first-child, .table>thead>tr>th:first-child{
+    text-align: left !important;
 }

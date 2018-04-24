@@ -9,31 +9,61 @@
                 <table class="table" ng-show="ordersList.length">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th class="w-50"></th>
                             <th>Waiter</th>
                             <th>Room</th>
                             <th>Table</th>
                             <th>Order Time</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th class="w-180">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat-start="order in ordersList | orderBy: '-created_at'">
-                            <td>
-                                <button ng-if="order.expanded" ng-click="order.expanded = false"><i class="fa fa-minus"></i></button>
-                                <button ng-if="!order.expanded" ng-click="order.expanded = true"><i class="fa fa-plus"></i></button>
+                            <td class="w-50">
+                                <button ng-if="order.expanded" class="btn-expand" ng-click="order.expanded = false">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button ng-if="!order.expanded" class="btn-expand" ng-click="order.expanded = true">
+                                    <i class="fa fa-plus"></i>
+                                </button>
                             </td>
                             <td>{{order.waiter.firstName}}</td>
                             <td>{{order.room.name}}</td>
                             <td>{{order.tableName}}</td>
                             <td>{{order.created_at | date:'hh:mm a'}}</td>
                             <td>{{getOrderStatus(order.status)}}</td>
-                            <td><button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button></td>
-                            <td><button type="button" class="text-btn" ng-click="checkout(order.room._id,order.table)">Checkout</button></td>                        
+                            <td class="w-180">
+                                <button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button>
+                                <button type="button" class="text-btn" ng-click="checkout(order.room._id,order.table)">Checkout</button>
+                            </td>
                         </tr>
                         <tr ng-if="order.expanded" ng-repeat-end="">
-                            <td>{{order.item}}</td>
+                            <td colspan="7" style="padding: 0">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Name</th>
+                                            <th>Item Price</th>
+                                            <th>Item Quantity</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in order.item">
+                                            <td>{{item.id.name}}</td>
+                                            <td>{{item.price}}</td>
+                                            <td>{{item.quantity}}</td>
+                                            <td>
+                                                <button type="button" class="text-btn" data-toggle="modal">In prepare</button>
+                                                <button type="button" class="text-btn" data-toggle="modal">Prepared</button>
+                                                <button type="button" class="text-btn" data-toggle="modal">Deliverd</button>
+                                                <button type="button" class="text-btn" data-toggle="modal">Cancle</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
