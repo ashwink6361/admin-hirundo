@@ -30,14 +30,12 @@
             ItemService.getCategories()
         ]).then(function (data) {
             $scope.categories = data[0].data;
-            console.log($scope.categories)
         });
 
 
         //Fetch Room list
         RoomService.getRooms().then(function(data) {
             $scope.rooms = RoomService.listRoom();
-            console.log("$scope.rooms ", $scope.rooms);
         }).catch(function(error) {
             console.log("Error ", error);
         });
@@ -47,13 +45,7 @@
             }).catch(function(error) {
                 console.log("Error ", error);
             });
-            // RoomService.getRooms().then(function (data) {
-            //     $scope.rooms = data.data;
-            // }).catch(function (error) {
-            //     $scope.rooms = [];
-            // });
         };
-        // $scope.getRoomList();
 
         $scope.switchTableOption = function(option) {
             $scope.isMultiple = option;
@@ -189,18 +181,8 @@
             $scope.Room = {};
         };
 
-        // $scope.openEditRoom = function (room, page, size) {
-        //     $scope.roomId = room._id;
-        //     $scope.editRoom = angular.copy(room);
-        //     $scope.editRoomInstance = $uibModal.open({
-        //         scope: $scope,
-        //         animation: true,
-        //         templateUrl: page,
-        //         size: size
-        //     });
-        // };
-
         $scope.openEditRoom = function (room, index) {
+
             if ($scope.editBtn == index) {
                 $scope.editBtn = -1;
             } else {
@@ -285,18 +267,9 @@
         };
         $scope.makeOrder = function () {
             if ($scope.Order.noOfPeople) {
-                // var data = {
-                //     roomId: $scope.roomData["_id"],
-                //     tableId: $scope.tableData["_id"],
-                //     noOfPeople: $scope.Order.noOfPeople,
-                //     selectedItems: []
-                // }
-                // console.log('datadatadatadata', data);
-                // RoomService.setOrderData(data);
                 $scope.changeTab(1);
             }
             else {
-                console.log('in');                
                 $scope.Order.error = true;
                 $scope.Order.errorMsg = 'Please choose number of person';
                 $timeout(function () {
@@ -310,7 +283,6 @@
             $scope.Order.selectedCategory = category;
             $scope.Order.categoryItems = [];
             CategoryService.getCategoryWithItems().then(function (data) {
-                console.log('data', data);
                 for (var i = 0; i < data.data.length; i++) {
                     if (data.data[i].category._id == category._id) {
                         $scope.Order.categoryItems = data.data[i].items;
@@ -325,7 +297,7 @@
         }
 
         $scope.goToItems = function () {
-            console.log('$scope.Order', $scope.Order);            
+            console.log($scope.order)
             if ($scope.Order.categoryItems) {
                 for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
                     if ($scope.Order.selectedItems.length) {
@@ -351,7 +323,6 @@
                 }
             }
             $scope.Order.selectedItems.push(item);
-            console.log('$scope.Order+++++++++++++', $scope.Order);                        
         }
         
         $scope.decreaseValue = function (item) {
@@ -375,7 +346,6 @@
                     }
                 }
             }
-            console.log('$scope.Order---------------------', $scope.Order);                        
         }
 
         $scope.deleteItemFromCart = function (item) {
@@ -400,18 +370,18 @@
               itemarray.push(item);
             }
             var createorder = {
-              room: $scope.Order.roomId,
-              table: $scope.Order.tableId,
+              room: $scope.roomData["_id"],
+              table: $scope.tableData["_id"],
               noOfPeople: $scope.Order.noOfPeople,
               item: itemarray
             }
-            console.log('createorder', createorder);
             RoomService.createOrder(createorder)
               .then(function(data) {
-                console.log('createorder data', data);
+                AlertService.success('createOrderMsg', data.message, 4000);
+                $scope.cancelCreateOrder();                
               })
               .catch(function(error) {
-                console.log('createorder error', error);
+                AlertService.error('createOrderMsg', error.message, 4000);                                
               });
           }
     }

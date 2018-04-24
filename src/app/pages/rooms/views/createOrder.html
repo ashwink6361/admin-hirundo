@@ -6,7 +6,6 @@
         <h4 class="modal-title" id="myModalLabel3">Make a Reservation</h4>
     </div>
     <div class="modal-body">
-        <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-md-12 d-flex justify-space-between">
                 <div class="form-group">
@@ -38,7 +37,6 @@
         <h4 class="modal-title" id="myModalLabel3">Choose Category</h4>
     </div>
     <div class="modal-body pt-0">
-        <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-sm-12 d-flex catogory-container">
                 <input class="form-control" ng-model="searchText" type="text" placeholder="Search Category" />
@@ -64,21 +62,20 @@
         <h4 class="modal-title" id="myModalLabel3">Choose Item</h4>
     </div>
     <div class="modal-body pt-0">
-        <div id="createOrderMsg"></div>
         <div ng-if="!Order.categoryItems.length">
             No Item Found
         </div>
         <div ng-if="Order.categoryItems.length">
             <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
-            <div class="order-item-container" ng-repeat="item in Order.categoryItems | filter : searchItem">
-                <div class="img" ng-style="{'background-color' : category.color}">
+            <div class="order-item-container d-flex justify-space-between" ng-repeat="item in Order.categoryItems | filter : searchItem">
+                <div class="img" ng-style="{'background-color' : item.category.color}">
                     <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
                     <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
                         alt="Category Logo" />
                     <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
-                    <span class="item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
+                    <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
                 </div>
-                <div>
+                <div class="order-item-detail">
                     <p class="name">{{item.name}}</p>
                 </div>
                 <div class="order-btn">
@@ -94,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
+        <div class="footer-btn">
             <button type="button" class="btn btn-primary" ng-click="changeTab(1)">
                 Back
             </button>
@@ -113,7 +110,6 @@
         <h4 class="modal-title" id="myModalLabel3">Choose Varient</h4>
     </div>
     <div class="modal-body">
-        <div id="createOrderMsg"></div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="category">
@@ -154,11 +150,11 @@
                 </div>
             </div>
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary">
-                    Create Order
+                <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
+                    Back
                 </button>
-                <button type="button" class="btn btn-primary">
-                    Cancle
+                <button type="submit" class="btn btn-primary" ng-click="createOrder()">
+                    Create Order
                 </button>
             </div>
         </div>
