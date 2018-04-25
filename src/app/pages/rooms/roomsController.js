@@ -251,7 +251,10 @@
             $scope.Order = {
                 errorMsg: '',
                 error: false,
-                selectedItems: []
+                selectedItems: [],
+                cartTotalPrice: 0,
+                cartTotalItem: 0,
+                selectedSubcategory: [false]                
             };
             $scope.activeTab = [true,false,false,false,false];
         };
@@ -270,7 +273,8 @@
             error: false,
             selectedItems: [],
             cartTotalPrice: 0,
-            cartTotalItem: 0
+            cartTotalItem: 0,
+            selectedSubcategory: [false]
         };
         $scope.makeOrder = function () {
             if ($scope.Order.noOfPeople) {
@@ -315,7 +319,7 @@
                         }
                     }
                 }
-                //   this.selectedSubcategory[-1] = true;
+                $scope.Order.selectedSubcategory[-1] = true;
             }
         }
 
@@ -331,12 +335,12 @@
             }
             $scope.Order.selectedItems.push(item);
             var cp = 0;
-            var itemno = 0;            
+            var itemno = 0;
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
                 itemno += $scope.Order.selectedItems[i].quantity;
                 cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
                 $scope.Order.cartTotalPrice = cp;
-                $scope.Order.cartTotalItem = itemno;                
+                $scope.Order.cartTotalItem = itemno;
             }
         }
         
@@ -361,74 +365,93 @@
                 }
             }
             var cp = 0;
-            var itemno = 0;                        
+            var itemno = 0;
             if ($scope.Order.selectedItems.length) {
                 for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-                    itemno += $scope.Order.selectedItems[i].quantity;                    
+                    itemno += $scope.Order.selectedItems[i].quantity;
                     cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
                     $scope.Order.cartTotalPrice = cp;
-                    $scope.Order.cartTotalItem = itemno;                                    
-        }
+                    $scope.Order.cartTotalItem = itemno;
+                }
             } else {
                 $scope.Order.cartTotalPrice = 0;
-                $scope.Order.cartTotalItem = 0;                                                    
-        }
+                $scope.Order.cartTotalItem = 0;
+            }
         }
 
         $scope.deleteItemFromCart = function (item) {
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-              if ($scope.Order.selectedItems[i]._id == item._id) {
-                $scope.Order.selectedItems.splice(i, 1);
-              }
+                if ($scope.Order.selectedItems[i]._id == item._id) {
+                    $scope.Order.selectedItems.splice(i, 1);
+                }
             }
             var cp = 0;
-            var itemno = 0;                                    
+            var itemno = 0;
             if ($scope.Order.selectedItems.length) {
                 for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-                    itemno += $scope.Order.selectedItems[i].quantity;                                        
+                    itemno += $scope.Order.selectedItems[i].quantity;
                     cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
                     $scope.Order.cartTotalPrice = cp;
-                    $scope.Order.cartTotalItem = itemno;                                                        
+                    $scope.Order.cartTotalItem = itemno;
                 }
             } else {
                 $scope.Order.cartTotalPrice = 0;
-                $scope.Order.cartTotalItem = 0;                                                                    
-          }
+                $scope.Order.cartTotalItem = 0;
+            }
             for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
                 if ($scope.Order.categoryItems[i]._id == item._id) {
                     delete $scope.Order.categoryItems[i].quantity;
                 }
             }
-          }
+        }
 
-         $scope.createOrder = function () {
+        $scope.createOrder = function () {
             var itemarray = [];
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-              var item = {
-                id: $scope.Order.selectedItems[i]._id,
-                category: $scope.Order.selectedItems[i].category._id,
-                quantity: $scope.Order.selectedItems[i].quantity,
-                price: $scope.Order.selectedItems[i].price,
-                notes: '',
-                variant: []
-              }
-              itemarray.push(item);
+                var item = {
+                    id: $scope.Order.selectedItems[i]._id,
+                    category: $scope.Order.selectedItems[i].category._id,
+                    quantity: $scope.Order.selectedItems[i].quantity,
+                    price: $scope.Order.selectedItems[i].price,
+                    notes: '',
+                    variant: []
+                }
+                itemarray.push(item);
             }
             var createorder = {
-              room: $scope.roomData["_id"],
-              table: $scope.tableData["_id"],
-              noOfPeople: $scope.Order.noOfPeople,
-              item: itemarray
+                room: $scope.roomData["_id"],
+                table: $scope.tableData["_id"],
+                noOfPeople: $scope.Order.noOfPeople,
+                item: itemarray
             }
             RoomService.createOrder(createorder)
-              .then(function(data) {
-                AlertService.success('createOrderMsg', data.message, 4000);
-                $scope.cancelCreateOrder();                
-              })
-              .catch(function(error) {
-                AlertService.error('createOrderMsg', error.message, 4000);                                
-              });
-          }
+                .then(function (data) {
+                    AlertService.success('createOrderMsg', data.message, 4000);
+                    $scope.cancelCreateOrder();
+                })
+                .catch(function (error) {
+                    AlertService.error('createOrderMsg', error.message, 4000);
+                });
+        }
+
+        $scope.filterBySubcategory = function (subcategory, index) {
+            $scope.subcategory = subcategory;
+            if (typeof index !== 'undefined') {
+                $scope.Order.selectedSubcategory[index] = true;
+                $scope.Order.selectedSubcategory[-1] = false;
+                for (var i = 0; i < $scope.Order.selectedSubcategory.length; i++) {
+                    if (index != i) {
+                        $scope.Order.selectedSubcategory[i] = false;
+                    }
+                }
+            }
+            else {
+                $scope.Order.selectedSubcategory[-1] = true;
+                for (var i = 0; i < $scope.Order.selectedSubcategory.length; i++) {
+                    $scope.Order.selectedSubcategory[i] = false;
+                }
+            }
+        }
     }
 
     function ViewRoomsController($scope, $stateParams, $state, RoomService, AlertService) {
