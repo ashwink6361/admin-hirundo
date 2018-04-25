@@ -6,27 +6,22 @@
         <h4 class="modal-title" id="myModalLabel3">Make a Reservation</h4>
     </div>
     <div class="modal-body">
-        <div class="row">
-            <div class="col-md-12 d-flex justify-space-between">
-                <div class="form-group">
-                    <label>{{roomData.name}}</label>
-                </div>
-                <div class="form-group">
-                    <label>{{tableData.name}}</label>
-                </div>
+        <div class="d-flex justify-space-between">
+            <div class="form-group">
+                <label>{{roomData.name}}</label>
             </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Number of Person</label>
-                    <input type="number" class="form-control" placeholder="Number of Person" ng-model="Order.noOfPeople" required>
-                    <span class="alert color-red" ng-if="Order.error">{{Order.errorMsg}}</span>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <button type="button" class="btn btn-primary" ng-click="makeOrder()">Make an order</button>
+            <div class="form-group">
+                <label>{{tableData.name}}</label>
             </div>
         </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Number of Person</label>
+            <input type="number" class="form-control" placeholder="Number of Person" ng-model="Order.noOfPeople" required>
+            <span class="alert color-red" ng-if="Order.error">{{Order.errorMsg}}</span>
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="makeOrder()">Make an order</button>
     </div>
+</div>
 </div>
 
 <div class="modal-content" ng-show="activeTab[1]">
@@ -55,11 +50,17 @@
 </div>
 
 <div class="modal-content" ng-show="activeTab[2]">
-    <div class="modal-header">
+    <div class="modal-header" ng-style="{'background-color' : Order.selectedCategory.color}">
         <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
             <em class="ion-ios-close-empty sn-link-close"></em>
         </button>
-        <h4 class="modal-title" id="myModalLabel3">Choose Item</h4>
+        <h4 class="modal-title" style="color: #fff" id="myModalLabel3">{{Order.selectedCategory.name}}</h4>
+    </div>
+    <div class="tabs-container" >
+        <ul ng-style="{'background-color' : Order.selectedCategory.color}">
+            <li>All</li>
+            <li>Sub 1</li>
+        </ul>
     </div>
     <div class="modal-body pt-0">
         <div ng-if="!Order.categoryItems.length">
@@ -77,6 +78,7 @@
                 </div>
                 <div class="order-item-detail">
                     <p class="name">{{item.name}}</p>
+                    <p class="name">&euro;{{item.price}}</p>                    
                 </div>
                 <div class="order-btn">
                     <button type="button" ng-click="decreaseValue(item)" value="Decrease Value">
@@ -85,7 +87,7 @@
                     <button type="button" ng-click="increaseValue(item)" value="Increase Value">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <button type="button" ng-click="changeTab(3)" value="Increase Value">
+                    <button type="button" class="varient-btn" ng-click="changeTab(3)" value="Increase Value">
                         <i class="fa fa-edit"></i>
                     </button>
                 </div>
@@ -96,7 +98,7 @@
                 Back
             </button>
             <button type="button" class="btn btn-primary" ng-click="changeTab(4)">
-                Cart
+                <i class="fa fa-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
             </button>
         </div>
     </div>
@@ -110,19 +112,21 @@
         <h4 class="modal-title" id="myModalLabel3">Choose Varient</h4>
     </div>
     <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="category">
-                    <img ng-src="assets/img/">
-                    <p class="name"></p>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
-                    Back
-                </button>
-            </div>
-        </div>
+        <h6>Varient and Notes</h6>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Varient Name</td>
+                    <td>Varient Quantity</td>
+                    <td>
+                        <input type="checkbox" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
+            Back
+        </button>
     </div>
 </div>
 
@@ -136,7 +140,7 @@
     <div class="modal-body">
         <div id="createOrderMsg"></div>
         <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Add</div>
-        <div ng-if="Order.selectedItems && Order.selectedItems.length">
+        <div ng-if="Order.selectedItems && Order.selectedItems.length" class="modal-height">
             <div class="order-item-container d-flex justify-space-between" ng-repeat="item in Order.selectedItems">
                 <div class="img" ng-style="{'background-color' : item.category.color}">
                     <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
@@ -147,17 +151,19 @@
                 </div>
                 <div class="order-item-detail">
                     <p class="name">{{item.name}}</p>
+                    <p class="name">&euro;{{item.price}}</p>                                        
                 </div>
                 <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
                     Delete
                 </button>
             </div>
+            <p>Sub Total : &euro;{{Order.cartTotalPrice}}</p>
         </div>
         <div class="footer-btn">
             <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
                 Back
             </button>
-            <button type="submit" class="btn btn-primary" ng-click="createOrder()">
+            <button type="submit" class="btn btn-primary" ng-click="createOrder()" ng-disabled="!Order.selectedItems.length">
                 Create Order
             </button>
         </div>
