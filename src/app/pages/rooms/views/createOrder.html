@@ -58,9 +58,9 @@
     </div>
     <div class="tabs-container" >
         <ul ng-style="{'background-color' : Order.selectedCategory.color}">
-            <li  ng-class="{'subcategory-active':Order.selectedSubcategory[-1]}" ng-click="filterBySubcategory()">All</li>
+            <li  ng-class="{'active':Order.selectedSubcategory[-1]}" ng-click="filterBySubcategory()">All</li>
             <span ng-if="Order.selectedCategory.subCategory.length">
-                <li ng-repeat="subCategory in Order.selectedCategory.subCategory track by $index" ng-class="{'subcategory-active':Order.selectedSubcategory[$index]}" ng-click="filterBySubcategory(subCategory,$index)">
+                <li ng-repeat="subCategory in Order.selectedCategory.subCategory track by $index" ng-class="{'active':Order.selectedSubcategory[$index]}" ng-click="filterBySubcategory(subCategory,$index)">
                     {{subCategory}}
                 </li>
             </span>
@@ -139,21 +139,45 @@
         <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
             <em class="ion-ios-close-empty sn-link-close"></em>
         </button>
-        <h4 class="modal-title" id="myModalLabel3">Choose Varient</h4>
+        <h4 class="modal-title" id="myModalLabel3">Choose Variant</h4>
     </div>
     <div class="modal-body">
-        <h6>Varient and Notes</h6>
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td>Varient Name</td>
-                    <td>Varient Quantity</td>
-                    <td>
-                        <input type="checkbox" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <h5>Quantity</h5>
+        <div class="input-group">
+            <span class="input-group-addon addon-left input-group-addon-secondry"><i class="fa fa-minus"></i></span>
+            <input type="text" class="form-control with-success-addon" />
+            <span class="input-group-addon addon-right input-group-addon-secondry"><i class="fa fa-plus"></i></span>            
+        </div>
+        <h5>Variant and Notes</h5>
+        <div class="tabs-btn d-flex">
+            <button type="button" ng-click="tabActive(1)" ng-class="{'active':Order.activeTab[0]}">Variants</button>
+            <button type="button" ng-click="tabActive(2)" ng-class="{'active':Order.activeTab[1]}">Notes</button>
+        </div>
+        <div class="varient-list" ng-if="Order.activeTab[0]">
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="varient in variantList">
+                        <td>{{varient.name}}</td>
+                        <td>&euro;{{varient.price}}</td>
+                        <td>
+                            <input type="checkbox" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="varient-list" ng-if="Order.activeTab[1]">
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="note in noteList">
+                        <td>{{note.notes}}</td>
+                        <td>
+                            <input type="checkbox" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
             Back
         </button>

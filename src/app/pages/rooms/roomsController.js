@@ -27,9 +27,12 @@
         $scope.showCategory = false;
 
         $q.all([            
-            ItemService.getCategories()
+            RoomService.getCategories(),
+            RoomService.getVariantsAndNotes()
         ]).then(function (data) {
             $scope.categories = data[0].data;
+            $scope.variantList = data[1].data.variants;
+            $scope.noteList = data[1].data.notes;
         });
 
 
@@ -254,7 +257,8 @@
                 selectedItems: [],
                 cartTotalPrice: 0,
                 cartTotalItem: 0,
-                selectedSubcategory: [false]                
+                selectedSubcategory: [false],
+                activeTab: [true,false]                                
             };
             $scope.activeTab = [true,false,false,false,false];
         };
@@ -274,8 +278,21 @@
             selectedItems: [],
             cartTotalPrice: 0,
             cartTotalItem: 0,
-            selectedSubcategory: [false]
+            selectedSubcategory: [false],
+            activeTab: [true,false]
         };
+
+        $scope.tabActive = function (tab) {
+            if (tab == 1) {
+                $scope.Order.activeTab[0] = true;
+                $scope.Order.activeTab[1] = false;
+            }
+            else {
+                $scope.Order.activeTab[1] = true;
+                $scope.Order.activeTab[0] = false;
+            }
+        }
+
         $scope.makeOrder = function () {
             if ($scope.Order.noOfPeople) {
                 $scope.changeTab(1);

@@ -114,6 +114,26 @@ function RoomService($q, $http) {
                 def.reject(error);
             });
             return def.promise;
+        },
+        getVariantsAndNotes: function() {
+            var def = $q.defer();
+            var url = '/api/variantAndNotes';
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+        getCategories: function() {
+            var def = $q.defer();
+            var url = '/api/category';            
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
         }
     };
 }

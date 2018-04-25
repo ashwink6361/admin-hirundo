@@ -30,7 +30,7 @@
     width: 50px;
 }
 
-.w-310{
+.w-310 {
     width: 310px;
 }
 
@@ -1301,6 +1301,12 @@
     }
 }
 
+.modal {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
 .modal-height {
     max-height: 330px;
     overflow-y: auto;
@@ -1317,9 +1323,22 @@
             border-bottom: 2px solid transparent;
             color: #fff;
             cursor: pointer;
-            &.active{
+            &.active {
                 border-bottom: 2px solid #fff;
             }
+        }
+    }
+}
+
+.tabs-btn {
+    button {
+        width: 50%;
+        border: none;
+        padding: 8px 0;
+        color: $primary;
+        &.active {
+            background-color: $primary;
+            color: #fff;
         }
     }
 }
