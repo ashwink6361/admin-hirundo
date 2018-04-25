@@ -1239,7 +1239,7 @@
     text-align: left !important;
 }
 
-.footer-btn{
+.footer-btn {
     margin-top: 10px;
 }
 
@@ -1248,8 +1248,8 @@
     margin-top: 10px;
     .img {
         border-radius: 50%;
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1257,10 +1257,10 @@
         img {
             max-width: 100%;
             &.icon-img {
-                max-width: 40%;
+                max-width: 60%;
             }
         }
-        .order-item-quantity{
+        .order-item-quantity {
             position: absolute;
             top: 0;
             right: 0;
@@ -1277,11 +1277,45 @@
     .order-item-detail {
         display: flex;
         width: 60%;
-
         .name {
             max-width: 60%;
             width: 100%;
         }
     }
-    .order-btn {}
+    .order-btn {
+        button {
+            background: #ce8b00;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: #fff;
+            &.varient-btn {
+                background-color: #a9a9a9;
+            }
+        }
+    }
+}
+
+.modal-height {
+    max-height: 330px;
+    overflow-y: auto;
+}
+
+.tabs-container {
+    ul {
+        padding: 0 15px;
+        list-style: none;
+        overflow-x: auto;
+        li {
+            display: inline-block;
+            padding: 5px 15px;
+            border-bottom: 2px solid transparent;
+            color: #fff;
+            cursor: pointer;
+            &.active{
+                border-bottom: 2px solid #fff;
+            }
+        }
+    }
 }
