@@ -24,28 +24,70 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel with-scroll table-panel mh-500 animated zoomIn" ng-if="categoryItems.length<1">
-                        <div class="panel-body">
-                            <div class="subcategory-container">
-                                <div class="add-subcategory">
-                                    <div class="category-content">
-                                        <i class="icon-plus" ng-click="addArticle()"></i>
-                                        <div class="name">
-                                            Add
+                    <!-- <div class="panel with-scroll table-panel mh-500 animated zoomIn" ng-repeat="item in categoryItems">
+                        <div ng-if="item.subcategory.length<1">
+                            <div class="panel-body">
+                                <div class="subcategory-container">
+                                    <div class="add-subcategory">
+                                        <div class="category-content">
+                                            <i class="icon-plus" ng-click="addArticle()"></i>
+                                            <div class="name">
+                                                Add
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="panel with-scroll table-panel mh-500 animated zoomIn subcategory-panel {{selectedItem}}" ng-repeat="item in categoryItems | filter: {category : {name: (selectedItem || '')}}">
                         <div class="panel-heading" ng-style="{'background-color':item.category.color}">
                             <h3 class="panel-title">{{item.category.name}}</h3>
                         </div>
                         <div class="panel-body">
                             <div class="subcategory-container">
-                                <h4 class="subcategory-name" ng-if="item.category.subCategory.length"><span ng-repeat="subcategory in item.category.subCategory">{{subcategory}}<font ng-show="!$last">,&nbsp;</font></span></h4>
-                                <div ng-repeat="article in item.items" class="subcategory" ng-style="{'background-color':article.category.color}" ng-click="updateArticle(article, article._id)">
+                                <div class="add-subcategory" ng-if="item.subcategory.length<1" ng-click="addArticle(item.category)">
+                                    <div class="category-content">
+                                        <i class="icon-plus"></i>
+                                        <div class="name">
+                                            Add
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-repeat="subcategory in item.subcategory">
+                                    <h4 class="subcategory-name">{{subcategory.name}}</h4>
+                                    <div class="d-flex">
+                                        <div ng-repeat="article in subcategory.items" class="subcategory" ng-style="{'background-color':article.category.color}"
+                                            ng-click="updateArticle(article, article._id)">
+                                            <img ng-if="!article.logo.small && article.category.isIcon" class="icon-img" ng-src="{{article.category.icon}}" alt="" />
+                                            <img ng-if="!article.logo.small && !article.category.isIcon && article.category.logo.small" ng-src="{{article.category.logo.small}}"
+                                                alt="Category Logo" />
+                                            <img ng-if="article.logo.small" ng-src="{{article.logo.small}}" alt="Item Logo" />
+                                            <div class="category-content">
+                                                <div class="name">
+                                                    {{article.name}}
+                                                </div>
+                                            </div>
+                                            <div class="edit-category" ng-show="isArticleEdit" ng-click="updateArticle(article, article._id)">
+                                                <i class="ion-edit"></i>
+                                            </div>
+                                            <button type="button" class="remove-category" ng-show="isArticleEdit" ng-click="removeArticle(article._id)">
+                                                <i class="ion-trash-b"></i>
+                                            </button>
+                                        </div>
+                                        <div class="add-subcategory" ng-click="addArticle(item.category)">
+                                            <div class="category-content">
+                                                <i class="icon-plus"></i>
+                                                <div class="name">
+                                                    Add
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <h4 class="subcategory-name" ng-if="item.category.subCategory.length"><span ng-repeat="subcategory in item.category.subCategory">{{subcategory}}<font ng-show="!$last">,&nbsp;</font></span></h4> -->
+                                <!-- <div ng-repeat="article in item.items" class="subcategory" ng-style="{'background-color':article.category.color}" ng-click="updateArticle(article, article._id)">
                                     <img ng-if="!article.logo.small && article.category.isIcon" class="icon-img" ng-src="{{article.category.icon}}" alt="" />
                                     <img ng-if="!article.logo.small && !article.category.isIcon && article.category.logo.small" ng-src="{{article.category.logo.small}}"
                                         alt="Category Logo" />
@@ -61,15 +103,15 @@
                                     <button type="button" class="remove-category" ng-show="isArticleEdit" ng-click="removeArticle(article._id)">
                                         <i class="ion-trash-b"></i>
                                     </button>
-                                </div>
-                                <div class="add-subcategory" ng-click="addArticle(item.category)">
+                                </div> -->
+                                <!-- <div class="add-subcategory" ng-click="addArticle(item.category)">
                                     <div class="category-content">
                                         <i class="icon-plus"></i>
                                         <div class="name">
                                             Add
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

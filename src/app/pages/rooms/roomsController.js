@@ -310,7 +310,7 @@
         $scope.showItems = function (category) {
             $scope.Order.selectedCategory = category;
             $scope.Order.categoryItems = [];
-            CategoryService.getCategoryWithItems().then(function (data) {
+            RoomService.getCategoryWithItems().then(function (data) {
                 for (var i = 0; i < data.data.length; i++) {
                     if (data.data[i].category._id == category._id) {
                         $scope.Order.categoryItems = data.data[i].items;
