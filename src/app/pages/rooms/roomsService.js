@@ -134,6 +134,17 @@ function RoomService($q, $http) {
                 def.reject(error);
             });
             return def.promise;
+        },
+
+        getCategoryWithItems: function() {
+            var def = $q.defer();
+            var url = '/api/category/itemsByCategory';
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
         }
     };
 }
