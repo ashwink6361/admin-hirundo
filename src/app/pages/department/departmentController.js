@@ -41,7 +41,7 @@
     
         //View Department
         $scope.viewDepartment = function (data, id) {
-            DepartmentService.setDepartmentDetails(data);
+            // DepartmentService.setDepartmentDetails(data);
             $state.go('viewdepartment', {
                 'id': id
             });
@@ -49,7 +49,7 @@
 
         //Edit Department
         $scope.updateDepartment = function (data, id) {
-            DepartmentService.setDepartmentDetails(data);
+            // DepartmentService.setDepartmentDetails(data);
             $state.go('adddepartment', {
                 'id': id
             });
@@ -58,9 +58,14 @@
 
     function ViewDepartmentController($scope, $stateParams, $state, DepartmentService, AlertService) {
         var id = $stateParams.id;
-        $scope.departmentDetail = DepartmentService.getDepartmentDetails();
-        if(!$scope.departmentDetail)
+        DepartmentService.getDepartmentDetail(id).then(function (data) {
+            $scope.departmentDetail = data.data;
+        }).catch(function (error) {
             $state.go('staff');
+        });
+        // $scope.departmentDetail = DepartmentService.getDepartmentDetails();
+        // if(!$scope.departmentDetail)
+        //     $state.go('staff');
     }
 
     function AddDepartmentController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, DepartmentService, ItemService, AlertService) {
@@ -79,15 +84,29 @@
                     name: categories[i].name,
                 });
             }
+
             if ($scope.departmentId) {
-                $scope.Department = DepartmentService.getDepartmentDetails();
-                for (var i = 0; i < $scope.Department.category.length; i++) {
-                    $scope.selectedCategories.push($scope.Department.category[i]._id);
-                    $scope.itms.push($scope.Department.category[i]);
-                }
-                if(!$scope.Department)
+                DepartmentService.getDepartmentDetail($scope.departmentId).then(function (data) {
+                    $scope.Department = data.data;
+                    for (var i = 0; i < $scope.Department.category.length; i++) {
+                        $scope.selectedCategories.push($scope.Department.category[i]._id);
+                        $scope.itms.push($scope.Department.category[i]);
+                    }
+                }).catch(function (error) {
                     $state.go('staff');
+                });
             }
+
+
+            // if ($scope.departmentId) {
+            //     $scope.Department = DepartmentService.getDepartmentDetails();
+            //     for (var i = 0; i < $scope.Department.category.length; i++) {
+            //         $scope.selectedCategories.push($scope.Department.category[i]._id);
+            //         $scope.itms.push($scope.Department.category[i]);
+            //     }
+            //     if(!$scope.Department)
+            //         $state.go('staff');
+            // }
         });
 
         $scope.departmentAddRequest = false;

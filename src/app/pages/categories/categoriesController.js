@@ -115,8 +115,11 @@
         };
 
         // Add Article
-        $scope.addArticle = function (category) {
+        $scope.addArticle = function (category,subcategory) {
             CategoryService.setItemCategoryDetails(category);
+            if(subcategory){
+                CategoryService.setSubCategoryDetails(subcategory);            
+            }
             $state.go('additem');
         }
 
