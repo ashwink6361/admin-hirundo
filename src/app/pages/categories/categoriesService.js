@@ -8,7 +8,7 @@ angular.module('BlurAdmin.pages.categories').service('CategoryService', Category
 function CategoryService($q, $http) {
     var _categoryDetails = {};
     var _itemCategoryDetails = {};
-    var _subCategoryDetails = {};
+    var _subCategoryDetails = '';
     var _activeTab = 0;
     return {
         getCategories: function(name, offset, limit) {
