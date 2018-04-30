@@ -34,7 +34,7 @@
                             <td>{{order.created_at | date:'hh:mm a'}}</td>
                             <td>{{getOrderStatus(order.status)}}</td>
                             <td class="w-180">
-                                <button type="button" class="text-btn" data-toggle="modal" ng-click="openPopup(order, 'app/pages/orders/views/update.html', 'md')">Update</button>
+                                <button type="button" class="text-btn" data-toggle="modal" ng-click="updateOrder(order, 1)">Update</button>
                                 <button type="button" class="text-btn" ng-click="checkout(order.room._id,order.table)">Checkout</button>
                             </td>
                         </tr>
@@ -46,19 +46,24 @@
                                             <th>Item Name</th>
                                             <th>Item Price</th>
                                             <th>Item Quantity</th>
+                                            <th>Status</th>
                                             <th class="w-310">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="item in order.item">
-                                            <td>{{item.id.name}}</td>
-                                            <td>{{item.price}}</td>
-                                            <td>{{item.quantity}}</td>
                                             <td>
-                                                <button type="button" class="text-btn" data-toggle="modal">In prepare</button>
-                                                <button type="button" class="text-btn" data-toggle="modal">Prepared</button>
-                                                <button type="button" class="text-btn" data-toggle="modal">Deliverd</button>
-                                                <button type="button" class="text-btn" data-toggle="modal">Cancle</button>
+                                                {{item.id.name}}
+                                                <span class="variant-container" ng-repeat="varient in item.variant"><i ng-show="varient.status == 1">+</i><i ng-show="varient.status == 0">-</i>{{varient.name}}</span>
+                                            </td>
+                                            <td>&euro; {{item.price}}</td>
+                                            <td>{{item.quantity}}</td>
+                                            <td>{{getOrderStatus(item.status)}}</td>
+                                            <td>
+                                                <button type="button" class="text-btn" ng-click="updateItem(item, order._id, 4)">In prepare</button>
+                                                <button type="button" class="text-btn" ng-click="updateItem(item, order._id, 2)">Prepared</button>
+                                                <button type="button" class="text-btn" ng-click="updateItem(item, order._id, 1)">Deliverd</button>
+                                                <button type="button" class="text-btn" ng-click="updateItem(item, order._id, 3)">Cancle</button>
                                             </td>
                                         </tr>
                                     </tbody>

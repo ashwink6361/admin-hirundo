@@ -1,6 +1,6 @@
 (function () {
 'use strict';
-    angular.module('BlurAdmin.pages.department', []).config(routeConfig);
+    angular.module('BlurAdmin.pages.department', ['ui.select']).config(routeConfig);
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider

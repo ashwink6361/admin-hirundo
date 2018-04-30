@@ -65,6 +65,9 @@
 
     function AddDepartmentController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, DepartmentService, ItemService, AlertService) {
         $scope.departmentId = $stateParams.id;
+        $scope.itms = [];
+        $scope.selectedCategories = [];
+
         $q.all([
             ItemService.getCategories()
         ]).then(function (data) {
@@ -78,6 +81,10 @@
             }
             if ($scope.departmentId) {
                 $scope.Department = DepartmentService.getDepartmentDetails();
+                for (var i = 0; i < $scope.Department.category.length; i++) {
+                    $scope.selectedCategories.push($scope.Department.category[i]._id);
+                    $scope.itms.push($scope.Department.category[i]);
+                }
                 if(!$scope.Department)
                     $state.go('staff');
             }
@@ -85,11 +92,15 @@
 
         $scope.departmentAddRequest = false;
         $scope.addDepartment = function () {
+            if (!$scope.selectedCategories.length) {
+                AlertService.error('departmentmsg', "Please select category", 4000);
+                return false;
+            }
             var opts = {
                 userName: $scope.Department.userName,
                 password: $scope.Department.password,
                 name: $scope.Department.firstName, 
-                category: $scope.Department.category,               
+                category: ($scope.selectedCategories.length) ? $scope.selectedCategories : [],                            
                 deviceType: 'web',
                 deviceId: '',
                 deviceToken: ''
@@ -105,9 +116,13 @@
         };
 
         $scope.editDepartment = function () {
+            if (!$scope.selectedCategories.length) {
+                AlertService.error('departmentmsg', "Please select category", 4000);
+                return false;
+            }
             var opts = {
                 name: $scope.Department.firstName,
-                category: $scope.Department.category,               
+                category: ($scope.selectedCategories.length) ? $scope.selectedCategories : [],                
                 deviceType: 'web',
                 deviceId: '',
                 deviceToken: ''
@@ -120,6 +135,24 @@
                 $scope.departmentAddRequest = false;
                 AlertService.error('departmentmsg', error.message, 4000);
             });
+        };
+
+        $scope.selectCategory = function (category) {
+            console.log('category',category);
+            if ($scope.selectedCategories.indexOf(category.selected._id) === -1) {
+                $scope.selectedCategories.push(category.selected._id);
+                $scope.itms.push({
+                    _id: category.selected._id,
+                    name: category.selected.name
+                });
+            }
+        };
+
+        $scope.removeCategory = function (indx, item) {
+            if ($scope.selectedCategories.indexOf(item._id) > -1) {
+                $scope.selectedCategories.splice(indx, 1);
+                $scope.itms.splice(indx, 1);
+            }
         };
     }
 })();

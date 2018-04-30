@@ -46,12 +46,36 @@
             });
         };
 
-        $scope.updateOrder = function(status) {
-            $scope.activeOrder.status = status;
-            OrderService.updateOrder($scope.activeOrder._id, {status: status}).then(function(data) {
+        $scope.updateOrder = function(order, status) {
+            order.status = status;
+            var items = [];
+            for (var i = 0; i < order.item.length; i++) {
+                items.push(order.item[i].id._id)
+            }
+            var opts = {
+                status: status,
+                itemId: items
+            };
+            OrderService.updateOrder(order._id, opts).then(function(data) {
                 console.log("Order updated", data);
             }).catch(function(error) {
 
+            });
+        };
+
+        $scope.updateItem = function(item, order, status) {
+            console.log(item, '')
+            item.status = status;
+            var items = [];
+            items.push(item.id._id)
+            var opts = {
+                status: status,
+                itemId: items
+            };
+            OrderService.updateOrder(order, opts).then(function(data) {
+                console.log("waiter Order updated", data);
+            }).catch(function(error) {
+                console.log("error", error);
             });
         };
 
