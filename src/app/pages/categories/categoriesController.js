@@ -119,6 +119,8 @@
             CategoryService.setItemCategoryDetails(category);
             if(subcategory){
                 CategoryService.setSubCategoryDetails(subcategory);            
+            }else{
+                CategoryService.setSubCategoryDetails('');
             }
             $state.go('additem');
         }
