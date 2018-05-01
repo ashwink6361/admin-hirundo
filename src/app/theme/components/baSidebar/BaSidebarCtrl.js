@@ -30,6 +30,7 @@
 
     $scope.selectedTab = function () {
       CategoryService.setActiveTab(0);
+      localStorage.setItem('activeTab', 0);
     }
     
     ProfileService.getDetails().then(function (data) {

@@ -8,6 +8,9 @@
 .text-center {
     text-align: center;
 }
+.mb-10{
+    margin-bottom: 10px;
+}
 
 .flex-row {
     flex-direction: row !important;
@@ -1261,6 +1264,7 @@
         position: relative;
         img {
             max-width: 100%;
+            border-radius: 100%;
             &.icon-img {
                 max-width: 60%;
             }
@@ -1347,4 +1351,21 @@
 .variant-container{
     display: block;
     font-size: 12px;
+}
+
+.order-modal{
+    .modal-dialog{
+        position: fixed;
+        right: 0;
+        height: 100%;
+        top: 0;
+        .modal-content{
+            height: 100%;
+            border-radius: 0;
+            .modal-content{
+                height: 100%;
+                border-radius: 0;
+            }
+        }
+    }
 }

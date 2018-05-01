@@ -54,7 +54,7 @@
                                         <tr ng-repeat="item in order.item">
                                             <td>
                                                 {{item.id.name}}
-                                                <span class="variant-container" ng-repeat="varient in item.variant"><i ng-show="varient.status == 1">+</i><i ng-show="varient.status == 0">-</i>{{varient.name}}</span>
+                                                <span class="variant-container" ng-repeat="varient in item.variant"><i ng-show="varient.status == 1">+</i><i ng-show="varient.status == 0">-</i>{{varient.name}} &euro;{{varient.price}}</span>
                                             </td>
                                             <td>&euro; {{item.price}}</td>
                                             <td>{{item.quantity}}</td>

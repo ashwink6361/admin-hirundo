@@ -22,8 +22,6 @@
         <button type="button" class="btn btn-primary" ng-click="makeOrder()">Make an order</button>
     </div>
 </div>
-</div>
-
 <div class="modal-content" ng-if="activeTab[1]">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
@@ -56,11 +54,12 @@
         </button>
         <h4 class="modal-title" style="color: #fff" id="myModalLabel3">{{Order.selectedCategory.name}}</h4>
     </div>
-    <div class="tabs-container" >
+    <div class="tabs-container">
         <ul ng-style="{'background-color' : Order.selectedCategory.color}">
-            <li  ng-class="{'active':Order.selectedSubcategory[-1]}" ng-click="filterBySubcategory()">All</li>
+            <li ng-class="{'active':Order.selectedSubcategory[-1]}" ng-click="filterBySubcategory()">All</li>
             <span ng-if="Order.selectedCategory.subCategory.length">
-                <li ng-repeat="subCategory in Order.selectedCategory.subCategory track by $index" ng-class="{'active':Order.selectedSubcategory[$index]}" ng-click="filterBySubcategory(subCategory,$index)">
+                <li ng-repeat="subCategory in Order.selectedCategory.subCategory track by $index" ng-class="{'active':Order.selectedSubcategory[$index]}"
+                    ng-click="filterBySubcategory(subCategory,$index)">
                     {{subCategory}}
                 </li>
             </span>
@@ -110,13 +109,13 @@
                         <p class="name">&euro;{{item.price}}</p>
                     </div>
                     <div class="order-btn">
-                        <button type="button" ng-click="decreaseValue(item)" >
+                        <button type="button" ng-click="decreaseValue(item)">
                             <i class="fa fa-minus"></i>
                         </button>
-                        <button type="button" ng-click="increaseValue(item)" >
+                        <button type="button" ng-click="increaseValue(item)">
                             <i class="fa fa-plus"></i>
                         </button>
-                        <button type="button" class="varient-btn" ng-click="changeTab(3)" >
+                        <button type="button" class="varient-btn" ng-click="changeTab(3)">
                             <img src="assets/img/icon_edit.png" alt="" />
                         </button>
                     </div>
@@ -144,9 +143,13 @@
     <div class="modal-body">
         <h5>Quantity</h5>
         <div class="input-group">
-            <span class="input-group-addon addon-left input-group-addon-secondry"><i class="fa fa-minus"></i></span>
+            <span class="input-group-addon addon-left input-group-addon-secondry">
+                <i class="fa fa-minus"></i>
+            </span>
             <input type="text" class="form-control with-success-addon" />
-            <span class="input-group-addon addon-right input-group-addon-secondry"><i class="fa fa-plus"></i></span>            
+            <span class="input-group-addon addon-right input-group-addon-secondry">
+                <i class="fa fa-plus"></i>
+            </span>
         </div>
         <h5>Variant and Notes</h5>
         <div class="tabs-btn d-flex">
@@ -205,7 +208,7 @@
                 </div>
                 <div class="order-item-detail">
                     <p class="name">{{item.name}}</p>
-                    <p class="name">&euro;{{item.price}}</p>                                        
+                    <p class="name">&euro;{{item.price}}</p>
                 </div>
                 <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
                     Delete
