@@ -353,12 +353,19 @@
     }
 
     function TabController($scope, $state, $http, $timeout, CategoryService, AlertService) {
-        $scope.activeTab = CategoryService.getActiveTab();
+        console.log(localStorage.getItem('activeTab'));
+        if(localStorage.getItem('activeTab')){
+            $scope.activeTab = localStorage.getItem('activeTab');
+        }
+        else{
+            $scope.activeTab = CategoryService.getActiveTab();
+        }        
         $scope.selectTab = function (tab) {
             if (tab == 1) {
                 $state.reload();
             }
             CategoryService.setActiveTab(tab);
+            localStorage.setItem('activeTab', tab);
         };
     }
 })();
