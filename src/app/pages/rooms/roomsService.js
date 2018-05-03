@@ -28,10 +28,9 @@ function baRoomServiceProvider() {
 function RoomService($q, $http) {
     var _roomDetails = {};
     var _rooms = [];
-
     var socket = io.connect(SOCKETURL);
-    if(socket.connected)
-    console.log("Socket Connection Done");
+    if (socket.connected)
+        console.log("Socket Connection Done");
     socket.on('tablestatus', function (data) {
         for (var i = 0; i < _rooms.length; i++) {
             if (data.room == _rooms[i]._id) {
@@ -44,124 +43,125 @@ function RoomService($q, $http) {
         }
     });
     return {
-        getRooms: function() {
+        getRooms: function () {
             var def = $q.defer();
             var url = '/api/room';
-            doGet($q, $http, url).then(function(data) {
+            doGet($q, $http, url).then(function (data) {
                 _rooms = data.data;
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 _rooms = [];
                 def.reject(error);
             });
             return def.promise;
         },
-        listRoom: function() {
+        listRoom: function () {
             return _rooms;
         },
-        addRoom: function(opts) {
+        addRoom: function (opts) {
             var def = $q.defer();
             var url = '/api/room';
-            doPost($q, $http, url, opts).then(function(data) {
+            doPost($q, $http, url, opts).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
-        updateRoom: function(id, opts) {
+        updateRoom: function (id, opts) {
             var def = $q.defer();
-            var url = '/api/room/'+id;
-            doPut($q, $http, url, opts).then(function(data) {
+            var url = '/api/room/' + id;
+            doPut($q, $http, url, opts).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
-        removeRoom: function(id) {
+        removeRoom: function (id) {
             var def = $q.defer();
-            var url = '/api/room/'+id;
-            doDelete($q, $http, url).then(function(data) {
+            var url = '/api/room/' + id;
+            doDelete($q, $http, url).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
-        getRoomDetails: function() {
+        getRoomDetails: function () {
             return _roomDetails;
         },
-        setRoomDetails: function(data) {
+        setRoomDetails: function (data) {
             _roomDetails = data;
         },
-        addTable: function(id,opts) {
+
+        addTable: function (id, opts) {
             var def = $q.defer();
-            var url = '/api/room/'+id+'/table';
-            doPost($q, $http, url, opts).then(function(data) {
+            var url = '/api/room/' + id + '/table';
+            doPost($q, $http, url, opts).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
-        removeTable: function(id,tableId) {
+        removeTable: function (id, tableId) {
             var def = $q.defer();
-            var url = '/api/room/'+id+'/table/'+tableId;
-            doDelete($q, $http, url).then(function(data) {
+            var url = '/api/room/' + id + '/table/' + tableId;
+            doDelete($q, $http, url).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
-        updateTable: function(id,tableId,opts) {
+        updateTable: function (id, tableId, opts) {
             var def = $q.defer();
-            var url = '/api/room/'+id+'/table/'+tableId;
-            doPut($q, $http, url, opts).then(function(data) {
+            var url = '/api/room/' + id + '/table/' + tableId;
+            doPut($q, $http, url, opts).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
-        createOrder: function(opts) {
+        createOrder: function (opts) {
             var def = $q.defer();
             var url = '/api/order';
-            doPost($q, $http, url, opts).then(function(data) {
+            doPost($q, $http, url, opts).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
-        getVariantsAndNotes: function() {
+        getVariantsAndNotes: function () {
             var def = $q.defer();
             var url = '/api/variantAndNotes';
-            doGet($q, $http, url).then(function(data) {
+            doGet($q, $http, url).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
-        getCategories: function() {
+        getCategories: function () {
             var def = $q.defer();
-            var url = '/api/category';            
-            doGet($q, $http, url).then(function(data) {
+            var url = '/api/category';
+            doGet($q, $http, url).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;
         },
 
-        getCategoryWithItems: function() {
+        getCategoryWithItems: function () {
             var def = $q.defer();
             var url = '/api/category/itemsByCategory';
-            doGet($q, $http, url).then(function(data) {
+            doGet($q, $http, url).then(function (data) {
                 def.resolve(data);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 def.reject(error);
             });
             return def.promise;

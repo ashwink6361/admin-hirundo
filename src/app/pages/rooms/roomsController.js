@@ -248,6 +248,7 @@
                 size: size,
                 backdrop: 'static'
             });
+            $scope.activeTab = [true,false,false,false,false];
         };
 
         $scope.cancelCreateOrder = function () {
