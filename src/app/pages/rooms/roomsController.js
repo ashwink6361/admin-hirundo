@@ -240,12 +240,14 @@
         $scope.openCreateOrder = function (table, room, page, size) {            
             $scope.roomData = angular.copy(room);
             $scope.tableData = angular.copy(table);
+            // RoomOrderService.setOrderSidebar(true);
             $scope.createOrderInstance = $uibModal.open({
                 scope: $scope,
                 animation: true,
                 templateUrl: page,
                 size: size
             });
+            $scope.activeTab = [true,false,false,false,false];
         };
 
         $scope.cancelCreateOrder = function () {
