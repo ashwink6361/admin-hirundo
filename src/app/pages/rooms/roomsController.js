@@ -9,7 +9,7 @@
         .controller('ViewRoomsController', ViewRoomsController);
 
     /** @ngInject */
-    function RoomsController($scope, $uibModal, $state, $http, $translate, $timeout, RoomService, CategoryService, AlertService, ItemService, $q) {
+    function RoomsController($scope, $rootScope, baRoomService, $uibModal, $state, $http, $translate, $timeout, RoomService, CategoryService, AlertService, ItemService, $q) {
         console.log($translate.instant('Rooms'));
         $scope.tableModal = false;
         $scope.editTableModal = false;
@@ -240,11 +240,13 @@
         $scope.openCreateOrder = function (table, room, page, size) {            
             $scope.roomData = angular.copy(room);
             $scope.tableData = angular.copy(table);
+            baRoomService.setCreateModalCollapsed(true);
             $scope.createOrderInstance = $uibModal.open({
                 scope: $scope,
                 animation: true,
                 templateUrl: page,
-                size: size
+                size: size,
+                backdrop: 'static'
             });
         };
 
@@ -261,6 +263,7 @@
                 activeTab: [true,false]                                
             };
             $scope.activeTab = [true,false,false,false,false];
+            baRoomService.setCreateModalCollapsed(false);            
         };
 
         $scope.changeTab = function (tab) {

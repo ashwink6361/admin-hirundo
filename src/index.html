@@ -30,7 +30,7 @@
   <!-- endbuild -->
 </head>
 
-<body>
+<body  ng-class="{ 'order-modal': $baRoomService.getCreateModalCollapsed() }">
   <div class="body-bg"></div>
   <main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
 

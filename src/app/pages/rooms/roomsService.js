@@ -4,7 +4,27 @@
  */
 (function () {
 'use strict';
-angular.module('BlurAdmin.pages.rooms').factory('RoomService', RoomService);
+angular.module('BlurAdmin.pages.rooms')
+    .factory('RoomService', RoomService)
+    .provider('baRoomService', baRoomServiceProvider);
+
+function baRoomServiceProvider() {
+    var showCreateModal = false;
+    /** @ngInject */
+    this.$get = function () {
+        return new _factory();
+        function _factory() {
+            var showCreateModal = false;
+            this.setCreateModalCollapsed = function (data) {
+                showCreateModal = data;
+            };
+            this.getCreateModalCollapsed = function () {
+                return showCreateModal;
+            };
+        }
+    };
+};
+
 function RoomService($q, $http) {
     var _roomDetails = {};
     var _rooms = [];
