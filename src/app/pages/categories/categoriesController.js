@@ -162,7 +162,7 @@
         }
     }
 
-    function AddCategoryController($scope, $http, $stateParams, $q, $state, $timeout, fileReader, CategoryService, AlertService) {
+    function AddCategoryController($scope, $http, $stateParams, $q, $state, $timeout, fileReader, DepartmentService, CategoryService, AlertService) {
         $scope.showCategoryIcon = false;
         $scope.isIcon = true;
         $scope.categoryId = $stateParams.id;
@@ -172,32 +172,49 @@
             color: '#fdab00'
         }
         $scope.subCategories = [];
-        if ($scope.categoryId) {
-            CategoryService.getCategoryDetail($scope.categoryId).then(function (data) {
-                $scope.Category = data.data;
-                for (var i = 0; i < $scope.Category.subCategory.length; i++) {
-                    $scope.subCategories.push($scope.Category.subCategory[i]);
-                }
-                if (!$scope.Category.isIcon) {
-                    $scope.categoryPicture = $scope.Category.logo.original;
-                    $scope.Category.color = '#fdab00';
-                    $scope.isIcon = false;
-                } else {
-                    $scope.selectedIconImage = angular.copy($scope.Category.icon);
-                    if ($scope.selectedIconImage.indexOf('/') !== -1) {
-                        var result = $scope.selectedIconImage.substring($scope.selectedIconImage.lastIndexOf("/") + 1, $scope.selectedIconImage.lastIndexOf("."));
-                        $scope.Category.icon = result;
-                    }
-                    $scope.isIcon = true;
-                }
-            }).catch(function (error) {
-                $state.go('editormenu');
-            });
-        }
+        $scope.itms = [];
+        $scope.selectedDepartments = [];
+
         $q.all([
-            CategoryService.getIcons('', 0, 100)
+            CategoryService.getIcons('', 0, 100),
+            DepartmentService.getDepartments()
         ]).then(function (data) {
+            console.log('data',data);
             $scope.icons = data[0].data;
+            var departments = data[1].data;
+            $scope.departments = [];
+            for(var i=0; i<departments.length; i++) {
+                $scope.departments.push({
+                    _id: departments[i]._id,
+                    firstName: departments[i].firstName,
+                });
+            }
+            if ($scope.categoryId) {
+                CategoryService.getCategoryDetail($scope.categoryId).then(function (data) {
+                    $scope.Category = data.data;
+                    for (var i = 0; i < $scope.Category.subCategory.length; i++) {
+                        $scope.subCategories.push($scope.Category.subCategory[i]);
+                    }
+                    for (var j = 0; j < $scope.Category.department.length; j++) {
+                        $scope.selectedDepartments.push($scope.Category.department[j]._id);
+                        $scope.itms.push($scope.Category.department[j]);
+                    }
+                    if (!$scope.Category.isIcon) {
+                        $scope.categoryPicture = $scope.Category.logo.original;
+                        $scope.Category.color = '#fdab00';
+                        $scope.isIcon = false;
+                    } else {
+                        $scope.selectedIconImage = angular.copy($scope.Category.icon);
+                        if ($scope.selectedIconImage.indexOf('/') !== -1) {
+                            var result = $scope.selectedIconImage.substring($scope.selectedIconImage.lastIndexOf("/") + 1, $scope.selectedIconImage.lastIndexOf("."));
+                            $scope.Category.icon = result;
+                        }
+                        $scope.isIcon = true;
+                    }
+                }).catch(function (error) {
+                    $state.go('editormenu');
+                });
+            }
         });
 
         $scope.addNewSubCategory = function () {
@@ -269,7 +286,8 @@
                 name: $scope.Category.name,
                 description: $scope.Category.description ? $scope.Category.description : '',
                 isIcon: $scope.isIcon ? true : false,
-                subCategory: $scope.subCategories ? JSON.stringify($scope.subCategories) : ''
+                subCategory: $scope.subCategories ? JSON.stringify($scope.subCategories) : '',
+                department: $scope.selectedDepartments ? JSON.stringify($scope.selectedDepartments) : ''
             };
             if ($scope.isIcon) {
                 if ($scope.Category.color.indexOf('#') === -1) {
@@ -315,7 +333,8 @@
                 name: $scope.Category.name,
                 description: $scope.Category.description ? $scope.Category.description : '',
                 isIcon: $scope.isIcon ? true : false,
-                subCategory: $scope.subCategories ? JSON.stringify($scope.subCategories) : ''
+                subCategory: $scope.subCategories ? JSON.stringify($scope.subCategories) : '',
+                department: $scope.selectedDepartments ? JSON.stringify($scope.selectedDepartments) : ''                
             };
             if ($scope.isIcon) {
                 opts.icon = $scope.Category.icon,
@@ -352,6 +371,24 @@
             $scope.selectedIconImage = icon.image;
             $scope.showCategoryIcon = false;
         }
+
+        $scope.selectDepartment = function (department) {
+            console.log('department',department);
+            if ($scope.selectedDepartments.indexOf(department.selected._id) === -1) {
+                $scope.selectedDepartments.push(department.selected._id);
+                $scope.itms.push({
+                    _id: department.selected._id,
+                    firstName: department.selected.firstName
+                });
+            }
+        };
+
+        $scope.removeDepartment = function (indx, item) {
+            if ($scope.selectedDepartments.indexOf(item._id) > -1) {
+                $scope.selectedDepartments.splice(indx, 1);
+                $scope.itms.splice(indx, 1);
+            }
+        };
     }
 
     function TabController($scope, $state, $http, $timeout, CategoryService, AlertService) {

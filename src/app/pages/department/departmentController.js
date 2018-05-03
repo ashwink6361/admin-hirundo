@@ -96,17 +96,6 @@
                     $state.go('staff');
                 });
             }
-
-
-            // if ($scope.departmentId) {
-            //     $scope.Department = DepartmentService.getDepartmentDetails();
-            //     for (var i = 0; i < $scope.Department.category.length; i++) {
-            //         $scope.selectedCategories.push($scope.Department.category[i]._id);
-            //         $scope.itms.push($scope.Department.category[i]);
-            //     }
-            //     if(!$scope.Department)
-            //         $state.go('staff');
-            // }
         });
 
         $scope.departmentAddRequest = false;
