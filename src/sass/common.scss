@@ -1416,7 +1416,27 @@
         }
         .modal-title{
             color: #fff;
+            position: relative;
+            .save-variant{
+                position: absolute;
+                right: 0;
+                background-color: #008000;
+                border: none;
+                padding: 3px 10px;
+                font-size: 14px;
+                border-radius: 3px;
+            }
         }
+    }
+    .input-group{
+        span{
+            cursor: pointer;
+        }
+    }
+    .sub-total{
+        position: absolute;
+        bottom: 0;
+        right: 5px;
     }
 }
 .add-varient-btn{
