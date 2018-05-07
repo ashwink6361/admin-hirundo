@@ -1,6 +1,6 @@
-<div class="tabs-container">
+<div class="tabs-container step-container">
     <ul>
-        <li ng-repeat="step in stepArray track by $index" ng-class="{'active' : activeStepTab[$index]}" (click)="selectedTab(stepArray[$index],$index)">{{step}}</li>
+        <li ng-repeat="step in stepArray track by $index" ng-class="{'active' : activeStepTab[$index]}" ng-click="selectedTab(stepArray[$index],$index)">{{step}}</li>
         <li class="add-step" ng-click="addStep()"><i class="fa fa-plus"></i></li>
     </ul>
 </div>

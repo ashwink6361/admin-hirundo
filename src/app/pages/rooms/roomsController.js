@@ -259,6 +259,9 @@
             // });
             $scope.showOrder = true;
             $scope.activeTab = [true,false,false,false,false];
+            localStorage.removeItem('stepData');
+            localStorage.removeItem('tabData');
+
         };
 
         $scope.cancelCreateOrder = function () {
@@ -275,7 +278,9 @@
             };
             $scope.activeTab = [true,false,false,false,false];
             $scope.showOrder = false;            
-            baRoomService.setCreateModalCollapsed(false);            
+            baRoomService.setCreateModalCollapsed(false);   
+            localStorage.removeItem('stepData');
+            localStorage.removeItem('tabData');         
         };
 
         $scope.changeTab = function (tab) {
@@ -855,6 +860,9 @@
     function StepsController($scope, RoomService, AlertService) {
         $scope.stepArray = ['Uscita 1', 'Uscita 2'];
         $scope.activeStepTab = [];
+        console.log('RoomService.getStepData()',RoomService.getStepData());
+        console.log('RoomService.getTabData()',RoomService.getTabData());
+        
         var step = RoomService.getStepData();
         var data = RoomService.getTabData();
         if (step && step.length) {
@@ -884,7 +892,11 @@
         }
 
         $scope.selectedTab = function (step, tab) {
+        console.log('tab',tab);
+            
             $scope.activeStepTab[tab] = true;
+        console.log('$scope.activeStepTab',$scope.activeStepTab);
+            
             for (var i = 0; i < $scope.activeStepTab.length; i++) {
                 if (i != tab) {
                     $scope.activeStepTab[i] = false;
