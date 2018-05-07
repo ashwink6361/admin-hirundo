@@ -86,7 +86,7 @@
     </div>
 
     <div class="modal-content" ng-if="activeTab[1]">
-        <div class="modal-header mb-10">
+        <div class="modal-header">
             <i class="icon-arrow-left" ng-click="changeTab(0)"></i>
             <h4 class="modal-title">Choose Category</h4>
         </div>
@@ -126,7 +126,7 @@
             </ul>
         </div>
         <step-list></step-list>
-        <div class="modal-body pt-0">
+        <div class="modal-body pt-0 calc-height">
             <div ng-if="!Order.categoryItems.length">
                 No Item Found
             </div>

@@ -1329,11 +1329,16 @@
     overflow-y: auto;
 }
 
+.calc-height{
+    height: calc(100% - 91px) !important;
+}
+
 .tabs-container {
     ul {
         padding: 0 15px;
         list-style: none;
         overflow-x: auto;
+        margin-bottom: 0;
         li {
             display: inline-block;
             padding: 5px 15px;
@@ -1349,6 +1354,7 @@
 
 .step-container{
     background-color: $primary;
+    margin-bottom: 10px;
 }
 
 .tabs-btn {
@@ -1391,7 +1397,7 @@
     }
     .modal-body{
         height: 100%;
-        height: calc(100% - 73px);
+        height: calc(100% - 91px);
     }
     .order-header {
         padding: 20px;
