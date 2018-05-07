@@ -482,16 +482,18 @@
         }
 
         $scope.viewVarient = function (article) {
-            RoomService.getRooms()
+            RoomService.getVariantsAndNotes()
                 .then(function (data) {
-                    $scope.variantList = data[1].data.variants;
-                    $scope.noteList = data[1].data.notes;
+                    $scope.variantList = data.data.variants;
+                    $scope.noteList = data.data.notes;
                 }).catch(function (error) {
                     console.log("Error ", error);
                 });
             $scope.changeTab(3);
             $scope.articleData = angular.copy(article);
             $scope.notes = [];
+            $scope.Order.activeTab[0] = true;
+            $scope.Order.activeTab[1] = false;
         }
 
 
