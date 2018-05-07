@@ -90,6 +90,7 @@
             <i class="icon-arrow-left" ng-click="changeTab(0)"></i>
             <h4 class="modal-title">Choose Category</h4>
         </div>
+        <step-list></step-list>
         <div class="modal-body pt-0">
             <div class="row">
                 <div class="col-sm-12 d-flex catogory-container">
@@ -124,6 +125,7 @@
                 </span>
             </ul>
         </div>
+        <step-list></step-list>
         <div class="modal-body pt-0">
             <div ng-if="!Order.categoryItems.length">
                 No Item Found
@@ -202,6 +204,7 @@
                 <button ng-click="saveVariantData()">Save</button>
             </h4>
         </div>
+        <step-list></step-list>
         <div class="modal-body">
             <h5>Quantity</h5>
             <div class="input-group">
@@ -260,33 +263,36 @@
             <i class="icon-arrow-left" ng-click="changeTab(2)"></i>
             <h4 class="modal-title">Create Order</h4>
         </div>
+        <step-list></step-list>
         <div class="modal-body">
             <div id="createOrderMsg"></div>
             <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Added</div>
             <div ng-if="Order.selectedItems && Order.selectedItems.length" class="modal-height">
                 <div class="order-item-container d-flex justify-space-between" ng-repeat="item in Order.selectedItems">
-                    <div class="img" ng-style="{'background-color' : item.category.color}">
-                        <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
-                        <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
-                            alt="Category Logo" />
-                        <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
-                        <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
-                    </div>
-                    <div class="order-item-detail">
-                        <p class="name">{{item.name}}</p>
-                        <p class="name">&euro;{{item.price}}</p>
-                        <span ng-if="item.variant && item.variant.length">
-                            <span ng-repeat="variant in item.variant" class="d-flex added-variand-name">
-                                <span ng-if="variant.status == 0">- {{variant.name}} </span>
-                                <span ng-if="variant.status == 1">+ {{variant.name}} &euro;{{variant.price}}</span>
+                    <div ng-if="item.step == RoomService.getTabData().step">
+                        <div class="img" ng-style="{'background-color' : item.category.color}">
+                            <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
+                            <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
+                                alt="Category Logo" />
+                            <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
+                            <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
+                        </div>
+                        <div class="order-item-detail">
+                            <p class="name">{{item.name}}</p>
+                            <p class="name">&euro;{{item.price}}</p>
+                            <span ng-if="item.variant && item.variant.length">
+                                <span ng-repeat="variant in item.variant" class="d-flex added-variand-name">
+                                    <span ng-if="variant.status == 0">- {{variant.name}} </span>
+                                    <span ng-if="variant.status == 1">+ {{variant.name}} &euro;{{variant.price}}</span>
+                                </span>
                             </span>
-                        </span>
-                        <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
+                            <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
+                            Delete
+                        </button>
                     </div>
-                    
-                    <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
-                        Delete
-                    </button>
                 </div>
                 <p>Sub Total : &euro;{{Order.cartTotalPrice}}</p>
             </div>            

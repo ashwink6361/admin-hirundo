@@ -425,7 +425,7 @@
         // }
 
         $scope.increaseValue = function(article) {
-            // article.step = $scope.globalService.getTabData().step;
+            article.step = RoomService.getTabData().step;
             if ($scope.Order.selectedItems.length) {
               var isExist = true;
               var isarr = [];
@@ -498,7 +498,7 @@
         
           $scope.decreaseValue = function(article) {
             console.log('article dec', article);
-            // article.step = $scope.globalService.getTabData().step;
+            article.step = RoomService.getTabData().step;
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
               if ($scope.Order.selectedItems[i]._id == article._id && !$scope.Order.selectedItems[i].variant) {
                 if ($scope.Order.selectedItems[i].quantity > 1) {
@@ -823,7 +823,7 @@
                 $scope.articleData.quantity = $scope.variantData.quantity;
                 $scope.articleData.variant = $scope.variantData.variant;
                 $scope.articleData.ordernote = $scope.variantData.notes;
-                // $scope.articleData.step = $scope.globalService.getTabData().step;
+                $scope.articleData.step = RoomService.getTabData().step;
                 $scope.Order.selectedItems.push($scope.articleData);
                 for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
                     if ($scope.Order.categoryItems[i]._id == $scope.articleData._id) {
@@ -853,7 +853,49 @@
     }
 
     function StepsController($scope, RoomService, AlertService) {
-        
+        $scope.stepArray = ['Uscita 1', 'Uscita 2'];
+        $scope.activeStepTab = [];
+        var step = RoomService.getStepData();
+        var data = RoomService.getTabData();
+        if (step && step.length) {
+            $scope.stepArray = step;
+        }
+        if (data && data.tab) {
+            $scope.activeStepTab[data.tab] = true;
+            var stepdata = {
+                tab: data.tab,
+                step: data.step
+            }
+            RoomService.setTabData(stepdata);
+        }
+        else {
+            $scope.activeStepTab[0] = true;
+            var stepdata = {
+                tab: 0,
+                step: $scope.stepArray[0]
+            }
+            RoomService.setTabData(stepdata);
+        }
+
+        $scope.addStep = function () {
+            var count = $scope.stepArray.length + 1;
+            $scope.stepArray.push('Uscita ' + count);
+            RoomService.setStepData($scope.stepArray);
+        }
+
+        $scope.selectedTab = function (step, tab) {
+            $scope.activeStepTab[tab] = true;
+            for (var i = 0; i < $scope.activeStepTab.length; i++) {
+                if (i != tab) {
+                    $scope.activeStepTab[i] = false;
+                }
+            }
+            var data = {
+                tab: tab,
+                step: step
+            }
+            RoomService.setTabData(data);
+        }
     }
     function ViewRoomsController($scope, $stateParams, $state, RoomService, AlertService) {
         var id = $stateParams.id;

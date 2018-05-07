@@ -179,6 +179,20 @@ function RoomService($q, $http) {
                 def.reject(error);
             });
             return def.promise;
+        },
+        setStepData: function(data) {
+            localStorage.setItem('stepData', JSON.stringify(data));
+        },
+        getStepData: function() {
+            var data = localStorage.getItem('stepData');
+            return JSON.parse(data);
+        },
+        setTabData: function(data) {
+            localStorage.setItem('tabData', JSON.stringify(data));        
+        },
+        getTabData: function() {
+            var data = localStorage.getItem('tabData');
+            return JSON.parse(data);
         }
     };
 }
