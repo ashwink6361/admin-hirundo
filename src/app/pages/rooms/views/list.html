@@ -150,7 +150,7 @@
                             <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
                                 alt="Category Logo" />
                             <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
-                            <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
+                            <span class="order-item-quantity" ng-if="item.itemTotal>0">{{item.itemTotal}}</span>
                         </div>
                         <div class="order-item-detail">
                             <p class="name">{{item.name}}</p>
@@ -174,7 +174,7 @@
                             <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
                                 alt="Category Logo" />
                             <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
-                            <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
+                            <span class="order-item-quantity" ng-if="item.itemTotal>0">{{item.itemTotal}}</span>
                         </div>
                         <div class="order-item-detail">
                             <p class="name">{{item.name}}</p>
@@ -217,14 +217,15 @@
         <div class="modal-body">
             <h5>Quantity</h5>
             <div class="input-group">
-                <span class="input-group-addon addon-left input-group-addon-secondry">
+                <span class="input-group-addon addon-left input-group-addon-secondry" ng-click="decreaseQty()">
                     <i class="fa fa-minus"></i>
                 </span>
-                <input type="text" class="form-control with-success-addon" />
-                <span class="input-group-addon addon-right input-group-addon-secondry">
+                <div class="text-center input-value">{{variantData.quantity}}</div>
+                <span class="input-group-addon addon-right input-group-addon-secondry" ng-click="increaseQty()">
                     <i class="fa fa-plus"></i>
                 </span>
             </div>
+            <div *ngIf="variantError" class="color-red">{{variantError}}</div>
             <h5>Variant and Notes</h5>
             <div class="tabs-btn d-flex">
                 <button type="button" ng-click="tabActive(1)" ng-class="{'active':Order.activeTab[0]}">Variants</button>
@@ -237,7 +238,12 @@
                             <td>{{varient.name}}</td>
                             <td>&euro;{{varient.price}}</td>
                             <td>
-                                <input type="checkbox" />
+                                <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value" ng-click="addRemoveVariant(varient,0)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}"  id="increase" value="Increase Value" ng-click="addRemoveVariant(varient,1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -246,10 +252,10 @@
             <div class="varient-list" ng-if="Order.activeTab[1]">
                 <table class="table">
                     <tbody>
-                        <tr ng-repeat="note in noteList">
+                        <tr ng-repeat="note in noteList track by $index">
                             <td>{{note.notes}}</td>
                             <td>
-                                <input type="checkbox" />
+                                <input type="checkbox" ng-model="notes[note.notes]" ng-change="addNote(note.notes, $index)"/>
                             </td>
                         </tr>
                     </tbody>
@@ -270,7 +276,7 @@
         </div>
         <div class="modal-body">
             <div id="createOrderMsg"></div>
-            <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Add</div>
+            <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Added</div>
             <div ng-if="Order.selectedItems && Order.selectedItems.length" class="modal-height">
                 <div class="order-item-container d-flex justify-space-between" ng-repeat="item in Order.selectedItems">
                     <div class="img" ng-style="{'background-color' : item.category.color}">
@@ -283,7 +289,15 @@
                     <div class="order-item-detail">
                         <p class="name">{{item.name}}</p>
                         <p class="name">&euro;{{item.price}}</p>
+                        <span ng-if="item.variant && item.variant.length">
+                            <span ng-repeat="variant in item.variant" class="d-flex added-variand-name">
+                                <span ng-if="variant.status == 0">- {{variant.name}} </span>
+                                <span ng-if="variant.status == 1">+ {{variant.name}} &euro;{{variant.price}}</span>
+                            </span>
+                        </span>
+                        <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
                     </div>
+                    
                     <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
                         Delete
                     </button>

@@ -29,11 +29,14 @@
         $scope.variantList = [];
         $scope.noteList = [];
         $scope.notes = [];
+        $scope.notesarray = [];        
         $scope.variantData = {
             quantity: 0,
             variant: [],
             notes: ''
-          }
+        };
+        $scope.variantError = '';
+
         $q.all([            
             RoomService.getCategories()
         ]).then(function (data) {
@@ -322,11 +325,22 @@
             $scope.Order.selectedCategory = category;
             $scope.Order.categoryItems = [];
             RoomService.getCategoryWithItems().then(function (data) {
-                for (var i = 0; i < data.data.length; i++) {
-                    if (data.data[i].category._id == category._id) {
+                if(data.data.length){
+                    for (var i = 0; i < data.data.length; i++) {
+                      if (data.data[i].category._id == category._id) {
                         $scope.Order.categoryItems = data.data[i].items;
+                        for (var j = 0; j < $scope.Order.categoryItems.length; j++) {
+                            $scope.Order.categoryItems[j].quantity = 0;
+                            $scope.Order.categoryItems[j].itemTotal = 0;
+                        }
+                      }
                     }
-                }
+                  }
+                // for (var i = 0; i < data.data.length; i++) {
+                //     if (data.data[i].category._id == category._id) {
+                //         $scope.Order.categoryItems = data.data[i].items;
+                //     }
+                // }
                 $scope.changeTab(2);
                 $scope.goToItems();
             })
@@ -339,10 +353,12 @@
             console.log($scope.order)
             if ($scope.Order.categoryItems) {
                 for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
+                    $scope.Order.categoryItems[i].itemTotal = 0;                    
                     if ($scope.Order.selectedItems.length) {
                         for (var j = 0; j < $scope.Order.selectedItems.length; j++) {
                             if ($scope.Order.selectedItems[j]._id == $scope.Order.categoryItems[i]._id) {
                                 $scope.Order.categoryItems[i].quantity = $scope.Order.selectedItems[j].quantity;
+                                $scope.Order.categoryItems[i].itemTotal = $scope.Order.categoryItems[i].itemTotal + $scope.Order.selectedItems[j].quantity;                            
                             }
                         }
                     }
@@ -351,87 +367,264 @@
             }
         }
 
-        $scope.increaseValue = function (item) {
-            var value = item.quantity;
-            value = isNaN(value) ? 0 : value;
-            value++;
-            item.quantity = value;
-            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-                if ($scope.Order.selectedItems[i]._id == item._id) {
-                    $scope.Order.selectedItems.splice(i, 1);
+        // $scope.increaseValue = function (item) {
+        //     var value = item.quantity;
+        //     value = isNaN(value) ? 0 : value;
+        //     value++;
+        //     item.quantity = value;
+        //     for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+        //         if ($scope.Order.selectedItems[i]._id == item._id) {
+        //             $scope.Order.selectedItems.splice(i, 1);
+        //         }
+        //     }
+        //     $scope.Order.selectedItems.push(item);
+        //     var cp = 0;
+        //     var itemno = 0;
+        //     for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+        //         itemno += $scope.Order.selectedItems[i].quantity;
+        //         cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
+        //         $scope.Order.cartTotalPrice = cp;
+        //         $scope.Order.cartTotalItem = itemno;
+        //     }
+        // }
+        
+        // $scope.decreaseValue = function (item) {
+        //     var value = item.quantity;
+        //     value = isNaN(value) ? 0 : value;
+        //     value < 1 ? value = 1 : '';
+        //     value--;
+        //     item.quantity = value;
+        //     for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+        //         if ($scope.Order.selectedItems[i]._id == item._id) {
+        //             $scope.Order.selectedItems.splice(i, 1);
+        //         }
+        //     }
+        //     if (item.quantity > 0) {
+        //         $scope.Order.selectedItems.push(item);
+        //     } else if (item.quantity == 0) {
+        //         for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
+        //             if ($scope.Order.categoryItems[i]._id == item._id) {
+        //                 delete $scope.Order.categoryItems[i].quantity;
+        //             }
+        //         }
+        //     }
+        //     var cp = 0;
+        //     var itemno = 0;
+        //     if ($scope.Order.selectedItems.length) {
+        //         for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+        //             itemno += $scope.Order.selectedItems[i].quantity;
+        //             cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
+        //             $scope.Order.cartTotalPrice = cp;
+        //             $scope.Order.cartTotalItem = itemno;
+        //         }
+        //     } else {
+        //         $scope.Order.cartTotalPrice = 0;
+        //         $scope.Order.cartTotalItem = 0;
+        //     }
+        // }
+
+        $scope.increaseValue = function(article) {
+            // article.step = $scope.globalService.getTabData().step;
+            if ($scope.Order.selectedItems.length) {
+              var isExist = true;
+              var isarr = [];
+              for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+                if ($scope.Order.selectedItems[i]._id == article._id) {
+                  if (!$scope.Order.selectedItems[i].variant) {
+                    $scope.Order.selectedItems[i].quantity += 1;
+                    isarr.push($scope.Order.selectedItems[i]._id);
+                    for (var j = 0; j < $scope.Order.categoryItems.length; j++) {
+                      if ($scope.Order.categoryItems[j]._id == $scope.Order.selectedItems[i]._id) {
+                        $scope.Order.categoryItems[j].itemTotal = $scope.Order.selectedItems[i].quantity;
+                      }
+                    }
+                  }
+                  else {
+                    for (var j = 0; j < $scope.Order.categoryItems.length; j++) {
+                      if ($scope.Order.categoryItems[j]._id == $scope.Order.selectedItems[i]._id) {
+                        $scope.Order.categoryItems[j].itemTotal = $scope.Order.categoryItems[j].itemTotal + $scope.Order.selectedItems[i].quantity;
+                      }
+                    }
+                  }
                 }
+                if ($scope.Order.selectedItems[i]._id != article._id) {
+                  isExist = false;
+                }
+              }
+              if (!isExist && isarr.indexOf(article._id) < 0) {
+                article.quantity = article.quantity + 1;
+                for (var j = 0; j < $scope.Order.categoryItems.length; j++) {
+                  if ($scope.Order.categoryItems[j]._id == article._id) {
+                    $scope.Order.categoryItems[j].itemTotal = article.quantity;
+                  }
+                }
+                $scope.Order.selectedItems.push(article);
+              }
             }
-            $scope.Order.selectedItems.push(item);
+            else {
+              article.quantity = article.quantity + 1;
+              for (var j = 0; j < $scope.Order.categoryItems.length; j++) {
+                if ($scope.Order.categoryItems[j]._id == article._id) {
+                  $scope.Order.categoryItems[j].itemTotal = article.quantity;
+                }
+              }
+              $scope.Order.selectedItems.push(article);
+            }
             var cp = 0;
             var itemno = 0;
+            var varicost = 0;
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+              itemno += $scope.Order.selectedItems[i].quantity;
+              if ($scope.Order.selectedItems[i].variant) {
+                for (var j = 0; j < $scope.Order.selectedItems[i].variant.length; j++) {
+                  if ($scope.Order.selectedItems[i].variant[j].status == 1) {
+                    varicost += $scope.Order.selectedItems[i].variant[j].price;
+                  }
+                }
+              }
+            console.log('$scope.Order.selectedItems[i].price', $scope.Order.selectedItems[i].price);
+            console.log('varicost', varicost);
+            console.log('$scope.Order.selectedItems[i].quantity', $scope.Order.selectedItems[i].quantity);
+            console.log('cp', ($scope.Order.selectedItems[i].price + varicost) * $scope.Order.selectedItems[i].quantity);
+              
+              cp += ($scope.Order.selectedItems[i].price + varicost) * $scope.Order.selectedItems[i].quantity;
+            console.log('cp', cp);                          
+              $scope.Order.cartTotalPrice = cp;
+              $scope.Order.cartTotalItem = itemno;
+            }
+            console.log('inc $scope.order', $scope.Order);
+          }
+        
+          $scope.decreaseValue = function(article) {
+            console.log('article dec', article);
+            // article.step = $scope.globalService.getTabData().step;
+            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+              if ($scope.Order.selectedItems[i]._id == article._id && !$scope.Order.selectedItems[i].variant) {
+                if ($scope.Order.selectedItems[i].quantity > 1) {
+                  $scope.Order.selectedItems[i].quantity = $scope.Order.selectedItems[i].quantity - 1;
+                  for (var j = 0; j < $scope.Order.categoryItems.length; j++) {
+                    if ($scope.Order.categoryItems[j]._id == $scope.Order.selectedItems[i]._id) {
+                      $scope.Order.categoryItems[j].itemTotal = $scope.Order.categoryItems[j].itemTotal - 1;
+                    }
+                  }
+                }
+                else {
+                  article.quantity = 0;
+                  for (var j = 0; j < $scope.Order.categoryItems.length; j++) {
+                    if ($scope.Order.categoryItems[j]._id == $scope.Order.selectedItems[i]._id) {
+                      $scope.Order.categoryItems[j].itemTotal = $scope.Order.categoryItems[j].itemTotal - 1;
+                    }
+                  }
+                  $scope.Order.selectedItems.splice(i, 1);
+                }
+              }
+            }
+            var cp = 0;
+            var itemno = 0;
+            var varicost = 0;
+            if ($scope.Order.selectedItems.length) {
+              for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
                 itemno += $scope.Order.selectedItems[i].quantity;
-                cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
+                if ($scope.Order.selectedItems[i].variant) {
+                  for (var j = 0; j < $scope.Order.selectedItems[i].variant.length; j++) {
+                    if ($scope.Order.selectedItems[i].variant[j].status == 1) {
+                      varicost += $scope.Order.selectedItems[i].variant[j].price;
+                    }
+                  }
+                }
+                cp += ($scope.Order.selectedItems[i].price + varicost) * $scope.Order.selectedItems[i].quantity;
                 $scope.Order.cartTotalPrice = cp;
                 $scope.Order.cartTotalItem = itemno;
+              }
             }
-        }
-        
-        $scope.decreaseValue = function (item) {
-            var value = item.quantity;
-            value = isNaN(value) ? 0 : value;
-            value < 1 ? value = 1 : '';
-            value--;
-            item.quantity = value;
-            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-                if ($scope.Order.selectedItems[i]._id == item._id) {
-                    $scope.Order.selectedItems.splice(i, 1);
-                }
+            else {
+              $scope.Order.cartTotalPrice = 0;
+              $scope.Order.cartTotalItem = 0;
             }
-            if (item.quantity > 0) {
-                $scope.Order.selectedItems.push(item);
-            } else if (item.quantity == 0) {
-                for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
-                    if ($scope.Order.categoryItems[i]._id == item._id) {
-                        delete $scope.Order.categoryItems[i].quantity;
-                    }
-                }
-            }
-            var cp = 0;
-            var itemno = 0;
-            if ($scope.Order.selectedItems.length) {
-                for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-                    itemno += $scope.Order.selectedItems[i].quantity;
-                    cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
-                    $scope.Order.cartTotalPrice = cp;
-                    $scope.Order.cartTotalItem = itemno;
-                }
-            } else {
-                $scope.Order.cartTotalPrice = 0;
-                $scope.Order.cartTotalItem = 0;
-            }
-        }
+            console.log('dec $scope.order', $scope.Order);
+          }
 
-        $scope.deleteItemFromCart = function (item) {
+        // $scope.deleteItemFromCart = function (item) {
+        //     for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+        //         if ($scope.Order.selectedItems[i]._id == item._id) {
+        //             $scope.Order.selectedItems.splice(i, 1);
+        //         }
+        //     }
+        //     var cp = 0;
+        //     var itemno = 0;
+        //     if ($scope.Order.selectedItems.length) {
+        //         for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+        //             itemno += $scope.Order.selectedItems[i].quantity;
+        //             cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
+        //             $scope.Order.cartTotalPrice = cp;
+        //             $scope.Order.cartTotalItem = itemno;
+        //         }
+        //     } else {
+        //         $scope.Order.cartTotalPrice = 0;
+        //         $scope.Order.cartTotalItem = 0;
+        //     }
+        //     for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
+        //         if ($scope.Order.categoryItems[i]._id == item._id) {
+        //             delete $scope.Order.categoryItems[i].quantity;
+        //         }
+        //     }
+        // }
+
+        $scope.deleteItemFromCart = function(article) {
+            console.log('aricle',article);
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-                if ($scope.Order.selectedItems[i]._id == item._id) {
-                    $scope.Order.selectedItems.splice(i, 1);
+              if ($scope.Order.selectedItems[i]._id == article._id && !article.variant) {
+                //non variant type data
+                for (var m = 0; m < $scope.Order.categoryItems.length; m++) {
+                  if ($scope.Order.categoryItems[m]._id == $scope.Order.selectedItems[i]._id) {
+                    $scope.Order.categoryItems[m].itemTotal = $scope.Order.categoryItems[m].itemTotal - $scope.Order.selectedItems[i].quantity;
+                  }
                 }
+                if (!$scope.Order.selectedItems[i].variant) {
+                  $scope.Order.selectedItems.splice(i, 1);
+                }
+              }
+              else if ($scope.Order.selectedItems[i]._id == article._id && article.variant) {
+                  console.log('in');
+                //variant type data
+                for (var m = 0; m < $scope.Order.categoryItems.length; m++) {
+                  if ($scope.Order.categoryItems[m]._id == $scope.Order.selectedItems[i]._id) {
+                    $scope.Order.categoryItems[m].itemTotal = $scope.Order.categoryItems[m].itemTotal - $scope.Order.selectedItems[i].quantity;
+                console.log('$scope.Order.categoryItems[m].itemTotal',$scope.Order.categoryItems[m].itemTotal);                  
+                  
+                }
+                }
+                console.log('$scope.Order.selectedItems[i]',$scope.Order.selectedItems[i]);                  
+                
+                if ($scope.Order.selectedItems[i].variant) {
+                  $scope.Order.selectedItems.splice(i, 1);
+                  console.log('in+++++++++++',$scope.Order.selectedItems);                  
+                }
+              }
             }
-            var cp = 0;
-            var itemno = 0;
-            if ($scope.Order.selectedItems.length) {
+              var cp = 0;
+              var itemno = 0;
+              var varicost = 0;
+              if ($scope.Order.selectedItems.length) {
                 for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-                    itemno += $scope.Order.selectedItems[i].quantity;
-                    cp += $scope.Order.selectedItems[i].price * $scope.Order.selectedItems[i].quantity;
-                    $scope.Order.cartTotalPrice = cp;
-                    $scope.Order.cartTotalItem = itemno;
+                  itemno += $scope.Order.selectedItems[i].quantity;
+                  if ($scope.Order.selectedItems[i].variant) {
+                    for (var j = 0; j < $scope.Order.selectedItems[i].variant.length; j++) {
+                      if ($scope.Order.selectedItems[i].variant[j].status == 1) {
+                        varicost += $scope.Order.selectedItems[i].variant[j].price;
+                      }
+                    }
+                  }
+                  cp += ($scope.Order.selectedItems[i].price + varicost) * $scope.Order.selectedItems[i].quantity;
+                  $scope.Order.cartTotalPrice = cp;
+                  $scope.Order.cartTotalItem = itemno;
                 }
-            } else {
+              }
+              else {
                 $scope.Order.cartTotalPrice = 0;
                 $scope.Order.cartTotalItem = 0;
-            }
-            for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
-                if ($scope.Order.categoryItems[i]._id == item._id) {
-                    delete $scope.Order.categoryItems[i].quantity;
-                }
-            }
-        }
+              }
+          }
 
         $scope.createOrder = function () {
             var itemarray = [];
@@ -492,6 +685,7 @@
             $scope.changeTab(3);
             $scope.articleData = angular.copy(article);
             $scope.notes = [];
+            $scope.notesarray = [];
             $scope.Order.activeTab[0] = true;
             $scope.Order.activeTab[1] = false;
         }
@@ -505,7 +699,94 @@
                 notes: ''
             };
             $scope.notes = [];
+            $scope.notesarray = [];
             $scope.articleData = {};
+        }
+
+        $scope.addNote = function (note, i) {
+            if ($scope.notes[note]) {
+                $scope.notesarray.push(note);
+            }
+            else {
+                $scope.notesarray.splice($scope.notesarray.indexOf(note), 1);
+            }
+            $scope.variantData.notes = $scope.notesarray.toString();
+        }
+
+        $scope.addRemoveVariant = function (variant, status) {
+            if (status == 0) {
+                variant.status = 0;
+            }
+            else {
+                variant.status = 1;
+            }
+            for (var i = 0; i < $scope.variantData.variant.length; i++) {
+                if ($scope.variantData.variant[i]._id == variant._id) {
+                    $scope.variantData.variant.splice(i, 1);
+                }
+            }
+            $scope.variantData.variant.push(variant);
+            console.log('$scope.variantData', $scope.variantData);
+        }
+
+        $scope.decreaseQty = function () {
+            var value = $scope.variantData.quantity;
+            value = isNaN(value) ? 0 : value;
+            value < 1 ? value = 1 : '';
+            value--;
+            $scope.variantData.quantity = value;
+        }
+
+        $scope.increaseQty = function () {
+            var value = $scope.variantData.quantity;
+            value = isNaN(value) ? 0 : value;
+            value++;
+            $scope.variantData.quantity = value;
+        }
+
+        $scope.saveVariantData = function () {
+            if ($scope.variantData.quantity == 0) {
+                $scope.variantError = 'Please enter quantity';
+                $timeout(function () {
+                    $scope.variantError = '';
+                }, 4000);
+            }
+            else if ($scope.variantData.quantity > 0 && !$scope.variantData.variant.length && !$scope.variantData.notes) {
+                $scope.variantError = 'Please select variants/notes';
+                $timeout(function () {
+                    $scope.variantError = '';
+                }, 4000);
+            }
+            else {
+                $scope.articleData.quantity = $scope.variantData.quantity;
+                $scope.articleData.variant = $scope.variantData.variant;
+                $scope.articleData.ordernote = $scope.variantData.notes;
+                // $scope.articleData.step = $scope.globalService.getTabData().step;
+                $scope.Order.selectedItems.push($scope.articleData);
+                for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
+                    if ($scope.Order.categoryItems[i]._id == $scope.articleData._id) {
+                        $scope.Order.categoryItems[i].itemTotal = $scope.Order.categoryItems[i].itemTotal + $scope.articleData.quantity;
+                    }
+                }
+                var cp = 0;
+                var itemno = 0;
+                var varicost = 0;
+                for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+                    itemno += $scope.Order.selectedItems[i].quantity;
+                    if ($scope.Order.selectedItems[i].variant) {
+                        for (var j = 0; j < $scope.Order.selectedItems[i].variant.length; j++) {
+                            if ($scope.Order.selectedItems[i].variant[j].status == 1) {
+                                varicost += $scope.Order.selectedItems[i].variant[j].price;
+                            }
+                        }
+                    }
+                    cp += ($scope.Order.selectedItems[i].price + varicost) * $scope.Order.selectedItems[i].quantity;
+                    $scope.Order.cartTotalPrice = cp;
+                    $scope.Order.cartTotalItem = itemno;
+                }
+                $scope.hideVarient();
+                console.log('$scope.order', $scope.Order);
+            }
         }
     }
 

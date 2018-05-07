@@ -1383,3 +1383,18 @@
         right: 0;
     }
 }
+
+.add-varient-btn{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #4b473f;
+    border: none;
+    color: #fff;
+    &.variant-added{
+        background-color: green;
+    }
+    &.variant-remove{
+        background-color: red;
+    }
+}
