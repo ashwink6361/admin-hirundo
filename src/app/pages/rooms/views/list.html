@@ -268,8 +268,9 @@
             <div id="createOrderMsg"></div>
             <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Added</div>
             <div ng-if="Order.selectedItems && Order.selectedItems.length" class="modal-height">
-                <div class="order-item-container d-flex justify-space-between" ng-repeat="item in Order.selectedItems">
-                    <div ng-if="item.step == RoomService.getTabData().step">
+                <div ng-repeat="item in Order.selectedItems">
+                    {{RoomService.getTabData().step}}
+                    <div class="order-item-container d-flex justify-space-between" ng-if="item.step == RoomService.getTabData().step">
                         <div class="img" ng-style="{'background-color' : item.category.color}">
                             <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
                             <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
