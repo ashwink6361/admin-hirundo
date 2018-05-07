@@ -6,6 +6,7 @@
     'use strict';
     angular.module('BlurAdmin.pages.rooms')
         .controller('RoomsController', RoomsController)
+        .controller('StepsController', StepsController)
         .controller('ViewRoomsController', ViewRoomsController);
 
     /** @ngInject */
@@ -26,14 +27,18 @@
         $scope.rooms = [];
         $scope.activeTab = [true,false,false,false,false];
         $scope.showCategory = false;
-
+        $scope.variantList = [];
+        $scope.noteList = [];
+        $scope.notes = [];
+        $scope.variantData = {
+            quantity: 0,
+            variant: [],
+            notes: ''
+          }
         $q.all([            
-            RoomService.getCategories(),
-            RoomService.getVariantsAndNotes()
+            RoomService.getCategories()
         ]).then(function (data) {
             $scope.categories = data[0].data;
-            $scope.variantList = data[1].data.variants;
-            $scope.noteList = data[1].data.notes;
         });
 
 
@@ -249,12 +254,12 @@
             //     size: size,
             //     backdrop: 'static'
             // });
-            $scope.showOrder = !$scope.showOrder
+            $scope.showOrder = true;
             $scope.activeTab = [true,false,false,false,false];
         };
 
         $scope.cancelCreateOrder = function () {
-            $scope.createOrderInstance.dismiss('cancel');
+            // $scope.createOrderInstance.dismiss('cancel');
             $scope.Order = {};
             $scope.Order = {
                 errorMsg: '',
@@ -266,6 +271,7 @@
                 activeTab: [true,false]                                
             };
             $scope.activeTab = [true,false,false,false,false];
+            $scope.showOrder = false;            
             baRoomService.setCreateModalCollapsed(false);            
         };
 
@@ -475,14 +481,42 @@
                 }
             }
         }
+
+        $scope.viewVarient = function (article) {
+            RoomService.getVariantsAndNotes()
+                .then(function (data) {
+                    $scope.variantList = data.data.variants;
+                    $scope.noteList = data.data.notes;
+                }).catch(function (error) {
+                    console.log("Error ", error);
+                });
+            $scope.changeTab(3);
+            $scope.articleData = angular.copy(article);
+            $scope.notes = [];
+            $scope.Order.activeTab[0] = true;
+            $scope.Order.activeTab[1] = false;
+        }
+
+
+        $scope.hideVarient = function () {
+            $scope.changeTab(2);
+            $scope.variantData = {
+                quantity: 0,
+                variant: [],
+                notes: ''
+            };
+            $scope.notes = [];
+            $scope.articleData = {};
+        }
     }
 
+    function StepsController($scope, RoomService, AlertService) {
+        
+    }
     function ViewRoomsController($scope, $stateParams, $state, RoomService, AlertService) {
         var id = $stateParams.id;
         $scope.roomDetail = RoomService.getRoomDetails();
         if (!$scope.roomDetail)
             $state.go('rooms');
-
-
     }
 })();

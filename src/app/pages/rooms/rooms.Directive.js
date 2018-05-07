@@ -17,7 +17,7 @@
     function stepList() {
         return {
             restrict: 'EA',
-            controller: 'RoomsController',
+            controller: 'StepsController',
             templateUrl: 'app/pages/rooms/views/steps.html'
         };
     }
