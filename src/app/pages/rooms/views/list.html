@@ -201,19 +201,19 @@
             </button> -->
             <i class="icon-arrow-left" ng-click="hideVarient()"></i>            
             <h4 class="modal-title" id="myModalLabel3" ng-if="Order.selectedCategory">Choose Variant
-                <button ng-click="saveVariantData()">Save</button>
+                <button class="save-variant" ng-click="saveVariantData()">Save</button>
             </h4>
         </div>
         <step-list></step-list>
         <div class="modal-body">
             <h5>Quantity</h5>
             <div class="input-group">
-                <span class="input-group-addon addon-left input-group-addon-secondry" ng-click="decreaseQty()">
-                    <i class="fa fa-minus"></i>
+                <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty()">
+                    <i class="icon-minus"></i>
                 </span>
                 <div class="text-center input-value">{{variantData.quantity}}</div>
-                <span class="input-group-addon addon-right input-group-addon-secondry" ng-click="increaseQty()">
-                    <i class="fa fa-plus"></i>
+                <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseQty()">
+                    <i class="icon-plus"></i>
                 </span>
             </div>
             <div *ngIf="variantError" class="color-red">{{variantError}}</div>
@@ -230,10 +230,10 @@
                             <td>&euro;{{varient.price}}</td>
                             <td>
                                 <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value" ng-click="addRemoveVariant(varient,0)">
-                                    <i class="fas fa-minus"></i>
+                                    <i class="icon-minus"></i>
                                 </button>
                                 <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}"  id="increase" value="Increase Value" ng-click="addRemoveVariant(varient,1)">
-                                    <i class="fas fa-plus"></i>
+                                    <i class="icon-plus"></i>
                                 </button>
                             </td>
                         </tr>
@@ -294,7 +294,7 @@
                         </button>
                     </div>
                 </div>
-                <p>Sub Total : &euro;{{Order.cartTotalPrice}}</p>
+                <p class="sub-total">Sub Total : &euro;{{Order.cartTotalPrice}}</p>
             </div>            
         </div>
         <div class="footer-btn">
