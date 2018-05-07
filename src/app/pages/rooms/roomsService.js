@@ -165,6 +165,20 @@ function RoomService($q, $http) {
                 def.reject(error);
             });
             return def.promise;
+        },
+        updateOrder: function (item, orderId) {
+            var def = $q.defer();
+            var url = '/api/waiter/order';
+            var opts = {
+                item: item,
+                orderId: orderId
+            }
+            doPut($q, $http, url, opts).then(function (data) {
+                def.resolve(data);
+            }).catch(function (error) {
+                def.reject(error);
+            });
+            return def.promise;
         }
     };
 }

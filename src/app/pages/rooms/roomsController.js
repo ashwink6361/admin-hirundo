@@ -655,6 +655,67 @@
                 });
         }
 
+
+        $scope.createOrder = function() {
+            var data = this.orderService.getOrderData();
+            var itemarray = [];
+            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+              var vararray = [];
+              if ($scope.Order.selectedItems[i].variant) {
+                for (var j = 0; j < $scope.Order.selectedItems[i].variant.length; j++) {
+                  var catarray = [];
+                  for (var k = 0; k < $scope.Order.selectedItems[i].variant[j].category.length; k++) {
+                    catarray.push($scope.Order.selectedItems[i].variant[j].category[k]._id);
+                  }
+                  var vari = {
+                    name: $scope.Order.selectedItems[i].variant[j].name,
+                    category: catarray,
+                    price: $scope.Order.selectedItems[i].variant[j].price,
+                    status: $scope.Order.selectedItems[i].variant[j].status
+                  }
+                  vararray.push(vari);
+                }
+              }
+              var item = {
+                id: $scope.Order.selectedItems[i]._id,
+                category: $scope.Order.selectedItems[i].category._id,
+                quantity: $scope.Order.selectedItems[i].quantity,
+                price: $scope.Order.selectedItems[i].price,
+                notes: $scope.Order.selectedItems[i].ordernote ? $scope.Order.selectedItems[i].ordernote : '',
+                variant: vararray,
+                step: $scope.Order.selectedItems[i].step,
+                department: $scope.Order.selectedItems[i].category.department
+              }
+              itemarray.push(item);
+            }
+            var createorder = {
+                room: $scope.roomData["_id"],
+                table: $scope.tableData["_id"],
+                noOfPeople: $scope.Order.noOfPeople,
+                item: itemarray
+            }
+            // if($scope.orderId){
+            // RoomService.updateOrder(itemarray,$scope.orderId)
+            //     .then(function (data) {
+            //         AlertService.success('createOrderMsg', data.message, 4000);
+            //         $scope.cancelCreateOrder();
+            //     })
+            //     .catch(function (error) {
+            //         AlertService.error('createOrderMsg', error.message, 4000);
+            //     });
+            // }
+            // else{
+                RoomService.createOrder(createorder)
+                .then(function (data) {
+                    AlertService.success('createOrderMsg', data.message, 4000);
+                    $scope.cancelCreateOrder();
+                })
+                .catch(function (error) {
+                    AlertService.error('createOrderMsg', error.message, 4000);
+                });
+            // }
+          }
+
         $scope.filterBySubcategory = function (subcategory, index) {
             $scope.subcategory = subcategory;
             if (typeof index !== 'undefined') {
