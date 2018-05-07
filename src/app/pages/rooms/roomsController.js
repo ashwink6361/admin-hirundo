@@ -22,6 +22,7 @@
         $scope.editRoom = {};
         $scope.editForm = {};
         $scope.Order = {};
+        $scope.showOrder = false;
         $scope.rooms = [];
         $scope.activeTab = [true,false,false,false,false];
         $scope.showCategory = false;
@@ -240,19 +241,20 @@
         $scope.openCreateOrder = function (table, room, page, size) {            
             $scope.roomData = angular.copy(room);
             $scope.tableData = angular.copy(table);
-            baRoomService.setCreateModalCollapsed(true);
-            $scope.createOrderInstance = $uibModal.open({
-                scope: $scope,
-                animation: true,
-                templateUrl: page,
-                size: size,
-                backdrop: 'static'
-            });
+            // baRoomService.setCreateModalCollapsed(true);
+            // $scope.createOrderInstance = $uibModal.open({
+            //     scope: $scope,
+            //     animation: true,
+            //     templateUrl: page,
+            //     size: size,
+            //     backdrop: 'static'
+            // });
+            $scope.showOrder = !$scope.showOrder;
             $scope.activeTab = [true,false,false,false,false];
         };
 
         $scope.cancelCreateOrder = function () {
-            $scope.createOrderInstance.dismiss('cancel');
+            // $scope.createOrderInstance.dismiss('cancel');
             $scope.Order = {};
             $scope.Order = {
                 errorMsg: '',
@@ -264,7 +266,8 @@
                 activeTab: [true,false]                                
             };
             $scope.activeTab = [true,false,false,false,false];
-            baRoomService.setCreateModalCollapsed(false);            
+            $scope.showOrder = false;            
+            // baRoomService.setCreateModalCollapsed(false);            
         };
 
         $scope.changeTab = function (tab) {

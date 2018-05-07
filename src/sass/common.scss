@@ -1369,3 +1369,17 @@
         }
     }
 }
+
+.admin-order{
+    position: fixed;
+    right: -100%;
+    transition: 0.3s;
+    width: 600px;
+    height: 100%;
+    top: 0;
+    background-color: #fff;
+    z-index: 999;
+    &.show{
+        right: 0;
+    }
+}
