@@ -1353,21 +1353,8 @@
     font-size: 12px;
 }
 
-.order-modal{
-    .modal-dialog{
-        position: fixed;
-        right: 0;
-        height: 100%;
-        top: 0;
-        .modal-content{
-            height: 100%;
-            border-radius: 0;
-            .modal-content{
-                height: 100%;
-                border-radius: 0;
-            }
-        }
-    }
+.order-sidebar{
+    margin-right: 600px;
 }
 
 .admin-order{
