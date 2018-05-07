@@ -6,6 +6,7 @@
     'use strict';
     angular.module('BlurAdmin.pages.rooms')
         .controller('RoomsController', RoomsController)
+        .controller('StepsController', StepsController)
         .controller('ViewRoomsController', ViewRoomsController);
 
     /** @ngInject */
@@ -248,7 +249,7 @@
         $scope.openCreateOrder = function (table, room, page, size) {            
             $scope.roomData = angular.copy(room);
             $scope.tableData = angular.copy(table);
-            // baRoomService.setCreateModalCollapsed(true);
+            baRoomService.setCreateModalCollapsed(true);
             // $scope.createOrderInstance = $uibModal.open({
             //     scope: $scope,
             //     animation: true,
@@ -256,7 +257,7 @@
             //     size: size,
             //     backdrop: 'static'
             // });
-            $scope.showOrder = !$scope.showOrder;
+            $scope.showOrder = true;
             $scope.activeTab = [true,false,false,false,false];
         };
 
@@ -274,7 +275,7 @@
             };
             $scope.activeTab = [true,false,false,false,false];
             $scope.showOrder = false;            
-            // baRoomService.setCreateModalCollapsed(false);            
+            baRoomService.setCreateModalCollapsed(false);            
         };
 
         $scope.changeTab = function (tab) {
@@ -851,6 +852,9 @@
         }
     }
 
+    function StepsController($scope, RoomService, AlertService) {
+        
+    }
     function ViewRoomsController($scope, $stateParams, $state, RoomService, AlertService) {
         var id = $stateParams.id;
         $scope.roomDetail = RoomService.getRoomDetails();

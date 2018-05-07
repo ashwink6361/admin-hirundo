@@ -30,7 +30,7 @@
   <!-- endbuild -->
 </head>
 
-<body  ng-class="{ 'order-modal': $baRoomService.getCreateModalCollapsed() }">
+<body>
   <div class="body-bg"></div>
   <main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" >
 
@@ -38,7 +38,7 @@
     <page-top></page-top>
 
     <div class="al-main">
-      <div class="al-content">
+      <div class="al-content" ng-class="{ 'order-sidebar': $baRoomService.getCreateModalCollapsed() }">
         <content-top></content-top>
         <div ui-view autoscroll="true" autoscroll-body-top></div>
       </div>

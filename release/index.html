@@ -19,10 +19,10 @@
   <link rel="stylesheet" href="/lib/angular-auto-complete.css" />
   <link rel="stylesheet" href="styles/vendor-dddc8eebb5.css">
 
-  <link rel="stylesheet" href="styles/app-444e2dfe58.css">
+  <link rel="stylesheet" href="styles/app-a8440b1290.css">
 </head>
 
-<body  ng-class="{ 'order-modal': $baRoomService.getCreateModalCollapsed() }">
+<body>
   <div class="body-bg"></div>
   <main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" >
 
@@ -30,7 +30,7 @@
     <page-top></page-top>
 
     <div class="al-main">
-      <div class="al-content">
+      <div class="al-content" ng-class="{ 'order-sidebar': $baRoomService.getCreateModalCollapsed() }">
         <content-top></content-top>
         <div ui-view autoscroll="true" autoscroll-body-top></div>
       </div>
@@ -59,7 +59,7 @@
   <script src="http://jvandemo.github.io/angularjs-google-maps/dist/angularjs-google-maps.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
   <!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBztAdAN1k9zYvN7U0uQAqEP0m_4NcQBOk&libraries=places"></script> -->
-  <script src="scripts/app-818e87a055.js"></script>
+  <script src="scripts/app-aabd8ba211.js"></script>
 </body>
 
 </html>
