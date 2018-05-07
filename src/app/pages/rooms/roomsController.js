@@ -26,14 +26,18 @@
         $scope.rooms = [];
         $scope.activeTab = [true,false,false,false,false];
         $scope.showCategory = false;
-
+        $scope.variantList = [];
+        $scope.noteList = [];
+        $scope.notes = [];
+        $scope.variantData = {
+            quantity: 0,
+            variant: [],
+            notes: ''
+          }
         $q.all([            
-            RoomService.getCategories(),
-            RoomService.getVariantsAndNotes()
+            RoomService.getCategories()
         ]).then(function (data) {
             $scope.categories = data[0].data;
-            $scope.variantList = data[1].data.variants;
-            $scope.noteList = data[1].data.notes;
         });
 
 
@@ -476,6 +480,31 @@
                 }
             }
         }
+
+        $scope.viewVarient = function (article) {
+            RoomService.getRooms()
+                .then(function (data) {
+                    $scope.variantList = data[1].data.variants;
+                    $scope.noteList = data[1].data.notes;
+                }).catch(function (error) {
+                    console.log("Error ", error);
+                });
+            $scope.changeTab(3);
+            $scope.articleData = angular.copy(article);
+            $scope.notes = [];
+        }
+
+
+        $scope.hideVarient = function () {
+            $scope.changeTab(2);
+            $scope.variantData = {
+                quantity: 0,
+                variant: [],
+                notes: ''
+            };
+            $scope.notes = [];
+            $scope.articleData = {};
+        }
     }
 
     function ViewRoomsController($scope, $stateParams, $state, RoomService, AlertService) {
@@ -483,7 +512,5 @@
         $scope.roomDetail = RoomService.getRoomDetails();
         if (!$scope.roomDetail)
             $state.go('rooms');
-
-
     }
 })();
