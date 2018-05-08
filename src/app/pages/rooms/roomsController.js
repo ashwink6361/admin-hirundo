@@ -716,19 +716,54 @@
     function StepsController($scope, RoomService, AlertService, baRoomService) {
         $scope.stepArray = ['Uscita 1', 'Uscita 2'];
         $scope.activeStepTab = [];
+        // if (baRoomService.getOrderId()) {
+        //     $scope.activeStepTab[0] = true;
+        //     var orderItems = JSON.parse(localStorage.getItem('orderItems'));
+        //     for (var i = 0; i < orderItems.length; i++) {
+        //         if ($scope.stepArray.indexOf(orderItems[i].step) < 0) {
+        //             $scope.stepArray.push(orderItems[i].step);
+        //         }
+        //     }
+        //     var tabdata = {
+        //         tab: 0,
+        //         step: $scope.stepArray[0]
+        //     }
+        //     baRoomService.setTabData(tabdata);
+        //     baRoomService.setStepData($scope.stepArray);
+        // }
         if (baRoomService.getOrderId()) {
-            $scope.activeStepTab[0] = [true];
+            if (baRoomService.getTabData()) {
+                $scope.activeStepTab[baRoomService.getTabData().tab] = true;
+            }
+            else {
+                $scope.activeStepTab[0] = true;
+            }
             var orderItems = JSON.parse(localStorage.getItem('orderItems'));
+            if (baRoomService.getStepData()) {
+                $scope.stepArray = baRoomService.getStepData();
+            }
+            else {
+                $scope.stepArray = ['Uscita 1', 'Uscita 2'];
+            }
             for (var i = 0; i < orderItems.length; i++) {
                 if ($scope.stepArray.indexOf(orderItems[i].step) < 0) {
                     $scope.stepArray.push(orderItems[i].step);
                 }
             }
-            var tabdata = {
-                tab: 0,
-                step: $scope.stepArray[0]
+            if (baRoomService.getTabData()) {
+                var tabdata = {
+                    tab: baRoomService.getTabData().tab,
+                    step: baRoomService.getTabData().step
+                }
+                baRoomService.setTabData(tabdata);
             }
-            baRoomService.setTabData(tabdata);
+            else {
+                var tabadata = {
+                    tab: 0,
+                    step: $scope.stepArray[0]
+                }
+                baRoomService.setTabData(tabadata);
+            }
             baRoomService.setStepData($scope.stepArray);
         }
         var step = baRoomService.getStepData();
