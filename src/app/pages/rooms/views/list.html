@@ -86,7 +86,7 @@
     </div>
 
     <div class="modal-content" ng-if="activeTab[1]">
-        <div class="modal-header mb-10">
+        <div class="modal-header">
             <i class="icon-arrow-left" ng-click="changeTab(0)"></i>
             <h4 class="modal-title">Choose Category</h4>
         </div>
@@ -126,7 +126,7 @@
             </ul>
         </div>
         <step-list></step-list>
-        <div class="modal-body pt-0">
+        <div class="modal-body pt-0 calc-height">
             <div ng-if="!Order.categoryItems.length">
                 No Item Found
             </div>
@@ -269,7 +269,6 @@
             <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Added</div>
             <div ng-if="Order.selectedItems && Order.selectedItems.length" class="modal-height">
                 <div ng-repeat="item in Order.selectedItems">
-                    {{RoomService.getTabData().step}}
                     <div class="order-item-container d-flex justify-space-between" ng-if="item.step == RoomService.getTabData().step">
                         <div class="img" ng-style="{'background-color' : item.category.color}">
                             <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
