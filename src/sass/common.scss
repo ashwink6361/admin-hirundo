@@ -1329,8 +1329,9 @@
     overflow-y: auto;
 }
 
+
 .calc-height{
-    height: calc(100% - 91px) !important;
+    height: calc(100% - 108px) !important;
 }
 
 .tabs-container {
@@ -1470,4 +1471,9 @@
     &.variant-remove{
         background-color: red;
     }
+}
+
+.cart-menu-btn{
+    position: fixed;
+    top: 82px;
 }

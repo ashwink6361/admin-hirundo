@@ -9,7 +9,7 @@
     .controller('BaSidebarCtrl', BaSidebarCtrl);
 
   /** @ngInject */
-  function BaSidebarCtrl($scope,$rootScope, ProfileService, baSidebarService, CategoryService) {
+  function BaSidebarCtrl($scope,$rootScope, ProfileService, baSidebarService, CategoryService, baRoomService) {
 
     $scope.menuItems = baSidebarService.getMenuItems();
     $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
@@ -30,6 +30,7 @@
 
     $scope.selectedTab = function () {
       CategoryService.setActiveTab(0);
+      baRoomService.setCreateModalCollapsed(false);
       localStorage.setItem('activeTab', 0);
     }
     

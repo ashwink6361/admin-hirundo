@@ -9,7 +9,6 @@ angular.module('BlurAdmin.pages.rooms')
     .provider('baRoomService', baRoomServiceProvider);
 
 function baRoomServiceProvider() {
-    var showCreateModal = false;
     /** @ngInject */
     this.$get = function () {
         return new _factory();
@@ -20,6 +19,34 @@ function baRoomServiceProvider() {
             };
             this.getCreateModalCollapsed = function () {
                 return showCreateModal;
+            };
+            this.setStepData = function(data) {
+                localStorage.setItem('stepData', JSON.stringify(data));
+            };
+            this.getStepData = function() {
+                var data = localStorage.getItem('stepData');
+                return JSON.parse(data);
+            };
+            this.setTabData = function(data) {
+                localStorage.setItem('tabData', JSON.stringify(data));        
+            };
+            this.getTabData = function() {
+                var data = localStorage.getItem('tabData');
+                return JSON.parse(data);
+            };
+            this.setOrderId = function(data){
+                localStorage.setItem('orderId', JSON.stringify(data));
+            };
+            this.getOrderId = function(){
+                var data = localStorage.getItem('orderId');
+                return JSON.parse(data);
+            };
+            this.setOrderItems = function(data){
+                localStorage.setItem('orderItems', JSON.stringify(data));
+            };
+            this.getOrderItems = function(){
+                var data = localStorage.getItem('orderItems');
+                return JSON.parse(data);
             };
         }
     };
@@ -180,20 +207,20 @@ function RoomService($q, $http) {
             });
             return def.promise;
         },
-        setStepData: function(data) {
-            localStorage.setItem('stepData', JSON.stringify(data));
-        },
-        getStepData: function() {
-            var data = localStorage.getItem('stepData');
-            return JSON.parse(data);
-        },
-        setTabData: function(data) {
-            localStorage.setItem('tabData', JSON.stringify(data));        
-        },
-        getTabData: function() {
-            var data = localStorage.getItem('tabData');
-            return JSON.parse(data);
-        }
+        // setStepData: function(data) {
+        //     localStorage.setItem('stepData', JSON.stringify(data));
+        // },
+        // getStepData: function() {
+        //     var data = localStorage.getItem('stepData');
+        //     return JSON.parse(data);
+        // },
+        // setTabData: function(data) {
+        //     localStorage.setItem('tabData', JSON.stringify(data));        
+        // },
+        // getTabData: function() {
+        //     var data = localStorage.getItem('tabData');
+        //     return JSON.parse(data);
+        // }
     };
 }
 })();
