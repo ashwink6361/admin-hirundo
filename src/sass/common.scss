@@ -1355,6 +1355,14 @@
 .step-container{
     background-color: $primary;
     margin-bottom: 10px;
+    ul{
+        li{
+            &.active{
+                color: #fbab0e;
+                border-color: #fbab0e;
+            }
+        }
+    }
 }
 
 .tabs-btn {
@@ -1397,7 +1405,7 @@
     }
     .modal-body{
         height: 100%;
-        height: calc(100% - 91px);
+        height: calc(100% - 101px);
     }
     .order-header {
         padding: 20px;
