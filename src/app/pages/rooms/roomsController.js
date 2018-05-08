@@ -430,7 +430,7 @@
         // }
 
         $scope.increaseValue = function(article) {
-            article.step = RoomService.getTabData().step;
+            article.step = baRoomService.getTabData().step;
             if ($scope.Order.selectedItems.length) {
               var isExist = true;
               var isarr = [];
@@ -503,7 +503,7 @@
         
           $scope.decreaseValue = function(article) {
             console.log('article dec', article);
-            article.step = RoomService.getTabData().step;
+            article.step = baRoomService.getTabData().step;
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
               if ($scope.Order.selectedItems[i]._id == article._id && !$scope.Order.selectedItems[i].variant) {
                 if ($scope.Order.selectedItems[i].quantity > 1) {
@@ -632,38 +632,37 @@
               }
           }
 
-        $scope.createOrder = function () {
-            var itemarray = [];
-            for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
-                var item = {
-                    id: $scope.Order.selectedItems[i]._id,
-                    category: $scope.Order.selectedItems[i].category._id,
-                    quantity: $scope.Order.selectedItems[i].quantity,
-                    price: $scope.Order.selectedItems[i].price,
-                    notes: '',
-                    variant: []
-                }
-                itemarray.push(item);
-            }
-            var createorder = {
-                room: $scope.roomData["_id"],
-                table: $scope.tableData["_id"],
-                noOfPeople: $scope.Order.noOfPeople,
-                item: itemarray
-            }
-            RoomService.createOrder(createorder)
-                .then(function (data) {
-                    AlertService.success('createOrderMsg', data.message, 4000);
-                    $scope.cancelCreateOrder();
-                })
-                .catch(function (error) {
-                    AlertService.error('createOrderMsg', error.message, 4000);
-                });
-        }
+        // $scope.createOrder = function () {
+        //     var itemarray = [];
+        //     for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
+        //         var item = {
+        //             id: $scope.Order.selectedItems[i]._id,
+        //             category: $scope.Order.selectedItems[i].category._id,
+        //             quantity: $scope.Order.selectedItems[i].quantity,
+        //             price: $scope.Order.selectedItems[i].price,
+        //             notes: '',
+        //             variant: []
+        //         }
+        //         itemarray.push(item);
+        //     }
+        //     var createorder = {
+        //         room: $scope.roomData["_id"],
+        //         table: $scope.tableData["_id"],
+        //         noOfPeople: $scope.Order.noOfPeople,
+        //         item: itemarray
+        //     }
+        //     RoomService.createOrder(createorder)
+        //         .then(function (data) {
+        //             AlertService.success('createOrderMsg', data.message, 4000);
+        //             $scope.cancelCreateOrder();
+        //         })
+        //         .catch(function (error) {
+        //             AlertService.error('createOrderMsg', error.message, 4000);
+        //         });
+        // }
 
 
         $scope.createOrder = function() {
-            var data = this.orderService.getOrderData();
             var itemarray = [];
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
               var vararray = [];
@@ -828,7 +827,7 @@
                 $scope.articleData.quantity = $scope.variantData.quantity;
                 $scope.articleData.variant = $scope.variantData.variant;
                 $scope.articleData.ordernote = $scope.variantData.notes;
-                $scope.articleData.step = RoomService.getTabData().step;
+                $scope.articleData.step = baRoomService.getTabData().step;
                 $scope.Order.selectedItems.push($scope.articleData);
                 for (var i = 0; i < $scope.Order.categoryItems.length; i++) {
                     if ($scope.Order.categoryItems[i]._id == $scope.articleData._id) {
@@ -857,14 +856,14 @@
         }
     }
 
-    function StepsController($scope, RoomService, AlertService) {
+    function StepsController($scope, RoomService, AlertService, baRoomService) {
         $scope.stepArray = ['Uscita 1', 'Uscita 2'];
         $scope.activeStepTab = [];
-        console.log('RoomService.getStepData()',RoomService.getStepData());
-        console.log('RoomService.getTabData()',RoomService.getTabData());
+        console.log('baRoomService.getStepData()',baRoomService.getStepData());
+        console.log('baRoomService.getTabData()',baRoomService.getTabData());
         
-        var step = RoomService.getStepData();
-        var data = RoomService.getTabData();
+        var step = baRoomService.getStepData();
+        var data = baRoomService.getTabData();
         if (step && step.length) {
             $scope.stepArray = step;
         }
@@ -874,7 +873,7 @@
                 tab: data.tab,
                 step: data.step
             }
-            RoomService.setTabData(stepdata);
+            baRoomService.setTabData(stepdata);
         }
         else {
             $scope.activeStepTab[0] = true;
@@ -882,13 +881,13 @@
                 tab: 0,
                 step: $scope.stepArray[0]
             }
-            RoomService.setTabData(stepdata);
+            baRoomService.setTabData(stepdata);
         }
 
         $scope.addStep = function () {
             var count = $scope.stepArray.length + 1;
             $scope.stepArray.push('Uscita ' + count);
-            RoomService.setStepData($scope.stepArray);
+            baRoomService.setStepData($scope.stepArray);
         }
 
         $scope.selectedTab = function (step, tab) {
@@ -906,7 +905,7 @@
                 tab: tab,
                 step: step
             }
-            RoomService.setTabData(data);
+            baRoomService.setTabData(data);
         }
     }
     function ViewRoomsController($scope, $stateParams, $state, RoomService, AlertService) {
