@@ -131,7 +131,7 @@
             <div ng-if="Order.categoryItems.length">
                 <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
                 <div ng-repeat="item in Order.categoryItems | filter : searchItem">
-                    <div class="order-item-container d-flex justify-space-between" ng-if="subcategory && (item.subCategory == subcategory)">
+                    <div class="order-item-container d-flex" ng-if="subcategory && (item.subCategory == subcategory)">
                         <div class="img" ng-style="{'background-color' : item.category.color}">
                             <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
                             <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
