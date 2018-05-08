@@ -63,6 +63,11 @@
 
 <div class="admin-order" ng-class="{'show' : showOrder}">
     <div class="order-header d-flex justify-space-between">
+        <div ng-if="orderId" class="cart-menu-btn">
+            <button type="button" class="btn btn-default" ng-click="changeTab(1)">
+                <i class="ion-edit">
+            </button>
+        </div>
         <div class="table-name">Table {{tableData.name}}</div>
         <i class="icon-close" ng-click="cancelCreateOrder()"></i>
     </div>
@@ -186,7 +191,7 @@
 
     <div class="modal-content" ng-if="activeTab[3]">
         <div class="modal-header">
-            <i class="icon-arrow-left" ng-click="hideVarient()"></i>            
+            <i class="icon-arrow-left" ng-click="hideVarient()"></i>
             <h4 class="modal-title" id="myModalLabel3" ng-if="Order.selectedCategory">Choose Variant
                 <button class="save-variant" ng-click="saveVariantData()">Save</button>
             </h4>
@@ -216,10 +221,12 @@
                             <td>{{varient.name}}</td>
                             <td>&euro;{{varient.price}}</td>
                             <td>
-                                <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value" ng-click="addRemoveVariant(varient,0)">
+                                <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
+                                    ng-click="addRemoveVariant(varient,0)">
                                     <i class="icon-minus"></i>
                                 </button>
-                                <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}"  id="increase" value="Increase Value" ng-click="addRemoveVariant(varient,1)">
+                                <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
+                                    ng-click="addRemoveVariant(varient,1)">
                                     <i class="icon-plus"></i>
                                 </button>
                             </td>
@@ -233,7 +240,7 @@
                         <tr ng-repeat="note in noteList track by $index">
                             <td>{{note.notes}}</td>
                             <td>
-                                <input type="checkbox" ng-model="notes[note.notes]" ng-change="addNote(note.notes, $index)"/>
+                                <input type="checkbox" ng-model="notes[note.notes]" ng-change="addNote(note.notes, $index)" />
                             </td>
                         </tr>
                     </tbody>
@@ -245,7 +252,7 @@
     <div class="modal-content" ng-if="activeTab[4]">
         <div class="modal-header">
             <i ng-if="!orderId" class="icon-arrow-left" ng-click="changeTab(2)"></i>
-            <i ng-if="orderId" class="icon-arrow-left" ng-click="changeTab(0)"></i>            
+            <i ng-if="orderId" class="icon-arrow-left" ng-click="changeTab(0)"></i>
             <h4 class="modal-title">Create Order</h4>
         </div>
         <step-list></step-list>
@@ -275,7 +282,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div ng-if="Order.selectedItems && Order.selectedItems.length" class="">
                 <div ng-repeat="item in Order.selectedItems">
                     <div class="order-item-container d-flex justify-space-between" ng-if="item.step == $baRoomService.getTabData().step">
@@ -302,18 +309,13 @@
                         </button>
                     </div>
                 </div>
-            </div>  
+            </div>
             <div class="sub-total">Sub Total : &euro;{{Order.cartTotalPrice}}</div>
-            <div ng-if="orderId" class="cart-menu-btn">
-                <button type="button" class="btn btn-default" ng-click="changeTab(1)">
-                    <i class="ion-edit">
-                </button>
-            </div>                      
         </div>
         <div class="footer-btn">
             <button type="submit" class="btn btn-primary" ng-click="createOrder()" ng-disabled="!Order.selectedItems.length">
                 Create Order
             </button>
         </div>
-    </div>    
+    </div>
 </div>
