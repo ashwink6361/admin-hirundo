@@ -35,6 +35,20 @@ function baRoomServiceProvider() {
                 var data = localStorage.getItem('tabData');
                 return JSON.parse(data);
             };
+            this.setOrderId = function(data){
+                localStorage.setItem('orderId', JSON.stringify(data));
+            };
+            this.getOrderId = function(){
+                var data = localStorage.getItem('orderId');
+                return JSON.parse(data);
+            };
+            this.setOrderItems = function(data){
+                localStorage.setItem('orderItems', JSON.stringify(data));
+            };
+            this.getOrderItems = function(){
+                var data = localStorage.getItem('orderItems');
+                return JSON.parse(data);
+            };
         }
     };
 };

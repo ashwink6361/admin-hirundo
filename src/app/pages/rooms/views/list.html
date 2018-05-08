@@ -17,9 +17,6 @@
                                             <button type="submit" class="btn bg-success" ng-click="updateRoom()">Update</button>
                                         </div>
                                         <span class="add-btn pt-r-50" title="Edit Room">
-                                            <!-- <a ng-click="openEditRoom(room,'app/pages/rooms/views/editRoom.html', 'md')" class="btn btn-default btn-icon">
-                                                <i class="icon-pencil"></i>
-                                            </a> -->
                                             <a ng-click="openEditRoom(room, $index)" class="btn btn-secondary btn-icon">
                                                 <i class="ion-edit"></i>
                                             </a>
@@ -31,7 +28,7 @@
                                         </span>
                                         <div class="room-container" ng-init="tableIndex = ($index+1)-1">
                                             <div ng-repeat="table in room.tables" class="table-container" ng-style="table.status == 0 ? {'background-color':'#c5c8cd'} : table.status == 1 ? {'background-color':'#add278'} : table.status == 2 ? {'background-color':'yellow'} :{'background-color':''}">
-                                                <div class="room-table" ng-click="openCreateOrder(table,room,'app/pages/rooms/views/createOrder.html', 'md')">
+                                                <div class="room-table" ng-click="openCreateOrder(table,room)">
                                                     <div class="table-name">
                                                         {{table.name}}
                                                     </div>
@@ -100,11 +97,6 @@
                         <p class="name">{{category.name}}</p>
                     </div>
                 </div>
-                <!-- <div class="col-sm-12">
-                    <button type="button" class="btn btn-primary" >
-                        Back
-                    </button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -184,9 +176,6 @@
                 </div>
             </div>
             <div class="footer-btn">
-                <!-- <button type="button" class="btn btn-primary" ng-click="changeTab(1)">
-                    Back
-                </button> -->
                 <button type="button" class="btn btn-primary" ng-click="changeTab(4)">
                     <i class="fa fa-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
                 </button>
@@ -196,9 +185,6 @@
 
     <div class="modal-content" ng-if="activeTab[3]">
         <div class="modal-header">
-            <!-- <button type="button" class="close" ng-click="cancelCreateOrder()" aria-label="Close">
-                <em class="ion-ios-close-empty sn-link-close"></em>
-            </button> -->
             <i class="icon-arrow-left" ng-click="hideVarient()"></i>            
             <h4 class="modal-title" id="myModalLabel3" ng-if="Order.selectedCategory">Choose Variant
                 <button class="save-variant" ng-click="saveVariantData()">Save</button>
@@ -252,21 +238,43 @@
                     </tbody>
                 </table>
             </div>
-            <!-- <button type="button" class="btn btn-primary" ng-click="hideVarient()">
-                Back
-            </button> -->
         </div>
     </div>
 
     <div class="modal-content" ng-if="activeTab[4]">
         <div class="modal-header">
-            <i class="icon-arrow-left" ng-click="changeTab(2)"></i>
+            <i ng-if="!orderId" class="icon-arrow-left" ng-click="changeTab(2)"></i>
+            <i ng-if="orderId" class="icon-arrow-left" ng-click="changeTab(0)"></i>            
             <h4 class="modal-title">Create Order</h4>
         </div>
         <step-list></step-list>
         <div class="modal-body">
             <div id="createOrderMsg"></div>
-            <div ng-if="!(Order.selectedItems && Order.selectedItems.length)">No Item Added</div>
+            <div ng-if="!orderId && !(Order.selectedItems && Order.selectedItems.length)">No Item Added</div>
+            <div ng-if="orderId && orderItems.length" class="modal-height">
+                <div ng-repeat="item in orderItems">
+                    <div class="order-item-container d-flex justify-space-between" ng-if="item.step == $baRoomService.getTabData().step">
+                        <div class="img" ng-style="{'background-color' : item.id.category.color}">
+                            <img ng-if="!item.id.logo.small && item.id.category.isIcon" class="icon-img" ng-src="{{item.id.category.icon}}" alt="" />
+                            <img ng-if="!item.id.logo.small && !item.id.category.isIcon && item.id.category.logo.small" ng-src="{{item.id.category.logo.small}}"
+                                alt="Category Logo" />
+                            <img ng-if="item.id.logo.small" ng-src="{{item.id.logo.small}}" alt="Item Logo" />
+                            <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
+                        </div>
+                        <div class="order-item-detail">
+                            <p class="name">{{item.id.name}}</p>
+                            <p class="name">&euro;{{item.price}}</p>
+                            <span ng-if="item.variant && item.variant.length">
+                                <span ng-repeat="variant in item.variant" class="d-flex added-variand-name">
+                                    <span ng-if="variant.status == 0">- {{variant.name}} </span>
+                                    <span ng-if="variant.status == 1">+ {{variant.name}} &euro;{{variant.price}}</span>
+                                </span>
+                            </span>
+                            <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div> 
             <div ng-if="Order.selectedItems && Order.selectedItems.length" class="modal-height">
                 <div ng-repeat="item in Order.selectedItems">
                     <div class="order-item-container d-flex justify-space-between" ng-if="item.step == $baRoomService.getTabData().step">
@@ -288,19 +296,20 @@
                             </span>
                             <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
                         </div>
-                        
                         <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
                             Delete
                         </button>
                     </div>
                 </div>
-                <p class="sub-total">Sub Total : &euro;{{Order.cartTotalPrice}}</p>
-            </div>            
+            </div>  
+            <div class="sub-total">Sub Total : &euro;{{Order.cartTotalPrice}}</div>
+            <div ng-if="orderId" class="cart-menu-btn">
+                <button type="button" class="btn btn-default" ng-click="changeTab(1)">
+                    Menu
+                </button>
+            </div>                      
         </div>
         <div class="footer-btn">
-            <!-- <button type="button" class="btn btn-primary" ng-click="changeTab(2)">
-                Back
-            </button> -->
             <button type="submit" class="btn btn-primary" ng-click="createOrder()" ng-disabled="!Order.selectedItems.length">
                 Create Order
             </button>
