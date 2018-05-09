@@ -570,6 +570,11 @@
                     .then(function (data) {
                         AlertService.success('createOrderMsg', data.message, 4000);
                         $scope.cancelCreateOrder();
+                        RoomService.getRooms().then(function (data) {
+                            $scope.rooms = RoomService.listRoom();
+                        }).catch(function (error) {
+                            console.log("Error ", error);
+                        });
                     })
                     .catch(function (error) {
                         AlertService.error('createOrderMsg', error.message, 4000);
@@ -579,6 +584,11 @@
                     .then(function (data) {
                         AlertService.success('createOrderMsg', data.message, 4000);
                         $scope.cancelCreateOrder();
+                        RoomService.getRooms().then(function (data) {
+                            $scope.rooms = RoomService.listRoom();
+                        }).catch(function (error) {
+                            console.log("Error ", error);
+                        });
                     })
                     .catch(function (error) {
                         AlertService.error('createOrderMsg', error.message, 4000);

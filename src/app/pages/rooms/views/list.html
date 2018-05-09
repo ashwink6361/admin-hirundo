@@ -131,7 +131,7 @@
             <div ng-if="Order.categoryItems.length">
                 <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
                 <div ng-repeat="item in Order.categoryItems | filter : searchItem">
-                    <div class="order-item-container d-flex justify-space-between" ng-if="subcategory && (item.subCategory == subcategory)">
+                    <div class="order-item-container d-flex" ng-if="subcategory && (item.subCategory == subcategory)">
                         <div class="img" ng-style="{'background-color' : item.category.color}">
                             <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
                             <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
@@ -252,16 +252,15 @@
     <div class="modal-content" ng-if="activeTab[4]">
         <div class="modal-header">
             <i ng-if="!orderId" class="icon-arrow-left" ng-click="changeTab(2)"></i>
-            <i ng-if="orderId" class="icon-arrow-left" ng-click="changeTab(0)"></i>
             <h4 class="modal-title">Create Order</h4>
         </div>
         <step-list></step-list>
-        <div class="modal-body calc-height">
+        <div class="modal-body calc-height pt-0">
             <div id="createOrderMsg"></div>
             <div ng-if="!orderId && !(Order.selectedItems && Order.selectedItems.length)">No Item Added</div>
             <div ng-if="orderId && orderItems.length" class="">
                 <div ng-repeat="item in orderItems">
-                    <div class="order-item-container d-flex justify-space-between" ng-if="item.step == $baRoomService.getTabData().step">
+                    <div class="order-item-container d-flex" ng-if="item.step == $baRoomService.getTabData().step">
                         <div class="img" ng-style="{'background-color' : item.id.category.color}">
                             <img ng-if="!item.id.logo.small && item.id.category.isIcon" class="icon-img" ng-src="{{item.id.category.icon}}" alt="" />
                             <img ng-if="!item.id.logo.small && !item.id.category.isIcon && item.id.category.logo.small" ng-src="{{item.id.category.logo.small}}"
@@ -285,7 +284,7 @@
             </div>
             <div ng-if="Order.selectedItems && Order.selectedItems.length" class="">
                 <div ng-repeat="item in Order.selectedItems">
-                    <div class="order-item-container d-flex justify-space-between" ng-if="item.step == $baRoomService.getTabData().step">
+                    <div class="order-item-container d-flex" ng-if="item.step == $baRoomService.getTabData().step">
                         <div class="img" ng-style="{'background-color' : item.category.color}">
                             <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
                             <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
