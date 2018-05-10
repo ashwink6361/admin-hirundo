@@ -1354,6 +1354,19 @@
     }
 }
 
+.leftsidebar{
+    position: fixed;
+    top: 66px;
+    padding-top: 20px;
+    left: 10px;
+    width: calc(100% - 390px);
+    background: #fff;
+    padding: 20px;
+    height: calc(100% - 66px);
+    background: #fff;
+    padding: 20px;
+}
+
 .step-container{
     background-color: $primary;
     margin-bottom: 10px;

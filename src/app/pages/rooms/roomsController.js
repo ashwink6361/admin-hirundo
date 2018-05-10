@@ -31,6 +31,7 @@
         $scope.noteList = [];
         $scope.notes = [];
         $scope.notesarray = [];
+        $scope.showLedtSideBar = false;
         $scope.variantData = {
             quantity: 0,
             variant: [],
@@ -286,6 +287,7 @@
             };
             $scope.activeTab = [true, false, false, false, false];
             $scope.showOrder = false;
+            $scope.showLedtSideBar = false;
             baRoomService.setCreateModalCollapsed(false);
             localStorage.removeItem('stepData');
             localStorage.removeItem('tabData');
@@ -720,6 +722,12 @@
                 }
                 $scope.hideVarient();
             }
+        }
+        $scope.showLeftSide = function(){
+            $scope.showLedtSideBar = true;
+        }
+        $scope.hideLeftSide = function(){
+            $scope.showLedtSideBar = false;
         }
     }
 
