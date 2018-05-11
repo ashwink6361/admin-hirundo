@@ -370,10 +370,10 @@
             <div class="sub-total">Sub Total : &euro;{{Order.cartTotalPrice}}</div>
         </div>
         <div class="footer-btn">
-            <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn">
+            <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn" ng-click="createOrder()" ng-disabled="!Order.selectedItems.length">
                 Create Order <i class="ion-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
             </button>
-            <button style="background-color:#00aef0; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" type="submit" class="btn" ng-click="createOrder()" ng-disabled="!Order.selectedItems.length">
+            <button style="background-color:#00aef0; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" type="submit" class="btn" >
                 Total <i class="ion-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
             </button>
         </div>

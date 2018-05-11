@@ -531,6 +531,7 @@
         }
 
         $scope.createOrder = function () {
+            console.log("fsdf");
             var itemarray = [];
             for (var i = 0; i < $scope.Order.selectedItems.length; i++) {
                 var vararray = [];
@@ -596,6 +597,7 @@
                         AlertService.error('createOrderMsg', error.message, 4000);
                     });
             }
+            $scope.showLedtSideBar = false;
         }
 
         $scope.filterBySubcategory = function (subcategory, index) {
