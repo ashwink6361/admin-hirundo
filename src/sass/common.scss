@@ -1424,11 +1424,28 @@
     }
     .order-header {
         padding: 20px;
+        .cart-menu-btn{
+            button{
+                border: none;
+                background-color: $secondry;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                i{
+                    color: #fff;
+                }
+            }
+        }
         .table-name {
             font-size: 18px;
             font-weight: bold;
             text-align: center;
             width: 100%;
+            .room-name{
+                border-right: 2px solid #dedede;
+                padding-right: 5px;
+                margin-right: 5px;
+            }
         }
         i{
             cursor: pointer;
@@ -1459,6 +1476,13 @@
                 font-size: 14px;
                 border-radius: 3px;
             }
+        }
+    }
+    .cart-header{
+        background-color: #dedede;
+        color: #333;
+        .modal-title{
+            color: #333;
         }
     }
     .input-group{
