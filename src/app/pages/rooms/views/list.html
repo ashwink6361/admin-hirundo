@@ -67,9 +67,12 @@
             <button type="button" ng-click="showLeftSide();changeTab(1)" ng-if="!showLedtSideBar">
                 <i class="ion-edit">
             </button>
-            <button type="button" ng-click="hideLeftSide()" ng-if="showLedtSideBar">
+            <button  type="button" ng-click="hideLeftSide()" ng-if="showLedtSideBar && orderId">
                 <i class="ion-close">
             </button>
+            <button  type="button" ng-click="hideLeftSide();changeTab(0)" ng-if="showLedtSideBar && !orderId">
+                    <i class="ion-close">
+                </button>
         </div>
         <div class="table-name"><span class="room-name">{{roomData.name}}</span> {{tableData.name}}</div>
         <i class="icon-arrow-right" ng-click="cancelCreateOrder()"></i>
@@ -128,12 +131,12 @@
             </div>
             <!-- <step-list></step-list> -->
             <div class="modal-body pt-0 mt-10">
-                <div ng-if="!Order.categoryItems.length">
+                <div ng-if="!Order.categoryItems[$baRoomService.getTabData().step]">
                     No Item Found
                 </div>
-                <div ng-if="Order.categoryItems.length">
+                <div ng-if="Order.categoryItems[$baRoomService.getTabData().step]">
                     <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
-                    <div ng-repeat="item in Order.categoryItems | filter : searchItem">
+                    <div ng-repeat="item in Order.categoryItems[$baRoomService.getTabData().step] | filter : searchItem">
                         <div class="order-item-container d-flex" ng-if="subcategory && (item.subCategory == subcategory)">
                             <div class="img" ng-style="{'background-color' : item.category.color}">
                                 <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
@@ -261,7 +264,7 @@
         <step-list ng-if="showLedtSideBar"></step-list>
         <div class="modal-body calc-height pt-0">
             <div id="createOrderMsg"></div>
-            <div ng-if="!orderId && !(Order.selectedItems && Order.selectedItems.length)">No Item Added</div>
+            <div ng-if="!orderId && !(Order.selectedItems)">No Item Added</div>
             <div ng-if="orderId && orderItems.length" class="">
                 <div ng-repeat="item in orderItems">
                     <div ng-if="showLedtSideBar">
@@ -311,8 +314,8 @@
                   
                 </div>
             </div>
-            <div ng-if="Order.selectedItems && Order.selectedItems.length" class="">
-                <div ng-repeat="item in Order.selectedItems">
+            <div ng-if="Order.selectedItems" class="">
+                <div ng-repeat="item in Order.selectedItems[$baRoomService.getTabData().step]">
                         <div ng-if="showLedtSideBar">
                                 <div class="order-item-container d-flex" ng-if="item.step == $baRoomService.getTabData().step">
                                         <div class="img" ng-style="{'background-color' : item.category.color}">
@@ -370,7 +373,7 @@
             <div class="sub-total">Sub Total : &euro;{{Order.cartTotalPrice}}</div>
         </div>
         <div class="footer-btn">
-            <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn" ng-click="createOrder()" ng-disabled="!Order.selectedItems.length">
+            <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn" ng-click="createOrder()" ng-disabled="!Order.selectedItems">
                 Create Order <i class="ion-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
             </button>
             <button style="background-color:#00aef0; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" type="submit" class="btn" >

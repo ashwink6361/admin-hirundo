@@ -7,7 +7,7 @@
 angular.module('BlurAdmin.pages.rooms')
     .factory('RoomService', RoomService)
     .provider('baRoomService', baRoomServiceProvider);
-
+    
 function baRoomServiceProvider() {
     /** @ngInject */
     this.$get = function () {
@@ -48,6 +48,13 @@ function baRoomServiceProvider() {
                 var data = localStorage.getItem('orderItems');
                 return JSON.parse(data);
             };
+            // this.setOrderData = function(data) {
+            //     localStorage.setItem('orderData', JSON.stringify(data));
+            // };
+            // this.getOrderData = function() {
+            //     var data = localStorage.getItem('orderData');
+            //     return JSON.parse(data);
+            // };
         }
     };
 };
