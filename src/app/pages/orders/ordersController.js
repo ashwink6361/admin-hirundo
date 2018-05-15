@@ -69,6 +69,7 @@
             var items = [];
             items.push(item.id._id)
             var opts = {
+                step: item.step,
                 status: status,
                 itemId: items
             };
