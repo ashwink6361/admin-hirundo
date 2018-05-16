@@ -1253,7 +1253,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    .btn{
+    .btn {
         width: 100%;
         border-radius: 0;
     }
@@ -1263,6 +1263,57 @@
     display: flex;
     margin-top: 10px;
     align-items: center;
+    .items {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin-top: 20px;
+        margin-right: 20px;
+        .img {
+            position: relative;
+            width: 135px;
+            height: 135px;
+            img {
+                max-width: 100%;
+                border-radius: 0%;
+                &.icon-img {
+                    max-width: 60%;
+                }
+            }
+            .name {
+                position: absolute;
+                bottom: 0;
+                color: #fff;
+                background-color: rgba(0, 0, 0, 0.5);
+                margin-bottom: 0;
+                width: 100%;
+                padding: 5px;
+                text-align: center;
+            }
+        }
+        .quantity-btn {
+            position: absolute;
+            button {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background: rgba(0, 0, 0, 0.5);
+                border: none;
+                color: #fff;
+            }
+        }
+        .varient-btn {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+        }
+    }
     .img {
         border-radius: 50%;
         width: 60px;
@@ -1330,12 +1381,12 @@
     overflow-y: auto;
 }
 
-
-.calc-height{
+.calc-height {
     height: calc(100% - 108px) !important;
 }
 
 .tabs-container {
+    background-color: #dedede;
     ul {
         padding: 0 15px;
         list-style: none;
@@ -1354,7 +1405,7 @@
     }
 }
 
-.leftsidebar{
+.leftsidebar {
     position: fixed;
     top: 66px;
     padding-top: 20px;
@@ -1367,12 +1418,12 @@
     padding: 20px;
 }
 
-.step-container{
+.step-container {
     background-color: $primary;
     margin-bottom: 10px;
-    ul{
-        li{
-            &.active{
+    ul {
+        li {
+            &.active {
                 color: #fbab0e;
                 border-color: #fbab0e;
             }
@@ -1418,21 +1469,23 @@
         box-shadow: none !important;
         height: calc(100% - 64px);
     }
-    .modal-body{
+    .modal-body {
         height: 100%;
         height: calc(100% - 101px);
     }
     .order-header {
         padding: 20px;
-        .cart-menu-btn{
-            button{
+        .cart-menu-btn {
+            button {
                 border: none;
                 background-color: $secondry;
-                border-radius: 50%;
-                width: 30px;
+                border-radius: 2px;
+                width: 100%;
                 height: 30px;
-                i{
+                color: #fff;
+                i {
                     color: #fff;
+                    margin-right: 5px;
                 }
             }
         }
@@ -1441,77 +1494,91 @@
             font-weight: bold;
             text-align: center;
             width: 100%;
-            .room-name{
+            .room-name {
                 border-right: 2px solid #dedede;
                 padding-right: 5px;
                 margin-right: 5px;
             }
         }
-        i{
+        i {
             cursor: pointer;
             padding: 5px;
         }
     }
-    .modal-header{
+    .modal-header {
         padding: 5px 10px;
         display: flex;
-        background-color: #fdab02;
+        background-color: transparent;
         color: #fff;
         border-radius: 0 !important;
         border-bottom: 0;
-        i{
+        i {
             line-height: 24px;
             padding: 0px 5px;
             cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            background-color: #4b473f;
         }
-        .modal-title{
+    }
+    .modal-title {
+        color: #4b473f;
+        position: relative;
+        font-size: 22px;
+        .save-variant {
+            position: absolute;
+            right: 0;
+            background-color: #008000;
+            border: none;
+            padding: 3px 10px;
+            font-size: 14px;
+            border-radius: 3px;
             color: #fff;
-            position: relative;
-            .save-variant{
-                position: absolute;
-                right: 0;
-                background-color: #008000;
-                border: none;
-                padding: 3px 10px;
-                font-size: 14px;
-                border-radius: 3px;
-            }
         }
-    }
-    .cart-header{
-        background-color: #dedede;
-        color: #333;
-        .modal-title{
-            color: #333;
-        }
-    }
-    .input-group{
-        span{
-            cursor: pointer;
-        }
-    }
-    .sub-total{
-        position: absolute;
-        bottom: 0;
-        right: 5px;
     }
 }
-.add-varient-btn{
+
+.cart-header {
+    background-color: #dedede;
+    color: #333;
+    .modal-title {
+        color: #333;
+    }
+}
+
+.input-group {
+    span {
+        cursor: pointer;
+    }
+}
+
+.sub-total {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+}
+
+.add-varient-btn {
     width: 30px;
     height: 30px;
     border-radius: 50%;
     background: #4b473f;
     border: none;
     color: #fff;
-    &.variant-added{
+    &.variant-added {
         background-color: green;
     }
-    &.variant-remove{
+    &.variant-remove {
         background-color: red;
     }
 }
 
-.cart-menu-btn{
+.cart-menu-btn {
     position: fixed;
     top: 82px;
 }
