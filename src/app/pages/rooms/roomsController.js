@@ -259,14 +259,41 @@
         };
 
         $scope.openCreateOrder = function (table, room) {
+            $scope.stepArray = [];
             $scope.roomData = angular.copy(room);
             $scope.tableData = angular.copy(table);
             baRoomService.setCreateModalCollapsed(true);
             if (table.orderId != null && table.orderId._id) {
                 $scope.orderId = table.orderId._id;
                 $scope.orderItems = table.orderId.item;
+                var cp = 0;
+                var itemno = 0;
+                var varicost = 0;
+                $scope.orderItemsTotalPrice = 0;
+                $scope.orderItemsTotalItem = 0;
+                if ($scope.orderItems.length) {
+                    for (var i = 0; i < $scope.orderItems.length; i++) {
+                        itemno += $scope.orderItems[i].quantity;
+                        if ($scope.orderItems[i].variant) {
+                            for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
+                                if ($scope.orderItems[i].variant[j].status == 1) {
+                                    varicost += $scope.orderItems[i].variant[j].price;
+                                }
+                            }
+                        }
+                        cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
+                        $scope.orderItemsTotalPrice = cp;
+                        $scope.orderItemsTotalItem = itemno;
+                    }
+                }
                 baRoomService.setOrderId(table.orderId._id);
                 baRoomService.setOrderItems(table.orderId.item);
+                for(var i=0;i<table.orderId.step.length;i++){
+                    $scope.stepArray.push(table.orderId.step[i].step); 
+                }
+                if($scope.stepArray.length){
+                    baRoomService.setStepData($scope.stepArray);                
+                }
                 var steps = [];
                 var selectedItems = {};      
                 if (baRoomService.getStepData()) {
@@ -310,6 +337,7 @@
             $scope.activeTab = [true, false, false, false, false, false];
             $scope.showOrder = false;
             $scope.showLedtSideBar = false;
+            $scope.stepArray = [];            
             baRoomService.setCreateModalCollapsed(false);
             localStorage.removeItem('stepData');
             localStorage.removeItem('tabData');
@@ -374,6 +402,7 @@
         $scope.showItems = function (category) {
             $rootScope.Order.selectedCategory = category;
             $rootScope.Order.categoryItems = {};
+            console.log('$rootScope.Order',$rootScope.Order);
             RoomService.getCategoryWithItems().then(function (data) {
                 if (data.data.length) {
                     for (var i = 0; i < data.data.length; i++) {
@@ -395,6 +424,7 @@
                         }
                     }
                 }
+            console.log('$rootScope.Order+++++++++++++++++',$rootScope.Order);
                 $scope.changeTab(2);
                 $scope.goToItems();
             })
@@ -404,6 +434,8 @@
         }
 
         $scope.goToItems = function () {
+            console.log('goToItems $rootScope.Order+++++++++++++++++',$rootScope.Order);
+            
             if ($rootScope.Order.categoryItems) {
                 var steps = [];
                 if (baRoomService.getStepData()) {
