@@ -262,8 +262,68 @@
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="modal-content" ng-if="activeTab[5]">
+            <div class="modal-header">
+                <i class="icon-arrow-left" ng-click="hideVarient1()"></i>
+                <h4 class="modal-title" id="myModalLabel4" ng-if="Order.selectedCategory">Edit Item
+                    <button class="save-variant" ng-click="saveVariantData1()">Save</button>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <h5>Quantity</h5>
+                <div class="input-group">
+                    <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty1()">
+                        <i class="icon-minus"></i>
+                    </span>
+                    <div class="text-center input-value">{{variantData1.quantity}}</div>
+                    <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseQty1()">
+                        <i class="icon-plus"></i>
+                    </span>
+                </div>
+                <div ng-if="variantError1" class="color-red">{{variantError1}}</div>
+                <div ng-class="{'pointer-none' : nonVariantData}">                
+                <h5>Variant and Notes</h5>
+                <div class="tabs-btn d-flex">
+                    <button type="button" ng-click="tabActive(1)" ng-class="{'active':Order.activeTab[0]}">Variants</button>
+                    <button type="button" ng-click="tabActive(2)" ng-class="{'active':Order.activeTab[1]}">Notes</button>
+                </div>
+                <div class="varient-list" ng-if="Order.activeTab[0]">
+                    <table class="table">
+                        <tbody>
+                            <tr ng-repeat="varient in variantList1">
+                                <td>{{varient.name}}</td>
+                                <td>&euro;{{varient.price}}</td>
+                                <td>
+                                    <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
+                                        ng-click="addRemoveVariant1(varient,0)">
+                                        <i class="icon-minus"></i>
+                                    </button>
+                                    <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
+                                        ng-click="addRemoveVariant1(varient,1)">
+                                        <i class="icon-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="varient-list" ng-if="Order.activeTab[1]">
+                    <table class="table">
+                        <tbody>
+                            <tr ng-repeat="note in noteList1 track by $index">
+                                <td>{{note.notes}}</td>
+                                <td>
+                                    <input type="checkbox" ng-model="notes1[note.notes]" ng-change="addNote1(note.notes, $index)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
     <div class="modal-content">
         <div class="modal-header cart-header" ng-if="!showLedtSideBar">
             <i class="icon-people"></i>
@@ -293,7 +353,7 @@
                                         <span ng-if="variant.status == 1">+ {{variant.name}} &euro;{{variant.price}}</span>
                                     </span>
                                 </span>
-                                <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
+                                <span ng-if="item.notes" class="d-flex added-variand-name">{{item.notes}}</span>
                             </div>
                         </div>
                     </div>
@@ -315,7 +375,7 @@
                                         <span ng-if="variant.status == 1">+ {{variant.name}} &euro;{{variant.price}}</span>
                                     </span>
                                 </span>
-                                <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
+                                <span ng-if="item.notes" class="d-flex added-variand-name">{{item.notes}}</span>
                             </div>
                         </div>
                     </div>
@@ -344,7 +404,7 @@
                                 </span>
                                 <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
                             </div>
-                            <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="editItemFromCart(item)">
+                            <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="viewVarient1(item)">
                                 <i class="ion-edit">
                             </button>
                             <button type="button" class="btn bg-red btn-icon" ng-click="deleteItemFromCart(item)">
@@ -372,7 +432,7 @@
                                 </span>
                                 <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
                             </div>
-                            <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="editItemFromCart(item)">
+                            <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="viewVarient1(item)">
                                 <i class="ion-edit">
                             </button>
                             <button type="button" class="btn bg-red btn-icon" ng-click="deleteItemFromCart(item)">

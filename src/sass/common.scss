@@ -9,6 +9,12 @@
     text-align: center;
 }
 
+.pointer-none{
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 .flex-wrap{
     flex-wrap: wrap;
 }
