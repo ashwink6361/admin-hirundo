@@ -137,7 +137,7 @@
                 </div>
                 <div ng-if="Order.categoryItems[$baRoomService.getTabData().step]">
                     <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
-                    <div class="d-flex">
+                    <div class="d-flex flex-wrap">
                         <div ng-repeat="item in Order.categoryItems[$baRoomService.getTabData().step] | filter : searchItem">
                             <div class="order-item-container d-flex" ng-if="subcategory && (item.subCategory == subcategory)">
                                 <div class="items" ng-style="{'background-color' : item.category.color}">
@@ -151,9 +151,9 @@
                                     </div>
 
                                     <div class="quantity-btn">
-                                        <button type="button" ng-click="decreaseValue(item)" value="Decrease Value">
+                                        <!-- <button type="button" ng-click="decreaseValue(item)" value="Decrease Value">
                                             <i class="fa fa-minus"></i>
-                                        </button>
+                                        </button> -->
                                         <button type="button" ng-click="increaseValue(item)" value="Increase Value">
                                             <i class="fa fa-plus"></i>
                                         </button>
@@ -180,9 +180,9 @@
                                     </div>
 
                                     <div class="quantity-btn">
-                                        <button type="button" ng-click="decreaseValue(item)" value="Decrease Value">
+                                        <!-- <button type="button" ng-click="decreaseValue(item)" value="Decrease Value">
                                             <i class="fa fa-minus"></i>
-                                        </button>
+                                        </button> -->
                                         <button type="button" ng-click="increaseValue(item)" value="Increase Value">
                                             <i class="fa fa-plus"></i>
                                         </button>
@@ -344,8 +344,11 @@
                                 </span>
                                 <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
                             </div>
-                            <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
-                                Delete
+                            <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="editItemFromCart(item)">
+                                <i class="ion-edit">
+                            </button>
+                            <button type="button" class="btn bg-red btn-icon" ng-click="deleteItemFromCart(item)">
+                                <i class="ion-trash-b">
                             </button>
                         </div>
                     </div>
@@ -369,8 +372,11 @@
                                 </span>
                                 <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
                             </div>
-                            <button type="button" class="btn btn-primary" ng-click="deleteItemFromCart(item)">
-                                Delete
+                            <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="editItemFromCart(item)">
+                                <i class="ion-edit">
+                            </button>
+                            <button type="button" class="btn bg-red btn-icon" ng-click="deleteItemFromCart(item)">
+                                <i class="ion-trash-b">
                             </button>
                         </div>
                     </div>
