@@ -214,20 +214,17 @@ function RoomService($q, $http) {
             });
             return def.promise;
         },
-        // setStepData: function(data) {
-        //     localStorage.setItem('stepData', JSON.stringify(data));
-        // },
-        // getStepData: function() {
-        //     var data = localStorage.getItem('stepData');
-        //     return JSON.parse(data);
-        // },
-        // setTabData: function(data) {
-        //     localStorage.setItem('tabData', JSON.stringify(data));        
-        // },
-        // getTabData: function() {
-        //     var data = localStorage.getItem('tabData');
-        //     return JSON.parse(data);
-        // }
+        checkoutOrder: function (id, tableId, opts) {
+            var def = $q.defer();
+            var url = '/api/room/checkout/' + id + '/table/' + tableId;
+            doPut($q, $http, url, opts).then(function (data) {
+                def.resolve(data);
+            }).catch(function (error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+        
     };
 }
 })();

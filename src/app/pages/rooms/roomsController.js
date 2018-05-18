@@ -52,6 +52,11 @@
         $scope.notesarray1 = [];        
         $scope.variantError1 = '';
         $scope.nonVariantData1 = false;     
+$scope.selectAllClicked = false;
+$scope.selectedCheckoutItems = [];
+$scope.checkoutPeople = 0;
+$scope.orderNumberOfPeople = 0;
+$scope.checkoutTotalPrice = 0;
 
         $q.all([
             RoomService.getCategories()
@@ -266,6 +271,7 @@
             if (table.orderId != null && table.orderId._id) {
                 $scope.orderId = table.orderId._id;
                 $scope.orderItems = table.orderId.item;
+                $scope.orderNumberOfPeople = table.orderId.noOfPeople;
                 var cp = 0;
                 var itemno = 0;
                 var varicost = 0;
@@ -1097,6 +1103,91 @@
         }
         $scope.hideLeftSide = function(){
             $scope.showLedtSideBar = false;
+        }
+        $scope.selectAllItems = function (items) {
+            $scope.selectAllClicked = !$scope.selectAllClicked;
+            if($scope.selectAllClicked){
+                for (var i = 0; i < items.length; i++) {
+                    if($scope.selectedCheckoutItems.indexOf(items[i]._id)<0){
+                        $scope.selectedCheckoutItems.push(items[i]._id);
+                    }
+                }
+                if($scope.selectedCheckoutItems.length){
+                    var cp = 0;
+                    var varicost = 0;
+                        for (var i = 0; i < items.length; i++) {
+                            if (items[i].variant) {
+                                for (var j = 0; j < items[i].variant.length; j++) {
+                                    if (items[i].variant[j].status == 1) {
+                                        varicost += items[i].variant[j].price;
+                                    }
+                                }
+                            }
+                            cp += (items[i].price + varicost) * items[i].quantity;
+                            $scope.checkoutTotalPrice = cp;
+                        }
+                }
+            }
+            else{
+                $scope.selectedCheckoutItems = [];
+                $scope.checkoutTotalPrice = 0;
+            }
+        }
+        $scope.selectItem = function (item, orderItemsLength) {
+            var idx = $scope.selectedCheckoutItems.indexOf(item._id);
+            if (idx > -1) {
+                var varicost = 0;
+                if (item.variant) {
+                    for (var j = 0; j < item.variant.length; j++) {
+                        if (item.variant[j].status == 1) {
+                            varicost += item.variant[j].price;
+                        }
+                    }
+                }
+                $scope.checkoutTotalPrice = $scope.checkoutTotalPrice - ((item.price + varicost) * item.quantity);
+                $scope.selectedCheckoutItems.splice(idx, 1);            
+            }
+            else {
+                var varicost = 0;
+                if (item.variant) {
+                    for (var j = 0; j < item.variant.length; j++) {
+                        if (item.variant[j].status == 1) {
+                            varicost += item.variant[j].price;
+                        }
+                    }
+                }
+                $scope.checkoutTotalPrice = $scope.checkoutTotalPrice + ((item.price + varicost) * item.quantity);
+                $scope.selectedCheckoutItems.push(item._id);            
+            }
+            if ($scope.selectedCheckoutItems.length == orderItemsLength) {
+                $scope.selectAllClicked = true;
+            }
+            else {
+                $scope.selectAllClicked = false;
+            }
+        }
+
+        $scope.decreasePeople = function () {
+            if($scope.checkoutPeople < $scope.orderNumberOfPeople){
+                $scope.checkoutPeople = $scope.checkoutPeople + 1;
+            }
+        }
+        $scope.increasePeople = function () {
+            if($scope.checkoutPeople >= 1){
+                $scope.checkoutPeople = $scope.checkoutPeople - 1;
+            }
+        }
+        $scope.checkoutOrder = function(){
+            var opts = {
+                noOfPeople : $scope.checkoutPeople,
+                orderItemId : $scope.selectedCheckoutItems ? $scope.selectedCheckoutItems : []
+            }
+            RoomService.checkoutOrder($scope.roomData["_id"],$scope.tableData["_id"],opts).then(function (data) {
+                console.log('data',data);
+                $scope.getRoomList();
+            }).catch(function (error) {
+                console.log('error',error);
+            });
         }
     }
 

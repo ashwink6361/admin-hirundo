@@ -326,19 +326,19 @@
             <i class="icon-people"></i>
             <h4 class="modal-title">{{Order.noOfPeople}}</h4>
             <div class="d-flex guest-number-btn">
-                <i class="icon-minus"></i>
-                <i class="icon-plus"></i>
+                <i class="icon-minus" ng-click="decreasePeople()"></i>
+                <i class="icon-plus" ng-click="increasePeople()"></i>
             </div>
         </div>
         <step-list ng-if="showLedtSideBar"></step-list>
         <div class="modal-body calc-height pt-0 checkbox">
             <div id="createOrderMsg"></div>
             <div ng-if="!orderId && !(Order.selectedItems)">No Item Added</div>
-            <div ng-if="orderId && orderItems.length" class="">
-                <input type="checkbox" id="box-1">
+            <div ng-if="orderId && orderItems.length && !showLedtSideBar" class="">
+                <input type="checkbox" id="box-1" ng-checked="selectAllClicked" ng-click="selectAllItems(orderItems)">
                 <label for="box-1">Select All</label>
                 <div ng-repeat="item in orderItems track by $index">
-                    <div ng-if="showLedtSideBar">
+                    <!-- <div ng-if="showLedtSideBar">
                         <div class="order-item-container d-flex" ng-if="item.step == $baRoomService.getTabData().step">
                             <input type="checkbox" id="{{item.id._id}}{{$index}}">
                             <label for="{{item.id._id}}{{$index}}">
@@ -362,10 +362,10 @@
                                 </div>
                             </label>
                         </div>
-                    </div>
-                    <div ng-if="!showLedtSideBar">
+                    </div> -->
+                    <!-- <div ng-if="!showLedtSideBar"> -->
                         <div class="order-item-container d-flex">
-                            <input type="checkbox" id="{{item.id._id}}{{$index}}">
+                            <input type="checkbox" value="{{item._id}}" ng-checked="selectedCheckoutItems.indexOf(item._id) > -1" ng-click="selectItem(item,orderItems.length)" id="{{item.id._id}}{{$index}}">
                             <label for="{{item.id._id}}{{$index}}">
                                 <div class="img" ng-style="{'background-color' : item.id.category.color}">
                                     <img ng-if="!item.id.logo.small && item.id.category.isIcon" class="icon-img" ng-src="{{item.id.category.icon}}" alt="" />
@@ -387,12 +387,12 @@
                                 </div>
                             </label>
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
-            <div ng-if="Order.selectedItems" class="">
+            <div ng-if="Order.selectedItems && showLedtSideBar" class="">
                 <div ng-repeat="item in Order.selectedItems[$baRoomService.getTabData().step]">
-                    <div ng-if="showLedtSideBar">
+                    <!-- <div ng-if="showLedtSideBar"> -->
                         <div class="order-item-container d-flex" ng-if="item.step == $baRoomService.getTabData().step">
                             <div class="img" ng-style="{'background-color' : item.category.color}">
                                 <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
@@ -419,8 +419,8 @@
                                 <i class="ion-trash-b">
                             </button>
                         </div>
-                    </div>
-                    <div ng-if="!showLedtSideBar">
+                    <!-- </div> -->
+                    <!-- <div ng-if="!showLedtSideBar">
                         <div class="order-item-container d-flex">
                             <div class="img" ng-style="{'background-color' : item.category.color}">
                                 <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
@@ -447,7 +447,7 @@
                                 <i class="ion-trash-b">
                             </button>
                         </div>
-                    </div>
+                    </div> -->
 
 
                 </div>
@@ -455,12 +455,15 @@
             <div class="sub-total" ng-if="showLedtSideBar">Sub Total : &euro;{{Order.cartTotalPrice}}</div>
         </div>
         <div class="footer-btn">
-            <span>Checkout Person - 2</span>
-            <span>Amount - 2</span>
+            <span *ngIf="!showLedtSideBar">Checkout Person -{{checkoutPeople}}</span>
+            <span *ngIf="!showLedtSideBar">Amount - {{checkoutTotalPrice}}</span>
             <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn" ng-click="createOrder()"
                 ng-disabled="!Order.selectedItems">
                 Create Order
                 <i class="ion-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
+            </button>
+            <button style="background-color:#00aef0; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" ng-disabled="checkoutPeople == 0" type="submit" class="btn" ng-click="checkoutOrder()">
+                Checkout        
             </button>
             <button style="background-color:#00aef0; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" type="submit" class="btn">
                 Total
