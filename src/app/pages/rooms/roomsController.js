@@ -1182,13 +1182,15 @@ $scope.checkoutTotalPrice = 0;
                 noOfPeople: $scope.checkoutPeople,
                 orderItemId: $scope.selectedCheckoutItems ? $scope.selectedCheckoutItems : []
             }
-            RoomService.checkoutOrder($scope.roomData["_id"], $scope.tableData["_id"], opts).then(function (data) {
+            RoomService.checkoutOrder($scope.roomData["_id"], $scope.tableData["_id"],$scope.orderId, opts).then(function (data) {
                 console.log('data', data);
                 $scope.selectAllClicked = false;
                 $scope.selectedCheckoutItems = [];
                 $scope.checkoutPeople = 0;
                 $scope.orderNumberOfPeople = 0;
                 $scope.checkoutTotalPrice = 0;
+                $scope.showLedtSideBar = false;
+                $scope.showOrder = false;
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {

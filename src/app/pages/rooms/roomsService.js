@@ -214,9 +214,9 @@ function RoomService($q, $http) {
             });
             return def.promise;
         },
-        checkoutOrder: function (id, tableId, opts) {
+        checkoutOrder: function (id, tableId, orderId, opts) {
             var def = $q.defer();
-            var url = '/api/room/checkout/' + id + '/table/' + tableId;
+            var url = '/api/room/checkout/' + id + '/table/' + tableId + '/' + orderId;
             doPut($q, $http, url, opts).then(function (data) {
                 def.resolve(data);
             }).catch(function (error) {
