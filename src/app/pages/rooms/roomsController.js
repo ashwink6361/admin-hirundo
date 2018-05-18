@@ -1191,6 +1191,7 @@ $scope.checkoutTotalPrice = 0;
                 $scope.checkoutTotalPrice = 0;
                 $scope.showLedtSideBar = false;
                 $scope.showOrder = false;
+                baRoomService.setCreateModalCollapsed(false);
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
