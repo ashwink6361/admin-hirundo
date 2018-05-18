@@ -1177,16 +1177,25 @@ $scope.checkoutTotalPrice = 0;
                 $scope.checkoutPeople = $scope.checkoutPeople - 1;
             }
         }
-        $scope.checkoutOrder = function(){
+        $scope.checkoutOrder = function () {
             var opts = {
-                noOfPeople : $scope.checkoutPeople,
-                orderItemId : $scope.selectedCheckoutItems ? $scope.selectedCheckoutItems : []
+                noOfPeople: $scope.checkoutPeople,
+                orderItemId: $scope.selectedCheckoutItems ? $scope.selectedCheckoutItems : []
             }
-            RoomService.checkoutOrder($scope.roomData["_id"],$scope.tableData["_id"],opts).then(function (data) {
-                console.log('data',data);
-                $scope.getRoomList();
+            RoomService.checkoutOrder($scope.roomData["_id"], $scope.tableData["_id"], opts).then(function (data) {
+                console.log('data', data);
+                $scope.selectAllClicked = false;
+                $scope.selectedCheckoutItems = [];
+                $scope.checkoutPeople = 0;
+                $scope.orderNumberOfPeople = 0;
+                $scope.checkoutTotalPrice = 0;
+                RoomService.getRooms().then(function (data) {
+                    $scope.rooms = RoomService.listRoom();
+                }).catch(function (error) {
+                    console.log("Error ", error);
+                });
             }).catch(function (error) {
-                console.log('error',error);
+                console.log('error', error);
             });
         }
     }
