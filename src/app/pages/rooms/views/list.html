@@ -334,7 +334,7 @@
         <div class="modal-body calc-height pt-0 checkbox">
             <div id="createOrderMsg"></div>
             <div ng-if="!orderId && !(Order.selectedItems)">No Item Added</div>
-            <div ng-if="orderId && orderItems.length && !showLedtSideBar" class="">
+            <div ng-if="orderId && orderItems.length && !showLedtSideBar" class="overflow-scroll">
                 <input type="checkbox" id="box-1" ng-checked="selectAllClicked" ng-click="selectAllItems(orderItems)">
                 <label for="box-1">Select All</label>
                 <div ng-repeat="item in orderItems track by $index">
@@ -391,7 +391,7 @@
                     <!-- </div> -->
                 </div>
             </div>
-            <div ng-if="Order.selectedItems && showLedtSideBar" class="">
+            <div ng-if="Order.selectedItems && showLedtSideBar" class="overflow-scroll">
                 <div ng-repeat="item in Order.selectedItems[$baRoomService.getTabData().step]">
                     <!-- <div ng-if="showLedtSideBar"> -->
                     <div class="order-item-container d-flex" ng-if="item.step == $baRoomService.getTabData().step">
@@ -463,11 +463,9 @@
             </button>
         </div>
         <div class="footer-btn" ng-if="orderId">
-            <span ng-if="!showLedtSideBar">Checkout Person -{{checkoutPeople}}</span>
-            <span ng-if="!showLedtSideBar">Amount - {{checkoutTotalPrice}}</span>
             <button style="background-color:#8e8d8c; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" ng-disabled="checkoutPeople == 0"
                 type="submit" class="btn" ng-click="checkoutOrder()">
-                Checkout
+                Checkout | Person -{{checkoutPeople}} | Amount - {{checkoutTotalPrice}}
             </button>
             <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn" ng-click="createOrder()"
                 ng-disabled="!Order.selectedItems">
