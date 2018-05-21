@@ -264,6 +264,15 @@
         };
 
         $scope.openCreateOrder = function (table, room) {
+            $rootScope.Order = {
+                errorMsg: '',
+                error: false,
+                selectedItems: {},
+                cartTotalPrice: 0,
+                cartTotalItem: 0,
+                selectedSubcategory: [false],
+                activeTab: [true, false]
+            };
             $scope.selectAllClicked = false;
             $scope.selectedCheckoutItems = [];
             $scope.checkoutPeople = 0;
@@ -284,6 +293,9 @@
                 $scope.orderItemsTotalItem = 0;
                 if ($scope.orderItems.length) {
                     for (var i = 0; i < $scope.orderItems.length; i++) {
+                        if($scope.orderItems[i].checkout && ($scope.selectedCheckoutItems.indexOf($scope.orderItems[i]._id)<0)){
+                            $scope.selectedCheckoutItems.push($scope.orderItems[i]._id);
+                        }
                         itemno += $scope.orderItems[i].quantity;
                         if ($scope.orderItems[i].variant) {
                             for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
@@ -332,6 +344,7 @@
                 $scope.activeTab = [true, false, false, false, false, false];
             }
             $scope.showOrder = true;
+            console.log('selectedCheckoutItems---------------',$scope.selectedCheckoutItems);
         };
 
         $scope.cancelCreateOrder = function () {
@@ -1121,24 +1134,33 @@
                     var cp = 0;
                     var varicost = 0;
                         for (var i = 0; i < items.length; i++) {
-                            if (items[i].variant) {
-                                for (var j = 0; j < items[i].variant.length; j++) {
-                                    if (items[i].variant[j].status == 1) {
-                                        varicost += items[i].variant[j].price;
+                            if(!items[i].checkout){
+                                if (items[i].variant) {
+                                    for (var j = 0; j < items[i].variant.length; j++) {
+                                        if (items[i].variant[j].status == 1) {
+                                            varicost += items[i].variant[j].price;
+                                        }
                                     }
                                 }
+                                cp += (items[i].price + varicost) * items[i].quantity;
                             }
-                            cp += (items[i].price + varicost) * items[i].quantity;
                             $scope.checkoutTotalPrice = cp;
+                            $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice+'e2')+'e-2');               
                         }
                 }
             }
             else{
-                $scope.selectedCheckoutItems = [];
+                for (var i = 0; i < items.length; i++) {
+                    if(!items[i].checkout && $scope.selectedCheckoutItems.indexOf(items[i]._id)>-1){
+                        $scope.selectedCheckoutItems.splice($scope.selectedCheckoutItems.indexOf(items[i]._id),1);
+                    }
+                }
+                // $scope.selectedCheckoutItems = [];
                 $scope.checkoutTotalPrice = 0;
             }
         }
         $scope.selectItem = function (item, orderItemsLength) {
+            console.log('$scope.selectedCheckoutItems 1',$scope.selectedCheckoutItems);            
             var idx = $scope.selectedCheckoutItems.indexOf(item._id);
             if (idx > -1) {
                 var varicost = 0;
@@ -1150,6 +1172,7 @@
                     }
                 }
                 $scope.checkoutTotalPrice = $scope.checkoutTotalPrice - ((item.price + varicost) * item.quantity);
+                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice+'e2')+'e-2');               
                 $scope.selectedCheckoutItems.splice(idx, 1);            
             }
             else {
@@ -1162,8 +1185,10 @@
                     }
                 }
                 $scope.checkoutTotalPrice = $scope.checkoutTotalPrice + ((item.price + varicost) * item.quantity);
+                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice+'e2')+'e-2');               
                 $scope.selectedCheckoutItems.push(item._id);            
             }
+            console.log('$scope.selectedCheckoutItems',$scope.selectedCheckoutItems);
             if ($scope.selectedCheckoutItems.length == orderItemsLength) {
                 $scope.selectAllClicked = true;
             }

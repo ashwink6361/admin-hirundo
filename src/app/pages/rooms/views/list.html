@@ -325,7 +325,7 @@
         <div class="modal-header cart-header" ng-if="!showLedtSideBar">
             <i class="icon-people"></i>
             <h4 class="modal-title">{{Order.noOfPeople}}</h4>
-            <div class="d-flex guest-number-btn">
+            <div ng-if="orderId" class="d-flex guest-number-btn">
                 <i class="icon-minus" ng-click="decreasePeople()"></i>
                 <i class="icon-plus" ng-click="increasePeople()"></i>
             </div>
@@ -364,8 +364,8 @@
                         </div>
                     </div> -->
                     <!-- <div ng-if="!showLedtSideBar"> -->
-                    <div class="order-item-container d-flex">
-                        <input type="checkbox" value="{{item._id}}" ng-checked="selectedCheckoutItems.indexOf(item._id) > -1" ng-click="selectItem(item,orderItems.length)"
+                    <div class="order-item-container d-flex" ng-class="{'pointer-none' : item.checkout}">
+                        <input type="checkbox" value="{{item._id}}" ng-checked="selectedCheckoutItems.indexOf(item._id) > -1 || item.checkout" ng-click="selectItem(item,orderItems.length)"
                             id="{{item.id._id}}{{$index}}">
                         <label for="{{item.id._id}}{{$index}}">
                             <div class="img" ng-style="{'background-color' : item.id.category.color}">
