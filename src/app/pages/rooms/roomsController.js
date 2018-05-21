@@ -52,11 +52,11 @@
         $scope.notesarray1 = [];        
         $scope.variantError1 = '';
         $scope.nonVariantData1 = false;     
-$scope.selectAllClicked = false;
-$scope.selectedCheckoutItems = [];
-$scope.checkoutPeople = 0;
-$scope.orderNumberOfPeople = 0;
-$scope.checkoutTotalPrice = 0;
+        $scope.selectAllClicked = false;
+        $scope.selectedCheckoutItems = [];
+        $scope.checkoutPeople = 0;
+        $scope.orderNumberOfPeople = 0;
+        $scope.checkoutTotalPrice = 0;
 
         $q.all([
             RoomService.getCategories()
@@ -264,6 +264,11 @@ $scope.checkoutTotalPrice = 0;
         };
 
         $scope.openCreateOrder = function (table, room) {
+            $scope.selectAllClicked = false;
+            $scope.selectedCheckoutItems = [];
+            $scope.checkoutPeople = 0;
+            $scope.orderNumberOfPeople = 0;
+            $scope.checkoutTotalPrice = 0;
             $scope.stepArray = [];
             $scope.roomData = angular.copy(room);
             $scope.tableData = angular.copy(table);
