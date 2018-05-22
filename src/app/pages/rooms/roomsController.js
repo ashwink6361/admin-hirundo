@@ -1267,6 +1267,10 @@
         
         $scope.checkout = function () {
             OrderService.checkoutTable($scope.roomData["_id"], $scope.tableData["_id"]).then(function(data) {
+                $scope.showLedtSideBar = false;
+                $scope.showOrder = false;
+                $scope.showCheckoutCart = false; 
+                baRoomService.setCreateModalCollapsed(false);
             }).catch(function(error) {
                 console.log("Order table error", error);
             });
