@@ -464,7 +464,7 @@
         </div>
         <div class="footer-btn" ng-if="orderId">
             <button style="background-color:#8e8d8c; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" ng-disabled="checkoutPeople == 0"
-                type="submit" class="btn" ng-click="showTotalItem()">
+                type="submit" class="btn" ng-click="showTotalItem(orderItems)">
                 <i class="fa fa-file"></i>
                 <!-- Checkout | Person -{{checkoutPeople}} | Amount - {{checkoutTotalPrice}} checkoutOrder() -->
             </button>
@@ -489,17 +489,17 @@
                 <thead>
                     <tr>
                         <th>Total</th>
-                        <th>$ 00.00</th>
+                        <th>&euro;{{orderItemsTotalPrice}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>X 2 Item Name</td>
+                    <tr ng-repeat="item in orderItems track by $index">
+                        <td>X {{item.quantity}} {{item.id.name}}</td>
                         <td>
-                            <button type="submit">
+                            <button type="submit" ng-click="increaseItemQty(item)">
                                 <i class="icon-plus"></i>
                             </button>
-                            <button type="submit">
+                            <button type="submit" ng-click="decreaseItemQty(item)">
                                 <i class="icon-minus"></i>
                             </button>
                         </td>
@@ -512,18 +512,22 @@
                 <thead>
                     <tr>
                         <th>Parziale</th>
-                        <th>$ 00.00</th>
+                        <th>&euro;0</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>X 2 Item Name</td>
+                    <tr ng-repeat="item in orderItemsNew track by $index">
+                        <td>X {{item.quantity}} {{item.name}}</td>
                         <td>
-                            $ 00.00
+                            &euro;{{item.amount}}
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="button">
+        <button type="submit" ng-click="checkout()">cancel</button>
+        <button type="submit" ng-click="checkoutOrderItems()">checkout</button>
     </div>
 </div>
