@@ -32,6 +32,7 @@
         $scope.notes = [];
         $scope.notesarray = [];
         $scope.showLedtSideBar = false;
+        $scope.showCheckoutCart = false;
         $scope.variantData = {
             quantity: 0,
             variant: [],
@@ -1230,6 +1231,10 @@
             }).catch(function (error) {
                 console.log('error', error);
             });
+        }
+
+        $scope.showTotalItem = function () {
+            $scope.showCheckoutCart = true;
         }
     }
 

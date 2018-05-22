@@ -464,8 +464,9 @@
         </div>
         <div class="footer-btn" ng-if="orderId">
             <button style="background-color:#8e8d8c; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" ng-disabled="checkoutPeople == 0"
-                type="submit" class="btn" ng-click="checkoutOrder()">
-                Checkout | Person -{{checkoutPeople}} | Amount - {{checkoutTotalPrice}}
+                type="submit" class="btn" ng-click="showTotalItem()">
+                <i class="fa fa-file"></i>
+                <!-- Checkout | Person -{{checkoutPeople}} | Amount - {{checkoutTotalPrice}} checkoutOrder() -->
             </button>
             <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn" ng-click="createOrder()"
                 ng-disabled="!Order.selectedItems">
@@ -476,6 +477,53 @@
                 Total
                 <i class="ion-cart"></i> {{orderItemsTotalItem}} | &euro;{{orderItemsTotalPrice}}
             </button>
+        </div>
+    </div>
+</div>
+
+<div class="leftsidebar" ng-if="showCheckoutCart">
+    Conto Separato
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Total</th>
+                        <th>$ 00.00</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>X 2 Item Name</td>
+                        <td>
+                            <button type="submit">
+                                <i class="icon-plus"></i>
+                            </button>
+                            <button type="submit">
+                                <i class="icon-minus"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Parziale</th>
+                        <th>$ 00.00</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>X 2 Item Name</td>
+                        <td>
+                            $ 00.00
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
