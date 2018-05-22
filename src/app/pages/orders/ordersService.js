@@ -29,7 +29,7 @@
                     if (data.id === _orders[i]._id) {
                         _orders[i].status = data.status;
                         for (var j = 0; j < _orders[i].item.length; j++) {
-                            if (data.order.itemId === _orders[i].item[j].id._id) {
+                            if (data.order.itemId === _orders[i].item[j].id._id && data.order.step === _orders[i].item[j].step) {
                                 _orders[i].item[j].status = data.order.status;
                             }
                         }
