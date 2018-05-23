@@ -1248,12 +1248,12 @@
                 orderItemId: itemsArray ? itemsArray : []
             }
             RoomService.checkoutOrder($scope.roomData["_id"], $scope.tableData["_id"],$scope.orderId, opts).then(function (data) {
-                console.log('data', data);
                 $scope.checkoutPeople = 0;
                 $scope.orderNumberOfPeople = 0;
                 $scope.showLedtSideBar = false;
                 $scope.showOrder = false;
-                $scope.showCheckoutCart = false;                
+                $scope.showCheckoutCart = false;   
+                $scope.checkoutTotalPrice = 0;             
                 baRoomService.setCreateModalCollapsed(false);
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
@@ -1267,6 +1267,18 @@
         
         $scope.checkout = function () {
             OrderService.checkoutTable($scope.roomData["_id"], $scope.tableData["_id"]).then(function(data) {
+                $scope.showLedtSideBar = false;
+                $scope.showOrder = false;
+                $scope.showCheckoutCart = false; 
+                $scope.checkoutPeople = 0;
+                $scope.orderNumberOfPeople = 0;
+                $scope.checkoutTotalPrice = 0;             
+                baRoomService.setCreateModalCollapsed(false);
+                RoomService.getRooms().then(function (data) {
+                    $scope.rooms = RoomService.listRoom();
+                }).catch(function (error) {
+                    console.log("Error ", error);
+                });
             }).catch(function(error) {
                 console.log("Order table error", error);
             });
@@ -1286,11 +1298,9 @@
         }
 
         $scope.decreaseItemQty = function (item) {
-            console.log('dec item',item);
             for(var i=0;i<$scope.orderItemsNew.length;i++){
                 if($scope.orderItemsNew[i]._id == item._id && $scope.orderItemsNew[i].quantity < item.quantity){
                     $scope.orderItemsNew[i].quantity = $scope.orderItemsNew[i].quantity + 1;
-            console.log('dec item $scope.orderItemsNew[i].quantity',$scope.orderItemsNew[i].quantity);                    
                     var varicost = 0;
                     if (item.variant) {
                         for (var j = 0; j < item.variant.length; j++) {
@@ -1299,17 +1309,17 @@
                             }
                         }
                     }
-            console.log('dec item $scope.orderItemsNew[i].quantity',$scope.orderItemsNew[i].quantity);                                        
-            console.log('dec item $scope.orderItemsNew[i].amount',$scope.orderItemsNew[i].amount);                    
-                    
                     $scope.orderItemsNew[i].amount = (item.price + varicost) * $scope.orderItemsNew[i].quantity;
                     $scope.orderItemsNew[i].amount = Number(Math.round($scope.orderItemsNew[i].amount+'e2')+'e-2');               
-                
                 }  
             } 
+            var out = 0;
+            for(var n in $scope.orderItemsNew){
+                out += $scope.orderItemsNew[n].amount;
+            }
+            $scope.checkoutTotalPrice = Number(Math.round(out+'e2')+'e-2');
         }
         $scope.increaseItemQty = function (item) {
-            console.log('inc item',item);
             for(var i=0;i<$scope.orderItemsNew.length;i++){
                 if($scope.orderItemsNew[i]._id == item._id && $scope.orderItemsNew[i].quantity >=1){
                     $scope.orderItemsNew[i].quantity = $scope.orderItemsNew[i].quantity - 1;
@@ -1321,12 +1331,15 @@
                             }
                         }
                     }
-            console.log('inc item $scope.orderItemsNew[i].quantity',$scope.orderItemsNew[i].quantity);                    
-            console.log('inc item $scope.orderItemsNew[i].amount',$scope.orderItemsNew[i].amount);                    
                     $scope.orderItemsNew[i].amount = (item.price + varicost) * $scope.orderItemsNew[i].quantity;
                     $scope.orderItemsNew[i].amount = Number(Math.round($scope.orderItemsNew[i].amount+'e2')+'e-2');               
                 }  
             } 
+            var out = 0;
+            for(var n in $scope.orderItemsNew){
+                out += $scope.orderItemsNew[n].amount;
+            }
+            $scope.checkoutTotalPrice = Number(Math.round(out+'e2')+'e-2');
         }
     }
 
