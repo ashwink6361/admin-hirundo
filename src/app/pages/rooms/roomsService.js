@@ -224,7 +224,16 @@ function RoomService($q, $http) {
             });
             return def.promise;
         },
-        
+        updateNoOfPeople: function (orderId, opts) {
+            var def = $q.defer();
+            var url = '/api/room/noOfPeople/' + orderId;
+            doPut($q, $http, url, opts).then(function (data) {
+                def.resolve(data);
+            }).catch(function (error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
     };
 }
 })();

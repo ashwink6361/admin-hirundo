@@ -56,9 +56,10 @@
         $scope.selectAllClicked = false;
         $scope.selectedCheckoutItems = [];
         $scope.checkoutPeople = 0;
-        $scope.orderNumberOfPeople = 0;
+        // $scope.orderNumberOfPeople = 0;
         $scope.checkoutTotalPrice = 0;
-        $scope.showCheckoutCart = false;            
+        $scope.showCheckoutCart = false;  
+        
 
         $q.all([
             RoomService.getCategories()
@@ -273,12 +274,13 @@
                 cartTotalPrice: 0,
                 cartTotalItem: 0,
                 selectedSubcategory: [false],
-                activeTab: [true, false]
+                activeTab: [true, false],
+                showMenu : false
             };
             $scope.selectAllClicked = false;
             $scope.selectedCheckoutItems = [];
             $scope.checkoutPeople = 0;
-            $scope.orderNumberOfPeople = 0;
+            // $scope.orderNumberOfPeople = 0;
             $scope.checkoutTotalPrice = 0;
             $scope.stepArray = [];
             $scope.roomData = angular.copy(room);
@@ -287,7 +289,7 @@
             if (table.orderId != null && table.orderId._id) {
                 $scope.orderId = table.orderId._id;
                 $scope.orderItems = table.orderId.item;
-                $scope.orderNumberOfPeople = table.orderId.noOfPeople;
+                // $scope.orderNumberOfPeople = table.orderId.noOfPeople;
                 var cp = 0;
                 var itemno = 0;
                 var varicost = 0;
@@ -334,6 +336,7 @@
                 $rootScope.Order.selectedItems = selectedItems;
                 $rootScope.Order.cartTotalPrice = 0;
                 $rootScope.Order.cartTotalItem = 0;
+                $rootScope.Order.showMenu = true;
             } else {
                 $scope.orderId = '';
                 $scope.orderItems = [];
@@ -358,7 +361,8 @@
                 cartTotalPrice: 0,
                 cartTotalItem: 0,
                 selectedSubcategory: [false],
-                activeTab: [true, false]
+                activeTab: [true, false],
+                showMenu : false                
             };
             $scope.activeTab = [true, false, false, false, false, false];
             $scope.showOrder = false;
@@ -386,7 +390,8 @@
             cartTotalPrice: 0,
             cartTotalItem: 0,
             selectedSubcategory: [false],
-            activeTab: [true, false]
+            activeTab: [true, false],
+            showMenu : false            
         };
 
         $scope.tabActive = function (tab) {
@@ -416,6 +421,7 @@
                 }
                 $rootScope.Order.selectedItems = selectedItems;
                 $scope.changeTab(1);
+                $rootScope.Order.showMenu = true;                
             } else {
                 $rootScope.Order.error = true;
                 $rootScope.Order.errorMsg = 'Please choose number of person';
@@ -1201,14 +1207,45 @@
         }
 
         $scope.decreasePeople = function () {
-            if($scope.checkoutPeople < $scope.orderNumberOfPeople){
+            // if($scope.checkoutPeople < $rootScope.Order.noOfPeople){
+                
+            // }
+            if($rootScope.Order.noOfPeople > 0){
                 $scope.checkoutPeople = $scope.checkoutPeople + 1;
+                $rootScope.Order.noOfPeople = $rootScope.Order.noOfPeople - 1;
+                var opts = {
+                    noOfPeople : $rootScope.Order.noOfPeople
+                }  
+                RoomService.updateNoOfPeople($scope.orderId, opts).then(function (data) {
+                   console.log("data+++",data);
+                   RoomService.getRooms().then(function (data) {
+                    $scope.rooms = RoomService.listRoom();
+                }).catch(function (error) {
+                    console.log("Error ", error);
+                });
+                }).catch(function (error) {
+                    console.log('error', error);
+                });
             }
         }
         $scope.increasePeople = function () {
             if($scope.checkoutPeople >= 1){
                 $scope.checkoutPeople = $scope.checkoutPeople - 1;
             }
+            $rootScope.Order.noOfPeople = $rootScope.Order.noOfPeople + 1;
+            var opts = {
+                noOfPeople : $rootScope.Order.noOfPeople
+            }  
+            RoomService.updateNoOfPeople($scope.orderId, opts).then(function (data) {
+               console.log("data",data);
+               RoomService.getRooms().then(function (data) {
+                $scope.rooms = RoomService.listRoom();
+            }).catch(function (error) {
+                console.log("Error ", error);
+            });
+            }).catch(function (error) {
+                console.log('error', error);
+            });                      
         }
         $scope.checkoutOrder = function () {
             var opts = {
@@ -1220,7 +1257,7 @@
                 $scope.selectAllClicked = false;
                 $scope.selectedCheckoutItems = [];
                 $scope.checkoutPeople = 0;
-                $scope.orderNumberOfPeople = 0;
+                // $scope.orderNumberOfPeople = 0;
                 $scope.checkoutTotalPrice = 0;
                 $scope.showLedtSideBar = false;
                 $scope.showOrder = false;
@@ -1249,7 +1286,7 @@
             }
             RoomService.checkoutOrder($scope.roomData["_id"], $scope.tableData["_id"],$scope.orderId, opts).then(function (data) {
                 $scope.checkoutPeople = 0;
-                $scope.orderNumberOfPeople = 0;
+                // $scope.orderNumberOfPeople = 0;
                 $scope.showLedtSideBar = false;
                 $scope.showOrder = false;
                 $scope.showCheckoutCart = false;   
@@ -1271,7 +1308,7 @@
                 $scope.showOrder = false;
                 $scope.showCheckoutCart = false; 
                 $scope.checkoutPeople = 0;
-                $scope.orderNumberOfPeople = 0;
+                // $scope.orderNumberOfPeople = 0;
                 $scope.checkoutTotalPrice = 0;             
                 baRoomService.setCreateModalCollapsed(false);
                 RoomService.getRooms().then(function (data) {
