@@ -1341,6 +1341,11 @@
             }
             $scope.checkoutTotalPrice = Number(Math.round(out+'e2')+'e-2');
         }
+
+        $scope.closeShowCheckoutCart = function (){
+            $scope.showCheckoutCart = false;
+            $scope.checkoutTotalPrice = 0;
+        }
     }
 
     function StepsController($scope,$rootScope, RoomService, AlertService, baRoomService) {
