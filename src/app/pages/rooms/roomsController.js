@@ -58,7 +58,8 @@
         $scope.checkoutPeople = 0;
         $scope.orderNumberOfPeople = 0;
         $scope.checkoutTotalPrice = 0;
-        $scope.showCheckoutCart = false;            
+        $scope.showCheckoutCart = false;  
+        
 
         $q.all([
             RoomService.getCategories()
@@ -273,7 +274,8 @@
                 cartTotalPrice: 0,
                 cartTotalItem: 0,
                 selectedSubcategory: [false],
-                activeTab: [true, false]
+                activeTab: [true, false],
+                showMenu : false
             };
             $scope.selectAllClicked = false;
             $scope.selectedCheckoutItems = [];
@@ -334,6 +336,7 @@
                 $rootScope.Order.selectedItems = selectedItems;
                 $rootScope.Order.cartTotalPrice = 0;
                 $rootScope.Order.cartTotalItem = 0;
+                $rootScope.Order.showMenu = true;
             } else {
                 $scope.orderId = '';
                 $scope.orderItems = [];
@@ -358,7 +361,8 @@
                 cartTotalPrice: 0,
                 cartTotalItem: 0,
                 selectedSubcategory: [false],
-                activeTab: [true, false]
+                activeTab: [true, false],
+                showMenu : false                
             };
             $scope.activeTab = [true, false, false, false, false, false];
             $scope.showOrder = false;
@@ -386,7 +390,8 @@
             cartTotalPrice: 0,
             cartTotalItem: 0,
             selectedSubcategory: [false],
-            activeTab: [true, false]
+            activeTab: [true, false],
+            showMenu : false            
         };
 
         $scope.tabActive = function (tab) {
@@ -416,6 +421,7 @@
                 }
                 $rootScope.Order.selectedItems = selectedItems;
                 $scope.changeTab(1);
+                $rootScope.Order.showMenu = true;                
             } else {
                 $rootScope.Order.error = true;
                 $rootScope.Order.errorMsg = 'Please choose number of person';
