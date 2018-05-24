@@ -1402,6 +1402,16 @@
             $scope.checkoutTotalPrice = 0;
             $scope.checkoutPeople = 0;
         }
+
+        $scope.openPopup = function(order, page, size) {
+            $scope.activeOrder = order;
+            $scope.editTableInstance = $uibModal.open({
+                scope: $scope,
+                animation: true,
+                templateUrl: page,
+                size: size
+            });
+        };
     }
 
     function StepsController($scope,$rootScope, RoomService, AlertService, baRoomService) {

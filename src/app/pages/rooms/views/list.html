@@ -476,7 +476,7 @@
                 Create Order
                 <i class="ion-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
             </button>
-            <button style="background-color:#00aef0; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" type="submit" class="btn">
+            <button style="background-color:#00aef0; color:#fff; padding:10px 0;" ng-if="!showLedtSideBar" ng-click="openPopup(room._id,'app/pages/rooms/views/update.html', 'md')" type="submit" class="btn">
                 Total
                 <i class="ion-cart"></i> {{orderItemsTotalItem}} | &euro;{{orderItemsTotalPrice}}
             </button>
@@ -536,14 +536,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>X {{checkoutPeople}} Coperti</td>
-                        <td>
+                        <td style="padding: 13px 0;">X {{checkoutPeople}} Coperti</td>
+                        <td style="padding: 13px 0;">
                             &euro;{{checkoutPeople}}
                         </td>
                     </tr>
                     <tr ng-repeat="item in orderItemsNew track by $index">
-                        <td>X {{item.quantity}} {{item.name}}</td>
-                        <td>
+                        <td style="padding: 13px 0;">X {{item.quantity}} {{item.name}}</td>
+                        <td style="padding: 13px 0;">
                             &euro;{{item.amount}}
                         </td>
                     </tr>
@@ -552,7 +552,10 @@
         </div>
     </div>
     <div class="button text-right">
-        <button type="submit" class="btn btn-default" ng-click="checkout()">cancel</button>
-        <button type="submit" class="btn btn-default" ng-click="checkoutOrderItems()">checkout</button>
+        <button type="submit" class="btn btn-default">Invia @</button>
+        <button type="submit" class="btn btn-default" >Scontrino</button>
+        <button type="submit" class="btn btn-default">Fattura</button>
+        <button type="submit" class="btn btn-default" ng-click="checkout()">Cancel</button>
+        <!-- <button type="submit" class="btn btn-default" ng-click="checkoutOrderItems()">checkout</button> -->
     </div>
 </div>
