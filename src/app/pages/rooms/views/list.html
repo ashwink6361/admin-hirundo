@@ -504,10 +504,10 @@
                     <tr>
                         <td>X {{Order.noOfPeople}} Coperti</td>
                         <td class="btn-quantity">
-                            <button type="submit" ng-click="decreasePeople()">
+                            <button type="submit" ng-click="decreaseCheckoutPeople()">
                                 <i class="icon-minus"></i>
                             </button>
-                            <button type="submit" ng-click="increasePeople()">
+                            <button type="submit" ng-click="increaseCheckoutPeople()">
                                 <i class="icon-plus"></i>
                             </button>
                         </td>
@@ -537,6 +537,9 @@
                 <tbody>
                     <tr>
                         <td>X {{checkoutPeople}} Coperti</td>
+                        <td>
+                            &euro;{{checkoutPeople}}
+                        </td>
                     </tr>
                     <tr ng-repeat="item in orderItemsNew track by $index">
                         <td>X {{item.quantity}} {{item.name}}</td>

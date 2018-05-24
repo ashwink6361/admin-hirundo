@@ -289,6 +289,7 @@
             if (table.orderId != null && table.orderId._id) {
                 $scope.orderId = table.orderId._id;
                 $scope.orderItems = table.orderId.item;
+                $rootScope.Order.noOfPeople = table.orderId.noOfPeople;                
                 // $scope.orderNumberOfPeople = table.orderId.noOfPeople;
                 var cp = 0;
                 var itemno = 0;
@@ -309,7 +310,7 @@
                             }
                         }
                         cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
-                        $scope.orderItemsTotalPrice = cp;
+                        $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople;
                         $scope.orderItemsTotalItem = itemno;
                     }
                 }
@@ -332,7 +333,7 @@
                 for (var j = 0; j < steps.length; j++) {
                   selectedItems[steps[j]] = [];
                 }
-                $rootScope.Order.noOfPeople = table.orderId.noOfPeople;
+                // $rootScope.Order.noOfPeople = table.orderId.noOfPeople;
                 $rootScope.Order.selectedItems = selectedItems;
                 $rootScope.Order.cartTotalPrice = 0;
                 $rootScope.Order.cartTotalItem = 0;
@@ -1211,8 +1212,9 @@
                 
             // }
             if($rootScope.Order.noOfPeople > 0){
-                $scope.checkoutPeople = $scope.checkoutPeople + 1;
+                // $scope.checkoutPeople = $scope.checkoutPeople + 1;
                 $rootScope.Order.noOfPeople = $rootScope.Order.noOfPeople - 1;
+                $scope.orderItemsTotalPrice = $scope.orderItemsTotalPrice - 1;
                 var opts = {
                     noOfPeople : $rootScope.Order.noOfPeople
                 }  
@@ -1229,10 +1231,11 @@
             }
         }
         $scope.increasePeople = function () {
-            if($scope.checkoutPeople >= 1){
-                $scope.checkoutPeople = $scope.checkoutPeople - 1;
-            }
+            // if($scope.checkoutPeople >= 1){
+            //     $scope.checkoutPeople = $scope.checkoutPeople - 1;
+            // }
             $rootScope.Order.noOfPeople = $rootScope.Order.noOfPeople + 1;
+            $scope.orderItemsTotalPrice = $scope.orderItemsTotalPrice + 1;            
             var opts = {
                 noOfPeople : $rootScope.Order.noOfPeople
             }  
@@ -1247,6 +1250,21 @@
                 console.log('error', error);
             });                      
         }
+
+        $scope.decreaseCheckoutPeople = function () {
+            if($scope.checkoutPeople < $rootScope.Order.noOfPeople){
+                $scope.checkoutPeople = $scope.checkoutPeople + 1;
+            $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice+'e2')+'e-2') + 1;
+                
+            }
+        }
+        $scope.increaseCheckoutPeople = function () {
+            if($scope.checkoutPeople >= 1){
+                $scope.checkoutPeople = $scope.checkoutPeople - 1;
+            $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice+'e2')+'e-2') - 1;                
+            }
+        }
+
         $scope.checkoutOrder = function () {
             var opts = {
                 noOfPeople: $scope.checkoutPeople,
@@ -1354,7 +1372,7 @@
             for(var n in $scope.orderItemsNew){
                 out += $scope.orderItemsNew[n].amount;
             }
-            $scope.checkoutTotalPrice = Number(Math.round(out+'e2')+'e-2');
+            $scope.checkoutTotalPrice = Number(Math.round(out+'e2')+'e-2') + $scope.checkoutPeople;
         }
         $scope.increaseItemQty = function (item) {
             for(var i=0;i<$scope.orderItemsNew.length;i++){
@@ -1376,12 +1394,13 @@
             for(var n in $scope.orderItemsNew){
                 out += $scope.orderItemsNew[n].amount;
             }
-            $scope.checkoutTotalPrice = Number(Math.round(out+'e2')+'e-2');
+            $scope.checkoutTotalPrice = Number(Math.round(out+'e2')+'e-2') + $scope.checkoutPeople;
         }
 
         $scope.closeShowCheckoutCart = function (){
             $scope.showCheckoutCart = false;
             $scope.checkoutTotalPrice = 0;
+            $scope.checkoutPeople = 0;
         }
     }
 
