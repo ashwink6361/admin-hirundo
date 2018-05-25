@@ -10,7 +10,7 @@
     "prodstop": "NODE_ENV=prod forever stop server.js",
     "hirundo": "mkdir -p logs; NODE_ENV=hirundo forever start server.js",
     "hirundorestart": "mkdir -p logs; NODE_ENV=hirundo forever restart server.js",
-    "hirundostop": "mkdir -p logs; NODE_ENV=hirundo forever stop server.js",
+    "hirundostop": "mkdir -p logs; NODE_ENV=hirundo forever stop server.js"
   },
   "dependencies": {
     "angucomplete-alt": "^3.0.0",
