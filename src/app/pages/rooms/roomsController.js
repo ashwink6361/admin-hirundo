@@ -1412,6 +1412,38 @@
                 size: size
             });
         };
+
+        $scope.deleteOrderItem = function(item,index){
+            console.log('item', item);
+            $scope.orderItems.splice(index, 1);
+            RoomService.deleteOrderItem($scope.orderId, item).then(function (data) {
+                console.log('data', data);
+                $scope.orderItems = data.data.item;
+                var cp = 0;
+                var itemno = 0;
+                var varicost = 0;
+                $scope.orderItemsTotalPrice = 0;
+                $scope.orderItemsTotalItem = 0;
+                if ($scope.orderItems.length) {
+                    for (var i = 0; i < $scope.orderItems.length; i++) {
+                        itemno += $scope.orderItems[i].quantity;
+                        if ($scope.orderItems[i].variant) {
+                            for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
+                                if ($scope.orderItems[i].variant[j].status == 1) {
+                                    varicost += $scope.orderItems[i].variant[j].price;
+                                }
+                            }
+                        }
+                        cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
+                        $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople;
+                        $scope.orderItemsTotalItem = itemno;
+                    }
+                }
+                baRoomService.setOrderItems(data.data.item);
+            }).catch(function (error) {
+                console.log("Error ", error);
+            });
+        }
     }
 
     function StepsController($scope,$rootScope, RoomService, AlertService, baRoomService) {

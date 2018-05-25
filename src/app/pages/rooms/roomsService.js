@@ -234,6 +234,16 @@ function RoomService($q, $http) {
             });
             return def.promise;
         },
+        deleteOrderItem: function (orderId, id) {
+            var def = $q.defer();
+            var url = '/api/deleteDish/' + orderId + '/' + id;
+            doGet($q, $http, url).then(function (data) {
+                def.resolve(data);
+            }).catch(function (error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
     };
 }
 })();

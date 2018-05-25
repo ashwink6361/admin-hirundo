@@ -387,6 +387,9 @@
                             <span ng-if="item.notes" class="d-flex added-variand-name">{{item.notes}}</span>
                         </div>
                         <!-- </label> -->
+                        <button type="button" class="btn bg-red btn-icon" ng-click="deleteOrderItem(item._id,$index)">
+                            <i class="ion-trash-b">
+                        </button>
                     </div>
                     <!-- </div> -->
                 </div>
