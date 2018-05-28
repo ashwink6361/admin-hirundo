@@ -56,6 +56,7 @@
         $scope.selectAllClicked = false;
         $scope.selectedCheckoutItems = [];
         $scope.checkoutPeople = 0;
+        $scope.checkoutPeoplePrice = 0;
         // $scope.orderNumberOfPeople = 0;
         $scope.checkoutTotalPrice = 0;
         $scope.showCheckoutCart = false;
@@ -280,6 +281,7 @@
             $scope.selectAllClicked = false;
             $scope.selectedCheckoutItems = [];
             $scope.checkoutPeople = 0;
+            $scope.checkoutPeoplePrice = 0;
             // $scope.orderNumberOfPeople = 0;
             $scope.checkoutTotalPrice = 0;
             $scope.stepArray = [];
@@ -777,6 +779,7 @@
                             $scope.selectAllClicked = false;
                             $scope.selectedCheckoutItems = [];
                             $scope.checkoutPeople = 0;
+                            $scope.checkoutPeoplePrice = 0;
                             $scope.checkoutTotalPrice = 0;
                             $scope.stepArray = [];
                             $scope.roomData = angular.copy($scope.roomData);
@@ -883,6 +886,7 @@
                             $scope.selectAllClicked = false;
                             $scope.selectedCheckoutItems = [];
                             $scope.checkoutPeople = 0;
+                            $scope.checkoutPeoplePrice = 0;
                             $scope.checkoutTotalPrice = 0;
                             $scope.stepArray = [];
                             $scope.roomData = angular.copy($scope.roomData);
@@ -1420,6 +1424,8 @@
         $scope.decreaseCheckoutPeople = function () {
             if ($scope.checkoutPeople < $rootScope.Order.noOfPeople) {
                 $scope.checkoutPeople = $scope.checkoutPeople + 1;
+                $scope.checkoutPeoplePrice = $scope.checkoutPeople + (0.5*$scope.checkoutPeople);
+                $scope.checkoutPeoplePrice = Number(Math.round($scope.checkoutPeoplePrice + 'e2') + 'e-2');                
                 $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2') + 1.5;
                 $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
             }
@@ -1427,6 +1433,8 @@
         $scope.increaseCheckoutPeople = function () {
             if ($scope.checkoutPeople >= 1) {
                 $scope.checkoutPeople = $scope.checkoutPeople - 1;
+                $scope.checkoutPeoplePrice = $scope.checkoutPeople + (0.5*$scope.checkoutPeople);
+                $scope.checkoutPeoplePrice = Number(Math.round($scope.checkoutPeoplePrice + 'e2') + 'e-2');                
                 $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2') - 1.5;
                 $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
             }
@@ -1442,6 +1450,7 @@
                 $scope.selectAllClicked = false;
                 $scope.selectedCheckoutItems = [];
                 $scope.checkoutPeople = 0;
+                $scope.checkoutPeoplePrice = 0;                
                 // $scope.orderNumberOfPeople = 0;
                 $scope.checkoutTotalPrice = 0;
                 $scope.showLedtSideBar = false;
@@ -1471,6 +1480,7 @@
             }
             RoomService.checkoutOrder($scope.roomData["_id"], $scope.tableData["_id"], $scope.orderId, opts).then(function (data) {
                 $scope.checkoutPeople = 0;
+                $scope.checkoutPeoplePrice = 0;                
                 // $scope.orderNumberOfPeople = 0;
                 $scope.showLedtSideBar = false;
                 $scope.showOrder = false;
@@ -1493,6 +1503,7 @@
                 $scope.showOrder = false;
                 $scope.showCheckoutCart = false;
                 $scope.checkoutPeople = 0;
+                $scope.checkoutPeoplePrice = 0;                
                 // $scope.orderNumberOfPeople = 0;
                 $scope.checkoutTotalPrice = 0;
                 baRoomService.setCreateModalCollapsed(false);
@@ -1571,6 +1582,7 @@
             $scope.showCheckoutCart = false;
             $scope.checkoutTotalPrice = 0;
             $scope.checkoutPeople = 0;
+            $scope.checkoutPeoplePrice = 0;                
         }
 
         $scope.openPopup = function (order, page, size) {
@@ -1585,10 +1597,39 @@
 
         $scope.deleteOrderItem = function (item, index) {
             console.log('item', item);
-            $scope.orderItems.splice(index, 1);
+            // $scope.orderItems.splice(index, 1);
             RoomService.deleteOrderItem($scope.orderId, item).then(function (data) {
                 console.log('data', data);
                 $scope.orderItems = data.data.item;
+                console.log('$scope.orderItemsNew', $scope.orderItemsNew);
+
+                for (var j = 0; j < $scope.orderItemsNew.length; j++) {
+                    if ($scope.orderItemsNew[j]._id == item) {
+                        $scope.orderItemsNew.splice(j, 1);
+                    }
+                }
+                for (var i = 0; i < $scope.orderItemsNew.length; i++) {
+                    if ($scope.orderItemsNew[i]._id == item._id && $scope.orderItemsNew[i].quantity < item.quantity) {
+                        $scope.orderItemsNew[i].quantity = $scope.orderItemsNew[i].quantity + 1;
+                        var varicost = 0;
+                        if (item.variant) {
+                            for (var j = 0; j < item.variant.length; j++) {
+                                if (item.variant[j].status == 1) {
+                                    varicost += item.variant[j].price;
+                                }
+                            }
+                        }
+                        $scope.orderItemsNew[i].amount = (item.price + varicost) * $scope.orderItemsNew[i].quantity;
+                        $scope.orderItemsNew[i].amount = Number(Math.round($scope.orderItemsNew[i].amount + 'e2') + 'e-2');
+                    }
+                }
+                var out = 0;
+                for (var n in $scope.orderItemsNew) {
+                    out += $scope.orderItemsNew[n].amount;
+                }
+                // $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + $scope.checkoutPeople;
+                $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + $scope.checkoutPeople + (0.5 * $scope.checkoutPeople);
+                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
                 var cp = 0;
                 var itemno = 0;
                 var varicost = 0;
