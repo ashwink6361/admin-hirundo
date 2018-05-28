@@ -1538,7 +1538,7 @@
             var out = 0;
             for (var n in $scope.orderItemsNew) {
                 out += $scope.orderItemsNew[n].amount;
-            }
+            } 
             // $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + $scope.checkoutPeople;
             $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + $scope.checkoutPeople + (0.5 * $scope.checkoutPeople);
             $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
