@@ -59,7 +59,7 @@ function baRoomServiceProvider() {
     };
 };
 
-function RoomService($q, $http) {
+function RoomService($q, $http, $rootScope) {
     var _roomDetails = {};
     var _rooms = [];
     var socket = io.connect(SOCKETURL);
@@ -75,6 +75,19 @@ function RoomService($q, $http) {
                 }
             }
         }
+    });
+    socket.on('newItem', function (data) {
+        console.log(data, 'newItem');
+        for (var i = 0; i < _rooms.length; i++) {
+            if (data.room._id === _rooms[i]._id) {
+                for (var j = 0; j < _rooms[i].tables.length; j++) {
+                    if (data.table == _rooms[i].tables[j]._id) {
+                        _rooms[i].tables[j].orderId = data;
+                    }
+                }
+            }
+        }
+        $rootScope.$broadcast('orderUpdated');
     });
     return {
         getRooms: function () {
