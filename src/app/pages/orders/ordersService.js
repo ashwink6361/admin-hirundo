@@ -38,6 +38,14 @@
                 }
             // }
         });
+        socket.on('newItem', function (data) {
+            console.log(data, 'newItem');
+            for (var i = 0; i < _orders.length; i++) {
+                if (data._id === _orders[i]._id) {
+                    _orders[i] = data;
+                }
+            }
+        });
         return {
             getOrders: function (id) {
                 var def = $q.defer();
