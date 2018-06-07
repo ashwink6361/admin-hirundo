@@ -52,8 +52,6 @@ app.set('apiUrl', Config.apiUrl);
 app.set('adminApiUrl', Config.adminApiUrl);
 app.set('secretKey', Config.key.privateKey);
 app.set('socketUrl', Config.socketUrl);
-console.log(Config.adminApiUrl);
-
 //intercepting API requests
 app.use('/api/*', function (req, res, next) {    
     var token = req.cookies.session;    
@@ -68,11 +66,7 @@ app.use('/api/*', function (req, res, next) {    
         
     var method = req.method;    
     var uri = app.get('adminApiUrl') + path;     //POST INTERCEPTOR
-console.log('method',method);
-    
     if (method == 'POST') {  
-console.log('in 1',method);
-              
         if (_.isEmpty(req.files)) {            
             request.post({                
                 url: uri,
@@ -103,8 +97,6 @@ console.log('in 1',method);
     }     //PUT INTERCEPTOR
         
     if (method == 'PUT') {
-console.log('in 2',method);
-                
         if (_.isEmpty(req.files)) {            
             request.put({                
                 url: uri,
@@ -136,8 +128,6 @@ console.log('in 2',method);
          //GET INTERCEPTOR
         
     if (method == 'GET') {  
-console.log('in 3',method);
-              
         request.get({            
             url: uri,
             headers: headers        

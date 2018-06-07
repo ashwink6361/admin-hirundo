@@ -149,7 +149,6 @@
                 provider: $scope.Ingredient.provider ? $scope.Ingredient.provider : '',
                 quantity: Number($scope.Ingredient.quantity)
             };
-            console.log('opts', opts);
             $scope.ingredientAddRequest = true;
             IngredientService.addIngredient(opts).then(function (data) {
                 $scope.ingredientAddRequest = false;

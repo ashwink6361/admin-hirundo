@@ -42,7 +42,6 @@ function VariantService($q, $http) {
         addVariant: function(opts) {
             var def = $q.defer();
             var url = '/api/variant';
-            console.log(opts);
             doPost($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
@@ -54,7 +53,6 @@ function VariantService($q, $http) {
         addNote: function(opts) {
             var def = $q.defer();
             var url = '/api/note';
-            console.log(opts);
             doPost($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {

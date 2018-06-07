@@ -77,7 +77,6 @@ function RoomService($q, $http, $rootScope) {
         }
     });
     socket.on('neworder', function (data) {
-        console.log(data, 'neworder');
         for (var i = 0; i < _rooms.length; i++) {
             if (data.room._id === _rooms[i]._id) {
                 for (var j = 0; j < _rooms[i].tables.length; j++) {
@@ -90,7 +89,6 @@ function RoomService($q, $http, $rootScope) {
         $rootScope.$broadcast('neworder');
     });
     socket.on('newItem', function (data) {
-        console.log(data, 'newItem');
         for (var i = 0; i < _rooms.length; i++) {
             if (data.room._id === _rooms[i]._id) {
                 for (var j = 0; j < _rooms[i].tables.length; j++) {

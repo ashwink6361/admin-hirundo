@@ -79,7 +79,6 @@
         $scope.categorySearchData = [];
         CategoryService.getCategoryWithItems().then(function (data) {
             $scope.categoryItems = data.data;
-            console.log('$scope.categoryItems',$scope.categoryItems);
             for (var i = 0; i < $scope.categoryItems.length; i++) {
                 $scope.categorySearchData.push({
                     _id: $scope.categoryItems[i].category._id,
@@ -179,7 +178,6 @@
             CategoryService.getIcons('', 0, 100),
             DepartmentService.getDepartments()
         ]).then(function (data) {
-            console.log('data',data);
             $scope.icons = data[0].data;
             var departments = data[1].data;
             $scope.departments = [];
@@ -304,7 +302,6 @@
                     opts.logo = $scope.categoryLogo,
                     opts.logoBounds = JSON.stringify($scope.bounds)
             }
-            console.log(opts);
             $scope.categoryAddRequest = true;
             CategoryService.addCategory(opts).then(function (data) {
                 $scope.categoryAddRequest = false;
@@ -373,7 +370,6 @@
         }
 
         $scope.selectDepartment = function (department) {
-            console.log('department',department);
             if ($scope.selectedDepartments.indexOf(department.selected._id) === -1) {
                 $scope.selectedDepartments.push(department.selected._id);
                 $scope.itms.push({
@@ -392,7 +388,6 @@
     }
 
     function TabController($scope, $state, $http, $timeout, CategoryService, AlertService) {
-        console.log(localStorage.getItem('activeTab'));
         if(localStorage.getItem('activeTab')){
             $scope.activeTab = localStorage.getItem('activeTab');
         }

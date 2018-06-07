@@ -85,13 +85,11 @@
         RoomService.getRooms().then(function (data) {
             $scope.rooms = RoomService.listRoom();
         }).catch(function (error) {
-            console.log("Error ", error);
         });
         $scope.getRoomList = function () {
             RoomService.getRooms().then(function (data) {
                 $scope.rooms = RoomService.listRoom();
             }).catch(function (error) {
-                console.log("Error ", error);
             });
         };
 
@@ -470,7 +468,6 @@
                     $scope.goToItems();
                 })
                 .catch(function (error) {
-                    console.log('error', error);
                 });
         }
 
@@ -844,7 +841,6 @@
                             $scope.showOrder = true;
 
                         }).catch(function (error) {
-                            console.log("Error ", error);
                         });
                     })
                     .catch(function (error) {
@@ -950,7 +946,6 @@
                             $scope.showOrder = true;
 
                         }).catch(function (error) {
-                            console.log("Error ", error);
                         });
                     })
                     .catch(function (error) {
@@ -984,7 +979,6 @@
                     $scope.variantList = data.data.variants;
                     $scope.noteList = data.data.notes;
                 }).catch(function (error) {
-                    console.log("Error ", error);
                 });
             $scope.changeTab(3);
             $scope.articleData = angular.copy(article);
@@ -1134,7 +1128,6 @@
                         $rootScope.Order.activeTab[1] = false;
                     }
                 }).catch(function (error) {
-                    console.log("Error ", error);
                 });
         }
 
@@ -1379,10 +1372,8 @@
                     RoomService.getRooms().then(function (data) {
                         $scope.rooms = RoomService.listRoom();
                     }).catch(function (error) {
-                        console.log("Error ", error);
                     });
                 }).catch(function (error) {
-                    console.log('error', error);
                 });
             }
         }
@@ -1397,10 +1388,8 @@
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
-                    console.log("Error ", error);
                 });
             }).catch(function (error) {
-                console.log('error', error);
             });
         }
 
@@ -1440,10 +1429,8 @@
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
-                    console.log("Error ", error);
                 });
             }).catch(function (error) {
-                console.log('error', error);
             });
         }
 
@@ -1470,10 +1457,8 @@
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
-                    console.log("Error ", error);
                 });
             }).catch(function (error) {
-                console.log('error', error);
             });
         }
 
@@ -1489,10 +1474,8 @@
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
-                    console.log("Error ", error);
                 });
             }).catch(function (error) {
-                console.log("Order table error", error);
             });
         }
 
@@ -1631,10 +1614,8 @@
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
-                    console.log("Error ", error);
                 });
             }).catch(function (error) {
-                console.log("Error ", error);
             });
         }
 
@@ -1678,7 +1659,6 @@
                         $rootScope.Order.activeTab[1] = false;
                     }
                 }).catch(function (error) {
-                    console.log("Error ", error);
                 });
         }
 
@@ -1773,10 +1753,8 @@
                         RoomService.getRooms().then(function (data) {
                             $scope.rooms = RoomService.listRoom();
                         }).catch(function (error) {
-                            console.log("Error ", error);
                         });
                     }).catch(function (error) {
-                        console.log("Error ", error);
                     });
                 }
             } else {
@@ -1832,10 +1810,8 @@
                         RoomService.getRooms().then(function (data) {
                             $scope.rooms = RoomService.listRoom();
                         }).catch(function (error) {
-                            console.log("Error ", error);
                         });
                     }).catch(function (error) {
-                        console.log("Error ", error);
                     });
                 }
             }
@@ -1938,7 +1914,6 @@
                 $scope.showOrder = true;
 
             }).catch(function (error) {
-                console.log("Error ", error);
             });
         });
 
@@ -1947,7 +1922,6 @@
             RoomService.getRooms().then(function (data) {
                 $scope.rooms = RoomService.listRoom();
             }).catch(function (error) {
-                console.log("Error ", error);
             });
         });
     }
@@ -2029,7 +2003,6 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log('error', error);
                 });
         }
 

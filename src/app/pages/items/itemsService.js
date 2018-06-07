@@ -69,7 +69,6 @@ function ItemService($q, $http) {
         addItem: function(opts) {
             var def = $q.defer();
             var url = '/api/item';
-            console.log(opts);
             doPostWithImage($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {

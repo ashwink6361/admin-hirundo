@@ -148,7 +148,6 @@
                 category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : '',
 
             };
-            console.log('opts', opts);
             $scope.variantAddRequest = true;
             VariantService.addVariant(opts).then(function (data) {
                 $scope.variantAddRequest = false;
@@ -166,7 +165,6 @@
                 // subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : ''
                 category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : '',                
             };
-            console.log('opts', opts);            
             $scope.variantAddRequest = true;
             VariantService.updateVariant($scope.variantId, opts).then(function (data) {
                 $scope.variantAddRequest = false;

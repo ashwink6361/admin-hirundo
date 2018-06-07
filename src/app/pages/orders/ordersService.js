@@ -13,18 +13,9 @@
         if (socket.connected)
             console.log("Socket Connection Done");
         socket.on('neworder', function (data) {
-            console.log(data, 'data')
-            console.log(_orders, 'orders')
             _orders.push(data);
         });
         socket.on('orderstatus', function (data) {
-            console.log(data, 'orderstatus data')
-            // if (data.who != 'admin') {
-                // for(var i=0; i<_orders.length; i++) {
-                //     if(data.id === _orders[i]._id) {
-                //         _orders[i].status = data.status;
-                //     }
-                // }
                 for (var i = 0; i < _orders.length; i++) {
                     if (data.id === _orders[i]._id) {
                         _orders[i].status = data.status;
@@ -34,12 +25,9 @@
                             }
                         }
                     }
-                    // console.log(this._orders[i], 'this._orders[i]')
                 }
-            // }
         });
         socket.on('newItem', function (data) {
-            console.log(data, 'newItem');
             for (var i = 0; i < _orders.length; i++) {
                 if (data._id === _orders[i]._id) {
                     _orders[i] = data;

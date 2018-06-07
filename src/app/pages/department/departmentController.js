@@ -146,7 +146,6 @@
         };
 
         $scope.selectCategory = function (category) {
-            console.log('category',category);
             if ($scope.selectedCategories.indexOf(category.selected._id) === -1) {
                 $scope.selectedCategories.push(category.selected._id);
                 $scope.itms.push({

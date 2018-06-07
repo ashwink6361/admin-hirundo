@@ -20,7 +20,6 @@
                     $state.go('dashboard');
                 }, 4000);
             }).catch(function (error) {
-                console.log("Error", error);
                 $scope.activeRequest = false;
                 $scope.passErrorMsg = error.message;
             });

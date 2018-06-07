@@ -30,7 +30,6 @@ function ProfileService($q, $http) {
         addProfilePicture: function(opts) {
             var def = $q.defer();
             var url = '/api/user/picture/upload';
-            console.log(opts);
             doPostWithImage($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {

@@ -13,7 +13,6 @@
         OrderService.getOrders().then(function(data) {
             $scope.ordersList = OrderService.listOrder();
         }).catch(function(error) {
-            console.log("Error ", error);
         });
 
         $scope.getOrderStatus = function(status) {
@@ -57,14 +56,12 @@
                 itemId: items
             };
             OrderService.updateOrder(order._id, opts).then(function(data) {
-                console.log("Order updated", data);
             }).catch(function(error) {
 
             });
         };
 
         $scope.updateItem = function(item, order, status) {
-            console.log(item, '')
             item.status = status;
             var items = [];
             items.push(item.id._id)
@@ -74,9 +71,7 @@
                 itemId: items
             };
             OrderService.updateOrder(order, opts).then(function(data) {
-                console.log("waiter Order updated", data);
             }).catch(function(error) {
-                console.log("error", error);
             });
         };
 
@@ -88,10 +83,8 @@
 
         $scope.checkout = function (roomid,tableid) {
             OrderService.checkoutTable(roomid, tableid).then(function(data) {
-                console.log("Order table updated", data);
                 AlertService.success('checkoutmsg', data.message, 4000);
             }).catch(function(error) {
-                console.log("Order table error", error);
             });
         }
     }
