@@ -41,7 +41,6 @@
     
         //View Department
         $scope.viewDepartment = function (data, id) {
-            // DepartmentService.setDepartmentDetails(data);
             $state.go('viewdepartment', {
                 'id': id
             });
@@ -49,7 +48,6 @@
 
         //Edit Department
         $scope.updateDepartment = function (data, id) {
-            // DepartmentService.setDepartmentDetails(data);
             $state.go('adddepartment', {
                 'id': id
             });
@@ -63,16 +61,12 @@
         }).catch(function (error) {
             $state.go('staff');
         });
-        // $scope.departmentDetail = DepartmentService.getDepartmentDetails();
-        // if(!$scope.departmentDetail)
-        //     $state.go('staff');
     }
 
     function AddDepartmentController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, DepartmentService, ItemService, AlertService) {
         $scope.departmentId = $stateParams.id;
         $scope.itms = [];
         $scope.selectedCategories = [];
-
         $q.all([
             ItemService.getCategories()
         ]).then(function (data) {
@@ -84,7 +78,6 @@
                     name: categories[i].name,
                 });
             }
-
             if ($scope.departmentId) {
                 DepartmentService.getDepartmentDetail($scope.departmentId).then(function (data) {
                     $scope.Department = data.data;

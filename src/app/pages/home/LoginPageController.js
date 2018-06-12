@@ -17,7 +17,6 @@ angular.module('ThyAdmin', []).controller('LoginPageController', LoginPageContro
             $scope.loginErrorMsg = "";
             $scope.activeRequest = true;
             $http.post('/login', AdminUser).then(function (response) {
-                console.log('response',response);
                 $scope.loginSuccessMsg = "Login success!";
                 localStorage.setItem('adminUser', JSON.stringify(response.data.data));
                 localStorage.setItem('token', response.data.token);
@@ -27,7 +26,6 @@ angular.module('ThyAdmin', []).controller('LoginPageController', LoginPageContro
                 }, 4000);
                 window.location = '/platform';
             }, function (error) {
-                console.log("Error", error);
                 $scope.activeRequest = false;
                 $scope.loginErrorMsg = error.data.message;
                 localStorage.removeItem('adminUser');

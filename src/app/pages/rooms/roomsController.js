@@ -57,7 +57,6 @@
         $scope.selectedCheckoutItems = [];
         $scope.checkoutPeople = 0;
         $scope.checkoutPeoplePrice = 0;
-        // $scope.orderNumberOfPeople = 0;
         $scope.checkoutTotalPrice = 0;
         $scope.showCheckoutCart = false;
 
@@ -79,8 +78,6 @@
         ]).then(function (data) {
             $scope.categories = data[0].data;
         });
-
-
         //Fetch Room list
         RoomService.getRooms().then(function (data) {
             $scope.rooms = RoomService.listRoom();
@@ -96,6 +93,7 @@
         $scope.switchTableOption = function (option) {
             $scope.isMultiple = option;
         }
+
         $scope.openAddTable = function (roomId, page, size) {
             $scope.roomId = roomId;
             $scope.addTableInstance = $uibModal.open({
@@ -496,7 +494,6 @@
             }
         }
 
-        //new code
         $scope.increaseValue = function (article) {
             article.step = baRoomService.getTabData().step;
             var currentStep = baRoomService.getTabData().step;
@@ -1322,7 +1319,6 @@
                         $scope.selectedCheckoutItems.splice($scope.selectedCheckoutItems.indexOf(items[i]._id), 1);
                     }
                 }
-                // $scope.selectedCheckoutItems = [];
                 $scope.checkoutTotalPrice = 0;
             }
         }
@@ -1610,7 +1606,6 @@
                     }
                 }
                 baRoomService.setOrderItems(data.data.item);
-                //Fetch Room list
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
@@ -1749,7 +1744,6 @@
                         }
                         baRoomService.setOrderItems(data.data.item);
                         $scope.hideEditOrderItem();
-                        //Fetch Room list
                         RoomService.getRooms().then(function (data) {
                             $scope.rooms = RoomService.listRoom();
                         }).catch(function (error) {
@@ -1806,7 +1800,6 @@
                         }
                         baRoomService.setOrderItems(data.data.item);
                         $scope.hideEditOrderItem();
-                        //Fetch Room list
                         RoomService.getRooms().then(function (data) {
                             $scope.rooms = RoomService.listRoom();
                         }).catch(function (error) {

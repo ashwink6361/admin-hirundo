@@ -8,12 +8,12 @@
   angular.module('BlurAdmin.pages.profile')
     .controller('ProfilePageCtrl', ProfilePageCtrl)
     .controller('datepickerpopupCtrl', datepickerpopupCtrl);
-    /** @ngInject */
-  function ProfilePageCtrl($scope,$rootScope, fileReader, $filter, $uibModal, ProfileService, AlertService) {
+  /** @ngInject */
+  function ProfilePageCtrl($scope, $rootScope, fileReader, $filter, $uibModal, ProfileService, AlertService) {
     $scope.picture = '';
     $scope.Profile = {};
     $scope.Profile.gender = 'M';
-    $scope.image1 = {}; 
+    $scope.image1 = {};
     $scope.image1.compressed = {
       dataURL: ''
     };
@@ -37,10 +37,11 @@
       var binary = atob(datauri);
       var array = [];
       for (var i = 0; i < binary.length; i++) {
-          array.push(binary.charCodeAt(i));
+        array.push(binary.charCodeAt(i));
       }
-      //Convert the binary format of image into image file object to upload
-      $scope.profilePic = new File([new Uint8Array(array)], 'profile_pic.jpg', {type: 'image/jpg'});
+      $scope.profilePic = new File([new Uint8Array(array)], 'profile_pic.jpg', {
+        type: 'image/jpg'
+      });
       var opts = {
         picture: $scope.profilePic
       };
@@ -49,76 +50,71 @@
         $rootScope.$broadcast('profilePicUpdated');
         AlertService.success('profilemsg', data.message, 4000);
         $scope.profilePic = '';
-        $scope.image1.compressed.dataURL = '';        
+        $scope.image1.compressed.dataURL = '';
         document.getElementById("uploadFile").value = "";
         ProfileService.getDetails().then(function (data) {
           $scope.Profile = data.data;
-          if($scope.Profile.adminType==1){
+          if ($scope.Profile.adminType == 1) {
             $scope.Profile.dob = new Date(data.data.dob);
           }
-      }).catch(function (error) {
-        AlertService.error('profilemsg', error.message, 4000);
-      });
+        }).catch(function (error) {
+          AlertService.error('profilemsg', error.message, 4000);
+        });
       }).catch(function (error) {
         $scope.uploadPicRequest = false;
         AlertService.error('profilemsg', error.message, 4000);
       });
     }
 
-    $scope.$on('gmPlacesAutocomplete::placeChanged', function() {
+    $scope.$on('gmPlacesAutocomplete::placeChanged', function () {
       var location = $scope.Profile.address.getPlace().geometry.location;
       $scope.Profile.address = $scope.Profile.address.getPlace().formatted_address;
       $scope.lat = location.lat();
       $scope.lng = location.lng();
       $scope.$apply();
-  });
+    });
 
-  $scope.updateRequest = false;
-  $scope.updateProfile = function (){
-    // if (!$scope.Profile.gender) {
-    //   AlertService.error('profilemsg', "Please select gender", 4000);
-    //   return false;
-    // }
+    $scope.updateRequest = false;
+    $scope.updateProfile = function () {
       var opts = {
         firstName: $scope.Profile.firstName,
-        lastName: $scope.Profile.lastName?$scope.Profile.lastName:'',
+        lastName: $scope.Profile.lastName ? $scope.Profile.lastName : '',
         mobile: $scope.Profile.mobile,
-        contactNumber: $scope.Profile.contactNumber?$scope.Profile.contactNumber:'',
-        gender: $scope.Profile.gender?$scope.Profile.gender:'M'
+        contactNumber: $scope.Profile.contactNumber ? $scope.Profile.contactNumber : '',
+        gender: $scope.Profile.gender ? $scope.Profile.gender : 'M'
       };
-      if($scope.Profile.dob) {
+      if ($scope.Profile.dob) {
         opts.dob = $scope.Profile.dob.toISOString();
       }
-      if($scope.Profile.address) {
+      if ($scope.Profile.address) {
         opts.address = $scope.Profile.address;
         opts.lat = $scope.lat;
         opts.lng = $scope.lng;
       }
-    $scope.updateRequest = true;
-    ProfileService.updateProfile(opts).then(function (data) {
-      $scope.updateRequest = false;
-      AlertService.success('profilemsg', data.message, 4000);
-    }).catch(function (error) {
-      $scope.updateRequest = false;
-      AlertService.error('profilemsg', error.message, 4000);
-    });
-  };
+      $scope.updateRequest = true;
+      ProfileService.updateProfile(opts).then(function (data) {
+        $scope.updateRequest = false;
+        AlertService.success('profilemsg', data.message, 4000);
+      }).catch(function (error) {
+        $scope.updateRequest = false;
+        AlertService.error('profilemsg', error.message, 4000);
+      });
+    };
   }
 
   function datepickerpopupCtrl($scope) {
     $scope.open = open;
     $scope.popup1 = {
-        opened: false
+      opened: false
     };
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[0];
     $scope.options = {
-        showWeeks: false
+      showWeeks: false
     };
 
-    $scope.open1 = function() {
-        $scope.popup1.opened = true;
+    $scope.open1 = function () {
+      $scope.popup1.opened = true;
     };
-}
-
+  }
 })();

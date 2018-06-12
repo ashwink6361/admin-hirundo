@@ -12,23 +12,19 @@
             $scope.resetSuccessMsg = '';
             $scope.resetErrorMsg = '';
             $scope.access_token  = '';
-                        
             $scope.resetPassword = function(Admin) {
                 $scope.access_token = $location.search().token;
-                console.log('$scope.access_token',$scope.access_token);
                 localStorage.setItem('token', $scope.access_token);
                 document.cookie = "session=" + $scope.access_token;
                 $scope.resetErrorMsg = "";
                 $scope.activeRequest = true;
                 $http.put('/api/user/reset/password', Admin).then(function (response) {
-                    console.log('response',response);
                     $scope.resetSuccessMsg = response.data.message;
                     $timeout(function () {
                         $scope.resetSuccessMsg = '';
                         window.location = '/';
                     }, 4000);
                 }, function (error) {
-                    console.log("Error", error);
                     $scope.activeRequest = false;
                     $scope.resetErrorMsg = error.data.message;
                     $timeout(function () {
@@ -36,11 +32,5 @@
                     }, 4000);
                 });
             };
-    
-            
-    
-           
         }
-    
     })();
-    

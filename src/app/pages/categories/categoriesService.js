@@ -68,7 +68,6 @@ function CategoryService($q, $http) {
         addCategory: function(opts) {
             var def = $q.defer();
             var url = '/api/category';
-            console.log(opts);
             doPostWithImage($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
@@ -125,7 +124,6 @@ function CategoryService($q, $http) {
         addSubCategory: function(categoryId,opts) {
             var def = $q.defer();
             var url = '/api/category/'+categoryId+'/subcategory';
-            console.log(opts);
             doPostWithImage($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {

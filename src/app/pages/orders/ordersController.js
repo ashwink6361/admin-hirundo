@@ -31,7 +31,6 @@
                 default:
                     break;
             }
-
             return str;
         };
 
@@ -57,7 +56,6 @@
             };
             OrderService.updateOrder(order._id, opts).then(function(data) {
             }).catch(function(error) {
-
             });
         };
 
@@ -88,5 +86,4 @@
             });
         }
     }
-
 })();

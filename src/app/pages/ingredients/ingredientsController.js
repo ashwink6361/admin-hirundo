@@ -78,10 +78,6 @@
         $scope.ingredientId = $stateParams.id;
         $scope.Ingredient = {};
         $scope.Ingredient.quantity = 1;
-        // $scope.Unit = {
-        //     name: '',
-        //     quantity: 1
-        // };
         $scope.showConfezioneQty = false;
         $scope.showNewInput = false;
         $q.all([
@@ -90,14 +86,9 @@
             $scope.units = data[0].data;
             if ($scope.ingredientId) {
                 $scope.Ingredient = IngredientService.getIngredientDetails();
-                // for (var i = 0; i < $scope.units.length; i++) {
-                    // if ($scope.units[i].name == $scope.Ingredient.unit) {
-                        // $scope.Ingredient.unitData = $scope.units[i];
-                        if ($scope.Ingredient.unit == 'Confezione') {
-                            $scope.showConfezioneQty = true;
-                        }
-                    // }
-                // }
+                if ($scope.Ingredient.unit == 'Confezione') {
+                    $scope.showConfezioneQty = true;
+                }
                 if (!$scope.Ingredient)
                     $state.go('ingredient');
             }

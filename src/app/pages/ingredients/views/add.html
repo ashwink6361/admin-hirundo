@@ -45,9 +45,6 @@
                                 <strong>{{'IngredientKey.Unit' | translate}}</strong>
                             </label>
                             <div class="col-sm-5">
-                                <!-- <select class="form-control" data-ng-options="unit.name for unit in units" ng-model="Ingredient.unitData" ng-change="unitChanged(Ingredient.unitData)">
-                                    <option value="?" selected="selected">Select Unit</option>
-                                </select>  -->
                                 <select class="form-control" ng-model="Ingredient.unit" ng-change="unitChanged(Ingredient.unit)">
                                     <option value="" selected hidden disabled>Select Unit</option>
                                     <option value="KG" selected="selected">KG</option>
@@ -63,12 +60,6 @@
                             </label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" ng-show="showConfezioneQty" ng-model="Ingredient.quantity" />
-                                <!-- <button type="button" class="text-btn mt-10" ng-click="addNewUnit()">Add new unit</button> -->
-                                <!-- <div class="add-unit d-flex justify-space-between" ng-if="showNewInput">
-                                    <input type="text" class="form-control" placeholder="Add new unit" ng-model="Unit.name">
-                                    <input type="text" float-number class="form-control" placeholder="Add quantity" ng-model="Unit.quantity">
-                                    <button type="button" class="btn btn-icon btn-success cursor-pointer" ng-click="addUnit()"><i class="ion-plus-round"></i></button>
-                                </div>                                -->
                             </div>
                         </div>
                         <div class="form-group">

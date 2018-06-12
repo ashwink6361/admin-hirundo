@@ -144,9 +144,7 @@
             var opts = {
                 name: $scope.Variant.name,
                 price: $scope.Variant.price,
-                // subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : '',
                 category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : '',
-
             };
             $scope.variantAddRequest = true;
             VariantService.addVariant(opts).then(function (data) {
@@ -162,7 +160,6 @@
             var opts = {
                 name: $scope.Variant.name,
                 price: $scope.Variant.price,
-                // subCategory: $scope.Variant.subCategory ? $scope.Variant.subCategory : ''
                 category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : '',                
             };
             $scope.variantAddRequest = true;
@@ -192,7 +189,6 @@
             }
         };
     }
-
 
     function AddNoteController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, VariantService, AlertService) {
         $scope.noteId = $stateParams.id;
@@ -233,9 +229,6 @@
                 notes: $scope.Note.notes,
                 category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : []                
             };
-            // if($scope.Note.subCategory){
-            //     opts.subCategory = $scope.Note.subCategory
-            // }
             $scope.noteAddRequest = true;
             VariantService.addNote(opts).then(function (data) {
                 $scope.noteAddRequest = false;
@@ -251,9 +244,6 @@
                 notes: $scope.Note.notes,
                 category: ($scope.selectedCategories.length) ? JSON.stringify($scope.selectedCategories) : []                
             };
-            // if($scope.Note.subCategory){
-            //     opts.subCategory = $scope.Note.subCategory
-            // };
             $scope.noteAddRequest = true;
             VariantService.updateNote($scope.noteId, opts).then(function (data) {
                 $scope.noteAddRequest = false;

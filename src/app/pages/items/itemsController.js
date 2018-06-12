@@ -68,7 +68,6 @@
                     'id': id
                 });
             }
-
         }
 
         function ViewItemController($scope, $stateParams, $state, ItemService, AlertService) {
@@ -138,13 +137,6 @@
                 if ($scope.selectedIngredients.indexOf(ingredient.selected._id) === -1) {
                     $scope.selectedIngredients.push(ingredient.selected._id);
                     $scope.itms.push({
-                        // id: ingredient.selected._id,
-                        // name: ingredient.selected.name,
-                        // ingredientQuantity: '',
-                        // quantity: ingredient.selected.quantity,
-                        // price: '',
-                        // priceOfQuantity: Number(Math.round((ingredient.selected.price / ingredient.selected.quantity) + 'e2') + 'e-2'),
-                        // unit: ingredient.selected.unit
                         id: {
                             _id: ingredient.selected._id,
                             name: ingredient.selected.name,
@@ -235,7 +227,6 @@
                         for (var i = 0; i < binary.length; i++) {
                             array.push(binary.charCodeAt(i));
                         }
-                        //Convert the binary format of image into image file object to upload
                         $scope.itemLogo = new File([new Uint8Array(array)], 'category.png', {
                             type: 'image/png'
                         });
@@ -271,12 +262,7 @@
                         else{
                             fitems.push({
                                 id: $scope.itms[i].id._id,
-                                // name: $scope.itms[i].name,
                                 ingredientQuantity: $scope.itms[i].ingredientQuantity,
-                                // price: $scope.itms[i].price,
-                                // priceOfQuantity: $scope.itms[i].priceOfQuantity * $scope.itms[i].ingredientQuantity,
-                                // unit: $scope.itms[i].unit,
-                                // quantity: $scope.itms[i].quantity
                             });
                         }
                     }
@@ -321,12 +307,7 @@
                         else{
                             fitems.push({
                                 id: $scope.itms[i].id._id,
-                                // name: $scope.itms[i].name,
                                 ingredientQuantity: $scope.itms[i].ingredientQuantity,
-                                // price: $scope.itms[i].price,
-                                // priceOfQuantity: $scope.itms[i].priceOfQuantity * $scope.itms[i].ingredientQuantity,
-                                // unit: $scope.itms[i].unit,
-                                // quantity: $scope.itms[i].quantity                                
                             });
                         }
                     }

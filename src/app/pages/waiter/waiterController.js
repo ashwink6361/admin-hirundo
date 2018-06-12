@@ -22,7 +22,6 @@
 
         $scope.getWaiterList();
 
-        //Delete Waiter
         $scope.removeWaiter = function (id) {
             var result = confirm("Do you really want to delete?");
             if (result) {
@@ -35,7 +34,6 @@
             }
         };
     
-        //View Waiter
         $scope.viewWaiter = function (data, id) {
             WaiterService.setWaiterDetails(data);
             $state.go('viewwaiter', {
@@ -43,7 +41,6 @@
             });
         };
 
-        //Edit Waiter
         $scope.updateWaiter = function (data, id) {
             WaiterService.setWaiterDetails(data);
             $state.go('addwaiter', {

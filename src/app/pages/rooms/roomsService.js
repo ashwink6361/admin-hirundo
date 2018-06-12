@@ -48,13 +48,6 @@ function baRoomServiceProvider() {
                 var data = localStorage.getItem('orderItems');
                 return JSON.parse(data);
             };
-            // this.setOrderData = function(data) {
-            //     localStorage.setItem('orderData', JSON.stringify(data));
-            // };
-            // this.getOrderData = function() {
-            //     var data = localStorage.getItem('orderData');
-            //     return JSON.parse(data);
-            // };
         }
     };
 };

@@ -62,10 +62,9 @@ app.use('/api/*', function (req, res, next) {    
     var urlArr = req.originalUrl.split('/');    
     urlArr.splice(0, 2);    
     var path = urlArr.join('/');
-
-        
     var method = req.method;    
-    var uri = app.get('adminApiUrl') + path;     //POST INTERCEPTOR
+    var uri = app.get('adminApiUrl') + path;
+    //POST INTERCEPTOR
     if (method == 'POST') {  
         if (_.isEmpty(req.files)) {            
             request.post({                
@@ -94,8 +93,8 @@ app.use('/api/*', function (req, res, next) {    
                 }            
             });        
         }    
-    }     //PUT INTERCEPTOR
-        
+    }
+    //PUT INTERCEPTOR
     if (method == 'PUT') {
         if (_.isEmpty(req.files)) {            
             request.put({                
@@ -124,9 +123,7 @@ app.use('/api/*', function (req, res, next) {    
             });        
         }    
     }
-
-         //GET INTERCEPTOR
-        
+    //GET INTERCEPTOR
     if (method == 'GET') {  
         request.get({            
             url: uri,
@@ -143,9 +140,7 @@ app.use('/api/*', function (req, res, next) {    
             }        
         });    
     }
-
-         //DELETE INTERCEPTOR
-        
+    //DELETE INTERCEPTOR
     if (method == 'DELETE') {        
         request.del({            
             url: uri,
@@ -226,8 +221,6 @@ app.get('/admin/account/verify', function (req, res) {
         }
     });
 });
-
-// Reset Password
 
 app.get('/resetPassword', function (req, res) {
     var uri = app.get('adminApiUrl') + '/user/reset/password?token=' + req.query.token;    
