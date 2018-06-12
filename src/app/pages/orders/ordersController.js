@@ -47,12 +47,15 @@
         $scope.updateOrder = function(order, status) {
             order.status = status;
             var items = [];
+            var ids = [];            
             for (var i = 0; i < order.item.length; i++) {
-                items.push(order.item[i].id._id)
+                items.push(order.item[i].id._id);
+                ids.push(order.item[i]._id);                
             }
             var opts = {
                 status: status,
-                itemId: items
+                itemId: items,
+                id: ids
             };
             OrderService.updateOrder(order._id, opts).then(function(data) {
             }).catch(function(error) {
@@ -62,11 +65,14 @@
         $scope.updateItem = function(item, order, status) {
             item.status = status;
             var items = [];
-            items.push(item.id._id)
+            var ids = [];                        
+            items.push(item.id._id);
+            ids.push(item._id);            
             var opts = {
                 step: item.step,
                 status: status,
-                itemId: items
+                itemId: items,
+                id: ids
             };
             OrderService.updateOrder(order, opts).then(function(data) {
             }).catch(function(error) {
