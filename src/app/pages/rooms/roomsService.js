@@ -91,8 +91,23 @@ function RoomService($q, $http, $rootScope) {
                 }
             }
         }
-        $rootScope.$broadcast('orderUpdated');
+        $rootScope.$broadcast('newItem');
     });
+
+    socket.on('orderstatus', function (data) {
+        console.log('orderstatus',data);
+        for (var i = 0; i < _rooms.length; i++) {
+            if (data.orderData.room._id === _rooms[i]._id) {
+                for (var j = 0; j < _rooms[i].tables.length; j++) {
+                    if (data.orderData.table == _rooms[i].tables[j]._id) {
+                        _rooms[i].tables[j].orderId = data.orderData;
+                    }
+                }
+            }
+        }
+        $rootScope.$broadcast('orderstatus');        
+    });
+
     return {
         getRooms: function () {
             var def = $q.defer();

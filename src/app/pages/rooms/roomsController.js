@@ -1809,8 +1809,8 @@
                 }
             }
         }
-
-        $rootScope.$on('orderUpdated', function (){
+        
+        $rootScope.$on('newItem', function (){
             RoomService.getRooms().then(function (data) {
                 $scope.rooms = RoomService.listRoom();
                 for (var i = 0; i < $scope.rooms.length; i++) {
@@ -1914,6 +1914,106 @@
         $rootScope.$on('neworder', function (){
             RoomService.getRooms().then(function (data) {
                 $scope.rooms = RoomService.listRoom();
+            }).catch(function (error) {
+            });
+        });
+
+        $rootScope.$on('orderstatus', function (){
+            RoomService.getRooms().then(function (data) {
+                $scope.rooms = RoomService.listRoom();
+                for (var i = 0; i < $scope.rooms.length; i++) {
+                    if ($scope.rooms[i]._id == $scope.roomData["_id"]) {
+                        for (var j = 0; j < $scope.rooms[i].tables.length; j++) {
+                            if ($scope.rooms[i].tables[j]._id == $scope.tableData["_id"]) {
+                                $scope.roomData = angular.copy($scope.rooms[i]);
+                                $scope.tableData = angular.copy($scope.rooms[i].tables[j]);
+                            }
+                        }
+                    }
+                }
+                $rootScope.Order = {
+                    errorMsg: '',
+                    error: false,
+                    selectedItems: {},
+                    cartTotalPrice: 0,
+                    cartTotalItem: 0,
+                    selectedSubcategory: [false],
+                    activeTab: [true, false],
+                    showMenu: false
+                };
+                $scope.selectAllClicked = false;
+                $scope.selectedCheckoutItems = [];
+                $scope.checkoutPeople = 0;
+                $scope.checkoutPeoplePrice = 0;
+                $scope.checkoutTotalPrice = 0;
+                $scope.stepArray = [];
+                $scope.roomData = angular.copy($scope.roomData);
+                $scope.tableData = angular.copy($scope.tableData);
+                baRoomService.setCreateModalCollapsed(true);
+                if ($scope.tableData.orderId != null && $scope.tableData.orderId._id) {
+                    $scope.orderId = $scope.tableData.orderId._id;
+                    $scope.orderItems = $scope.tableData.orderId.item;
+                    $rootScope.Order.noOfPeople = $scope.tableData.orderId.noOfPeople;
+                    var cp = 0;
+                    var itemno = 0;
+                    var varicost = 0;
+                    $scope.orderItemsTotalPrice = 0;
+                    $scope.orderItemsTotalItem = 0;
+                    if ($scope.orderItems.length) {
+                        for (var i = 0; i < $scope.orderItems.length; i++) {
+                            if ($scope.orderItems[i].checkout && ($scope.selectedCheckoutItems.indexOf($scope.orderItems[i]._id) < 0)) {
+                                $scope.selectedCheckoutItems.push($scope.orderItems[i]._id);
+                            }
+                            varicost = 0;
+                            itemno += $scope.orderItems[i].quantity;
+                            if ($scope.orderItems[i].variant) {
+                                for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
+                                    if ($scope.orderItems[i].variant[j].status == 1) {
+                                        varicost += $scope.orderItems[i].variant[j].price;
+                                    }
+                                }
+                            }
+                            cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
+                            $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                            $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
+                            $scope.orderItemsTotalItem = itemno;
+                        }
+                    }
+                    baRoomService.setOrderId($scope.tableData.orderId._id);
+                    baRoomService.setOrderItems($scope.tableData.orderId.item);
+                    for (var i = 0; i < $scope.tableData.orderId.step.length; i++) {
+                        $scope.stepArray.push($scope.tableData.orderId.step[i].step);
+                    }
+                    if ($scope.stepArray.length) {
+                        baRoomService.setStepData($scope.stepArray);
+                    }
+                    var steps = [];
+                    var selectedItems = {};
+                    if (baRoomService.getStepData()) {
+                        steps = baRoomService.getStepData();
+                    } else {
+                        steps = ['Uscita 1', 'Uscita 2'];
+                    }
+                    for (var j = 0; j < steps.length; j++) {
+                        selectedItems[steps[j]] = [];
+                    }
+                    $rootScope.Order.selectedItems = selectedItems;
+                    $rootScope.Order.cartTotalPrice = 0;
+                    $rootScope.Order.cartTotalItem = 0;
+                    $rootScope.Order.showMenu = true;
+                } else {
+                    $scope.orderId = '';
+                    $scope.orderItems = [];
+                    localStorage.removeItem('orderId');
+                    localStorage.removeItem('orderItems');
+                }
+                if ($scope.tableData.status == 1) {
+                    $scope.activeTab = [false, false, false, false, true, false, false];
+                } else {
+                    $scope.activeTab = [true, false, false, false, false, false, false];
+                }
+                $scope.showOrder = true;
+
             }).catch(function (error) {
             });
         });
