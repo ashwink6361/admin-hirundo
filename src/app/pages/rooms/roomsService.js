@@ -58,6 +58,20 @@ function RoomService($q, $http, $rootScope) {
     var socket = io.connect(SOCKETURL);
     if (socket.connected)
         console.log("Socket Connection Done");
+        var user = JSON.parse(localStorage.getItem('adminUser'));
+        if(user){
+            socket.emit('connection');  
+            console.log('user',user);                               
+            socket.on('connected', function (data) {
+                console.log('connected',data);            
+                if(data && socket.id == data.socketId){
+                socket.emit('userAuth', {userId: user._id});           
+                socket.on('authConnected', function (data) {
+                        console.log('authConnected',data);            
+                });
+            }
+            });
+        }
     socket.on('tablestatus', function (data) {
         for (var i = 0; i < _rooms.length; i++) {
             if (data.room == _rooms[i]._id) {

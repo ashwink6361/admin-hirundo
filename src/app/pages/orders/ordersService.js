@@ -11,6 +11,20 @@
         var socket = io.connect(SOCKETURL);
         if (socket.connected)
             console.log("Socket Connection Done");
+            var user = JSON.parse(localStorage.getItem('adminUser'));
+            if(user){
+                socket.emit('connection');  
+                console.log('user',user);                               
+                socket.on('connected', function (data) {
+                    console.log('connected',data);            
+                    if(data && socket.id == data.socketId){
+                    socket.emit('userAuth', {userId: user._id});           
+                    socket.on('authConnected', function (data) {
+                            console.log('authConnected',data);            
+                    });
+                }
+                });
+            }
         socket.on('neworder', function (data) {
             _orders.push(data);
         });
