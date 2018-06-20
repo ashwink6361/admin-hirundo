@@ -39,8 +39,6 @@
             notes: ''
         };
         $scope.variantError = '';
-        $scope.orderId = '';
-        $scope.orderItems = [];
 
         $scope.variantList1 = [];
         $scope.noteList1 = [];
@@ -72,6 +70,7 @@
         $scope.variantError2 = '';
         $scope.editNonVariantData = false;
         $scope.showLedtSideBar1 = false;
+        $scope.orderid = '';
 
         $q.all([
             RoomService.getCategories()
@@ -293,44 +292,31 @@
             $scope.checkoutTotalPrice = 0;
             $scope.stepArray = [];
             $scope.roomData = angular.copy(room);
-            $scope.tableData = angular.copy(table);
+            $rootScope.tableData = angular.copy(table);
             baRoomService.setCreateModalCollapsed(true);
-            if (table.orderId != null && table.orderId._id) {
-                $scope.orderId = table.orderId._id;
-                $scope.orderItems = table.orderId.item;
-                $rootScope.Order.noOfPeople = table.orderId.noOfPeople;
+            if ($rootScope.tableData.orderId.length) {
+                $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
                 var cp = 0;
                 var itemno = 0;
                 var varicost = 0;
                 $scope.orderItemsTotalPrice = 0;
                 $scope.orderItemsTotalItem = 0;
-                if ($scope.orderItems.length) {
-                    for (var i = 0; i < $scope.orderItems.length; i++) {
-                        if ($scope.orderItems[i].checkout && ($scope.selectedCheckoutItems.indexOf($scope.orderItems[i]._id) < 0)) {
-                            $scope.selectedCheckoutItems.push($scope.orderItems[i]._id);
-                        }
+                for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                    for (var i = 0; i < $rootScope.tableData.orderId[k].item.length; i++) {
                         varicost = 0;
-                        itemno += $scope.orderItems[i].quantity;
-                        if ($scope.orderItems[i].variant) {
-                            for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
-                                if ($scope.orderItems[i].variant[j].status == 1) {
-                                    varicost += $scope.orderItems[i].variant[j].price;
+                        itemno += $rootScope.tableData.orderId[k].item[i].quantity;
+                        if ($rootScope.tableData.orderId[k].item[i].variant) {
+                            for (var j = 0; j < $rootScope.tableData.orderId[k].item[i].variant.length; j++) {
+                                if ($rootScope.tableData.orderId[k].item[i].variant[j].status == 1) {
+                                    varicost += $rootScope.tableData.orderId[k].item[i].variant[j].price;
                                 }
                             }
                         }
-                        cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
+                        cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
                         $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
                         $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                         $scope.orderItemsTotalItem = itemno;
                     }
-                }
-                baRoomService.setOrderId(table.orderId._id);
-                baRoomService.setOrderItems(table.orderId.item);
-                for (var i = 0; i < table.orderId.step.length; i++) {
-                    $scope.stepArray.push(table.orderId.step[i].step);
-                }
-                if ($scope.stepArray.length) {
-                    baRoomService.setStepData($scope.stepArray);
                 }
                 var steps = [];
                 var selectedItems = {};
@@ -346,13 +332,8 @@
                 $rootScope.Order.cartTotalPrice = 0;
                 $rootScope.Order.cartTotalItem = 0;
                 $rootScope.Order.showMenu = true;
-            } else {
-                $scope.orderId = '';
-                $scope.orderItems = [];
-                localStorage.removeItem('orderId');
-                localStorage.removeItem('orderItems');
             }
-            if (table.status == 1) {
+            if ($rootScope.tableData.orderId.length) {
                 $scope.activeTab = [false, false, false, false, true, false, false];
             } else {
                 $scope.activeTab = [true, false, false, false, false, false, false];
@@ -734,221 +715,95 @@
             }
             var createorder = {
                 room: $scope.roomData["_id"],
-                table: $scope.tableData["_id"],
+                table: $rootScope.tableData["_id"],
                 noOfPeople: $rootScope.Order.noOfPeople,
                 item: itemarray
             }
-            if ($scope.orderId) {
-                RoomService.updateOrder(itemarray, $scope.orderId)
-                    .then(function (data) {
-                        AlertService.success('createOrderMsg', data.message, 4000);
-                        RoomService.getRooms().then(function (data) {
-                            $scope.rooms = RoomService.listRoom();
-                            for (var i = 0; i < $scope.rooms.length; i++) {
-                                if ($scope.rooms[i]._id == $scope.roomData["_id"]) {
-                                    for (var j = 0; j < $scope.rooms[i].tables.length; j++) {
-                                        if ($scope.rooms[i].tables[j]._id == $scope.tableData["_id"]) {
-                                            $scope.roomData = angular.copy($scope.rooms[i]);
-                                            $scope.tableData = angular.copy($scope.rooms[i].tables[j]);
-                                        }
+            RoomService.createOrder(createorder)
+                .then(function (data) {
+                    AlertService.success('createOrderMsg', data.message, 4000);
+                    RoomService.getRooms().then(function (data) {
+                        $scope.rooms = RoomService.listRoom();
+                        for (var i = 0; i < $scope.rooms.length; i++) {
+                            if ($scope.rooms[i]._id == $scope.roomData["_id"]) {
+                                for (var j = 0; j < $scope.rooms[i].tables.length; j++) {
+                                    if ($scope.rooms[i].tables[j]._id == $rootScope.tableData["_id"]) {
+                                        $scope.roomData = angular.copy($scope.rooms[i]);
+                                        $rootScope.tableData = angular.copy($scope.rooms[i].tables[j]);
                                     }
                                 }
                             }
-                            $rootScope.Order = {
-                                errorMsg: '',
-                                error: false,
-                                selectedItems: {},
-                                cartTotalPrice: 0,
-                                cartTotalItem: 0,
-                                selectedSubcategory: [false],
-                                activeTab: [true, false],
-                                showMenu: false
-                            };
-                            $scope.selectAllClicked = false;
-                            $scope.selectedCheckoutItems = [];
-                            $scope.checkoutPeople = 0;
-                            $scope.checkoutPeoplePrice = 0;
-                            $scope.checkoutTotalPrice = 0;
-                            $scope.stepArray = [];
-                            $scope.roomData = angular.copy($scope.roomData);
-                            $scope.tableData = angular.copy($scope.tableData);
-                            baRoomService.setCreateModalCollapsed(true);
-                            if ($scope.tableData.orderId != null && $scope.tableData.orderId._id) {
-                                $scope.orderId = $scope.tableData.orderId._id;
-                                $scope.orderItems = $scope.tableData.orderId.item;
-                                $rootScope.Order.noOfPeople = $scope.tableData.orderId.noOfPeople;
-                                var cp = 0;
-                                var itemno = 0;
-                                var varicost = 0;
-                                $scope.orderItemsTotalPrice = 0;
-                                $scope.orderItemsTotalItem = 0;
-                                if ($scope.orderItems.length) {
-                                    for (var i = 0; i < $scope.orderItems.length; i++) {
-                                        if ($scope.orderItems[i].checkout && ($scope.selectedCheckoutItems.indexOf($scope.orderItems[i]._id) < 0)) {
-                                            $scope.selectedCheckoutItems.push($scope.orderItems[i]._id);
-                                        }
-                                        varicost = 0;
-                                        itemno += $scope.orderItems[i].quantity;
-                                        if ($scope.orderItems[i].variant) {
-                                            for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
-                                                if ($scope.orderItems[i].variant[j].status == 1) {
-                                                    varicost += $scope.orderItems[i].variant[j].price;
-                                                }
+                        }
+                        $rootScope.Order = {
+                            errorMsg: '',
+                            error: false,
+                            selectedItems: {},
+                            cartTotalPrice: 0,
+                            cartTotalItem: 0,
+                            selectedSubcategory: [false],
+                            activeTab: [true, false],
+                            showMenu: false
+                        };
+                        $scope.selectAllClicked = false;
+                        $scope.selectedCheckoutItems = [];
+                        $scope.checkoutPeople = 0;
+                        $scope.checkoutPeoplePrice = 0;
+                        $scope.checkoutTotalPrice = 0;
+                        $scope.stepArray = [];
+                        $scope.roomData = angular.copy($scope.roomData);
+                        $rootScope.tableData = angular.copy($rootScope.tableData);
+                        baRoomService.setCreateModalCollapsed(true);
+                        if ($rootScope.tableData.orderId.length) {
+                            $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
+                            var cp = 0;
+                            var itemno = 0;
+                            var varicost = 0;
+                            $scope.orderItemsTotalPrice = 0;
+                            $scope.orderItemsTotalItem = 0;
+                            for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                                for (var i = 0; i < $rootScope.tableData.orderId[k].item.length; i++) {
+                                    varicost = 0;
+                                    itemno += $rootScope.tableData.orderId[k].item[i].quantity;
+                                    if ($rootScope.tableData.orderId[k].item[i].variant) {
+                                        for (var j = 0; j < $rootScope.tableData.orderId[k].item[i].variant.length; j++) {
+                                            if ($rootScope.tableData.orderId[k].item[i].variant[j].status == 1) {
+                                                varicost += $rootScope.tableData.orderId[k].item[i].variant[j].price;
                                             }
                                         }
-                                        cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
-                                        $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
-                                        $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
-                                        $scope.orderItemsTotalItem = itemno;
                                     }
+                                    cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
+                                    $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                                    $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
+                                    $scope.orderItemsTotalItem = itemno;
                                 }
-                                baRoomService.setOrderId($scope.tableData.orderId._id);
-                                baRoomService.setOrderItems($scope.tableData.orderId.item);
-                                for (var i = 0; i < $scope.tableData.orderId.step.length; i++) {
-                                    $scope.stepArray.push($scope.tableData.orderId.step[i].step);
-                                }
-                                if ($scope.stepArray.length) {
-                                    baRoomService.setStepData($scope.stepArray);
-                                }
-                                var steps = [];
-                                var selectedItems = {};
-                                if (baRoomService.getStepData()) {
-                                    steps = baRoomService.getStepData();
-                                } else {
-                                    steps = ['Uscita 1', 'Uscita 2'];
-                                }
-                                for (var j = 0; j < steps.length; j++) {
-                                    selectedItems[steps[j]] = [];
-                                }
-                                $rootScope.Order.selectedItems = selectedItems;
-                                $rootScope.Order.cartTotalPrice = 0;
-                                $rootScope.Order.cartTotalItem = 0;
-                                $rootScope.Order.showMenu = true;
-                            } else {
-                                $scope.orderId = '';
-                                $scope.orderItems = [];
-                                localStorage.removeItem('orderId');
-                                localStorage.removeItem('orderItems');
                             }
-                            if ($scope.tableData.status == 1) {
-                                $scope.activeTab = [false, false, false, false, true, false, false];
+                            var steps = [];
+                            var selectedItems = {};
+                            if (baRoomService.getStepData()) {
+                                steps = baRoomService.getStepData();
                             } else {
-                                $scope.activeTab = [true, false, false, false, false, false, false];
+                                steps = ['Uscita 1', 'Uscita 2'];
                             }
-                            $scope.showOrder = true;
-
-                        }).catch(function (error) {
-                        });
-                    })
-                    .catch(function (error) {
-                        AlertService.error('createOrderMsg', error.message, 4000);
+                            for (var j = 0; j < steps.length; j++) {
+                                selectedItems[steps[j]] = [];
+                            }
+                            $rootScope.Order.selectedItems = selectedItems;
+                            $rootScope.Order.cartTotalPrice = 0;
+                            $rootScope.Order.cartTotalItem = 0;
+                            $rootScope.Order.showMenu = true;
+                        }
+                        if ($rootScope.tableData.orderId.length) {
+                            $scope.activeTab = [false, false, false, false, true, false, false];
+                        } else {
+                            $scope.activeTab = [true, false, false, false, false, false, false];
+                        }
+                        $scope.showOrder = true;
+                    }).catch(function (error) {
                     });
-            } else {
-                RoomService.createOrder(createorder)
-                    .then(function (data) {
-                        AlertService.success('createOrderMsg', data.message, 4000);
-                        RoomService.getRooms().then(function (data) {
-                            $scope.rooms = RoomService.listRoom();
-                            for (var i = 0; i < $scope.rooms.length; i++) {
-                                if ($scope.rooms[i]._id == $scope.roomData["_id"]) {
-                                    for (var j = 0; j < $scope.rooms[i].tables.length; j++) {
-                                        if ($scope.rooms[i].tables[j]._id == $scope.tableData["_id"]) {
-                                            $scope.roomData = angular.copy($scope.rooms[i]);
-                                            $scope.tableData = angular.copy($scope.rooms[i].tables[j]);
-                                        }
-                                    }
-                                }
-                            }
-                            $rootScope.Order = {
-                                errorMsg: '',
-                                error: false,
-                                selectedItems: {},
-                                cartTotalPrice: 0,
-                                cartTotalItem: 0,
-                                selectedSubcategory: [false],
-                                activeTab: [true, false],
-                                showMenu: false
-                            };
-                            $scope.selectAllClicked = false;
-                            $scope.selectedCheckoutItems = [];
-                            $scope.checkoutPeople = 0;
-                            $scope.checkoutPeoplePrice = 0;
-                            $scope.checkoutTotalPrice = 0;
-                            $scope.stepArray = [];
-                            $scope.roomData = angular.copy($scope.roomData);
-                            $scope.tableData = angular.copy($scope.tableData);
-                            baRoomService.setCreateModalCollapsed(true);
-                            if ($scope.tableData.orderId != null && $scope.tableData.orderId._id) {
-                                $scope.orderId = $scope.tableData.orderId._id;
-                                $scope.orderItems = $scope.tableData.orderId.item;
-                                $rootScope.Order.noOfPeople = $scope.tableData.orderId.noOfPeople;
-                                var cp = 0;
-                                var itemno = 0;
-                                var varicost = 0;
-                                $scope.orderItemsTotalPrice = 0;
-                                $scope.orderItemsTotalItem = 0;
-                                if ($scope.orderItems.length) {
-                                    for (var i = 0; i < $scope.orderItems.length; i++) {
-                                        if ($scope.orderItems[i].checkout && ($scope.selectedCheckoutItems.indexOf($scope.orderItems[i]._id) < 0)) {
-                                            $scope.selectedCheckoutItems.push($scope.orderItems[i]._id);
-                                        }
-                                        varicost = 0;
-                                        itemno += $scope.orderItems[i].quantity;
-                                        if ($scope.orderItems[i].variant) {
-                                            for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
-                                                if ($scope.orderItems[i].variant[j].status == 1) {
-                                                    varicost += $scope.orderItems[i].variant[j].price;
-                                                }
-                                            }
-                                        }
-                                        cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
-                                        $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
-                                        $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
-                                        $scope.orderItemsTotalItem = itemno;
-                                    }
-                                }
-                                baRoomService.setOrderId($scope.tableData.orderId._id);
-                                baRoomService.setOrderItems($scope.tableData.orderId.item);
-                                for (var i = 0; i < $scope.tableData.orderId.step.length; i++) {
-                                    $scope.stepArray.push($scope.tableData.orderId.step[i].step);
-                                }
-                                if ($scope.stepArray.length) {
-                                    baRoomService.setStepData($scope.stepArray);
-                                }
-                                var steps = [];
-                                var selectedItems = {};
-                                if (baRoomService.getStepData()) {
-                                    steps = baRoomService.getStepData();
-                                } else {
-                                    steps = ['Uscita 1', 'Uscita 2'];
-                                }
-                                for (var j = 0; j < steps.length; j++) {
-                                    selectedItems[steps[j]] = [];
-                                }
-                                $rootScope.Order.selectedItems = selectedItems;
-                                $rootScope.Order.cartTotalPrice = 0;
-                                $rootScope.Order.cartTotalItem = 0;
-                                $rootScope.Order.showMenu = true;
-                            } else {
-                                $scope.orderId = '';
-                                $scope.orderItems = [];
-                                localStorage.removeItem('orderId');
-                                localStorage.removeItem('orderItems');
-                            }
-                            if ($scope.tableData.status == 1) {
-                                $scope.activeTab = [false, false, false, false, true, false, false];
-                            } else {
-                                $scope.activeTab = [true, false, false, false, false, false, false];
-                            }
-                            $scope.showOrder = true;
-
-                        }).catch(function (error) {
-                        });
-                    })
-                    .catch(function (error) {
-                        AlertService.error('createOrderMsg', error.message, 4000);
-                    });
-            }
+                })
+                .catch(function (error) {
+                    AlertService.error('createOrderMsg', error.message, 4000);
+                });
             $scope.showLedtSideBar = false;
         }
 
@@ -1364,7 +1219,7 @@
                 var opts = {
                     noOfPeople: $rootScope.Order.noOfPeople
                 }
-                RoomService.updateNoOfPeople($scope.orderId, opts).then(function (data) {
+                RoomService.updateNoOfPeople($scope.roomData["_id"], $rootScope.tableData["_id"], opts).then(function (data) {
                     RoomService.getRooms().then(function (data) {
                         $scope.rooms = RoomService.listRoom();
                     }).catch(function (error) {
@@ -1380,7 +1235,7 @@
             var opts = {
                 noOfPeople: $rootScope.Order.noOfPeople
             }
-            RoomService.updateNoOfPeople($scope.orderId, opts).then(function (data) {
+            RoomService.updateNoOfPeople($scope.roomData["_id"], $rootScope.tableData["_id"], opts).then(function (data) {
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
@@ -1408,58 +1263,8 @@
             }
         }
 
-        $scope.checkoutOrder = function () {
-            var opts = {
-                noOfPeople: $scope.checkoutPeople,
-                orderItemId: $scope.selectedCheckoutItems ? $scope.selectedCheckoutItems : []
-            }
-            RoomService.checkoutOrder($scope.roomData["_id"], $scope.tableData["_id"], $scope.orderId, opts).then(function (data) {
-                $scope.selectAllClicked = false;
-                $scope.selectedCheckoutItems = [];
-                $scope.checkoutPeople = 0;
-                $scope.checkoutPeoplePrice = 0;
-                $scope.checkoutTotalPrice = 0;
-                $scope.showLedtSideBar = false;
-                $scope.showOrder = false;
-                baRoomService.setCreateModalCollapsed(false);
-                RoomService.getRooms().then(function (data) {
-                    $scope.rooms = RoomService.listRoom();
-                }).catch(function (error) {
-                });
-            }).catch(function (error) {
-            });
-        }
-
-        $scope.checkoutOrderItems = function () {
-            var itemsArray = [];
-            for (var i = 0; i < $scope.orderItemsNew.length; i++) {
-                itemsArray.push({
-                    _id: $scope.orderItemsNew[i]._id,
-                    quantity: $scope.orderItemsNew[i].quantity,
-                });
-            }
-            var opts = {
-                noOfPeople: $scope.checkoutPeople,
-                orderItemId: itemsArray ? itemsArray : []
-            }
-            RoomService.checkoutOrder($scope.roomData["_id"], $scope.tableData["_id"], $scope.orderId, opts).then(function (data) {
-                $scope.checkoutPeople = 0;
-                $scope.checkoutPeoplePrice = 0;
-                $scope.showLedtSideBar = false;
-                $scope.showOrder = false;
-                $scope.showCheckoutCart = false;
-                $scope.checkoutTotalPrice = 0;
-                baRoomService.setCreateModalCollapsed(false);
-                RoomService.getRooms().then(function (data) {
-                    $scope.rooms = RoomService.listRoom();
-                }).catch(function (error) {
-                });
-            }).catch(function (error) {
-            });
-        }
-
         $scope.checkout = function () {
-            OrderService.checkoutTable($scope.roomData["_id"], $scope.tableData["_id"]).then(function (data) {
+            OrderService.checkoutTable($scope.roomData["_id"], $rootScope.tableData["_id"]).then(function (data) {
                 $scope.showLedtSideBar = false;
                 $scope.showOrder = false;
                 $scope.showCheckoutCart = false;
@@ -1477,10 +1282,11 @@
 
         $scope.showTotalItem = function (orderItems) {
             $scope.orderItemsNew = [];
-            for (var i = 0; i < orderItems.length; i++) {
+            for (var i = 0; i < $rootScope.tableData.orderId.length; i++) {
+                for(var j = 0; j < $rootScope.tableData.orderId[i].item.length; j++)
                 $scope.orderItemsNew.push({
-                    _id: orderItems[i]._id,
-                    name: orderItems[i].id.name,
+                    _id: $rootScope.tableData.orderId[i].item[j]._id,
+                    name: $rootScope.tableData.orderId[i].item[j].id.name,
                     quantity: 0,
                     amount: 0
                 });
@@ -1552,9 +1358,15 @@
             });
         };
 
-        $scope.deleteOrderItem = function (item, index) {
-            RoomService.deleteOrderItem($scope.orderId, item).then(function (data) {
-                $scope.orderItems = data.data.item;
+        $scope.deleteOrderItem = function (orderId, item, index) {
+            RoomService.deleteOrderItem(orderId, item).then(function (data) {
+                if ($rootScope.tableData.orderId.length) {
+                    for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                        if($rootScope.tableData.orderId[k]._id == data.data._id){
+                            $rootScope.tableData.orderId[k] = angular.copy(data.data);
+                        }
+                    }
+                }
                 if ($scope.showCheckoutCart) {
                     for (var j = 0; j < $scope.orderItemsNew.length; j++) {
                         if ($scope.orderItemsNew[j]._id == item) {
@@ -1588,24 +1400,25 @@
                 var varicost = 0;
                 $scope.orderItemsTotalPrice = 0;
                 $scope.orderItemsTotalItem = 0;
-                if ($scope.orderItems.length) {
-                    for (var i = 0; i < $scope.orderItems.length; i++) {
-                        varicost = 0;
-                        itemno += $scope.orderItems[i].quantity;
-                        if ($scope.orderItems[i].variant) {
-                            for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
-                                if ($scope.orderItems[i].variant[j].status == 1) {
-                                    varicost += $scope.orderItems[i].variant[j].price;
+                if ($rootScope.tableData.orderId.length) {
+                    for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                        for (var i = 0; i < $rootScope.tableData.orderId[k].item.length; i++) {
+                            varicost = 0;
+                            itemno += $rootScope.tableData.orderId[k].item[i].quantity;
+                            if ($rootScope.tableData.orderId[k].item[i].variant) {
+                                for (var j = 0; j < $rootScope.tableData.orderId[k].item[i].variant.length; j++) {
+                                    if ($rootScope.tableData.orderId[k].item[i].variant[j].status == 1) {
+                                        varicost += $rootScope.tableData.orderId[k].item[i].variant[j].price;
+                                    }
                                 }
                             }
+                            cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
+                            $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                            $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
+                            $scope.orderItemsTotalItem = itemno;
                         }
-                        cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
-                        $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
-                        $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
-                        $scope.orderItemsTotalItem = itemno;
                     }
                 }
-                baRoomService.setOrderItems(data.data.item);
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
@@ -1615,7 +1428,8 @@
         }
 
         //edit Order Item code
-        $scope.editOrderItem = function (article) {
+        $scope.editOrderItem = function (orderId, article) {
+            $scope.orderid = orderId;
             $scope.showLedtSideBar1 = true;
             $scope.showCheckoutCart = false;
             $scope.editNonVariantData = false;
@@ -1718,31 +1532,39 @@
                     }, 4000);
                 } else {
                     $scope.articleData2.quantity = $scope.variantData2.quantity;
-                    RoomService.editOrderItem($scope.orderId, $scope.articleData2._id, $scope.variantData2).then(function (data) {
-                        $scope.orderItems = data.data.item;
+                    RoomService.editOrderItem($scope.orderid, $scope.articleData2._id, $scope.variantData2).then(function (data) {
+                        if ($rootScope.tableData.orderId.length) {
+                            for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                                if($rootScope.tableData.orderId[k]._id == data.data._id){
+                                    $rootScope.tableData.orderId[k] = angular.copy(data.data);
+                                }
+                            }
+                        }
+                        $scope.orderid = '';
                         var cp = 0;
                         var itemno = 0;
                         var varicost = 0;
                         $scope.orderItemsTotalPrice = 0;
                         $scope.orderItemsTotalItem = 0;
-                        if ($scope.orderItems.length) {
-                            for (var i = 0; i < $scope.orderItems.length; i++) {
-                                varicost = 0;
-                                itemno += $scope.orderItems[i].quantity;
-                                if ($scope.orderItems[i].variant && $scope.orderItems[i].variant.length > 0) {
-                                    for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
-                                        if ($scope.orderItems[i].variant[j].status == 1) {
-                                            varicost += $scope.orderItems[i].variant[j].price;
+                        if ($rootScope.tableData.orderId.length) {
+                            for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                                for (var i = 0; i < $rootScope.tableData.orderId[k].item.length; i++) {
+                                    varicost = 0;
+                                    itemno += $rootScope.tableData.orderId[k].item[i].quantity;
+                                    if ($rootScope.tableData.orderId[k].item[i].variant) {
+                                        for (var j = 0; j < $rootScope.tableData.orderId[k].item[i].variant.length; j++) {
+                                            if ($rootScope.tableData.orderId[k].item[i].variant[j].status == 1) {
+                                                varicost += $rootScope.tableData.orderId[k].item[i].variant[j].price;
+                                            }
                                         }
                                     }
+                                    cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
+                                    $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                                    $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
+                                    $scope.orderItemsTotalItem = itemno;
                                 }
-                                cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
-                                $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
-                                $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
-                                $scope.orderItemsTotalItem = itemno;
                             }
                         }
-                        baRoomService.setOrderItems(data.data.item);
                         $scope.hideEditOrderItem();
                         RoomService.getRooms().then(function (data) {
                             $scope.rooms = RoomService.listRoom();
@@ -1774,31 +1596,39 @@
                         delete $scope.variantData2.variant[a].isDeleted;
                     }
                     $scope.articleData2.ordernote = $scope.variantData2.notes;
-                    RoomService.editOrderItem($scope.orderId, $scope.articleData2._id, $scope.variantData2).then(function (data) {
-                        $scope.orderItems = data.data.item;
+                    RoomService.editOrderItem($scope.orderid, $scope.articleData2._id, $scope.variantData2).then(function (data) {
+                        if ($rootScope.tableData.orderId.length) {
+                            for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                                if($rootScope.tableData.orderId[k]._id == data.data._id){
+                                    $rootScope.tableData.orderId[k] = angular.copy(data.data);
+                                }
+                            }
+                        }
+                        $scope.orderid = '';
                         var cp = 0;
                         var itemno = 0;
                         var varicost = 0;
                         $scope.orderItemsTotalPrice = 0;
                         $scope.orderItemsTotalItem = 0;
-                        if ($scope.orderItems.length) {
-                            for (var i = 0; i < $scope.orderItems.length; i++) {
-                                varicost = 0;
-                                itemno += $scope.orderItems[i].quantity;
-                                if ($scope.orderItems[i].variant && $scope.orderItems[i].variant.length > 0) {
-                                    for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
-                                        if ($scope.orderItems[i].variant[j].status == 1) {
-                                            varicost += $scope.orderItems[i].variant[j].price;
+                        if ($rootScope.tableData.orderId.length) {
+                            for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                                for (var i = 0; i < $rootScope.tableData.orderId[k].item.length; i++) {
+                                    varicost = 0;
+                                    itemno += $rootScope.tableData.orderId[k].item[i].quantity;
+                                    if ($rootScope.tableData.orderId[k].item[i].variant) {
+                                        for (var j = 0; j < $rootScope.tableData.orderId[k].item[i].variant.length; j++) {
+                                            if ($rootScope.tableData.orderId[k].item[i].variant[j].status == 1) {
+                                                varicost += $rootScope.tableData.orderId[k].item[i].variant[j].price;
+                                            }
                                         }
                                     }
+                                    cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
+                                    $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                                    $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
+                                    $scope.orderItemsTotalItem = itemno;
                                 }
-                                cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
-                                $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
-                                $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
-                                $scope.orderItemsTotalItem = itemno;
                             }
                         }
-                        baRoomService.setOrderItems(data.data.item);
                         $scope.hideEditOrderItem();
                         RoomService.getRooms().then(function (data) {
                             $scope.rooms = RoomService.listRoom();
@@ -1816,9 +1646,9 @@
                 for (var i = 0; i < $scope.rooms.length; i++) {
                     if ($scope.rooms[i]._id == $scope.roomData["_id"]) {
                         for (var j = 0; j < $scope.rooms[i].tables.length; j++) {
-                            if ($scope.rooms[i].tables[j]._id == $scope.tableData["_id"]) {
+                            if ($scope.rooms[i].tables[j]._id == $rootScope.tableData["_id"]) {
                                 $scope.roomData = angular.copy($scope.rooms[i]);
-                                $scope.tableData = angular.copy($scope.rooms[i].tables[j]);
+                                $rootScope.tableData = angular.copy($scope.rooms[i].tables[j]);
                             }
                         }
                     }
@@ -1840,44 +1670,31 @@
                 $scope.checkoutTotalPrice = 0;
                 $scope.stepArray = [];
                 $scope.roomData = angular.copy($scope.roomData);
-                $scope.tableData = angular.copy($scope.tableData);
+                $rootScope.tableData = angular.copy($rootScope.tableData);
                 baRoomService.setCreateModalCollapsed(true);
-                if ($scope.tableData.orderId != null && $scope.tableData.orderId._id) {
-                    $scope.orderId = $scope.tableData.orderId._id;
-                    $scope.orderItems = $scope.tableData.orderId.item;
-                    $rootScope.Order.noOfPeople = $scope.tableData.orderId.noOfPeople;
+                if ($rootScope.tableData.orderId.length) {
+                    $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
                     var cp = 0;
                     var itemno = 0;
                     var varicost = 0;
                     $scope.orderItemsTotalPrice = 0;
                     $scope.orderItemsTotalItem = 0;
-                    if ($scope.orderItems.length) {
-                        for (var i = 0; i < $scope.orderItems.length; i++) {
-                            if ($scope.orderItems[i].checkout && ($scope.selectedCheckoutItems.indexOf($scope.orderItems[i]._id) < 0)) {
-                                $scope.selectedCheckoutItems.push($scope.orderItems[i]._id);
-                            }
+                    for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                        for (var i = 0; i < $rootScope.tableData.orderId[k].item.length; i++) {
                             varicost = 0;
-                            itemno += $scope.orderItems[i].quantity;
-                            if ($scope.orderItems[i].variant) {
-                                for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
-                                    if ($scope.orderItems[i].variant[j].status == 1) {
-                                        varicost += $scope.orderItems[i].variant[j].price;
+                            itemno += $rootScope.tableData.orderId[k].item[i].quantity;
+                            if ($rootScope.tableData.orderId[k].item[i].variant) {
+                                for (var j = 0; j < $rootScope.tableData.orderId[k].item[i].variant.length; j++) {
+                                    if ($rootScope.tableData.orderId[k].item[i].variant[j].status == 1) {
+                                        varicost += $rootScope.tableData.orderId[k].item[i].variant[j].price;
                                     }
                                 }
                             }
-                            cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
+                            cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
                             $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
                             $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                             $scope.orderItemsTotalItem = itemno;
                         }
-                    }
-                    baRoomService.setOrderId($scope.tableData.orderId._id);
-                    baRoomService.setOrderItems($scope.tableData.orderId.item);
-                    for (var i = 0; i < $scope.tableData.orderId.step.length; i++) {
-                        $scope.stepArray.push($scope.tableData.orderId.step[i].step);
-                    }
-                    if ($scope.stepArray.length) {
-                        baRoomService.setStepData($scope.stepArray);
                     }
                     var steps = [];
                     var selectedItems = {};
@@ -1893,19 +1710,13 @@
                     $rootScope.Order.cartTotalPrice = 0;
                     $rootScope.Order.cartTotalItem = 0;
                     $rootScope.Order.showMenu = true;
-                } else {
-                    $scope.orderId = '';
-                    $scope.orderItems = [];
-                    localStorage.removeItem('orderId');
-                    localStorage.removeItem('orderItems');
                 }
-                if ($scope.tableData.status == 1) {
+                if ($rootScope.tableData.orderId.length) {
                     $scope.activeTab = [false, false, false, false, true, false, false];
                 } else {
                     $scope.activeTab = [true, false, false, false, false, false, false];
                 }
                 $scope.showOrder = true;
-
             }).catch(function (error) {
             });
         });
@@ -1924,9 +1735,9 @@
                 for (var i = 0; i < $scope.rooms.length; i++) {
                     if ($scope.rooms[i]._id == $scope.roomData["_id"]) {
                         for (var j = 0; j < $scope.rooms[i].tables.length; j++) {
-                            if ($scope.rooms[i].tables[j]._id == $scope.tableData["_id"]) {
+                            if ($scope.rooms[i].tables[j]._id == $rootScope.tableData["_id"]) {
                                 $scope.roomData = angular.copy($scope.rooms[i]);
-                                $scope.tableData = angular.copy($scope.rooms[i].tables[j]);
+                                $rootScope.tableData = angular.copy($scope.rooms[i].tables[j]);
                             }
                         }
                     }
@@ -1948,44 +1759,31 @@
                 $scope.checkoutTotalPrice = 0;
                 $scope.stepArray = [];
                 $scope.roomData = angular.copy($scope.roomData);
-                $scope.tableData = angular.copy($scope.tableData);
+                $rootScope.tableData = angular.copy($rootScope.tableData);
                 baRoomService.setCreateModalCollapsed(true);
-                if ($scope.tableData.orderId != null && $scope.tableData.orderId._id) {
-                    $scope.orderId = $scope.tableData.orderId._id;
-                    $scope.orderItems = $scope.tableData.orderId.item;
-                    $rootScope.Order.noOfPeople = $scope.tableData.orderId.noOfPeople;
+                if ($rootScope.tableData.orderId.length) {
+                    $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
                     var cp = 0;
                     var itemno = 0;
                     var varicost = 0;
                     $scope.orderItemsTotalPrice = 0;
                     $scope.orderItemsTotalItem = 0;
-                    if ($scope.orderItems.length) {
-                        for (var i = 0; i < $scope.orderItems.length; i++) {
-                            if ($scope.orderItems[i].checkout && ($scope.selectedCheckoutItems.indexOf($scope.orderItems[i]._id) < 0)) {
-                                $scope.selectedCheckoutItems.push($scope.orderItems[i]._id);
-                            }
+                    for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
+                        for (var i = 0; i < $rootScope.tableData.orderId[k].item.length; i++) {
                             varicost = 0;
-                            itemno += $scope.orderItems[i].quantity;
-                            if ($scope.orderItems[i].variant) {
-                                for (var j = 0; j < $scope.orderItems[i].variant.length; j++) {
-                                    if ($scope.orderItems[i].variant[j].status == 1) {
-                                        varicost += $scope.orderItems[i].variant[j].price;
+                            itemno += $rootScope.tableData.orderId[k].item[i].quantity;
+                            if ($rootScope.tableData.orderId[k].item[i].variant) {
+                                for (var j = 0; j < $rootScope.tableData.orderId[k].item[i].variant.length; j++) {
+                                    if ($rootScope.tableData.orderId[k].item[i].variant[j].status == 1) {
+                                        varicost += $rootScope.tableData.orderId[k].item[i].variant[j].price;
                                     }
                                 }
                             }
-                            cp += ($scope.orderItems[i].price + varicost) * $scope.orderItems[i].quantity;
+                            cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
                             $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
                             $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                             $scope.orderItemsTotalItem = itemno;
                         }
-                    }
-                    baRoomService.setOrderId($scope.tableData.orderId._id);
-                    baRoomService.setOrderItems($scope.tableData.orderId.item);
-                    for (var i = 0; i < $scope.tableData.orderId.step.length; i++) {
-                        $scope.stepArray.push($scope.tableData.orderId.step[i].step);
-                    }
-                    if ($scope.stepArray.length) {
-                        baRoomService.setStepData($scope.stepArray);
                     }
                     var steps = [];
                     var selectedItems = {};
@@ -2001,19 +1799,13 @@
                     $rootScope.Order.cartTotalPrice = 0;
                     $rootScope.Order.cartTotalItem = 0;
                     $rootScope.Order.showMenu = true;
-                } else {
-                    $scope.orderId = '';
-                    $scope.orderItems = [];
-                    localStorage.removeItem('orderId');
-                    localStorage.removeItem('orderItems');
                 }
-                if ($scope.tableData.status == 1) {
+                if ($rootScope.tableData.orderId.length) {
                     $scope.activeTab = [false, false, false, false, true, false, false];
                 } else {
                     $scope.activeTab = [true, false, false, false, false, false, false];
                 }
                 $scope.showOrder = true;
-
             }).catch(function (error) {
             });
         });
@@ -2022,23 +1814,23 @@
     function StepsController($scope, $rootScope, RoomService, AlertService, baRoomService) {
         $scope.stepArray = ['Uscita 1', 'Uscita 2'];
         $scope.activeStepTab = [];
-        if (baRoomService.getOrderId()) {
+        if ($rootScope.tableData.orderId.length) {
             if (baRoomService.getTabData()) {
                 $scope.activeStepTab[baRoomService.getTabData().tab] = true;
             } else {
                 $scope.activeStepTab[0] = true;
             }
-            var orderItems = JSON.parse(localStorage.getItem('orderItems'));
+            // var orderItems = JSON.parse(localStorage.getItem('orderItems'));
             if (baRoomService.getStepData()) {
                 $scope.stepArray = baRoomService.getStepData();
             } else {
                 $scope.stepArray = ['Uscita 1', 'Uscita 2'];
             }
-            for (var i = 0; i < orderItems.length; i++) {
-                if ($scope.stepArray.indexOf(orderItems[i].step) < 0) {
-                    $scope.stepArray.push(orderItems[i].step);
-                }
-            }
+            // for (var i = 0; i < orderItems.length; i++) {
+            //     if ($scope.stepArray.indexOf(orderItems[i].step) < 0) {
+            //         $scope.stepArray.push(orderItems[i].step);
+            //     }
+            // }
             if (baRoomService.getTabData()) {
                 var tabdata = {
                     tab: baRoomService.getTabData().tab,

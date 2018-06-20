@@ -27,7 +27,7 @@
                                             </a>
                                         </span>
                                         <div class="room-container" ng-init="tableIndex = ($index+1)-1">
-                                            <div ng-repeat="table in room.tables" class="table-container" ng-style="table.status == 0 ? {'background-color':'#c5c8cd'} : table.status == 1 ? {'background-color':'#add278'} : table.status == 2 ? {'background-color':'yellow'} :{'background-color':''}">
+                                            <div ng-repeat="table in room.tables" class="table-container" ng-style="table.orderId.length ? {'background-color':'#add278'} : {'background-color':'#c5c8cd'}">
                                                 <div class="room-table" ng-click="openCreateOrder(table,room)">
                                                     <div class="table-name">
                                                         {{table.name}}
@@ -67,10 +67,10 @@
             <button type="button" ng-click="showLeftSide();changeTab(1)" ng-if="!showLedtSideBar" ng-disabled="!Order.showMenu">
                 <i class="icon-notebook"> Menu
             </button>
-            <button type="button" ng-click="hideLeftSide()" ng-if="showLedtSideBar && orderId">
+            <button type="button" ng-click="hideLeftSide()" ng-if="showLedtSideBar && tableData.orderId.length">
                 Table
             </button>
-            <button type="button" ng-click="hideLeftSide();changeTab(0)" ng-if="showLedtSideBar && !orderId">
+            <button type="button" ng-click="hideLeftSide();changeTab(0)" ng-if="showLedtSideBar && !tableData.orderId.length">
                 Table
             </button>
         </div>
@@ -360,7 +360,7 @@
         <div class="modal-header cart-header" ng-if="!showLedtSideBar">
             <i class="icon-people"></i>
             <h4 class="modal-title">{{Order.noOfPeople}}</h4>
-            <div ng-if="orderId" class="d-flex guest-number-btn">
+            <div ng-if="tableData.orderId.length" class="d-flex guest-number-btn">
                 <i class="icon-minus" ng-click="decreasePeople()"></i>
                 <i class="icon-plus" ng-click="increasePeople()"></i>
             </div>
@@ -368,34 +368,36 @@
         <step-list ng-if="showLedtSideBar"></step-list>
         <div class="modal-body calc-height pt-0 checkbox">
             <div id="createOrderMsg"></div>
-            <div ng-if="!orderId && !(Order.selectedItems)">No Item Added</div>
-            <div ng-if="orderId && orderItems.length && !showLedtSideBar" class="overflow-scroll">
-                <div ng-repeat="item in orderItems track by $index">
-                    <div class="order-item-container d-flex" ng-class="{'pointer-none' : item.checkout}">
-                        <div class="img" ng-style="{'background-color' : item.id.category.color}">
-                            <img ng-if="!item.id.logo.small && item.id.category.isIcon" class="icon-img" ng-src="{{item.id.category.icon}}" alt="" />
-                            <img ng-if="!item.id.logo.small && !item.id.category.isIcon && item.id.category.logo.small" ng-src="{{item.id.category.logo.small}}"
-                                alt="Category Logo" />
-                            <img ng-if="item.id.logo.small" ng-src="{{item.id.logo.small}}" alt="Item Logo" />
-                            <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
-                        </div>
-                        <div class="order-item-detail">
-                            <p class="name">{{item.id.name}}</p>
-                            <p class="name">&euro;{{item.price}}</p>
-                            <span ng-if="item.variant && item.variant.length">
-                                <span ng-repeat="variant in item.variant" class="d-flex added-variand-name">
-                                    <span ng-if="variant.status == 0">- {{variant.name}} </span>
-                                    <span ng-if="variant.status == 1">+ {{variant.name}} &euro;{{variant.price}}</span>
+            <div ng-if="!tableData.orderId.length && !(Order.selectedItems)">No Item Added</div>
+            <div ng-if="tableData.orderId.length && !showLedtSideBar" class="overflow-scroll">
+                <div ng-repeat="order in tableData.orderId">
+                    <div ng-repeat="item in order.item track by $index">
+                        <div class="order-item-container d-flex" ng-class="{'pointer-none' : item.checkout}">
+                            <div class="img" ng-style="{'background-color' : item.id.category.color}">
+                                <img ng-if="!item.id.logo.small && item.id.category.isIcon" class="icon-img" ng-src="{{item.id.category.icon}}" alt="" />
+                                <img ng-if="!item.id.logo.small && !item.id.category.isIcon && item.id.category.logo.small" ng-src="{{item.id.category.logo.small}}"
+                                    alt="Category Logo" />
+                                <img ng-if="item.id.logo.small" ng-src="{{item.id.logo.small}}" alt="Item Logo" />
+                                <span class="order-item-quantity" ng-if="item.quantity>0">{{item.quantity}}</span>
+                            </div>
+                            <div class="order-item-detail">
+                                <p class="name">{{item.id.name}}</p>
+                                <p class="name">&euro;{{item.price}}</p>
+                                <span ng-if="item.variant && item.variant.length">
+                                    <span ng-repeat="variant in item.variant" class="d-flex added-variand-name">
+                                        <span ng-if="variant.status == 0">- {{variant.name}} </span>
+                                        <span ng-if="variant.status == 1">+ {{variant.name}} &euro;{{variant.price}}</span>
+                                    </span>
                                 </span>
-                            </span>
-                            <span ng-if="item.notes" class="d-flex added-variand-name">{{item.notes}}</span>
+                                <span ng-if="item.notes" class="d-flex added-variand-name">{{item.notes}}</span>
+                            </div>
+                            <button type="button" ng-show="item.status != 1" class="btn btn-secondary btn-icon mr-5" ng-click="editOrderItem(order._id,item)">
+                                <i class="ion-edit">
+                            </button>
+                            <button type="button" ng-show="item.status != 1" class="btn bg-red btn-icon" ng-click="deleteOrderItem(order._id,item._id,$index)">
+                                <i class="ion-trash-b">
+                            </button>
                         </div>
-                        <button type="button" ng-show="item.status != 1" class="btn btn-secondary btn-icon mr-5" ng-click="editOrderItem(item)">
-                            <i class="ion-edit">
-                        </button>
-                        <button type="button" ng-show="item.status != 1" class="btn bg-red btn-icon" ng-click="deleteOrderItem(item._id,$index)">
-                            <i class="ion-trash-b">
-                        </button>
                     </div>
                 </div>
             </div>
@@ -431,19 +433,19 @@
             </div>
             <div class="sub-total" ng-if="showLedtSideBar">Sub Total : &euro;{{Order.cartTotalPrice}}</div>
         </div>
-        <div class="footer-btn" ng-if="!orderId">
+        <div class="footer-btn" ng-if="!tableData.orderId.length">
             <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" type="submit" class="btn" ng-click="createOrder()"
                 ng-disabled="!Order.selectedItems">
                 Create Order
                 <i class="ion-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
             </button>
         </div>
-        <div class="footer-btn" ng-if="orderId">
+        <div class="footer-btn" ng-if="tableData.orderId.length">
             <div class="d-flex">
                 <button ng-if="!showLedtSideBar" type="submit" class="btn">
                     <img src="assets/img/icon_file.png" alt="" />
                 </button>
-                <button ng-if="!showLedtSideBar" type="submit" class="btn" ng-click="showTotalItem(orderItems)">
+                <button ng-if="!showLedtSideBar" type="submit" class="btn" ng-click="showTotalItem()">
                     <img src="assets/img/dollar_icon.png" alt="" />
                 </button>
             </div>
@@ -488,17 +490,19 @@
                             </button>
                         </td>
                     </tr>
-                    <tr ng-repeat="item in orderItems track by $index">
-                        <td>X {{item.quantity}} {{item.id.name}}</td>
-                        <td class="btn-quantity">
-                            <button type="submit" ng-click="decreaseItemQty(item)">
-                                <i class="icon-minus"></i>
-                            </button>
-                            <button type="submit" ng-click="increaseItemQty(item)">
-                                <i class="icon-plus"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <div ng-repeat="order in tableData.orderId">
+                        <tr ng-repeat="item in order.item track by $index">
+                            <td>X {{item.quantity}} {{item.id.name}}</td>
+                            <td class="btn-quantity">
+                                <button type="submit" ng-click="decreaseItemQty(item)">
+                                    <i class="icon-minus"></i>
+                                </button>
+                                <button type="submit" ng-click="increaseItemQty(item)">
+                                    <i class="icon-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </div>
                 </tbody>
             </table>
         </div>

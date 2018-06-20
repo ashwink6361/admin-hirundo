@@ -10,12 +10,12 @@
                     <thead>
                         <tr>
                             <th class="w-50"></th>
+                            <th>#Orderid </th>
                             <th>Waiter</th>
                             <th>Room</th>
                             <th>Table</th>
                             <th>Order Time</th>
                             <th>Status</th>
-                            <th class="w-180">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,13 +28,12 @@
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </td>
+                            <td>N.{{order.orderId}}</td>                            
                             <td>{{order.waiter.firstName}}</td>
                             <td>{{order.room.name}}</td>
                             <td>{{order.tableName}}</td>
                             <td>{{order.created_at | date:'hh:mm a'}}</td>
                             <td>{{getOrderStatus(order.status)}}</td>
-                            <td class="w-180">
-                            </td>
                         </tr>
                         <tr ng-if="order.expanded" ng-repeat-end="">
                             <td colspan="7" style="padding: 0">
@@ -63,7 +62,7 @@
                                             <td>
                                                 <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 4)">In prepare</button>
                                                 <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 2)">Prepared</button>
-                                                <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 1)">Deliverd</button>
+                                                <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 1)">Delivered</button>
                                                 <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 3)">Cancel</button>
                                             </td>
                                         </tr>
