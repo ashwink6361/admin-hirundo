@@ -55,72 +55,76 @@ function baRoomServiceProvider() {
 function RoomService($q, $http, $rootScope) {
     var _roomDetails = {};
     var _rooms = [];
-    // var socket = io.connect(SOCKETURL);
-    // if (socket.connected)
-    //     console.log("Socket Connection Done");
-    //     var user = JSON.parse(localStorage.getItem('adminUser'));
-    //     if(user){
-    //         socket.emit('connection');  
-    //         console.log('user',user);                               
-    //         socket.on('connected', function (data) {
-    //             console.log('connected',data);            
-    //             if(data && socket.id == data.socketId){
-    //             socket.emit('userAuth', {userId: user._id});           
-    //             socket.on('authConnected', function (data) {
-    //                     console.log('authConnected',data);            
-    //             });
-    //         }
-    //         });
-    //     }
-    // socket.on('tablestatus', function (data) {
-    //     for (var i = 0; i < _rooms.length; i++) {
-    //         if (data.room == _rooms[i]._id) {
-    //             for (var j = 0; j < _rooms[i].tables.length; j++) {
-    //                 if (data.table == _rooms[i].tables[j]._id) {
-    //                     _rooms[i].tables[j].status = data.status;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // });
-    // socket.on('neworder', function (data) {
-    //     for (var i = 0; i < _rooms.length; i++) {
-    //         if (data.room._id === _rooms[i]._id) {
-    //             for (var j = 0; j < _rooms[i].tables.length; j++) {
-    //                 if (data.table == _rooms[i].tables[j]._id) {
-    //                     _rooms[i].tables[j].orderId = data;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     $rootScope.$broadcast('neworder');
-    // });
-    // socket.on('newItem', function (data) {
-    //     for (var i = 0; i < _rooms.length; i++) {
-    //         if (data.room._id === _rooms[i]._id) {
-    //             for (var j = 0; j < _rooms[i].tables.length; j++) {
-    //                 if (data.table == _rooms[i].tables[j]._id) {
-    //                     _rooms[i].tables[j].orderId = data;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     $rootScope.$broadcast('newItem');
-    // });
+    var socket = io.connect(SOCKETURL);
+    if (socket.connected)
+        console.log("Socket Connection Done");
+        var user = JSON.parse(localStorage.getItem('adminUser'));
+        if(user){
+            socket.emit('connection');  
+            console.log('user',user);                               
+            socket.on('connected', function (data) {
+                console.log('connected',data);            
+                if(data && socket.id == data.socketId){
+                socket.emit('userAuth', {userId: user._id});           
+                socket.on('authConnected', function (data) {
+                        console.log('authConnected',data);            
+                });
+            }
+            });
+        }
+    socket.on('tablestatus', function (data) {
+        for (var i = 0; i < _rooms.length; i++) {
+            if (data.room == _rooms[i]._id) {
+                for (var j = 0; j < _rooms[i].tables.length; j++) {
+                    if (data.table == _rooms[i].tables[j]._id) {
+                        _rooms[i].tables[j].status = data.status;
+                    }
+                }
+            }
+        }
+    });
+    socket.on('neworder', function (data) {
+        for (var i = 0; i < _rooms.length; i++) {
+            if (data.room._id === _rooms[i]._id) {
+                for (var j = 0; j < _rooms[i].tables.length; j++) {
+                    if (data.table == _rooms[i].tables[j]._id) {
+                        _rooms[i].tables[j].orderId.push(data);
+                    }
+                }
+            }
+        }
+        $rootScope.$broadcast('neworder');
+    });
+    socket.on('newItem', function (data) {
+        for (var i = 0; i < _rooms.length; i++) {
+            if (data.room._id === _rooms[i]._id) {
+                for (var j = 0; j < _rooms[i].tables.length; j++) {
+                    if (data.table == _rooms[i].tables[j]._id) {
+                        _rooms[i].tables[j].orderId = data;
+                    }
+                }
+            }
+        }
+        $rootScope.$broadcast('newItem');
+    });
 
-    // socket.on('orderstatus', function (data) {
-    //     console.log('orderstatus',data);
-    //     for (var i = 0; i < _rooms.length; i++) {
-    //         if (data.orderData.room._id === _rooms[i]._id) {
-    //             for (var j = 0; j < _rooms[i].tables.length; j++) {
-    //                 if (data.orderData.table == _rooms[i].tables[j]._id) {
-    //                     _rooms[i].tables[j].orderId = data.orderData;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     $rootScope.$broadcast('orderstatus');        
-    // });
+    socket.on('orderstatus', function (data) {
+        console.log('orderstatus',data);
+        for (var i = 0; i < _rooms.length; i++) {
+            if (data.room._id === _rooms[i]._id) {
+                for (var j = 0; j < _rooms[i].tables.length; j++) {
+                    if (data.table == _rooms[i].tables[j]._id) {
+                        for (var k = 0; k < _rooms[i].tables[j].orderId.length; k++) {
+                            if (data._id == _rooms[i].tables[j].orderId[k]._id) {
+                                _rooms[i].tables[j].orderId[k] = data;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $rootScope.$broadcast('orderstatus');        
+    });
 
     return {
         getRooms: function () {
