@@ -25,22 +25,11 @@
                 }
                 });
             }
-        socket.on('neworder', function (data) {
+        socket.on('neworderAdmin', function (data) {
+            console.log('neworderAdmin',data);
             _orders.push(data);
         });
         socket.on('orderstatus', function (data) {
-            for (var i = 0; i < _orders.length; i++) {
-                if (data._id === _orders[i]._id) {
-                    _orders[i] = data;
-                    // for (var j = 0; j < _orders[i].item.length; j++) {
-                    //     if (data.order.itemId === _orders[i].item[j].id._id && data.order.step === _orders[i].item[j].step) {
-                    //         _orders[i].item[j].status = data.order.status;
-                    //     }
-                    // }
-                }
-            }
-        });
-        socket.on('newItem', function (data) {
             for (var i = 0; i < _orders.length; i++) {
                 if (data._id === _orders[i]._id) {
                     _orders[i] = data;

@@ -64,14 +64,14 @@
 
         $scope.updateItem = function(item, order, status) {
             item.status = status;
-            var items = [];
+            // var items = [];
             var ids = [];                        
-            items.push(item.id._id);
+            // items.push(item.id._id);
             ids.push(item._id);            
             var opts = {
-                step: item.step,
-                status: status,
-                itemId: items,
+                // step: item.step,
+                // status: status,
+                // itemId: items,
                 id: ids
             };
             OrderService.updateOrder(order, opts).then(function(data) {

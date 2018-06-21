@@ -73,19 +73,9 @@ function RoomService($q, $http, $rootScope) {
             });
         }
     socket.on('tablestatus', function (data) {
+        console.log('tablestatus data',data);
         for (var i = 0; i < _rooms.length; i++) {
-            if (data.room == _rooms[i]._id) {
-                for (var j = 0; j < _rooms[i].tables.length; j++) {
-                    if (data.table == _rooms[i].tables[j]._id) {
-                        _rooms[i].tables[j].status = data.status;
-                    }
-                }
-            }
-        }
-    });
-    socket.on('neworder', function (data) {
-        for (var i = 0; i < _rooms.length; i++) {
-            if (data.room._id === _rooms[i]._id) {
+            if (data.room._id == _rooms[i]._id) {
                 for (var j = 0; j < _rooms[i].tables.length; j++) {
                     if (data.table == _rooms[i].tables[j]._id) {
                         _rooms[i].tables[j].orderId.push(data);
@@ -93,19 +83,7 @@ function RoomService($q, $http, $rootScope) {
                 }
             }
         }
-        $rootScope.$broadcast('neworder');
-    });
-    socket.on('newItem', function (data) {
-        for (var i = 0; i < _rooms.length; i++) {
-            if (data.room._id === _rooms[i]._id) {
-                for (var j = 0; j < _rooms[i].tables.length; j++) {
-                    if (data.table == _rooms[i].tables[j]._id) {
-                        _rooms[i].tables[j].orderId = data;
-                    }
-                }
-            }
-        }
-        $rootScope.$broadcast('newItem');
+        $rootScope.$broadcast('tablestatus');        
     });
 
     socket.on('orderstatus', function (data) {
