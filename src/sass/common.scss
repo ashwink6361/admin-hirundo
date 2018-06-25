@@ -1708,3 +1708,7 @@
         transform: rotate(45deg);
     }
 }
+
+.table>tbody>tr>td>table>tbody>tr>td:last-child{
+    width: 172px;
+}
