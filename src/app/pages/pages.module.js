@@ -16,7 +16,7 @@ angular.module('BlurAdmin.pages', [
     "BlurAdmin.pages.change-password",
     'BlurAdmin.pages.orders',
     'BlurAdmin.pages.ingredient',
-    // 'BlurAdmin.pages.users',
+    'BlurAdmin.pages.settings',
     'BlurAdmin.pages.items',
     'BlurAdmin.pages.variants',
     'BlurAdmin.pages.admins'

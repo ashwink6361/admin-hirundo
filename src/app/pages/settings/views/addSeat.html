@@ -1,0 +1,28 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="settingmsg"></div>
+            <div class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal" name="form" novalidate>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label">
+                                <strong>Seat Cost</strong>
+                            </label>
+                            <div class="col-sm-5">
+                                <input type="text" name="seatcost" ng-model="Settings.seatCost" class="form-control" placeholder="Seat Cost" required />
+                                <span class="alert color-red" ng-show="form.seatcost.$dirty && form.seatcost.$error.required">Seat Cost is required.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input01" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <button type="button" class="btn bg-success" ng-click="save()" ng-disabled="form.$invalid||loader">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

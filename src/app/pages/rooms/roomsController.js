@@ -296,6 +296,7 @@
             baRoomService.setCreateModalCollapsed(true);
             if ($rootScope.tableData.orderId.length) {
                 $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
+                $rootScope.Order.seatCost = $rootScope.tableData.orderId[0].seatCost;                
                 var cp = 0;
                 var itemno = 0;
                 var varicost = 0;
@@ -313,7 +314,7 @@
                             }
                         }
                         cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
-                        $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                        $scope.orderItemsTotalPrice = cp + (Number($rootScope.Order.seatCost) * $rootScope.Order.noOfPeople);
                         $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                         $scope.orderItemsTotalItem = itemno;
                     }
@@ -708,7 +709,8 @@
                         notes: $rootScope.Order.selectedItems[steps[a]][i].ordernote ? $rootScope.Order.selectedItems[steps[a]][i].ordernote : '',
                         variant: vararray,
                         step: $rootScope.Order.selectedItems[steps[a]][i].step,
-                        department: $rootScope.Order.selectedItems[steps[a]][i].category.department
+                        department: $rootScope.Order.selectedItems[steps[a]][i].category.department,
+                        preparationTime: $rootScope.Order.selectedItems[steps[a]][i].preparationTime
                     }
                     itemarray.push(item);
                 }
@@ -755,6 +757,7 @@
                         baRoomService.setCreateModalCollapsed(true);
                         if ($rootScope.tableData.orderId.length) {
                             $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
+                            $rootScope.Order.seatCost = $rootScope.tableData.orderId[0].seatCost;                                            
                             var cp = 0;
                             var itemno = 0;
                             var varicost = 0;
@@ -772,7 +775,7 @@
                                         }
                                     }
                                     cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
-                                    $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                                    $scope.orderItemsTotalPrice = cp + (Number($rootScope.Order.seatCost) * $rootScope.Order.noOfPeople);
                                     $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                                     $scope.orderItemsTotalItem = itemno;
                                 }
@@ -1214,12 +1217,12 @@
         $scope.decreasePeople = function () {
             if ($rootScope.Order.noOfPeople > 0) {
                 $rootScope.Order.noOfPeople = $rootScope.Order.noOfPeople - 1;
-                $scope.orderItemsTotalPrice = $scope.orderItemsTotalPrice - 1.5;
-                $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                 var opts = {
                     noOfPeople: $rootScope.Order.noOfPeople
                 }
                 RoomService.updateNoOfPeople($scope.roomData["_id"], $rootScope.tableData["_id"], opts).then(function (data) {
+                    $scope.orderItemsTotalPrice = $scope.orderItemsTotalPrice - Number(data.data.seatCost);
+                    $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                     RoomService.getRooms().then(function (data) {
                         $scope.rooms = RoomService.listRoom();
                     }).catch(function (error) {
@@ -1230,12 +1233,12 @@
         }
         $scope.increasePeople = function () {
             $rootScope.Order.noOfPeople = $rootScope.Order.noOfPeople + 1;
-            $scope.orderItemsTotalPrice = $scope.orderItemsTotalPrice + 1.5;
-            $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
             var opts = {
                 noOfPeople: $rootScope.Order.noOfPeople
             }
             RoomService.updateNoOfPeople($scope.roomData["_id"], $rootScope.tableData["_id"], opts).then(function (data) {
+                $scope.orderItemsTotalPrice = $scope.orderItemsTotalPrice + Number(data.data.seatCost);
+                $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
@@ -1247,18 +1250,18 @@
         $scope.decreaseCheckoutPeople = function () {
             if ($scope.checkoutPeople < $rootScope.Order.noOfPeople) {
                 $scope.checkoutPeople = $scope.checkoutPeople + 1;
-                $scope.checkoutPeoplePrice = $scope.checkoutPeople + (0.5 * $scope.checkoutPeople);
+                $scope.checkoutPeoplePrice = (Number($rootScope.Order.seatCost) * $scope.checkoutPeople);
                 $scope.checkoutPeoplePrice = Number(Math.round($scope.checkoutPeoplePrice + 'e2') + 'e-2');
-                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2') + 1.5;
+                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2') + Number($rootScope.Order.seatCost);
                 $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
             }
         }
         $scope.increaseCheckoutPeople = function () {
             if ($scope.checkoutPeople >= 1) {
                 $scope.checkoutPeople = $scope.checkoutPeople - 1;
-                $scope.checkoutPeoplePrice = $scope.checkoutPeople + (0.5 * $scope.checkoutPeople);
+                $scope.checkoutPeoplePrice = (Number($rootScope.Order.seatCost) * $scope.checkoutPeople);
                 $scope.checkoutPeoplePrice = Number(Math.round($scope.checkoutPeoplePrice + 'e2') + 'e-2');
-                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2') - 1.5;
+                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2') - Number($rootScope.Order.seatCost);
                 $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
             }
         }
@@ -1314,7 +1317,7 @@
             for (var n in $scope.orderItemsNew) {
                 out += $scope.orderItemsNew[n].amount;
             }
-            $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + $scope.checkoutPeople + (0.5 * $scope.checkoutPeople);
+            $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + (Number($rootScope.Order.seatCost) * $scope.checkoutPeople);
             $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
         }
         $scope.increaseItemQty = function (item) {
@@ -1337,7 +1340,7 @@
             for (var n in $scope.orderItemsNew) {
                 out += $scope.orderItemsNew[n].amount;
             }
-            $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + $scope.checkoutPeople + (0.5 * $scope.checkoutPeople);
+            $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + (Number($rootScope.Order.seatCost) * $scope.checkoutPeople);
             $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
         }
 
@@ -1392,7 +1395,7 @@
                     for (var n in $scope.orderItemsNew) {
                         out += $scope.orderItemsNew[n].amount;
                     }
-                    $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + $scope.checkoutPeople + (0.5 * $scope.checkoutPeople);
+                    $scope.checkoutTotalPrice = Number(Math.round(out + 'e2') + 'e-2') + (Number($rootScope.Order.seatCost) * $scope.checkoutPeople);
                     $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
                 }
                 var cp = 0;
@@ -1413,7 +1416,7 @@
                                 }
                             }
                             cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
-                            $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                            $scope.orderItemsTotalPrice = cp + (Number($rootScope.Order.seatCost) * $rootScope.Order.noOfPeople);
                             $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                             $scope.orderItemsTotalItem = itemno;
                         }
@@ -1559,7 +1562,7 @@
                                         }
                                     }
                                     cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
-                                    $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                                    $scope.orderItemsTotalPrice = cp + (Number($rootScope.Order.seatCost) * $rootScope.Order.noOfPeople);
                                     $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                                     $scope.orderItemsTotalItem = itemno;
                                 }
@@ -1623,7 +1626,7 @@
                                         }
                                     }
                                     cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
-                                    $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                                    $scope.orderItemsTotalPrice = cp + (Number($rootScope.Order.seatCost) * $rootScope.Order.noOfPeople);
                                     $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                                     $scope.orderItemsTotalItem = itemno;
                                 }
@@ -1763,6 +1766,7 @@
                     baRoomService.setCreateModalCollapsed(true);
                     if ($rootScope.tableData.orderId.length) {
                         $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
+                        $rootScope.Order.seatCost = $rootScope.tableData.orderId[0].seatCost;                                        
                         var cp = 0;
                         var itemno = 0;
                         var varicost = 0;
@@ -1780,7 +1784,7 @@
                                     }
                                 }
                                 cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
-                                $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                                $scope.orderItemsTotalPrice = cp + (Number($rootScope.Order.seatCost) * $rootScope.Order.noOfPeople);
                                 $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                                 $scope.orderItemsTotalItem = itemno;
                             }
@@ -1846,6 +1850,7 @@
                 baRoomService.setCreateModalCollapsed(true);
                 if ($rootScope.tableData.orderId.length) {
                     $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
+                    $rootScope.Order.seatCost = $rootScope.tableData.orderId[0].seatCost;                                    
                     var cp = 0;
                     var itemno = 0;
                     var varicost = 0;
@@ -1863,7 +1868,7 @@
                                 }
                             }
                             cp += ($rootScope.tableData.orderId[k].item[i].price + varicost) * $rootScope.tableData.orderId[k].item[i].quantity;
-                            $scope.orderItemsTotalPrice = cp + $rootScope.Order.noOfPeople + (0.5 * $rootScope.Order.noOfPeople);
+                            $scope.orderItemsTotalPrice = cp + (Number($rootScope.Order.seatCost) * $rootScope.Order.noOfPeople);
                             $scope.orderItemsTotalPrice = Number(Math.round($scope.orderItemsTotalPrice + 'e2') + 'e-2');
                             $scope.orderItemsTotalItem = itemno;
                         }
