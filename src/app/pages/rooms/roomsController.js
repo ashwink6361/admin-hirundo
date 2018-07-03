@@ -296,7 +296,7 @@
             baRoomService.setCreateModalCollapsed(true);
             if ($rootScope.tableData.orderId.length) {
                 $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
-                $rootScope.Order.seatCost = $rootScope.tableData.orderId[0].seatCost;                
+                $rootScope.Order.seatCost = $rootScope.tableData.orderId[$rootScope.tableData.orderId.length-1].seatCost;                
                 var cp = 0;
                 var itemno = 0;
                 var varicost = 0;
@@ -757,7 +757,7 @@
                         baRoomService.setCreateModalCollapsed(true);
                         if ($rootScope.tableData.orderId.length) {
                             $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
-                            $rootScope.Order.seatCost = $rootScope.tableData.orderId[0].seatCost;                                            
+                            $rootScope.Order.seatCost = $rootScope.tableData.orderId[$rootScope.tableData.orderId.length-1].seatCost;                                            
                             var cp = 0;
                             var itemno = 0;
                             var varicost = 0;
@@ -1766,7 +1766,7 @@
                     baRoomService.setCreateModalCollapsed(true);
                     if ($rootScope.tableData.orderId.length) {
                         $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
-                        $rootScope.Order.seatCost = $rootScope.tableData.orderId[0].seatCost;                                        
+                        $rootScope.Order.seatCost = $rootScope.tableData.orderId[$rootScope.tableData.orderId.length-1].seatCost;                                        
                         var cp = 0;
                         var itemno = 0;
                         var varicost = 0;
@@ -1850,7 +1850,7 @@
                 baRoomService.setCreateModalCollapsed(true);
                 if ($rootScope.tableData.orderId.length) {
                     $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
-                    $rootScope.Order.seatCost = $rootScope.tableData.orderId[0].seatCost;                                    
+                    $rootScope.Order.seatCost = $rootScope.tableData.orderId[$rootScope.tableData.orderId.length-1].seatCost;                                    
                     var cp = 0;
                     var itemno = 0;
                     var varicost = 0;
