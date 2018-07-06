@@ -560,8 +560,6 @@
 }
 
 .subcategory-container {
-    @extend .category-container;
-    flex-direction: column;
     margin-top: 0;
     .category-name {
         background-color: #dedede;
