@@ -37,7 +37,7 @@
                                 </div>
                                 <div ng-repeat="subcategory in item.subcategory" class="mb-10">
                                     <h4 class="subcategory-name">{{subcategory.name}}</h4>
-                                    <div class="d-flex">
+                                    <div class="d-flex flex-wrap">
                                         <div ng-repeat="article in subcategory.items" class="subcategory" ng-style="{'background-color':article.category.color}"
                                             ng-click="updateArticle(article, article._id)">
                                             <img ng-if="!article.logo.small && article.category.isIcon" class="icon-img" ng-src="{{article.category.icon}}" alt="" />
