@@ -16,8 +16,8 @@
                 title: 'Settings',
                 controller: 'SettingsController',
                 sidebarMeta: {
-                    icon: 'icon-basket-loaded',
-                    order: 2,
+                    icon: 'icon-settings',
+                    order: 10,
                 },
                 accessLevel: [2]
             });
