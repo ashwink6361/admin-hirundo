@@ -1,69 +1,76 @@
 <div class="widgets">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="waitermsg"></div>
-            <div class="panel">
-                <div class="panel-body">
-                    <form class="form-horizontal" name="form" novalidate>
-                        <div class="form-group">
-                            <label for="input01" class="col-sm-2 control-label">
-                                <strong>{{'WaiterKey.firstName' | translate}}</strong>
-                            </label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" name="firstName" ng-model="Waiter.firstName" placeholder="{{'WaiterKey.firstName' | translate}}" required />
-                                <span class="alert color-red" ng-show="form.firstName.$dirty &&  form.firstName.$error.required">{{'WaiterKey.firstNameRequired' | translate}}</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input01" class="col-sm-2 control-label">
-                                <strong>{{'WaiterKey.lastName' | translate}}</strong>
-                            </label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" name="lastName" ng-model="Waiter.lastName" placeholder="{{'WaiterKey.lastName' | translate}}" required />
-                                <span class="alert color-red" ng-show="form.lastName.$dirty &&  form.lastName.$error.required">{{'WaiterKey.lastNameRequired' | translate}}</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input01" class="col-sm-2 control-label">
-                                <strong>{{'WaiterKey.Username' | translate}}</strong>
-                            </label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" name="userName" ng-model="Waiter.userName" placeholder="{{'WaiterKey.Username' | translate}}" autocomplete="off" ng-readonly="waiterId" ng-required="!waiterId" />
-                                <span class="alert color-red" ng-show="form.userName.$dirty &&  form.userName.$error.required">{{'WaiterKey.usernameRequired' | translate}}</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input01" class="col-sm-2 control-label">
-                                <strong>{{'WaiterKey.Password' | translate}}</strong>
-                            </label>
-                            <div class="col-sm-5">
-                                <input type="password" name="uPassword" class="form-control" ng-model="Waiter.password" placeholder="{{'WaiterKey.Password' | translate}}" autocomplete="off" ng-readonly="waiterId" ng-required="!waiterId">
-                                <span class="alert color-red" ng-show="form.uPassword.$dirty &&  form.uPassword.$error.required">{{'WaiterKey.passwordRequired' | translate}}</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input01" class="col-sm-2 control-label">
-                                <strong>{{'WaiterKey.confirmPassword' | translate}}</strong>
-                            </label>
-                            <div class="col-sm-5">
-                                <input type="password" name="ucPassword" class="form-control" ng-model="Waiter.confirmPassword" placeholder="{{'WaiterKey.confirmPassword' | translate}}"
-                                    autocomplete="off" ng-readonly="waiterId" ng-required="!waiterId"/>
-                                <span class="alert color-red" ng-show="form.ucPassword.$dirty &&  form.ucPassword.$error.required">{{'WaiterKey.confirmPasswordRequired' | translate}}</span>
-                                <span class="alert color-red" ng-show="(form.uPassword.$dirty && form.ucPassword.$dirty) && (Waiter.password != Waiter.confirmPassword)">{{'WaiterKey.pwdDontMatch' | translate}}</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input01" class="col-sm-2 control-label">
-                            </label>
-                            <div class="col-sm-5">
-                                <button type="button" ng-show="waiterId" class="btn bg-success" ng-click="editWaiter()" ng-disabled="form.$invalid||waiterAddRequest">{{'WaiterKey.Update' | translate}}</button>
-                                <button type="button" ng-show="!waiterId" class="btn bg-success" ng-click="addWaiter()" ng-disabled="form.$invalid||waiterAddRequest">{{'WaiterKey.Add' | translate}}</button>                                
-                                <button type="button" class="btn btn-default" ui-sref="staff">{{'WaiterKey.Cancel' | translate}}</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="waitermsg"></div>
+      <div class="panel">
+        <div class="panel-body">
+          <form class="form-horizontal" name="form" novalidate>
+            <div class="form-group">
+              <label for="input01" class="col-sm-2 control-label">
+                <strong>{{'WaiterKey.firstName' | translate}}</strong>
+              </label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" name="firstName" ng-model="Waiter.firstName" placeholder="{{'WaiterKey.firstName' | translate}}"
+                  required />
+                <span class="alert color-red" ng-show="form.firstName.$dirty &&  form.firstName.$error.required">{{'WaiterKey.firstNameRequired' | translate}}</span>
+              </div>
             </div>
+            <div class="form-group">
+              <label for="input01" class="col-sm-2 control-label">
+                <strong>{{'WaiterKey.lastName' | translate}}</strong>
+              </label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" name="lastName" ng-model="Waiter.lastName" placeholder="{{'WaiterKey.lastName' | translate}}"
+                  required />
+                <span class="alert color-red" ng-show="form.lastName.$dirty &&  form.lastName.$error.required">{{'WaiterKey.lastNameRequired' | translate}}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="input01" class="col-sm-2 control-label">
+                <strong>{{'WaiterKey.Username' | translate}}</strong>
+              </label>
+              <div class="col-sm-5">
+                <div class="input-group">
+                  <span class="input-group-addon addon-left input-group-addon-secondry"></span>
+                  <input type="text" class="form-control" name="userName" ng-model="Waiter.userName" placeholder="{{'WaiterKey.Username' | translate}}"
+                    autocomplete="off" ng-readonly="waiterId" ng-required="!waiterId" />
+                </div>
+                <span class="alert color-red" ng-show="form.userName.$dirty &&  form.userName.$error.required">{{'WaiterKey.usernameRequired' | translate}}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="input01" class="col-sm-2 control-label">
+                <strong>{{'WaiterKey.Password' | translate}}</strong>
+              </label>
+              <div class="col-sm-5">
+                <input type="password" name="uPassword" class="form-control" ng-model="Waiter.password" placeholder="{{'WaiterKey.Password' | translate}}"
+                  autocomplete="off" ng-readonly="waiterId" ng-required="!waiterId">
+                <span class="alert color-red" ng-show="form.uPassword.$dirty &&  form.uPassword.$error.required">{{'WaiterKey.passwordRequired' | translate}}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="input01" class="col-sm-2 control-label">
+                <strong>{{'WaiterKey.confirmPassword' | translate}}</strong>
+              </label>
+              <div class="col-sm-5">
+                <input type="password" name="ucPassword" class="form-control" ng-model="Waiter.confirmPassword" placeholder="{{'WaiterKey.confirmPassword' | translate}}"
+                  autocomplete="off" ng-readonly="waiterId" ng-required="!waiterId" />
+                <span class="alert color-red" ng-show="form.ucPassword.$dirty &&  form.ucPassword.$error.required">{{'WaiterKey.confirmPasswordRequired' | translate}}</span>
+                <span class="alert color-red" ng-show="(form.uPassword.$dirty && form.ucPassword.$dirty) && (Waiter.password != Waiter.confirmPassword)">{{'WaiterKey.pwdDontMatch' | translate}}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="input01" class="col-sm-2 control-label">
+              </label>
+              <div class="col-sm-5">
+                <button type="button" ng-show="waiterId" class="btn bg-success" ng-click="editWaiter()" ng-disabled="form.$invalid||waiterAddRequest">{{'WaiterKey.Update' | translate}}</button>
+                <button type="button" ng-show="!waiterId" class="btn bg-success" ng-click="addWaiter()" ng-disabled="form.$invalid||waiterAddRequest">{{'WaiterKey.Add' | translate}}</button>
+                <button type="button" class="btn btn-default" ui-sref="staff">{{'WaiterKey.Cancel' | translate}}</button>
+              </div>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
