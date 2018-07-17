@@ -71,7 +71,7 @@
             var opts = {
                 firstName: $scope.Waiter.firstName,
                 lastName: $scope.Waiter.lastName,
-                userName: $scope.Waiter.userName,
+                userName: $scope.tempUserName +'-'+ $scope.Waiter.userName,
                 password: $scope.Waiter.password,
                 deviceType: 'web',
                 deviceId: '',
