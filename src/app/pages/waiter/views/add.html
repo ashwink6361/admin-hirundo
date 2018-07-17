@@ -31,8 +31,8 @@
               </label>
               <div class="col-sm-5">
                 <div class="input-group">
-                  <span class="input-group-addon addon-left input-group-addon-secondry"></span>
-                  <input type="text" class="form-control" name="userName" ng-model="Waiter.userName" placeholder="{{'WaiterKey.Username' | translate}}"
+                  <span class="input-group-addon addon-left input-group-addon-secondry admin-addon">{{tempUserName}} - </span>
+                  <input type="text" class="form-control username-input" name="userName" ng-model="Waiter.userName" placeholder="{{'WaiterKey.Username' | translate}}"
                     autocomplete="off" ng-readonly="waiterId" ng-required="!waiterId" />
                 </div>
                 <span class="alert color-red" ng-show="form.userName.$dirty &&  form.userName.$error.required">{{'WaiterKey.usernameRequired' | translate}}</span>

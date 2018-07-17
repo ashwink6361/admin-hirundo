@@ -57,6 +57,8 @@
     }
 
     function AddWaiterController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, WaiterService, AlertService) {
+        var tempUser = JSON.parse(localStorage.getItem('adminUser'));
+        $scope.tempUserName = tempUser.userName;
         $scope.waiterId = $stateParams.id;
         if ($scope.waiterId) {
             $scope.Waiter = WaiterService.getWaiterDetails();
