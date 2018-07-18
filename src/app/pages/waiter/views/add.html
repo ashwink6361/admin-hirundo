@@ -31,7 +31,7 @@
               </label>
               <div class="col-sm-5">
                 <div class="input-group">
-                  <span class="input-group-addon addon-left input-group-addon-secondry admin-addon">{{tempUserName}} - </span>
+                  <span ng-if="!waiterId" class="input-group-addon addon-left input-group-addon-secondry admin-addon">{{tempUserName}} - </span>
                   <input type="text" class="form-control username-input" name="userName" ng-model="Waiter.userName" placeholder="{{'WaiterKey.Username' | translate}}"
                     autocomplete="off" ng-readonly="waiterId" ng-required="!waiterId" />
                 </div>
