@@ -1449,14 +1449,22 @@
     top: 66px;
     padding: 20px;
     height: calc(100% - 66px);
-    background: #fff;
+    background-color: #F0F3F4;
     padding: 20px;
     left: 52px;
     width: calc(100% - 452px);
-    background: #fff;
-    padding: 20px;
+    padding: 8px 32px 8px 40px;
     z-index: 999;
     overflow-y: auto;
+    .content-top{
+        background-color: #f0f3f4;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        .al-breadcrumb{
+            padding: 0;
+        }
+    }
     h1{
         font-weight: 700;
         color: #666;
@@ -1550,6 +1558,7 @@
     }
     .modal-body {
         height: 100%;
+        padding: 15px 22px;
         height: calc(100% - 101px);
     }
     .order-header {
