@@ -19,7 +19,10 @@
                                 <strong>{{'DepartmentKey.Username' | translate}}</strong>
                             </label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="userName" ng-model="Department.userName" placeholder="{{'DepartmentKey.Username' | translate}}" autocomplete="off" ng-readonly="departmentId" ng-required="!departmentId" />
+                                <div class="input-group">
+                                    <span ng-if="!waiterId" class="input-group-addon addon-left input-group-addon-secondry admin-addon">{{tempUserName}} - </span>
+                                    <input type="text" class="form-control" name="userName" ng-model="Department.userName" placeholder="{{'DepartmentKey.Username' | translate}}" autocomplete="off" ng-readonly="departmentId" ng-required="!departmentId" />
+                                </div>
                                 <span class="alert color-red" ng-show="form.userName.$dirty &&  form.userName.$error.required">{{'DepartmentKey.usernameRequired' | translate}}</span>
                             </div>
                         </div>
@@ -69,7 +72,7 @@
                             </label>
                             <div class="col-sm-5">
                                 <button type="button" ng-show="departmentId" class="btn bg-success" ng-click="editDepartment()" ng-disabled="form.$invalid||departmentAddRequest">{{'DepartmentKey.Update' | translate}}</button>
-                                <button type="button" ng-show="!departmentId" class="btn bg-success" ng-click="addDepartment()" ng-disabled="form.$invalid||departmentAddRequest">{{'DepartmentKey.Add' | translate}}</button>                                
+                                <button type="button" ng-show="!departmentId" class="btn bg-success" ng-click="addDepartment()" ng-disabled="form.$invalid||departmentAddRequest">{{'DepartmentKey.Add' | translate}}</button>
                                 <button type="button" class="btn btn-default" ui-sref="staff">{{'DepartmentKey.Cancel' | translate}}</button>
                             </div>
                         </div>
