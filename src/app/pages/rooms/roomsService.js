@@ -281,7 +281,17 @@ function RoomService($q, $http, $rootScope) {
                 def.reject(error);
             });
             return def.promise;
-        }
+        },
+        addArticle: function (opts) {
+            var def = $q.defer();
+            var url = '/api/addItem';
+            doPost($q, $http, url, opts).then(function (data) {
+                def.resolve(data);
+            }).catch(function (error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
     };
 }
 })();

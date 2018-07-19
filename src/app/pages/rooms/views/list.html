@@ -110,6 +110,11 @@
       <div class="modal-header">
         <i class="icon-arrow-left" ng-click="changeTab(1)" ng-style="{'background-color' : Order.selectedCategory.color}"></i>
         <h4 class="modal-title" id="myModalLabel3">{{Order.selectedCategory.name}}</h4>
+        <span class="add-btn">
+          <a class="btn btn-secondary btn-icon" ng-click="addArticle()">
+              <i class="ion-plus-round"></i>
+          </a>
+      </span>
       </div>
       <div class="tabs-container">
         <ul ng-style="{'background-color' : Order.selectedCategory.color}">
@@ -352,6 +357,83 @@
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content" ng-if="activeTab[7]">
+      <div class="modal-header">
+        <i class="icon-arrow-left" ng-click="hideArticle()"></i>
+        <h4 class="modal-title" id="myModalLabel5">Add Item
+          <button class="save-variant" ng-click="saveArticleData()">Save</button>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div ng-if="variantError3" class="color-red">{{variantError3}}</div>
+        <div class="form-group">
+            <label for="input01" class="col-sm-4 control-label">
+                <h5>Name</h5>
+            </label>
+            <div class="col-sm-8">
+                <input type="text" name="name" ng-model="AddDataArticle.name" class="form-control" placeholder="Name" />
+            </div>
+        </div>
+        <h5>Quantity</h5>
+        <div class="input-group">
+          <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseArticleQty()">
+            <i class="icon-minus"></i>
+          </span>
+          <div class="text-center input-value">{{AddDataArticle.quantity}}</div>
+          <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseArticleQty()">
+            <i class="icon-plus"></i>
+          </span>
+        </div>
+        <div class="form-group">
+            <label for="input01" class="col-sm-4 control-label">
+                <h5>Price</h5>
+            </label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
+                    <input type="text" float-number ng-model="AddDataArticle.price" class="form-control" name="price" placeholder="Price" />
+                </div>
+            </div>
+        </div>
+        <h5>Variant and Notes</h5>
+        <div class="tabs-btn d-flex">
+          <button type="button" ng-click="tabActive(1)" ng-class="{'active':Order.activeTab[0]}">Variants</button>
+          <button type="button" ng-click="tabActive(2)" ng-class="{'active':Order.activeTab[1]}">Notes</button>
+        </div>
+        <div class="varient-list" ng-if="Order.activeTab[0]">
+          <table class="table">
+            <tbody>
+              <tr ng-repeat="varient in variantList3">
+                <td>{{varient.name}}</td>
+                <td>&euro;{{varient.price}}</td>
+                <td>
+                  <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
+                    ng-click="addRemoveArticleVariant(varient,0)">
+                    <i class="icon-minus"></i>
+                  </button>
+                  <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
+                    ng-click="addRemoveArticleVariant(varient,1)">
+                    <i class="icon-plus"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="varient-list" ng-if="Order.activeTab[1]">
+          <table class="table">
+            <tbody>
+              <tr ng-repeat="note in noteList3 track by $index">
+                <td>{{note.notes}}</td>
+                <td>
+                  <input type="checkbox" ng-model="notes3[note.notes]" ng-change="addArticleNote(note.notes, $index)" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
