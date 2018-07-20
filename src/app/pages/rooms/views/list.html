@@ -125,11 +125,11 @@
       <div class="modal-header">
         <i class="icon-arrow-left" ng-click="changeTab(1)" ng-style="{'background-color' : Order.selectedCategory.color}"></i>
         <h4 class="modal-title" id="myModalLabel3">{{Order.selectedCategory.name}}</h4>
-        <span class="add-btn">
+        <span class="add-item-btn">
           <a class="btn btn-secondary btn-icon" ng-click="addArticle()">
-              <i class="ion-plus-round"></i>
+            <i class="ion-plus-round"></i>
           </a>
-      </span>
+        </span>
       </div>
       <div class="tabs-container">
         <ul ng-style="{'background-color' : Order.selectedCategory.color}">
@@ -385,6 +385,15 @@
       </div>
     </div>
     <div class="modal-content" ng-if="activeTab[7]">
+      <div class="content-top">
+        <h1 class="al-title">Menu</h1>
+        <ul class="breadcrumb al-breadcrumb">
+          <li>
+            <a href="#/dashboard">Home</a>
+          </li>
+          <li>Menu</li>
+        </ul>
+      </div>
       <div class="modal-header">
         <i class="icon-arrow-left" ng-click="hideArticle()"></i>
         <h4 class="modal-title" id="myModalLabel5">Add Item
@@ -393,13 +402,13 @@
       </div>
       <div class="modal-body">
         <div ng-if="variantError3" class="color-red">{{variantError3}}</div>
-        <div class="form-group">
-            <label for="input01" class="col-sm-4 control-label">
-                <h5>Name</h5>
-            </label>
-            <div class="col-sm-8">
-                <input type="text" name="name" ng-model="AddDataArticle.name" class="form-control" placeholder="Name" />
-            </div>
+        <div class="form-group row">
+          <label for="input01" class="col-sm-12 control-label">
+            <h5>Name</h5>
+          </label>
+          <div class="col-sm-12">
+            <input type="text" name="name" ng-model="AddDataArticle.name" class="form-control" placeholder="Name" />
+          </div>
         </div>
         <h5>Quantity</h5>
         <div class="input-group">
@@ -411,16 +420,16 @@
             <i class="icon-plus"></i>
           </span>
         </div>
-        <div class="form-group">
-            <label for="input01" class="col-sm-4 control-label">
-                <h5>Price</h5>
-            </label>
-            <div class="col-sm-8">
-                <div class="input-group">
-                    <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
-                    <input type="text" float-number ng-model="AddDataArticle.price" class="form-control" name="price" placeholder="Price" />
-                </div>
+        <div class="form-group row">
+          <label for="input01" class="col-sm-12 control-label">
+            <h5>Price</h5>
+          </label>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
+              <input type="text" float-number ng-model="AddDataArticle.price" class="form-control" name="price" placeholder="Price" />
             </div>
+          </div>
         </div>
         <h5>Variant and Notes</h5>
         <div class="tabs-btn d-flex">
