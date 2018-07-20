@@ -91,10 +91,11 @@
   <div class="leftsidebar" ng-if="showLedtSideBar || showLedtSideBar1">
     <div class="modal-content" ng-if="activeTab[1]">
       <div class="content-top">
-        <h1 class="al-title">Menu</h1>      
+        <h1 class="al-title">Menu</h1>
         <ul class="breadcrumb al-breadcrumb">
           <li>
-            <a href="#/dashboard">Home</a></li>
+            <a href="#/dashboard">Home</a>
+          </li>
           <li>Menu</li>
         </ul>
       </div>
@@ -112,6 +113,15 @@
     </div>
 
     <div class="modal-content" ng-if="activeTab[2]">
+      <div class="content-top">
+        <h1 class="al-title">Menu</h1>
+        <ul class="breadcrumb al-breadcrumb">
+          <li>
+            <a href="#/dashboard">Home</a>
+          </li>
+          <li>Menu</li>
+        </ul>
+      </div>
       <div class="modal-header">
         <i class="icon-arrow-left" ng-click="changeTab(1)" ng-style="{'background-color' : Order.selectedCategory.color}"></i>
         <h4 class="modal-title" id="myModalLabel3">{{Order.selectedCategory.name}}</h4>
@@ -181,6 +191,15 @@
     </div>
 
     <div class="modal-content" ng-if="activeTab[3]">
+      <div class="content-top">
+        <h1 class="al-title">Menu</h1>
+        <ul class="breadcrumb al-breadcrumb">
+          <li>
+            <a href="#/dashboard">Home</a>
+          </li>
+          <li>Menu</li>
+        </ul>
+      </div>
       <div class="modal-header">
         <i class="icon-arrow-left" ng-click="hideVarient()"></i>
         <h4 class="modal-title" id="myModalLabel3" ng-if="Order.selectedCategory">Choose Variant
