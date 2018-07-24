@@ -88,7 +88,7 @@
       <button type="button" class="btn btn-primary" ng-click="makeOrder()">Make an order</button>
     </div>
   </div>
-  <div class="leftsidebar" ng-if="showLedtSideBar || showLedtSideBar1" ng-class="{ 'leftorder-sidebar': $baSidebarService.isMenuCollapsed() }">
+  <div class="leftsidebar" ng-if="showLedtSideBar || showLedtSideBar1 || showAddArticle" ng-class="{ 'leftorder-sidebar': $baSidebarService.isMenuCollapsed() }">
     <div class="modal-content" ng-if="activeTab[1]">
       <div class="content-top">
         <h1 class="al-title">Menu</h1>
@@ -126,7 +126,7 @@
         <i class="icon-arrow-left" ng-click="changeTab(1)" ng-style="{'background-color' : Order.selectedCategory.color}"></i>
         <h4 class="modal-title" id="myModalLabel3">{{Order.selectedCategory.name}}</h4>
         <span class="add-item-btn">
-          <a class="btn btn-secondary btn-icon" ng-click="addArticle()">
+          <a class="btn btn-secondary btn-icon" ng-click="addArticle(1)">
             <i class="ion-plus-round"></i>
           </a>
         </span>
@@ -397,27 +397,32 @@
       <div class="modal-header">
         <i class="icon-arrow-left" ng-click="hideArticle()"></i>
         <h4 class="modal-title" id="myModalLabel5">Add Item
-          <button class="save-variant" ng-click="saveArticleData()">Save</button>
+          <button class="save-variant" ng-click="saveArticleData(); changeTab(0)">Save</button>
         </h4>
       </div>
       <div class="modal-body">
         <div ng-if="variantError3" class="color-red">{{variantError3}}</div>
-        <div class="form-group row">
+        <div class="form-group row" ng-if="addArticleType == 2">
           <label for="input01" class="col-sm-12 control-label">
             <h5>Choose Category</h5>
           </label>
           <div class="col-sm-12">
-            <input type="text" name="category" ng-model="AddDataArticle.category" class="form-control" placeholder="Select Category"
-            />
+            <select class="form-control" data-ng-options="category.name for category in categories" ng-model="AddDataArticle.category"
+              ng-change="categoryChanged(AddDataArticle.category)">
+              <option value="?" selected="selected">Select Category</option>
+              <option selected="selected" value="">Select Category</option>
+            </select>
           </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row" ng-if="addArticleType == 2">
           <label for="input01" class="col-sm-12 control-label">
-            <h5>Choose SubCategory</h5>
+            <h5>Choose Sub Category</h5>
           </label>
           <div class="col-sm-12">
-            <input type="text" name="subcategory" ng-model="AddDataArticle.subcategory" class="form-control" placeholder="Select subcategory"
-            />
+            <select class="form-control" data-ng-options="subcat for subcat in subCategories" ng-model="AddDataArticle.subCategory">
+              <option value="?" selected="selected">Select Sub Category</option>
+              <option selected="selected" value="">Select Sub Category</option>              
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -575,7 +580,7 @@
     </div>
     <div class="footer-btn" ng-if="tableData.orderId.length">
       <div class="d-flex">
-        <button ng-if="!showLedtSideBar" type="submit" class="btn">
+        <button ng-if="!showLedtSideBar" type="submit" class="btn" ng-click="addArticle(2)">
           <img src="assets/img/icon_file.png" alt="" />
         </button>
         <button ng-if="!showLedtSideBar" type="submit" class="btn" ng-click="showTotalItem()">
