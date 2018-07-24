@@ -74,19 +74,11 @@
 
         $scope.variantList3 = [];
         $scope.noteList3 = [];
-        // $scope.AddDataArticle = {
-        //     name: '',
-        //     price: '',
-        //     category: '',
-        //     subCategory: '',
-        //     quantity: 0,
-        //     variant: [],
-        //     notes: '',
-        //     isDeleted: true
-        // }
         $scope.notes3 = [];
         $scope.notesarray3 = [];
         $scope.variantError3 = '';
+        $scope.subCategories = [];
+
         $q.all([
             RoomService.getCategories()
         ]).then(function (data) {
@@ -1824,7 +1816,11 @@
             }).catch(function (error) {
             });
         });
-        $scope.addArticle = function () {
+        $scope.addArticle = function (type) {
+            $scope.addArticleType = type;
+            if(type == 2){
+                $scope.showLedtSideBar = true;                
+            }
             RoomService.getVariantsAndNotes()
                 .then(function (data) {
                     $scope.variantList3 = data.data.variants;
@@ -1904,8 +1900,8 @@
 
         $scope.saveArticleData = function () {
             var currentStep = baRoomService.getTabData().step;
-            if (this.AddDataArticle.name === '') {
-                this.addArticleError = 'Please enter name';
+            if ($scope.AddDataArticle.name === '') {
+                $scope.variantError3 = 'Please enter name';
                 $timeout(function () {
                     $scope.variantError3 = '';
                 }, 4000);
@@ -1923,71 +1919,147 @@
                 }, 4000);
             }
             else {
-                $scope.AddDataArticle.category = $rootScope.Order.selectedCategory._id;
-                if ($rootScope.Order.selectedSubcategory[-1]) {
-                    $scope.AddDataArticle.subCategory = '';
-                }
-                if (!$rootScope.Order.selectedSubcategory[-1]) {
-                    if ($rootScope.Order.selectedCategory.subCategory.length) {
-                        for (var i = 0; i < $rootScope.Order.selectedCategory.subCategory.length; i++) {
-                            if ($rootScope.Order.selectedSubcategory[i]) {
-                                $scope.AddDataArticle.subCategory = $rootScope.Order.selectedCategory.subCategory[i];
-                            }
-                        }
-                    }
-                    else {
+                if($scope.addArticleType == 1){
+                    $scope.AddDataArticle.category = $rootScope.Order.selectedCategory._id;
+                    if ($rootScope.Order.selectedSubcategory[-1]) {
                         $scope.AddDataArticle.subCategory = '';
                     }
-                }
-                var opts = {
-                    name: $scope.AddDataArticle.name,
-                    price: Number($scope.AddDataArticle.price),
-                    category: $scope.AddDataArticle.category,
-                    subCategory: $scope.AddDataArticle.subCategory,
-                    isDeleted: $scope.AddDataArticle.isDeleted
-                }
-                $scope.loader = true;
-                RoomService.addArticle(opts).then(function (data) {
-                    $scope.loader = false;
-                    var itemTemp = angular.copy(data.data);
-                    itemTemp.step = currentStep;
-                    itemTemp.quantity = $scope.AddDataArticle.quantity;
-                    itemTemp.variant = $scope.AddDataArticle.variant;
-                    itemTemp.ordernote = $scope.AddDataArticle.notes;
-                    var itemData = angular.copy(itemTemp);
-                    $rootScope.Order.selectedItems[currentStep].push(itemData);
-                    var cp = 0;
-                    var itemno = 0;
-                    var varicost = 0;
-                    var steps = [];
-                    if (baRoomService.getStepData()) {
-                        steps = baRoomService.getStepData();
-                    } else {
-                        steps = ['Uscita 1', 'Uscita 2'];
-                    }
-                    for (var a = 0; a < steps.length; a++) {
-                        for (var i = 0; i < $rootScope.Order.selectedItems[steps[a]].length; i++) {
-                            varicost = 0;
-                            itemno += $rootScope.Order.selectedItems[steps[a]][i].quantity;
-                            if ($rootScope.Order.selectedItems[steps[a]][i].variant) {
-                                for (var j = 0; j < $rootScope.Order.selectedItems[steps[a]][i].variant.length; j++) {
-                                    if ($rootScope.Order.selectedItems[steps[a]][i].variant[j].status == 1) {
-                                        varicost += $rootScope.Order.selectedItems[steps[a]][i].variant[j].price;
-                                    }
+                    if (!$rootScope.Order.selectedSubcategory[-1]) {
+                        if ($rootScope.Order.selectedCategory.subCategory.length) {
+                            for (var i = 0; i < $rootScope.Order.selectedCategory.subCategory.length; i++) {
+                                if ($rootScope.Order.selectedSubcategory[i]) {
+                                    $scope.AddDataArticle.subCategory = $rootScope.Order.selectedCategory.subCategory[i];
                                 }
                             }
-                            cp += ($rootScope.Order.selectedItems[steps[a]][i].price + varicost) * $rootScope.Order.selectedItems[steps[a]][i].quantity;
-                            $rootScope.Order.cartTotalPrice = cp;
-                            $rootScope.Order.cartTotalItem = itemno;
+                        }
+                        else {
+                            $scope.AddDataArticle.subCategory = '';
                         }
                     }
-                    $scope.hideArticle();
-                }).catch(function (error) {
-                    $scope.loader = false;
-                    AlertService.error('variantError3', error.message, 4000);
-                });
+                    var opts = {
+                        name: $scope.AddDataArticle.name,
+                        price: Number($scope.AddDataArticle.price),
+                        category: $scope.AddDataArticle.category,
+                        subCategory: $scope.AddDataArticle.subCategory,
+                        isDeleted: $scope.AddDataArticle.isDeleted
+                    }
+                    $scope.loader = true;
+                    RoomService.addArticle(opts).then(function (data) {
+                        $scope.loader = false;
+                        var itemTemp = angular.copy(data.data);
+                        itemTemp.step = currentStep;
+                        itemTemp.quantity = $scope.AddDataArticle.quantity;
+                        itemTemp.variant = $scope.AddDataArticle.variant;
+                        itemTemp.ordernote = $scope.AddDataArticle.notes;
+                        var itemData = angular.copy(itemTemp);
+                        $rootScope.Order.selectedItems[currentStep].push(itemData);
+                        var cp = 0;
+                        var itemno = 0;
+                        var varicost = 0;
+                        var steps = [];
+                        if (baRoomService.getStepData()) {
+                            steps = baRoomService.getStepData();
+                        } else {
+                            steps = ['Uscita 1', 'Uscita 2'];
+                        }
+                        for (var a = 0; a < steps.length; a++) {
+                            for (var i = 0; i < $rootScope.Order.selectedItems[steps[a]].length; i++) {
+                                varicost = 0;
+                                itemno += $rootScope.Order.selectedItems[steps[a]][i].quantity;
+                                if ($rootScope.Order.selectedItems[steps[a]][i].variant) {
+                                    for (var j = 0; j < $rootScope.Order.selectedItems[steps[a]][i].variant.length; j++) {
+                                        if ($rootScope.Order.selectedItems[steps[a]][i].variant[j].status == 1) {
+                                            varicost += $rootScope.Order.selectedItems[steps[a]][i].variant[j].price;
+                                        }
+                                    }
+                                }
+                                cp += ($rootScope.Order.selectedItems[steps[a]][i].price + varicost) * $rootScope.Order.selectedItems[steps[a]][i].quantity;
+                                $rootScope.Order.cartTotalPrice = cp;
+                                $rootScope.Order.cartTotalItem = itemno;
+                            }
+                        }
+                        $scope.hideArticle();
+                    }).catch(function (error) {
+                        $scope.loader = false;
+                        AlertService.error('variantError3', error.message, 4000);
+                    });
+                }
+                else if($scope.addArticleType == 2){
+                    if ($scope.AddDataArticle.category === '') {
+                        $scope.variantError3 = 'Please select category';
+                        $timeout(function () {
+                            $scope.variantError3 = '';
+                        }, 4000);
+                    }
+                    else{
+                        var opts = {
+                            name: $scope.AddDataArticle.name,
+                            price: Number($scope.AddDataArticle.price),
+                            category: $scope.AddDataArticle.category._id,
+                            subCategory: $scope.AddDataArticle.subCategory ? $scope.AddDataArticle.subCategory : '',
+                            isDeleted: $scope.AddDataArticle.isDeleted
+                        }
+                        $scope.loader = true;
+                        RoomService.addArticle(opts).then(function (data) {
+                            $scope.loader = false;
+                            var itemTemp = angular.copy(data.data);
+                            itemTemp.step = currentStep;
+                            itemTemp.quantity = $scope.AddDataArticle.quantity;
+                            itemTemp.variant = $scope.AddDataArticle.variant;
+                            itemTemp.ordernote = $scope.AddDataArticle.notes;
+                            var itemData = angular.copy(itemTemp);
+                            $rootScope.Order.selectedItems[currentStep].push(itemData);
+                            var cp = 0;
+                            var itemno = 0;
+                            var varicost = 0;
+                            var steps = [];
+                            if (baRoomService.getStepData()) {
+                                steps = baRoomService.getStepData();
+                            } else {
+                                steps = ['Uscita 1', 'Uscita 2'];
+                            }
+                            for (var a = 0; a < steps.length; a++) {
+                                for (var i = 0; i < $rootScope.Order.selectedItems[steps[a]].length; i++) {
+                                    varicost = 0;
+                                    itemno += $rootScope.Order.selectedItems[steps[a]][i].quantity;
+                                    if ($rootScope.Order.selectedItems[steps[a]][i].variant) {
+                                        for (var j = 0; j < $rootScope.Order.selectedItems[steps[a]][i].variant.length; j++) {
+                                            if ($rootScope.Order.selectedItems[steps[a]][i].variant[j].status == 1) {
+                                                varicost += $rootScope.Order.selectedItems[steps[a]][i].variant[j].price;
+                                            }
+                                        }
+                                    }
+                                    cp += ($rootScope.Order.selectedItems[steps[a]][i].price + varicost) * $rootScope.Order.selectedItems[steps[a]][i].quantity;
+                                    $rootScope.Order.cartTotalPrice = cp;
+                                    $rootScope.Order.cartTotalItem = itemno;
+                                }
+                            }
+                            $scope.hideArticle();
+                            if($scope.addArticleType == 2){
+                                $scope.showLedtSideBar = false;     
+                                $scope.subCategories = [];           
+                            }
+                        }).catch(function (error) {
+                            $scope.loader = false;
+                            AlertService.error('variantError3', error.message, 4000);
+                        });
+                    }
+                }
+                
             }
         }
+
+        $scope.categoryChanged = function (category) {
+            console.log('category',category);
+            $scope.AddDataArticle.subCategory = '';            
+            if(category){
+                $scope.subCategories = category.subCategory;
+            }
+            else{
+                $scope.subCategories = [];
+                $scope.AddDataArticle.category = '';
+            }
+        };
     }
 
     function StepsController($scope, $rootScope, RoomService, AlertService, baRoomService) {
@@ -2042,7 +2114,7 @@
         }
 
         $scope.addStep = function () {
-            var count = this.stepArray.length + 1;
+            var count = $scope.stepArray.length + 1;
             $scope.stepArray.push('Uscita ' + count);
             var step = 'Uscita ' + count;
             baRoomService.setStepData($scope.stepArray);
