@@ -598,77 +598,89 @@
 
 <div class="leftsidebar" ng-if="showCheckoutCart" ng-class="{ 'leftorder-sidebar': $baSidebarService.isMenuCollapsed() }">
   <div class="contianer">
-    <h1>Conto Separato</h1>
+    <div class="content-top">
+      <h1 class="al-title">Conto Separato</h1>
+      <ul class="breadcrumb al-breadcrumb">
+        <li>
+          <a href="#/dashboard">Home</a>
+        </li>
+        <li>Conto Separato</li>
+      </ul>
+    </div>
   </div>
   <button type="button" class="checkout-close-btn" ng-click="closeShowCheckoutCart()">
     <i class="ion-close-round"></i>
   </button>
   <div class="row height">
-    <div class="col-sm-6">
-      <table class="table">
-        <thead>
-          <tr>
-            <th style="width: 73%;">Total</th>
-            <th>&euro;{{orderItemsTotalPrice}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="width: 73%;">X {{Order.noOfPeople}} Coperti</td>
-            <td class="btn-quantity">
-              <button type="submit" ng-click="decreaseCheckoutPeople()">
-                <i class="icon-minus"></i>
-              </button>
-              <button type="submit" ng-click="increaseCheckoutPeople()">
-                <i class="icon-plus"></i>
-              </button>
-            </td>
-          </tr>
-          <tr ng-repeat="order in tableData.orderId">
-            <td colspan="2" class="order-item-table">
-              <table class="table">
-                <tbody>
-                  <tr ng-repeat="item in order.item track by $index">
-                    <td>X {{item.quantity}} {{item.id.name}}</td>
-                    <td class="btn-quantity">
-                      <button type="submit" ng-click="decreaseItemQty(item)">
-                        <i class="icon-minus"></i>
-                      </button>
-                      <button type="submit" ng-click="increaseItemQty(item)">
-                        <i class="icon-plus"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-sm-6">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Parziale</th>
-            <th>&euro;{{checkoutTotalPrice}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding: 13px 0;">X {{checkoutPeople}} Coperti</td>
-            <td style="padding: 13px 0;">
-              &euro;{{checkoutPeoplePrice}}
-            </td>
-          </tr>
-          <tr ng-repeat="item in orderItemsNew track by $index">
-            <td style="padding: 13px 0;">X {{item.quantity}} {{item.name}}</td>
-            <td style="padding: 13px 0;">
-              &euro;{{item.amount}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="panel">
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Total</th>
+                <th>&euro;{{orderItemsTotalPrice}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>X {{Order.noOfPeople}} Coperti</td>
+                <td class="btn-quantity">
+                  <button type="submit" ng-click="decreaseCheckoutPeople()">
+                    <i class="icon-minus"></i>
+                  </button>
+                  <button type="submit" ng-click="increaseCheckoutPeople()">
+                    <i class="icon-plus"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr ng-repeat="order in tableData.orderId">
+                <td colspan="2" class="order-item-table">
+                  <table class="table">
+                    <tbody>
+                      <tr ng-repeat="item in order.item track by $index">
+                        <td>X {{item.quantity}} {{item.id.name}}</td>
+                        <td class="btn-quantity">
+                          <button type="submit" ng-click="decreaseItemQty(item)">
+                            <i class="icon-minus"></i>
+                          </button>
+                          <button type="submit" ng-click="increaseItemQty(item)">
+                            <i class="icon-plus"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Parziale</th>
+                <th>&euro;{{checkoutTotalPrice}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 13px 0;">X {{checkoutPeople}} Coperti</td>
+                <td style="padding: 13px 0;">
+                  &euro;{{checkoutPeoplePrice}}
+                </td>
+              </tr>
+              <tr ng-repeat="item in orderItemsNew track by $index">
+                <td style="padding: 13px 0;">X {{item.quantity}} {{item.name}}</td>
+                <td style="padding: 13px 0;">
+                  &euro;{{item.amount}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
   <div class="button text-right">

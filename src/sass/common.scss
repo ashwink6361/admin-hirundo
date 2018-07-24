@@ -1732,8 +1732,16 @@
     }
 }
 
+.table>tbody>tr>td:last-child, .table>thead>tr>th:last-child{
+    width: 92px;
+}
+
+.order-item-table{
+    padding-right: 0 !important;
+}
+
 .table>tbody>tr>td>table>tbody>tr>td:last-child{
-    width: 172px;
+    width: 92px;
 }
 
 .add-item-btn{
