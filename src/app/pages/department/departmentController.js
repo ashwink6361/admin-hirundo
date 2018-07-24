@@ -38,7 +38,7 @@
                 });
             }
         };
-    
+
         //View Department
         $scope.viewDepartment = function (data, id) {
             $state.go('viewdepartment', {
@@ -64,6 +64,8 @@
     }
 
     function AddDepartmentController($scope, $http, $stateParams, $state, $q, $timeout, fileReader, DepartmentService, ItemService, AlertService) {
+        var tempUser = JSON.parse(localStorage.getItem('adminUser'));
+        $scope.tempUserName = tempUser.userName;
         $scope.departmentId = $stateParams.id;
         $scope.itms = [];
         $scope.selectedCategories = [];
@@ -98,10 +100,10 @@
                 return false;
             }
             var opts = {
-                userName: $scope.Department.userName,
+                userName:  $scope.tempUserName +'-'+ $scope.Department.userName,
                 password: $scope.Department.password,
-                name: $scope.Department.firstName, 
-                category: ($scope.selectedCategories.length) ? $scope.selectedCategories : [],                            
+                name: $scope.Department.firstName,
+                category: ($scope.selectedCategories.length) ? $scope.selectedCategories : [],
                 deviceType: 'web',
                 deviceId: '',
                 deviceToken: ''
@@ -123,7 +125,7 @@
             }
             var opts = {
                 name: $scope.Department.firstName,
-                category: ($scope.selectedCategories.length) ? $scope.selectedCategories : [],                
+                category: ($scope.selectedCategories.length) ? $scope.selectedCategories : [],
                 deviceType: 'web',
                 deviceId: '',
                 deviceToken: ''
