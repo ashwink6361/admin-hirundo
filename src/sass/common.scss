@@ -1451,8 +1451,8 @@
     height: calc(100% - 66px);
     background-color: #F0F3F4;
     padding: 20px;
-    left: 52px;
-    width: calc(100% - 452px);
+    left: 179px;
+    width: calc(100% - 572px);
     padding: 8px 32px 8px 40px;
     z-index: 999;
     overflow-y: auto;
@@ -1537,7 +1537,12 @@
 }
 
 .order-sidebar {
-    margin-right: 370px;
+    margin-right: 390px;
+}
+
+.leftorder-sidebar{
+    left: 52px;
+    width: calc(100% - 442px);
 }
 
 .admin-order {

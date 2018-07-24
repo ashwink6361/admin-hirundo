@@ -88,7 +88,7 @@
       <button type="button" class="btn btn-primary" ng-click="makeOrder()">Make an order</button>
     </div>
   </div>
-  <div class="leftsidebar" ng-if="showLedtSideBar || showLedtSideBar1">
+  <div class="leftsidebar" ng-if="showLedtSideBar || showLedtSideBar1" ng-class="{ 'leftorder-sidebar': $baSidebarService.isMenuCollapsed() }">
     <div class="modal-content" ng-if="activeTab[1]">
       <div class="content-top">
         <h1 class="al-title">Menu</h1>
@@ -578,7 +578,7 @@
   </div>
 </div>
 
-<div class="leftsidebar" ng-if="showCheckoutCart">
+<div class="leftsidebar" ng-if="showCheckoutCart" ng-class="{ 'leftorder-sidebar': $baSidebarService.isMenuCollapsed() }">
   <div class="contianer">
     <h1>Conto Separato</h1>
   </div>
