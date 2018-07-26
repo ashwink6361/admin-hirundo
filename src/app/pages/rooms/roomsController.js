@@ -999,7 +999,7 @@
         }
 
         $scope.hideVarient1 = function () {
-            $scope.changeTab(2);
+            $scope.changeTab(1);
             $scope.nonVariantData = false;
             $scope.variantData1 = {
                 quantity: 0,
@@ -1077,11 +1077,11 @@
                             }
                         }
                     }
-                    for (var i = 0; i < $rootScope.Order.categoryItems[$scope.articleData1.step].length; i++) {
-                        if ($rootScope.Order.categoryItems[$scope.articleData1.step][i]._id == $scope.articleData1._id) {
-                            $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal = $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal + $scope.articleData1.quantity;
-                        }
-                    }
+                    // for (var i = 0; i < $rootScope.Order.categoryItems[$scope.articleData1.step].length; i++) {
+                    //     if ($rootScope.Order.categoryItems[$scope.articleData1.step][i]._id == $scope.articleData1._id) {
+                    //         $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal = $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal + $scope.articleData1.quantity;
+                    //     }
+                    // }
                     var cp = 0;
                     var itemno = 0;
                     var varicost = 0;
@@ -1144,11 +1144,11 @@
                             $rootScope.Order.selectedItems[$scope.articleData1.step][i].ordernote = $scope.articleData1.ordernote;
                         }
                     }
-                    for (var i = 0; i < $rootScope.Order.categoryItems[$scope.articleData1.step].length; i++) {
-                        if ($rootScope.Order.categoryItems[$scope.articleData1.step][i]._id == $scope.articleData1._id) {
-                            $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal = $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal + $scope.articleData1.quantity;
-                        }
-                    }
+                    // for (var i = 0; i < $rootScope.Order.categoryItems[$scope.articleData1.step].length; i++) {
+                    //     if ($rootScope.Order.categoryItems[$scope.articleData1.step][i]._id == $scope.articleData1._id) {
+                    //         $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal = $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal + $scope.articleData1.quantity;
+                    //     }
+                    // }
                     var cp = 0;
                     var itemno = 0;
                     var varicost = 0;
@@ -1448,6 +1448,7 @@
         }
 
         $scope.hideEditOrderItem = function () {
+            $scope.changeTab(1);
             $scope.editNonVariantData = false;
             $scope.showLedtSideBar1 = false;
             $scope.variantData2 = {
@@ -1841,7 +1842,7 @@
         }
 
         $scope.hideArticle = function () {
-            $scope.changeTab(2);
+            $scope.changeTab(1);
             $scope.AddDataArticle = {
                 name: '',
                 price: '',
