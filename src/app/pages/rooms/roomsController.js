@@ -46,7 +46,8 @@
         $scope.variantData1 = {
             quantity: 0,
             variant: [],
-            notes: ''
+            notes: '',
+            price: ''
         }
         $scope.notes1 = [];
         $scope.notesarray1 = [];
@@ -64,7 +65,8 @@
         $scope.variantData2 = {
             quantity: 0,
             variant: [],
-            notes: ''
+            notes: '',
+            price: ''
         }
         $scope.notes2 = [];
         $scope.notesarray2 = [];
@@ -713,7 +715,7 @@
                         id: $rootScope.Order.selectedItems[steps[a]][i]._id,
                         category: $rootScope.Order.selectedItems[steps[a]][i].category._id,
                         quantity: $rootScope.Order.selectedItems[steps[a]][i].quantity,
-                        price: $rootScope.Order.selectedItems[steps[a]][i].price,
+                        price: Number($rootScope.Order.selectedItems[steps[a]][i].price),
                         notes: $rootScope.Order.selectedItems[steps[a]][i].ordernote ? $rootScope.Order.selectedItems[steps[a]][i].ordernote : '',
                         variant: vararray,
                         step: $rootScope.Order.selectedItems[steps[a]][i].step,
@@ -961,12 +963,14 @@
                     $scope.variantList1 = data.data.variants;
                     $scope.noteList1 = data.data.notes;
                     $scope.articleData1 = angular.copy(article);
-                    if (!$scope.articleData1.variant) {
+                    if (!$scope.articleData1.variant || $scope.articleData1.variant.length == 0) {
                         $scope.nonVariantData = true;
                         $scope.variantData1.quantity = $scope.articleData1.quantity;
+                        $scope.variantData1.price = $scope.articleData1.price;                        
                     } else {
                         $scope.nonVariantData = false;
                         $scope.variantData1.quantity = $scope.articleData1.quantity;
+                        $scope.variantData1.price = $scope.articleData1.price;                                                
                         $scope.variantData1.variant = $scope.articleData1.variant;
                         $scope.variantData1.notes = $scope.articleData1.ordernote;
                         if ($scope.articleData1.ordernote) {
@@ -995,12 +999,13 @@
         }
 
         $scope.hideVarient1 = function () {
-            $scope.changeTab(2);
+            $scope.changeTab(1);
             $scope.nonVariantData = false;
             $scope.variantData1 = {
                 quantity: 0,
                 variant: [],
-                notes: ''
+                notes: '',
+                price: ''
             };
             $scope.notes1 = [];
             $scope.notesarray1 = [];
@@ -1046,24 +1051,37 @@
         }
 
         $scope.saveVariantData1 = function () {
-            if (!$scope.articleData1.variant) {
+            if (!$scope.articleData1.variant || $scope.articleData1.variant.length == 0) {
                 if ($scope.variantData1.quantity == 0) {
                     $scope.variantError1 = 'Please enter quantity';
                     $timeout(function () {
                         $scope.variantError1 = '';
                     }, 4000);
-                } else {
+                }
+                else if ($scope.variantData1.price == 0 || $scope.variantData1.price == '') {
+                    $scope.variantError1 = 'Please enter price';
+                    $timeout(function () {
+                        $scope.variantError1 = '';
+                    }, 4000);
+                }
+                else {
                     $scope.articleData1.quantity = $scope.variantData1.quantity;
+                    if($scope.articleData1.isDeleted){
+                        $scope.articleData1.price = $scope.variantData1.price;                    
+                    }
                     for (var i = 0; i < $rootScope.Order.selectedItems[$scope.articleData1.step].length; i++) {
-                        if ($rootScope.Order.selectedItems[$scope.articleData1.step][i]._id == $scope.articleData1._id && !$rootScope.Order.selectedItems[$scope.articleData1.step][i].variant) {
+                        if ($rootScope.Order.selectedItems[$scope.articleData1.step][i]._id == $scope.articleData1._id && (!$rootScope.Order.selectedItems[$scope.articleData1.step][i].variant || $rootScope.Order.selectedItems[$scope.articleData1.step][i].variant.length == 0)) {
                             $rootScope.Order.selectedItems[$scope.articleData1.step][i].quantity = $scope.articleData1.quantity;
+                            if($scope.articleData1.isDeleted){
+                                $rootScope.Order.selectedItems[$scope.articleData1.step][i].price = $scope.articleData1.price;                    
+                            }
                         }
                     }
-                    for (var i = 0; i < $rootScope.Order.categoryItems[$scope.articleData1.step].length; i++) {
-                        if ($rootScope.Order.categoryItems[$scope.articleData1.step][i]._id == $scope.articleData1._id) {
-                            $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal = $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal + $scope.articleData1.quantity;
-                        }
-                    }
+                    // for (var i = 0; i < $rootScope.Order.categoryItems[$scope.articleData1.step].length; i++) {
+                    //     if ($rootScope.Order.categoryItems[$scope.articleData1.step][i]._id == $scope.articleData1._id) {
+                    //         $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal = $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal + $scope.articleData1.quantity;
+                    //     }
+                    // }
                     var cp = 0;
                     var itemno = 0;
                     var varicost = 0;
@@ -1089,7 +1107,7 @@
                             $rootScope.Order.cartTotalItem = itemno;
                         }
                     }
-                    $scope.hideVarient();
+                    $scope.hideVarient1();
                 }
             } else {
                 if ($scope.variantData1.quantity == 0) {
@@ -1097,27 +1115,40 @@
                     $timeout(function () {
                         $scope.variantError1 = '';
                     }, 4000);
-                } else if ($scope.variantData1.quantity > 0 && !$scope.variantData1.variant.length && !$scope.variantData1.notes) {
+                }
+                else if ($scope.variantData1.price == 0 || $scope.variantData1.price == '') {
+                    $scope.variantError1 = 'Please enter price';
+                    $timeout(function () {
+                        $scope.variantError1 = '';
+                    }, 4000);
+                }
+                else if ($scope.variantData1.quantity > 0 && !$scope.variantData1.variant.length && !$scope.variantData1.notes) {
                     $scope.variantError1 = 'Please select variants/notes';
                     $timeout(function () {
                         $scope.variantError1 = '';
                     }, 4000);
                 } else {
                     $scope.articleData1.quantity = $scope.variantData1.quantity;
+                    if($scope.articleData1.isDeleted){
+                        $scope.articleData1.price = $scope.variantData1.price;                    
+                    }
                     $scope.articleData1.variant = $scope.variantData1.variant;
                     $scope.articleData1.ordernote = $scope.variantData1.notes;
                     for (var i = 0; i < $rootScope.Order.selectedItems[$scope.articleData1.step].length; i++) {
                         if ($rootScope.Order.selectedItems[$scope.articleData1.step][i]._id == $scope.articleData1._id && $rootScope.Order.selectedItems[$scope.articleData1.step][i].variant && $rootScope.Order.selectedItems[$scope.articleData1.step][i].variantUniqueId == $scope.articleData1.variantUniqueId) {
                             $rootScope.Order.selectedItems[$scope.articleData1.step][i].quantity = $scope.articleData1.quantity;
+                            if($scope.articleData1.isDeleted){
+                                $rootScope.Order.selectedItems[$scope.articleData1.step][i].price = $scope.articleData1.price;                    
+                            }
                             $rootScope.Order.selectedItems[$scope.articleData1.step][i].variant = $scope.articleData1.variant;
                             $rootScope.Order.selectedItems[$scope.articleData1.step][i].ordernote = $scope.articleData1.ordernote;
                         }
                     }
-                    for (var i = 0; i < $rootScope.Order.categoryItems[$scope.articleData1.step].length; i++) {
-                        if ($rootScope.Order.categoryItems[$scope.articleData1.step][i]._id == $scope.articleData1._id) {
-                            $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal = $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal + $scope.articleData1.quantity;
-                        }
-                    }
+                    // for (var i = 0; i < $rootScope.Order.categoryItems[$scope.articleData1.step].length; i++) {
+                    //     if ($rootScope.Order.categoryItems[$scope.articleData1.step][i]._id == $scope.articleData1._id) {
+                    //         $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal = $rootScope.Order.categoryItems[$scope.articleData1.step][i].itemTotal + $scope.articleData1.quantity;
+                    //     }
+                    // }
                     var cp = 0;
                     var itemno = 0;
                     var varicost = 0;
@@ -1143,7 +1174,7 @@
                             $rootScope.Order.cartTotalItem = itemno;
                         }
                     }
-                    $scope.hideVarient();
+                    $scope.hideVarient1();
                 }
             }
         }
@@ -1153,75 +1184,7 @@
         $scope.hideLeftSide = function () {
             $scope.showLedtSideBar = false;
         }
-        $scope.selectAllItems = function (items) {
-            $scope.selectAllClicked = !$scope.selectAllClicked;
-            if ($scope.selectAllClicked) {
-                for (var i = 0; i < items.length; i++) {
-                    if ($scope.selectedCheckoutItems.indexOf(items[i]._id) < 0) {
-                        $scope.selectedCheckoutItems.push(items[i]._id);
-                    }
-                }
-                if ($scope.selectedCheckoutItems.length) {
-                    var cp = 0;
-                    var varicost = 0;
-                    for (var i = 0; i < items.length; i++) {
-                        if (!items[i].checkout) {
-                            if (items[i].variant) {
-                                for (var j = 0; j < items[i].variant.length; j++) {
-                                    if (items[i].variant[j].status == 1) {
-                                        varicost += items[i].variant[j].price;
-                                    }
-                                }
-                            }
-                            cp += (items[i].price + varicost) * items[i].quantity;
-                        }
-                        $scope.checkoutTotalPrice = cp;
-                        $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
-                    }
-                }
-            } else {
-                for (var i = 0; i < items.length; i++) {
-                    if (!items[i].checkout && $scope.selectedCheckoutItems.indexOf(items[i]._id) > -1) {
-                        $scope.selectedCheckoutItems.splice($scope.selectedCheckoutItems.indexOf(items[i]._id), 1);
-                    }
-                }
-                $scope.checkoutTotalPrice = 0;
-            }
-        }
-        $scope.selectItem = function (item, orderItemsLength) {
-            var idx = $scope.selectedCheckoutItems.indexOf(item._id);
-            if (idx > -1) {
-                var varicost = 0;
-                if (item.variant) {
-                    for (var j = 0; j < item.variant.length; j++) {
-                        if (item.variant[j].status == 1) {
-                            varicost += item.variant[j].price;
-                        }
-                    }
-                }
-                $scope.checkoutTotalPrice = $scope.checkoutTotalPrice - ((item.price + varicost) * item.quantity);
-                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
-                $scope.selectedCheckoutItems.splice(idx, 1);
-            } else {
-                var varicost = 0;
-                if (item.variant) {
-                    for (var j = 0; j < item.variant.length; j++) {
-                        if (item.variant[j].status == 1) {
-                            varicost += item.variant[j].price;
-                        }
-                    }
-                }
-                $scope.checkoutTotalPrice = $scope.checkoutTotalPrice + ((item.price + varicost) * item.quantity);
-                $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
-                $scope.selectedCheckoutItems.push(item._id);
-            }
-            if ($scope.selectedCheckoutItems.length == orderItemsLength) {
-                $scope.selectAllClicked = true;
-            } else {
-                $scope.selectAllClicked = false;
-            }
-        }
-
+        
         $scope.decreasePeople = function () {
             if ($rootScope.Order.noOfPeople > 0) {
                 $rootScope.Order.noOfPeople = $rootScope.Order.noOfPeople - 1;
@@ -1452,9 +1415,11 @@
                     if ($scope.articleData2.variant.length == 0) {
                         $scope.editNonVariantData = true;
                         $scope.variantData2.quantity = $scope.articleData2.quantity;
+                        $scope.variantData2.price = $scope.articleData2.price;
                     } else {
                         $scope.editNonVariantData = false;
                         $scope.variantData2.quantity = $scope.articleData2.quantity;
+                        $scope.variantData2.price = $scope.articleData2.price;                        
                         $scope.variantData2.variant = $scope.articleData2.variant;
                         $scope.variantData2.notes = $scope.articleData2.notes;
                         if ($scope.articleData2.notes) {
@@ -1483,12 +1448,14 @@
         }
 
         $scope.hideEditOrderItem = function () {
+            $scope.changeTab(1);
             $scope.editNonVariantData = false;
             $scope.showLedtSideBar1 = false;
             $scope.variantData2 = {
                 quantity: 0,
                 variant: [],
-                notes: ''
+                notes: '',
+                price: ''
             };
             $scope.notes2 = [];
             $scope.notesarray2 = [];
@@ -1541,8 +1508,22 @@
                     $timeout(function () {
                         $scope.variantError2 = '';
                     }, 4000);
-                } else {
+                }
+                else if ($scope.variantData2.price == 0 || $scope.variantData2.price == '') {
+                    $scope.variantError2 = 'Please enter price';
+                    $timeout(function () {
+                        $scope.variantError2 = '';
+                    }, 4000);
+                }
+                else {
                     $scope.articleData2.quantity = $scope.variantData2.quantity;
+                    if($scope.articleData2.id.isDeleted){
+                        $scope.articleData2.price = $scope.variantData2.price;  
+                        $scope.variantData2.price = Number($scope.variantData2.price); 
+                    }
+                    else{
+                        delete $scope.variantData2.price;
+                    }                                     
                     RoomService.editOrderItem($scope.orderid, $scope.articleData2._id, $scope.variantData2).then(function (data) {
                         if ($rootScope.tableData.orderId.length) {
                             for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
@@ -1590,13 +1571,27 @@
                     $timeout(function () {
                         $scope.variantError2 = '';
                     }, 4000);
-                } else if ($scope.variantData2.quantity > 0 && !$scope.variantData2.variant.length && !$scope.variantData2.notes) {
+                }
+                else if ($scope.variantData2.price == 0 || $scope.variantData2.price == '') {
+                    $scope.variantError2 = 'Please enter price';
+                    $timeout(function () {
+                        $scope.variantError2 = '';
+                    }, 4000);
+                }
+                else if ($scope.variantData2.quantity > 0 && !$scope.variantData2.variant.length && !$scope.variantData2.notes) {
                     $scope.variantError2 = 'Please select variants/notes';
                     $timeout(function () {
                         $scope.variantError2 = '';
                     }, 4000);
                 } else {
                     $scope.articleData2.quantity = $scope.variantData2.quantity;
+                    if($scope.articleData2.id.isDeleted){
+                        $scope.articleData2.price = $scope.variantData2.price;  
+                        $scope.variantData2.price = Number($scope.variantData2.price); 
+                    }
+                    else{
+                        delete $scope.variantData2.price;
+                    }  
                     $scope.articleData2.variant = $scope.variantData2.variant;
                     for (var a = 0; a < $scope.variantData2.variant.length; a++) {
                         delete $scope.variantData2.variant[a]._id;
@@ -1847,7 +1842,7 @@
         }
 
         $scope.hideArticle = function () {
-            $scope.changeTab(2);
+            $scope.changeTab(1);
             $scope.AddDataArticle = {
                 name: '',
                 price: '',
@@ -2053,7 +2048,6 @@
         }
 
         $scope.categoryChanged = function (category) {
-            console.log('category',category);
             $scope.AddDataArticle.subCategory = '';            
             if(category){
                 $scope.subCategories = category.subCategory;
