@@ -551,10 +551,10 @@
                 </span>
                 <span ng-if="item.notes" class="d-flex added-variand-name">{{item.notes}}</span>
               </div>
-              <button type="button" ng-show="item.status != 1" class="btn btn-secondary btn-icon mr-5" ng-click="editOrderItem(order._id,item)">
+              <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="editOrderItem(order._id,item)">
                 <i class="ion-edit">
               </button>
-              <button type="button" ng-show="item.status != 1" class="btn bg-red btn-icon" ng-click="deleteOrderItem(order._id,item._id,$index)">
+              <button type="button" class="btn bg-red btn-icon" ng-click="deleteOrderItem(order._id,item._id,$index)">
                 <i class="ion-trash-b">
               </button>
             </div>

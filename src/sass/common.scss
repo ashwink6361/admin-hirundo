@@ -1569,6 +1569,7 @@
     .order-header {
         padding: 20px;
         .cart-menu-btn {
+
             button {
                 border: none;
                 background-color: $secondry;
@@ -1674,6 +1675,7 @@
 .cart-menu-btn {
     position: fixed;
     top: 82px;
+    z-index: 99;
 }
 
 .guest-number-btn {
