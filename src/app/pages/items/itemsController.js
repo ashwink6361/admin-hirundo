@@ -233,7 +233,7 @@
                     });
             };
 
-            $scope.removeCategoryPicture = function () {
+            $scope.removeItemPicture = function () {
                 $scope.itemPicture = '';
                 $scope.itemLogo = '';
                 $scope.cropper = {};
