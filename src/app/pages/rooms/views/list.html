@@ -232,17 +232,25 @@
           <table class="table">
             <tbody>
               <tr ng-repeat="varient in variantList">
-                <td>{{varient.name}}</td>
-                <td>&euro;{{varient.price}}</td>
-                <td>
-                  <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
-                    ng-click="addRemoveVariant(varient,0)">
-                    <i class="icon-minus"></i>
-                  </button>
-                  <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
-                    ng-click="addRemoveVariant(varient,1)">
-                    <i class="icon-plus"></i>
-                  </button>
+                <td ng-if="!varient.category.length || (varient.category.length && varient.category.indexOf(Order.selectedCategory._id)>-1)">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td>{{varient.name}}</td>
+                        <td>&euro;{{varient.price}}</td>
+                        <td>
+                          <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
+                            ng-click="addRemoveVariant(varient,0)">
+                            <i class="icon-minus"></i>
+                          </button>
+                          <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
+                            ng-click="addRemoveVariant(varient,1)">
+                            <i class="icon-plus"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </td>
               </tr>
             </tbody>
