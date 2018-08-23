@@ -10,7 +10,10 @@ angular.module('ThyAdmin', []).controller('LoginPageController', LoginPageContro
         $scope.Admin  = {};
         $scope.loginSuccessMsg = '';
         $scope.loginErrorMsg = '';
+        $scope.loginErrorMsgResend = '';        
         $scope.showLogin = true;
+        $scope.showResend = false;
+        
         $scope.forgetpassEmail = '';
 
         $scope.login = function(AdminUser) {
@@ -27,17 +30,37 @@ angular.module('ThyAdmin', []).controller('LoginPageController', LoginPageContro
                 window.location = '/platform';
             }, function (error) {
                 $scope.activeRequest = false;
-                $scope.loginErrorMsg = error.data.message;
+                if(error.data.message == 'This activation link account is expired. Please request a new one.'){
+                    $scope.loginErrorMsgResend = error.data.message;
+                    $scope.loginErrorMsg = '';                                        
+                }
+                else{
+                    $scope.loginErrorMsg = error.data.message;    
+                    $scope.loginErrorMsgResend = '';                                                                
+                }
                 localStorage.removeItem('adminUser');
                 localStorage.removeItem('token');
-                $timeout(function () {
-                    $scope.loginErrorMsg = '';
-                }, 4000);
+                if($scope.loginErrorMsgResend != ''){
+                    $timeout(function () {
+                        $scope.loginErrorMsgResend = '';
+                    }, 10000);
+                }
+                if($scope.loginErrorMsg != ''){
+                    $timeout(function () {
+                        $scope.loginErrorMsg = '';
+                    }, 4000);
+                }
             });
         };
 
         $scope.showHideSection = function (type) {
             $scope.showLogin = type ? false : true;
+            $scope.showResend = false;            
+        }
+
+        $scope.showResetSection = function () {
+            $scope.showLogin = false;
+            $scope.showResend = true;
         }
 
         $scope.forgetPassword = function(email) {
@@ -58,6 +81,26 @@ angular.module('ThyAdmin', []).controller('LoginPageController', LoginPageContro
                 }, 4000);
             });
         }
+
+        $scope.resendLink = function(email) {
+            $scope.resendSuccessMsg = "";
+            $scope.resendErrorMsg = "";
+            $scope.resendRequest = true;
+            $http.put('/api/resend/link/'+email).then(function (response) {
+                $scope.resendSuccessMsg = response.data.message;
+                $timeout(function () {
+                    $scope.resendSuccessMsg = '';
+                    $scope.resendRequest = false;
+                }, 4000);
+            }, function (error) {
+                $scope.resendRequest = false;
+                $scope.resendErrorMsg = error.data.message;
+                $timeout(function () {
+                    $scope.resendErrorMsg = '';
+                }, 4000);
+            });
+        }
+        
     }
 
 })();

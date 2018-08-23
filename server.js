@@ -203,8 +203,8 @@ app.get('/platform/', function (req, res) {
     });
 });
 
-app.get('/admin/account/verify', function (req, res) {
-    var uri = app.get('adminApiUrl') + 'account/verify?userId=' + req.query.userId + '&email=' + req.query.email + '&token=' + req.query.token;    
+app.get('/admin/account/verify/:userId/:email/:token', function (req, res) {
+    var uri = app.get('adminApiUrl') + 'account/verify?userId=' + req.params.userId + '&email=' + req.params.email + '&token=' + req.params.token;    
     var headers = {        
         "accept-language": req.headers['accept-language'],
         "content-type": "application/json"    
