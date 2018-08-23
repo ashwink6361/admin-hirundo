@@ -24,7 +24,7 @@
                 <div class="alert color-green text-center" ng-show="loginSuccessMsg" ng-bind="loginSuccessMsg"></div>
                 <div class="alert color-red text-center" role="alert" ng-show="loginErrorMsg" ng-bind="loginErrorMsg"></div>
                 <div class="alert color-red text-center" role="alert" ng-show="loginErrorMsgResend">
-                    {{loginErrorMsgResend}} <a href="" ng-click="showResetSection()" class="forgot-pass">Resend Link</a></div>
+                    {{loginErrorMsgResend}} <a ng-click="showResetSection()">Resend Link</a></div>
             </div>
             <form class="form-horizontal" name="form">
                 <div class="form-group">
