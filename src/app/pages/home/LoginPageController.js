@@ -30,7 +30,7 @@ angular.module('ThyAdmin', []).controller('LoginPageController', LoginPageContro
                 window.location = '/platform';
             }, function (error) {
                 $scope.activeRequest = false;
-                if(error.data.message == 'This activation link account is expired. Please request a new one.'){
+                if(error.data.message == 'Please activate your account to continue. Check inbox for the activation email.'){
                     $scope.loginErrorMsgResend = error.data.message;
                     $scope.loginErrorMsg = '';                                        
                 }
