@@ -260,9 +260,17 @@
           <table class="table">
             <tbody>
               <tr ng-repeat="note in noteList track by $index">
-                <td>{{note.notes}}</td>
-                <td>
-                  <input type="checkbox" ng-model="notes[note.notes]" ng-change="addNote(note.notes, $index)" />
+                <td ng-if="!note.category.length || (note.category.length && note.category.indexOf(Order.selectedCategory._id)>-1)">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td>{{note.notes}}</td>
+                        <td>
+                          <input type="checkbox" ng-model="notes[note.notes]" ng-change="addNote(note.notes, $index)" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </td>
               </tr>
             </tbody>
