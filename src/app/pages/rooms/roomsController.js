@@ -368,6 +368,7 @@
             $scope.showOrder = false;
             $scope.showCheckoutCart = false;
             $scope.showLedtSideBar = false;
+            $scope.showLedtSideBar1 = false;
             $scope.stepArray = [];
             baRoomService.setCreateModalCollapsed(false);
             localStorage.removeItem('stepData');

@@ -105,7 +105,7 @@
         <div class="row">
           <div class="col-sm-12 d-flex catogory-container mt-10 overflow-y">
             <input class="form-control" ng-model="searchText" type="text" placeholder="Search Category" />
-            <div class="overflow-leftsidebar-content d-flex flex-wrap">
+            <div class="overflow-leftsidebar-content d-flex flex-wrap align-content-start">
               <div class="category" ng-repeat="category in categories | filter : searchText" ng-click="showItems(category)"
                 ng-style="{'background-color' : category.color}">
                 <img ng-src="{{category.icon}}">
@@ -153,7 +153,7 @@
         </div>
         <div ng-if="Order.categoryItems[$baRoomService.getTabData().step]">
           <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
-          <div class="d-flex flex-wrap overflow-leftsidebar-content">
+          <div class="d-flex flex-wrap overflow-leftsidebar-content align-content-start">
             <div ng-repeat="item in Order.categoryItems[$baRoomService.getTabData().step] | filter : searchItem">
               <div class="order-item-container d-flex" ng-if="subcategory && (item.subCategory == subcategory)">
                 <div class="items" ng-style="{'background-color' : item.category.color}">
@@ -244,7 +244,7 @@
                     <tbody>
                       <tr>
                         <td>{{varient.name}}</td>
-                        <td>&euro;{{varient.price}}</td>
+                        <td style="width : 150px">&euro;{{varient.price}}</td>
                         <td>
                           <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
                             id="decrease" value="Decrease Value" ng-click="addRemoveVariant(varient,0)">
