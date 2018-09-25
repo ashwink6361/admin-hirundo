@@ -40,7 +40,7 @@
             notes: ''
         };
         $scope.variantError = '';
-
+        $scope.loader = false;
         $scope.variantList1 = [];
         $scope.noteList1 = [];
         $scope.variantData1 = {
@@ -59,7 +59,7 @@
         $scope.checkoutPeoplePrice = 0;
         $scope.checkoutTotalPrice = 0;
         $scope.showCheckoutCart = false;
-
+        
         $scope.variantList2 = [];
         $scope.noteList2 = [];
         $scope.variantData2 = {
@@ -88,14 +88,22 @@
             $scope.categories = data[0].data;
         });
         //Fetch Room list
-        RoomService.getRooms().then(function (data) {
+        $scope.loader = true;
+        RoomService.getRooms().then(function (data) {  
+            $scope.loader = false;         
             $scope.rooms = RoomService.listRoom();
         }).catch(function (error) {
+            $scope.rooms = [];
+            $scope.loader = false;
         });
         $scope.getRoomList = function () {
+            $scope.loader = true;
             RoomService.getRooms().then(function (data) {
+                $scope.loader = false;
                 $scope.rooms = RoomService.listRoom();
             }).catch(function (error) {
+                $scope.rooms = [];
+                $scope.loader = false;
             });
         };
 

@@ -9,52 +9,55 @@
               Room</button>
           </span>
           <div>
-            <div ng-show="rooms&&rooms.length" ng-init="indextab = 0">
-              <uib-tabset active="indextab">
-                <uib-tab ng-repeat="room in rooms track by $index" heading="{{room.name}}">
-                  <div ba-panel ba-panel-title="{{room.name}}" ba-panel-class="table-panel-container mh-500">
-                    <div class="update-name" ng-show="editBtn === $index">
-                      <input type="text" ng-model="editRoom.name" />
-                      <button type="submit" class="btn bg-success" ng-click="updateRoom()">Update</button>
-                    </div>
-                    <span class="add-btn pt-r-50" title="Edit Room">
-                      <a ng-click="openEditRoom(room, $index)" class="btn btn-secondary btn-icon">
-                        <i class="ion-edit"></i>
-                      </a>
-                    </span>
-                    <span class="delete-btn " title="Delete Room">
-                      <a ng-click="removeRoom(room._id)" class="btn bg-red btn-icon">
-                        <i class="ion-trash-b"></i>
-                      </a>
-                    </span>
-                    <div class="room-container" ng-init="tableIndex = ($index+1)-1">
-                      <div ng-repeat="table in room.tables" class="table-container" ng-style="table.orderId.length ? {'background-color':'#add278'} : {'background-color':'#c5c8cd'}">
-                        <div class="room-table" ng-click="openCreateOrder(table,room)">
-                          <div class="table-name">
-                            {{table.name}}
-                          </div>
-                        </div>
-                        <div class="edit-table-btn" ng-show="editBtn == tableIndex">
-                          <a title="Edit Table" ng-click="openEditTable(table,room._id,'app/pages/rooms/views/editTable.html', 'md')">
-                            <i class="ion-edit"></i>
-                          </a>
-                        </div>
-
-                        <a title="Delete Table" ng-show="editBtn == tableIndex" ng-click="removeTable(room._id, table._id)"
-                          class="delete-table-btn">
+            <div class="loader text-center" ng-if="loader"><img src="assets/img/loader.gif"></div>
+            <div ng-if="!loader">
+              <div ng-show="rooms&&rooms.length" ng-init="indextab = 0">
+                <uib-tabset active="indextab">
+                  <uib-tab ng-repeat="room in rooms track by $index" heading="{{room.name}}">
+                    <div ba-panel ba-panel-title="{{room.name}}" ba-panel-class="table-panel-container mh-500">
+                      <div class="update-name" ng-show="editBtn === $index">
+                        <input type="text" ng-model="editRoom.name" />
+                        <button type="submit" class="btn bg-success" ng-click="updateRoom()">Update</button>
+                      </div>
+                      <span class="add-btn pt-r-50" title="Edit Room">
+                        <a ng-click="openEditRoom(room, $index)" class="btn btn-secondary btn-icon">
+                          <i class="ion-edit"></i>
+                        </a>
+                      </span>
+                      <span class="delete-btn " title="Delete Room">
+                        <a ng-click="removeRoom(room._id)" class="btn bg-red btn-icon">
                           <i class="ion-trash-b"></i>
                         </a>
-                      </div>
-                      <div class="add-room" ng-click="openAddTable(room._id,'app/pages/rooms/views/addTable.html', 'md')">
-                        <i class="icon-plus"></i>
-                        <div class="name">
-                          Add
+                      </span>
+                      <div class="room-container" ng-init="tableIndex = ($index+1)-1">
+                        <div ng-repeat="table in room.tables" class="table-container" ng-style="table.orderId.length ? {'background-color':'#add278'} : {'background-color':'#c5c8cd'}">
+                          <div class="room-table" ng-click="openCreateOrder(table,room)">
+                            <div class="table-name">
+                              {{table.name}}
+                            </div>
+                          </div>
+                          <div class="edit-table-btn" ng-show="editBtn == tableIndex">
+                            <a title="Edit Table" ng-click="openEditTable(table,room._id,'app/pages/rooms/views/editTable.html', 'md')">
+                              <i class="ion-edit"></i>
+                            </a>
+                          </div>
+
+                          <a title="Delete Table" ng-show="editBtn == tableIndex" ng-click="removeTable(room._id, table._id)"
+                            class="delete-table-btn">
+                            <i class="ion-trash-b"></i>
+                          </a>
+                        </div>
+                        <div class="add-room" ng-click="openAddTable(room._id,'app/pages/rooms/views/addTable.html', 'md')">
+                          <i class="icon-plus"></i>
+                          <div class="name">
+                            Add
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </uib-tab>
-              </uib-tabset>
+                  </uib-tab>
+                </uib-tabset>
+              </div>
             </div>
           </div>
         </div>
@@ -433,7 +436,7 @@
             <table class="table">
               <tbody>
                 <tr ng-repeat="varient in variantList2">
-                  <!-- <td ng-if="!varient.category.length || (varient.category.length && varient.category.indexOf(Order.selectedCategory._id)>-1)">
+                  <td ng-if="!varient.category.length || (varient.category.length && varient.category.indexOf(articleData2.category)>-1)">
                         <table class="table">
                           <tbody>
                             <tr>
@@ -452,8 +455,8 @@
                             </tr>
                           </tbody>
                         </table>
-                      </td> -->
-                  <td>{{varient.name}}</td>
+                      </td>
+                  <!-- <td>{{varient.name}}</td>
                   <td style="width: 100px">&euro;{{varient.price}}</td>
                   <td>
                     <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
@@ -464,7 +467,7 @@
                       value="Increase Value" ng-click="addRemoveVariant2(varient,1)">
                       <i class="icon-plus"></i>
                     </button>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
@@ -473,7 +476,7 @@
             <table class="table">
               <tbody>
                 <tr ng-repeat="note in noteList2 track by $index">
-                  <!-- <td ng-if="!note.category.length || (note.category.length && note.category.indexOf(Order.selectedCategory._id)>-1)">
+                  <td ng-if="!note.category.length || (note.category.length && note.category.indexOf(articleData2.category)>-1)">
                         <table class="table">
                           <tbody>
                             <tr>
@@ -484,11 +487,11 @@
                             </tr>
                           </tbody>
                         </table>
-                      </td> -->
-                  <td>{{note.notes}}</td>
+                      </td>
+                  <!-- <td>{{note.notes}}</td>
                   <td>
                     <input type="checkbox" ng-model="notes2[note.notes]" ng-change="addNote2(note.notes, $index)" />
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>

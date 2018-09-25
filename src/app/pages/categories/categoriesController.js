@@ -17,15 +17,18 @@
         $scope.itemsPerPage = 100;
         $scope.currentPage = 1;
         $scope.showOptions = false;
-
+        $scope.loader = false;
         //Fetch Category list
         $scope.getCategoryList = function (name, offset, itemsPerPage) {
+            $scope.loader = true;
             CategoryService.getCategories(name, offset, itemsPerPage).then(function (data) {
+                $scope.loader = false;
                 $scope.categories = data.data;
                 $scope.totalCount = data.totalCount;
                 $scope.totalPageCount = Math.ceil(data.totalCount / itemsPerPage);
             }).catch(function (error) {
-                $scope.brands = [];
+                $scope.categories = [];
+                $scope.loader = false;
             });
         };
 
