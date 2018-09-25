@@ -5,7 +5,8 @@
       <div class="col-lg-12 col-md-12">
         <div ba-panel ba-panel-class="table-panel mh-500">
           <span class="add-btn" title="Add Room">
-            <button type="button" class="text-btn" data-toggle="modal" ng-click="openAddRoom('app/pages/rooms/views/add.html', 'md')">Add Room</button>
+            <button type="button" class="text-btn" data-toggle="modal" ng-click="openAddRoom('app/pages/rooms/views/add.html', 'md')">Add
+              Room</button>
           </span>
           <div>
             <div ng-show="rooms&&rooms.length" ng-init="indextab = 0">
@@ -39,7 +40,8 @@
                           </a>
                         </div>
 
-                        <a title="Delete Table" ng-show="editBtn == tableIndex" ng-click="removeTable(room._id, table._id)" class="delete-table-btn">
+                        <a title="Delete Table" ng-show="editBtn == tableIndex" ng-click="removeTable(room._id, table._id)"
+                          class="delete-table-btn">
                           <i class="ion-trash-b"></i>
                         </a>
                       </div>
@@ -103,9 +105,12 @@
         <div class="row">
           <div class="col-sm-12 d-flex catogory-container mt-10 overflow-y">
             <input class="form-control" ng-model="searchText" type="text" placeholder="Search Category" />
-            <div class="category" ng-repeat="category in categories | filter : searchText" ng-click="showItems(category)" ng-style="{'background-color' : category.color}">
-              <img ng-src="{{category.icon}}">
-              <p class="name">{{category.name}}</p>
+            <div class="overflow-leftsidebar-content d-flex flex-wrap">
+              <div class="category" ng-repeat="category in categories | filter : searchText" ng-click="showItems(category)"
+                ng-style="{'background-color' : category.color}">
+                <img ng-src="{{category.icon}}">
+                <p class="name">{{category.name}}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -148,12 +153,13 @@
         </div>
         <div ng-if="Order.categoryItems[$baRoomService.getTabData().step]">
           <input class="form-control" ng-model="searchItem" type="text" placeholder="Search Item" />
-          <div class="d-flex flex-wrap">
+          <div class="d-flex flex-wrap overflow-leftsidebar-content">
             <div ng-repeat="item in Order.categoryItems[$baRoomService.getTabData().step] | filter : searchItem">
               <div class="order-item-container d-flex" ng-if="subcategory && (item.subCategory == subcategory)">
                 <div class="items" ng-style="{'background-color' : item.category.color}">
                   <div class="img">
-                    <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
+                    <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}"
+                      alt="" />
                     <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
                       alt="Category Logo" />
                     <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
@@ -173,7 +179,8 @@
               <div class="order-item-container d-flex justify-space-between" ng-if="!subcategory">
                 <div class="items" ng-style="{'background-color' : item.category.color}">
                   <div class="img">
-                    <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
+                    <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}"
+                      alt="" />
                     <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
                       alt="Category Logo" />
                     <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
@@ -228,7 +235,7 @@
           <button type="button" ng-click="tabActive(1)" ng-class="{'active':Order.activeTab[0]}">Variants</button>
           <button type="button" ng-click="tabActive(2)" ng-class="{'active':Order.activeTab[1]}">Notes</button>
         </div>
-        <div class="varient-list" ng-if="Order.activeTab[0]">
+        <div class="varient-list varient-overflow-scroll" ng-if="Order.activeTab[0]">
           <table class="table">
             <tbody>
               <tr ng-repeat="varient in variantList">
@@ -239,12 +246,12 @@
                         <td>{{varient.name}}</td>
                         <td>&euro;{{varient.price}}</td>
                         <td>
-                          <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
-                            ng-click="addRemoveVariant(varient,0)">
+                          <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
+                            id="decrease" value="Decrease Value" ng-click="addRemoveVariant(varient,0)">
                             <i class="icon-minus"></i>
                           </button>
-                          <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
-                            ng-click="addRemoveVariant(varient,1)">
+                          <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}"
+                            id="increase" value="Increase Value" ng-click="addRemoveVariant(varient,1)">
                             <i class="icon-plus"></i>
                           </button>
                         </td>
@@ -256,7 +263,7 @@
             </tbody>
           </table>
         </div>
-        <div class="varient-list" ng-if="Order.activeTab[1]">
+        <div class="varient-list varient-overflow-scroll" ng-if="Order.activeTab[1]">
           <table class="table">
             <tbody>
               <tr ng-repeat="note in noteList track by $index">
@@ -287,7 +294,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <div ng-if="variantError1" class="color-red">{{variantError1}}</div>        
+        <div ng-if="variantError1" class="color-red">{{variantError1}}</div>
         <h5>Quantity</h5>
         <div class="input-group">
           <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty1()">
@@ -305,7 +312,8 @@
           <div class="col-sm-12">
             <div class="input-group">
               <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
-              <input type="text" float-number ng-model="variantData1.price" class="form-control" name="price" placeholder="Price" />
+              <input type="text" float-number ng-model="variantData1.price" class="form-control" name="price"
+                placeholder="Price" />
             </div>
           </div>
         </div>
@@ -315,35 +323,68 @@
             <button type="button" ng-click="tabActive(1)" ng-class="{'active':Order.activeTab[0]}">Variants</button>
             <button type="button" ng-click="tabActive(2)" ng-class="{'active':Order.activeTab[1]}">Notes</button>
           </div>
-          <div class="varient-list" ng-if="Order.activeTab[0]">
+          <div class="varient-list varient-overflow-scroll" ng-if="Order.activeTab[0]">
             <table class="table">
               <tbody>
                 <tr ng-repeat="varient in variantList1">
-                  <td>{{varient.name}}</td>
+                  <td ng-if="!varient.category.length || (varient.category.length && varient.category.indexOf(Order.selectedCategory._id)>-1)">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>{{varient.name}}</td>
+                          <td style="width: 100px">&euro;{{varient.price}}</td>
+                          <td>
+                            <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
+                              id="decrease" value="Decrease Value" ng-click="addRemoveVariant1(varient,0)">
+                              <i class="icon-minus"></i>
+                            </button>
+                            <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}"
+                              id="increase" value="Increase Value" ng-click="addRemoveVariant1(varient,1)">
+                              <i class="icon-plus"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <!-- <td>{{varient.name}}</td>
                   <td>&euro;{{varient.price}}</td>
                   <td>
-                    <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
-                      ng-click="addRemoveVariant1(varient,0)">
+                    <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
+                      id="decrease" value="Decrease Value" ng-click="addRemoveVariant1(varient,0)">
                       <i class="icon-minus"></i>
                     </button>
-                    <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
-                      ng-click="addRemoveVariant1(varient,1)">
+                    <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase"
+                      value="Increase Value" ng-click="addRemoveVariant1(varient,1)">
                       <i class="icon-plus"></i>
                     </button>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="varient-list" ng-if="Order.activeTab[1]">
+          <div class="varient-list varient-overflow-scroll" ng-if="Order.activeTab[1]">
             <table class="table">
               <tbody>
                 <tr ng-repeat="note in noteList1 track by $index">
-                  <td>{{note.notes}}</td>
+                  <td ng-if="!note.category.length || (note.category.length && note.category.indexOf(Order.selectedCategory._id)>-1)">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>{{note.notes}}</td>
+                          <td>
+                            <input type="checkbox" ng-model="notes1[note.notes]" ng-change="addNote1(note.notes, $index)" />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <!-- <td>{{note.notes}}</td>
                   <td>
                     <input type="checkbox" ng-model="notes1[note.notes]" ng-change="addNote1(note.notes, $index)" />
-                  </td>
+                  </td> -->
                 </tr>
+
               </tbody>
             </table>
           </div>
@@ -359,7 +400,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <div ng-if="variantError2" class="color-red">{{variantError2}}</div>        
+        <div ng-if="variantError2" class="color-red">{{variantError2}}</div>
         <h5>Quantity</h5>
         <div class="input-group">
           <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty2()">
@@ -371,35 +412,56 @@
           </span>
         </div>
         <div class="form-group row" ng-if="articleData2.id.isDeleted">
-            <label for="input01" class="col-sm-12 control-label">
-              <h5>Price</h5>
-            </label>
-            <div class="col-sm-12">
-              <div class="input-group">
-                <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
-                <input type="text" float-number ng-model="variantData2.price" class="form-control" name="price" placeholder="Price" />
-              </div>
+          <label for="input01" class="col-sm-12 control-label">
+            <h5>Price</h5>
+          </label>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
+              <input type="text" float-number ng-model="variantData2.price" class="form-control" name="price"
+                placeholder="Price" />
             </div>
           </div>
+        </div>
         <div ng-class="{'pointer-none' : editNonVariantData}">
           <h5>Variant and Notes</h5>
           <div class="tabs-btn d-flex">
             <button type="button" ng-click="tabActive(1)" ng-class="{'active':Order.activeTab[0]}">Variants</button>
             <button type="button" ng-click="tabActive(2)" ng-class="{'active':Order.activeTab[1]}">Notes</button>
           </div>
-          <div class="varient-list" ng-if="Order.activeTab[0]">
+          <div class="varient-list varient-overflow-scroll" ng-if="Order.activeTab[0]">
             <table class="table">
               <tbody>
                 <tr ng-repeat="varient in variantList2">
+                  <!-- <td ng-if="!varient.category.length || (varient.category.length && varient.category.indexOf(Order.selectedCategory._id)>-1)">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <td>{{varient.name}}</td>
+                              <td>&euro;{{varient.price}}</td>
+                              <td>
+                                  <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
+                                  id="decrease" value="Decrease Value" ng-click="addRemoveVariant2(varient,0)">
+                                  <i class="icon-minus"></i>
+                                </button>
+                                <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase"
+                                  value="Increase Value" ng-click="addRemoveVariant2(varient,1)">
+                                  <i class="icon-plus"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td> -->
                   <td>{{varient.name}}</td>
-                  <td>&euro;{{varient.price}}</td>
+                  <td style="width: 100px">&euro;{{varient.price}}</td>
                   <td>
-                    <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
-                      ng-click="addRemoveVariant2(varient,0)">
+                    <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
+                      id="decrease" value="Decrease Value" ng-click="addRemoveVariant2(varient,0)">
                       <i class="icon-minus"></i>
                     </button>
-                    <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
-                      ng-click="addRemoveVariant2(varient,1)">
+                    <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase"
+                      value="Increase Value" ng-click="addRemoveVariant2(varient,1)">
                       <i class="icon-plus"></i>
                     </button>
                   </td>
@@ -407,10 +469,22 @@
               </tbody>
             </table>
           </div>
-          <div class="varient-list" ng-if="Order.activeTab[1]">
+          <div class="varient-list varient-overflow-scroll" ng-if="Order.activeTab[1]">
             <table class="table">
               <tbody>
                 <tr ng-repeat="note in noteList2 track by $index">
+                  <!-- <td ng-if="!note.category.length || (note.category.length && note.category.indexOf(Order.selectedCategory._id)>-1)">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <td>{{note.notes}}</td>
+                              <td>
+                                  <input type="checkbox" ng-model="notes2[note.notes]" ng-change="addNote2(note.notes, $index)" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td> -->
                   <td>{{note.notes}}</td>
                   <td>
                     <input type="checkbox" ng-model="notes2[note.notes]" ng-change="addNote2(note.notes, $index)" />
@@ -459,7 +533,7 @@
           <div class="col-sm-12">
             <select class="form-control" data-ng-options="subcat for subcat in subCategories" ng-model="AddDataArticle.subCategory">
               <option value="?" selected="selected">Select Sub Category</option>
-              <option selected="selected" value="">Select Sub Category</option>              
+              <option selected="selected" value="">Select Sub Category</option>
             </select>
           </div>
         </div>
@@ -488,7 +562,8 @@
           <div class="col-sm-12">
             <div class="input-group">
               <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
-              <input type="text" float-number ng-model="AddDataArticle.price" class="form-control" name="price" placeholder="Price" />
+              <input type="text" float-number ng-model="AddDataArticle.price" class="form-control" name="price"
+                placeholder="Price" />
             </div>
           </div>
         </div>
@@ -497,19 +572,19 @@
           <button type="button" ng-click="tabActive(1)" ng-class="{'active':Order.activeTab[0]}">Variants</button>
           <button type="button" ng-click="tabActive(2)" ng-class="{'active':Order.activeTab[1]}">Notes</button>
         </div>
-        <div class="varient-list" ng-if="Order.activeTab[0]">
+        <div class="varient-list varient-overflow-scroll" ng-if="Order.activeTab[0]">
           <table class="table">
             <tbody>
               <tr ng-repeat="varient in variantList3">
                 <td>{{varient.name}}</td>
                 <td>&euro;{{varient.price}}</td>
                 <td>
-                  <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease" value="Decrease Value"
-                    ng-click="addRemoveArticleVariant(varient,0)">
+                  <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}" id="decrease"
+                    value="Decrease Value" ng-click="addRemoveArticleVariant(varient,0)">
                     <i class="icon-minus"></i>
                   </button>
-                  <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase" value="Increase Value"
-                    ng-click="addRemoveArticleVariant(varient,1)">
+                  <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase"
+                    value="Increase Value" ng-click="addRemoveArticleVariant(varient,1)">
                     <i class="icon-plus"></i>
                   </button>
                 </td>
@@ -517,7 +592,7 @@
             </tbody>
           </table>
         </div>
-        <div class="varient-list" ng-if="Order.activeTab[1]">
+        <div class="varient-list varient-overflow-scroll" ng-if="Order.activeTab[1]">
           <table class="table">
             <tbody>
               <tr ng-repeat="note in noteList3 track by $index">
@@ -550,7 +625,8 @@
           <div ng-repeat="item in order.item track by $index">
             <div class="order-item-container d-flex" ng-class="{'pointer-none' : item.checkout}">
               <div class="img" ng-style="{'background-color' : item.id.category.color}">
-                <img ng-if="!item.id.logo.small && item.id.category.isIcon" class="icon-img" ng-src="{{item.id.category.icon}}" alt="" />
+                <img ng-if="!item.id.logo.small && item.id.category.isIcon" class="icon-img" ng-src="{{item.id.category.icon}}"
+                  alt="" />
                 <img ng-if="!item.id.logo.small && !item.id.category.isIcon && item.id.category.logo.small" ng-src="{{item.id.category.logo.small}}"
                   alt="Category Logo" />
                 <img ng-if="item.id.logo.small" ng-src="{{item.id.logo.small}}" alt="Item Logo" />
@@ -581,7 +657,8 @@
         <div ng-repeat="item in Order.selectedItems[$baRoomService.getTabData().step]">
           <div class="order-item-container d-flex" ng-if="item.step == $baRoomService.getTabData().step">
             <div class="img" ng-style="{'background-color' : item.category.color}">
-              <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}" alt="" />
+              <img ng-if="!item.logo.small && item.category.isIcon" class="icon-img" ng-src="{{item.category.icon}}"
+                alt="" />
               <img ng-if="!item.logo.small && !item.category.isIcon && item.category.logo.small" ng-src="{{item.category.logo.small}}"
                 alt="Category Logo" />
               <img ng-if="item.logo.small" ng-src="{{item.logo.small}}" alt="Item Logo" />
@@ -625,8 +702,8 @@
           <img src="assets/img/dollar_icon.png" alt="" />
         </button>
       </div>
-      <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn" ng-click="createOrder()"
-        ng-disabled="!Order.selectedItems">
+      <button style="background-color:#8dc63e; color:#fff; padding:10px 0;" ng-if="showLedtSideBar" type="submit" class="btn"
+        ng-click="createOrder()" ng-disabled="!Order.selectedItems">
         Create Order
         <i class="ion-cart"></i> {{Order.cartTotalItem}} | &euro;{{Order.cartTotalPrice}}
       </button>

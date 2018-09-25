@@ -1455,7 +1455,7 @@
     width: calc(100% - 572px);
     padding: 8px 32px 8px 40px;
     z-index: 999;
-    overflow-y: auto;
+    overflow-y: hidden;
     .content-top{
         background-color: #f0f3f4;
         align-items: center;
@@ -1556,6 +1556,11 @@
     z-index: 999;
     &.show {
         right: 0;
+    }
+    .leftsidebar{
+        .modal-content{
+            height: 100%;
+        }
     }
     .modal-content {
         box-shadow: none !important;
@@ -1746,8 +1751,24 @@
     width: 92px;
 }
 
+.table>tbody>tr>td>table>tbody>tr>td{
+    border: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 .add-item-btn{
     i{
         background-color: transparent !important;
     }
+}
+
+.overflow-leftsidebar-content{
+    height: calc(100vh - 290px);
+    overflow-y: auto;
+}
+
+.varient-overflow-scroll{
+    height: calc(100vh - 280px);
+    overflow-y: auto;
 }
