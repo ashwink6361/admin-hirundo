@@ -194,6 +194,9 @@ app.post('/forgetpassword', function (req, res, next) {    
 app.get('/', function (req, res) {    
     res.sendFile(path.join(root, 'release/auth.html'));
 });
+app.get('/invoice', function (req, res) {    
+    res.sendFile(path.join(root, 'release/invoice.html'));
+});
 
 app.get('/platform/', function (req, res) {
     res.render(path.join(root, 'release/index.html'), {

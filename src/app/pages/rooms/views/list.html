@@ -437,25 +437,25 @@
               <tbody>
                 <tr ng-repeat="varient in variantList2">
                   <td ng-if="!varient.category.length || (varient.category.length && varient.category.indexOf(articleData2.category)>-1)">
-                        <table class="table">
-                          <tbody>
-                            <tr>
-                              <td>{{varient.name}}</td>
-                              <td style="width : 100px;">&euro;{{varient.price}}</td>
-                              <td>
-                                  <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
-                                  id="decrease" value="Decrease Value" ng-click="addRemoveVariant2(varient,0)">
-                                  <i class="icon-minus"></i>
-                                </button>
-                                <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}" id="increase"
-                                  value="Increase Value" ng-click="addRemoveVariant2(varient,1)">
-                                  <i class="icon-plus"></i>
-                                </button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>{{varient.name}}</td>
+                          <td style="width : 100px;">&euro;{{varient.price}}</td>
+                          <td>
+                            <button type="button" class="add-varient-btn" ng-class="{'variant-remove' : varient.status == 0}"
+                              id="decrease" value="Decrease Value" ng-click="addRemoveVariant2(varient,0)">
+                              <i class="icon-minus"></i>
+                            </button>
+                            <button type="button" class="add-varient-btn" ng-class="{'variant-added' : varient.status == 1}"
+                              id="increase" value="Increase Value" ng-click="addRemoveVariant2(varient,1)">
+                              <i class="icon-plus"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
                   <!-- <td>{{varient.name}}</td>
                   <td style="width: 100px">&euro;{{varient.price}}</td>
                   <td>
@@ -477,17 +477,17 @@
               <tbody>
                 <tr ng-repeat="note in noteList2 track by $index">
                   <td ng-if="!note.category.length || (note.category.length && note.category.indexOf(articleData2.category)>-1)">
-                        <table class="table">
-                          <tbody>
-                            <tr>
-                              <td>{{note.notes}}</td>
-                              <td>
-                                  <input type="checkbox" ng-model="notes2[note.notes]" ng-change="addNote2(note.notes, $index)" />
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>{{note.notes}}</td>
+                          <td>
+                            <input type="checkbox" ng-model="notes2[note.notes]" ng-change="addNote2(note.notes, $index)" />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
                   <!-- <td>{{note.notes}}</td>
                   <td>
                     <input type="checkbox" ng-model="notes2[note.notes]" ng-change="addNote2(note.notes, $index)" />
@@ -737,79 +737,83 @@
   <div class="row height">
     <div class="panel">
       <div class="panel-body">
-        <div class="col-sm-6">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Total</th>
-                <th>&euro;{{orderItemsTotalPrice}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>X {{Order.noOfPeople}} Coperti</td>
-                <td class="btn-quantity">
-                  <button type="submit" ng-click="decreaseCheckoutPeople()">
-                    <i class="icon-minus"></i>
-                  </button>
-                  <button type="submit" ng-click="increaseCheckoutPeople()">
-                    <i class="icon-plus"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr ng-repeat="order in tableData.orderId">
-                <td colspan="2" class="order-item-table">
-                  <table class="table">
-                    <tbody>
-                      <tr ng-repeat="item in order.item track by $index">
-                        <td>X {{item.quantity}} {{item.id.name}}</td>
-                        <td class="btn-quantity">
-                          <button type="submit" ng-click="decreaseItemQty(item)">
-                            <i class="icon-minus"></i>
-                          </button>
-                          <button type="submit" ng-click="increaseItemQty(item)">
-                            <i class="icon-plus"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="row overflow-leftsidebar-content">
+          <div class="col-sm-6">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Total</th>
+                  <th>&euro;{{orderItemsTotalPrice}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>X {{Order.noOfPeople}} Coperti</td>
+                  <td class="btn-quantity">
+                    <button type="submit" ng-click="decreaseCheckoutPeople()">
+                      <i class="icon-minus"></i>
+                    </button>
+                    <button type="submit" ng-click="increaseCheckoutPeople()">
+                      <i class="icon-plus"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr ng-repeat="order in tableData.orderId">
+                  <td colspan="2" class="order-item-table">
+                    <table class="table">
+                      <tbody>
+                        <tr ng-repeat="item in order.item track by $index">
+                          <td>X {{item.quantity}} {{item.id.name}}</td>
+                          <td class="btn-quantity">
+                            <button type="submit" ng-click="decreaseItemQty(item)">
+                              <i class="icon-minus"></i>
+                            </button>
+                            <button type="submit" ng-click="increaseItemQty(item)">
+                              <i class="icon-plus"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-6">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Parziale</th>
+                  <th>&euro;{{checkoutTotalPrice}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 13px 0;">X {{checkoutPeople}} Coperti</td>
+                  <td style="padding: 13px 0;">
+                    &euro;{{checkoutPeoplePrice}}
+                  </td>
+                </tr>
+                <tr ng-repeat="item in orderItemsNew track by $index">
+                  <td style="padding: 13px 0;">X {{item.quantity}} {{item.name}}</td>
+                  <td style="padding: 13px 0;">
+                    &euro;{{item.amount}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Parziale</th>
-                <th>&euro;{{checkoutTotalPrice}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="padding: 13px 0;">X {{checkoutPeople}} Coperti</td>
-                <td style="padding: 13px 0;">
-                  &euro;{{checkoutPeoplePrice}}
-                </td>
-              </tr>
-              <tr ng-repeat="item in orderItemsNew track by $index">
-                <td style="padding: 13px 0;">X {{item.quantity}} {{item.name}}</td>
-                <td style="padding: 13px 0;">
-                  &euro;{{item.amount}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="button text-right">
+          <button type="submit" class="btn btn-default">Invia @</button>
+          <button type="submit" class="btn btn-default">Scontrino</button>
+          <a class="btn btn-default" ng-click="printInvoice(tableData.orderId)" href="invoice" target="_blank">Fattura</a>
+          <!-- <button type="submit" class="btn btn-default" ng-click="printInvoice(tableData.orderId)">Fattura</button> -->
+          <button type="submit" class="btn btn-default" ng-click="checkout()">Cancella</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="button text-right">
-    <button type="submit" class="btn btn-default">Invia @</button>
-    <button type="submit" class="btn btn-default">Scontrino</button>
-    <button type="submit" class="btn btn-default">Fattura</button>
-    <button type="submit" class="btn btn-default" ng-click="checkout()">Cancella</button>
-  </div>
+
 </div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ThyAdmin">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Invoice</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900&subset=latin,greek,greek-ext,vietnamese,cyrillic-ext,latin-ext,cyrillic'
+        rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
+
+    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- run `gulp inject` to automatically populate bower styles dependencies -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp/serve,src}) styles/auth.css -->
+    <!-- inject:css -->
+    <!-- css files will be automatically insert here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+</head>
+
+<body>
+    <main class="auth-main" ng-controller="RoomsController">
+        {{activeOrder}}
+        <table>
+            {}
+        </table>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <script src="../src/app/pages/rooms/roomsController.js"></script>
+    <!-- <script type="text/javascript" src="/lib/scrolling-tabs.min.js"></script> -->
+    <script type="text/javascript" src="/lib/angular-image-compress.js"></script>
+    <script type="text/javascript" src="/lib/tinycolor-min.js"></script>
+    <script type="text/javascript" src="/lib/angucomplete-alt.min.js"></script>
+    <script src="/lib/angular-translate.min.js"></script>
+    <script src="/lib/angular-auto-complete.js"></script>
+    <script src="/lib/angular-translate-loader-static-files.js"></script>
+    <script src="/lib/angularjs-color-picker.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBztAdAN1k9zYvN7U0uQAqEP0m_4NcQBOk&sensor=false&libraries=places"></script>
+    <script src="http://jvandemo.github.io/angularjs-google-maps/dist/angularjs-google-maps.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+</body>
+
+</html>

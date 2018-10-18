@@ -2066,6 +2066,35 @@
                 $scope.AddDataArticle.category = '';
             }
         };
+
+       
+        $scope.printInvoice = function (order) {
+            $scope.activeOrder = 'order';
+            console.log($scope.activeOrder, 'activeOrder');
+            $scope.totalPrice = 0;
+            $scope.activeOrder.map(
+                function(order){
+                    order.item.map(function(item) {
+                        $scope.totalPrice = $scope.totalPrice + (item.quantity * item.price);
+                        return $scope.totalPrice;
+                    })
+                }
+            )
+            $scope.totalPrice = $scope.totalPrice + ($scope.activeOrder[0].seatCost * $scope.activeOrder[0].noOfPeople);
+            $scope.totalPrice = Number(Math.round($scope.totalPrice + 'e2') + 'e-2');           
+        };
+
+        $scope.invoicePrint = function(){
+            var prtContent = document.getElementById("Invoice");
+            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();            
+            document.getElementById('invoicePrint').style.visibility = "hidden";
+            WinPrint.print();
+            WinPrint.close();
+            document.getElementById('invoicePrint').style.visibility = "visible";
+        }
     }
 
     function StepsController($scope, $rootScope, RoomService, AlertService, baRoomService) {
