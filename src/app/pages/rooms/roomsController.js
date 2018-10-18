@@ -2069,19 +2069,24 @@
 
        
         $scope.printInvoice = function (order) {
-            $scope.activeOrder = 'order';
-            console.log($scope.activeOrder, 'activeOrder');
-            $scope.totalPrice = 0;
-            $scope.activeOrder.map(
-                function(order){
-                    order.item.map(function(item) {
-                        $scope.totalPrice = $scope.totalPrice + (item.quantity * item.price);
-                        return $scope.totalPrice;
-                    })
-                }
-            )
-            $scope.totalPrice = $scope.totalPrice + ($scope.activeOrder[0].seatCost * $scope.activeOrder[0].noOfPeople);
-            $scope.totalPrice = Number(Math.round($scope.totalPrice + 'e2') + 'e-2');           
+            RoomService.printInvoice($scope.roomData._id,$rootScope.tableData._id).then(function (data) {
+                console.log('data',data);
+            })
+            .catch(function (error) {
+            });
+            // $scope.activeOrder = 'order';
+            // console.log($scope.activeOrder, 'activeOrder');
+            // $scope.totalPrice = 0;
+            // $scope.activeOrder.map(
+            //     function(order){
+            //         order.item.map(function(item) {
+            //             $scope.totalPrice = $scope.totalPrice + (item.quantity * item.price);
+            //             return $scope.totalPrice;
+            //         })
+            //     }
+            // )
+            // $scope.totalPrice = $scope.totalPrice + ($scope.activeOrder[0].seatCost * $scope.activeOrder[0].noOfPeople);
+            // $scope.totalPrice = Number(Math.round($scope.totalPrice + 'e2') + 'e-2');           
         };
 
         $scope.invoicePrint = function(){
