@@ -2069,13 +2069,20 @@
 
        
         $scope.printInvoice = function (order) {
-            RoomService.printInvoice($scope.roomData._id,$rootScope.tableData._id).then(function (data) {
-                console.log('data',data);
+            RoomService.printInvoice($scope.roomData._id,$rootScope.tableData._id,$scope.orderItemsTotalPrice).then(function (data) {
+                // var prtContent = document.getElementById("Invoice");
+                var WinPrint = window.open(data.data, '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+                // WinPrint.document.write(prtContent.innerHTML);
+                // WinPrint.document.close();
+                WinPrint.focus();            
+                // document.getElementById('invoicePrint').style.visibility = "hidden";
+                WinPrint.print();
+                // WinPrint.close();
+                // document.getElementById('invoicePrint').style.visibility = "visible";
             })
             .catch(function (error) {
             });
             // $scope.activeOrder = 'order';
-            // console.log($scope.activeOrder, 'activeOrder');
             // $scope.totalPrice = 0;
             // $scope.activeOrder.map(
             //     function(order){

@@ -292,9 +292,9 @@ function RoomService($q, $http, $rootScope) {
             });
             return def.promise;
         },
-        printInvoice: function(roomid,tableid){
+        printInvoice: function(roomid,tableid,total){
             var def = $q.defer();
-            var url = '/api/invoice/' + roomid + '/' + tableid;
+            var url = '/api/invoice/' + roomid + '/' + tableid + '/' + total;
             doGet($q, $http, url).then(function (data) {
                 def.resolve(data);
             }).catch(function (error) {
