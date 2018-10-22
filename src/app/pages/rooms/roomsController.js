@@ -2074,9 +2074,11 @@
                 var WinPrint = window.open(data.data, '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
                 // WinPrint.document.write(prtContent.innerHTML);
                 // WinPrint.document.close();
-                // WinPrint.focus();            
+                if(WinPrint){
+                    WinPrint.focus();            
+                    WinPrint.print();
+                }
                 // document.getElementById('invoicePrint').style.visibility = "hidden";
-                WinPrint.print();
                 // WinPrint.close();
                 // document.getElementById('invoicePrint').style.visibility = "visible";
             })
