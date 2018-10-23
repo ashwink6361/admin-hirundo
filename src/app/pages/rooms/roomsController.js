@@ -2068,34 +2068,23 @@
         };
 
        
-        $scope.printInvoice = function (order) {
+        $scope.printInvoice = function () {
+            $scope.pdf = '';
             RoomService.printInvoice($scope.roomData._id,$rootScope.tableData._id,$scope.orderItemsTotalPrice).then(function (data) {
-                // var prtContent = document.getElementById("Invoice");
-                var WinPrint = window.open(data.data, '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-                // WinPrint.document.write(prtContent.innerHTML);
-                // WinPrint.document.close();
-                if(WinPrint){
-                    WinPrint.focus();            
-                    WinPrint.print();
+                $scope.pdf = data.data;
+                if($scope.pdf){
+                    $('pdfDoc').click(function (event) {
+                        event.printAll();
+                    });
                 }
-                // document.getElementById('invoicePrint').style.visibility = "hidden";
-                // WinPrint.close();
-                // document.getElementById('invoicePrint').style.visibility = "visible";
+                // var WinPrint = window.open(data.data, '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+                // if(WinPrint){
+                //     WinPrint.focus();            
+                //     WinPrint.print();
+                // }
             })
             .catch(function (error) {
             });
-            // $scope.activeOrder = 'order';
-            // $scope.totalPrice = 0;
-            // $scope.activeOrder.map(
-            //     function(order){
-            //         order.item.map(function(item) {
-            //             $scope.totalPrice = $scope.totalPrice + (item.quantity * item.price);
-            //             return $scope.totalPrice;
-            //         })
-            //     }
-            // )
-            // $scope.totalPrice = $scope.totalPrice + ($scope.activeOrder[0].seatCost * $scope.activeOrder[0].noOfPeople);
-            // $scope.totalPrice = Number(Math.round($scope.totalPrice + 'e2') + 'e-2');           
         };
 
         $scope.invoicePrint = function(){

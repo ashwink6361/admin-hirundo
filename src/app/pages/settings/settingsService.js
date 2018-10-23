@@ -27,6 +27,26 @@ function SettingsService($q, $http) {
                 def.reject(error);
             });
             return def.promise;
+        },
+        getDevices: function() {
+            var def = $q.defer();
+            var url = '/api/bluetooth/scan';
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+        connectDevice: function(opts) {
+            var def = $q.defer();
+            var url = '/api/bluetooth/connection';
+            doPost($q, $http, url, opts).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
         }
     };
 }

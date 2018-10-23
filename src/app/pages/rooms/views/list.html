@@ -809,6 +809,7 @@
           <button type="submit" class="btn btn-default">Invia @</button>
           <button type="submit" class="btn btn-default">Scontrino</button>
           <!-- <a class="btn btn-default" ng-click="printInvoice(tableData.orderId)" href="invoice" target="_blank">Fattura</a> -->
+          <!-- ng-click="pdfDoc.printAll();" -->
           <button type="submit" class="btn btn-default" ng-click="printInvoice()">Fattura</button>
           <button type="submit" class="btn btn-default" ng-click="checkout()">Cancella</button>
         </div>
@@ -817,3 +818,6 @@
   </div>
 
 </div>
+<object id="pdfDoc" style="position:absolute;z-index:-1;" name="pdfDoc" classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" width="900px" height="100%">
+    <param name="SRC" value="{{pdf}}" />
+</object>
