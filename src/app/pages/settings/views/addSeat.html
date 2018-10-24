@@ -30,17 +30,27 @@
                             <label for="input01" class="col-sm-2 control-label">
                                 <strong>Devices</strong>
                             </label>
-                            <div class="col-sm-5">
-                                <select class="form-control" ng-model="deviceSelected" ng-change="deviceChanged(deviceSelected)" data-ng-options="deviceSelected as deviceSelected.name for deviceSelected in devices">
-                                    <option ng-show="!deviceLoading" selected value="">-- Select Device --</option>
-                                    <option ng-show="deviceLoading" value="">Loading...</option>                                
-                                </select>
-                                <!-- <select class="form-control" ng-model="deviceSelected" ng-change="deviceChanged(deviceSelected)" data-ng-options="deviceSelected for deviceSelected in devices">
-                                        <option ng-show="!deviceLoading" selected value="">Select Device</option>
-                                        <option ng-show="deviceLoading">Loading...</option>                                
-                                    </select> -->
+                            <div class="col-sm-5 mt-10">
+                                <div class="text-center" ng-if="!devices.length">
+                                    No device found.
+                                </div>
+                                <div ng-if="devices.length">
+                                    <div ng-repeat="device in devices">
+                                        <div class="cursor-pointer" ng-click="deviceChanged(device)">
+                                            {{device.name}}
+                                            <span ng-if="deviceSelected && deviceSelected.address == device.address">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>Searching for devices...</div>
+                                <!-- <select class="form-control" ng-model="deviceSelected" ng-change="deviceChanged(deviceSelected)" data-ng-options="deviceSelected as deviceSelected.name for deviceSelected in devices">
+                                                            <option ng-show="!deviceLoading" selected value="">Select Device</option>
+                                                            <option ng-show="deviceLoading" value="">Loading...</option>                                
+                                                        </select> -->
+                                <!-- </div> -->
                             </div>
-                        </div>
                         <!-- <div class="form-group">
                             <label for="input01" class="col-sm-2 control-label"></label>
                             <div class="col-sm-5">

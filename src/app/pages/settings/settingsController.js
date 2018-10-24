@@ -16,10 +16,7 @@
         var deviceData = JSON.parse(localStorage.getItem('selectedDevice'));
         var devicesData = JSON.parse(localStorage.getItem('devices'));
         $scope.devices = devicesData ? devicesData : [];
-        console.log('deviceData',deviceData);
-        console.log(' $scope.devices', $scope.devices);
         $scope.deviceSelected = deviceData ? deviceData : null; 
-        console.log('$scope.deviceSelected',$scope.deviceSelected);
         $scope.deviceLoading = false;
         $scope.getSeatCost = function () {
             SettingsService.getSeatCost().then(function (data) {
@@ -31,7 +28,16 @@
         $scope.getDevices = function () {
         $scope.deviceLoading = true;            
             SettingsService.getDevices().then(function (data) {
-                $scope.devices = data.data;
+                if($scope.devices.length){
+                    if(data.data.length){
+                        for(var i=0;i<data.data.length;i++){
+                            $scope.devices.push(data.data[i]);
+                        }
+                    }
+                }
+                else{
+                    $scope.devices = data.data;
+                }
                 localStorage.setItem('devices',JSON.stringify($scope.devices));
                 $scope.deviceLoading = false;
             }).catch(function (error) {
@@ -58,31 +64,31 @@
             });
         };
 
-        $scope.deviceChanged = function (device) {
-            localStorage.removeItem('selectedDevice');            
-            console.log('device',device);
-            if (device) {
-                delete device.$$hashKey;
-                var temp = angular.copy(device);
-                localStorage.setItem('selectedDevice', JSON.stringify(temp));
-                $scope.deviceSelected = device;
-                console.log('$scope.deviceSelected+++++++++++', $scope.deviceSelected);
-                var opts = {
-                    channel: device.channel,
-                    address: device.address
-                }
-                SettingsService.connectDevice(opts).then(function (data) {
-                    AlertService.success('settingmsg', data.message, 4000);
-                }).catch(function (error) {
-                    AlertService.error('settingmsg', error.message, 4000);
-                });
-            }
-            else {
-                localStorage.removeItem('selectedDevice');
-                $scope.deviceSelected = null;
-                $scope.getDevices();
-            }
-        };
+        // $scope.deviceChanged = function (device) {
+        //     localStorage.removeItem('selectedDevice');            
+        //     console.log('device',device);
+        //     if (device) {
+        //         delete device.$$hashKey;
+        //         var temp = angular.copy(device);
+        //         localStorage.setItem('selectedDevice', JSON.stringify(temp));
+        //         $scope.deviceSelected = device;
+        //         console.log('$scope.deviceSelected+++++++++++', $scope.deviceSelected);
+        //         var opts = {
+        //             channel: device.channel,
+        //             address: device.address
+        //         }
+        //         SettingsService.connectDevice(opts).then(function (data) {
+        //             AlertService.success('settingmsg', data.message, 4000);
+        //         }).catch(function (error) {
+        //             AlertService.error('settingmsg', error.message, 4000);
+        //         });
+        //     }
+        //     else {
+        //         localStorage.removeItem('selectedDevice');
+        //         $scope.deviceSelected = null;
+        //         $scope.getDevices();
+        //     }
+        // };
 
         // $scope.deviceChanged = function (device) {
         //     console.log('device',device);
@@ -102,5 +108,27 @@
         //         $scope.getDevices();                
         //     }
         // };
+
+        $scope.deviceChanged = function (device) {
+            localStorage.removeItem('selectedDevice');            
+            if (device) {
+                localStorage.setItem('selectedDevice', JSON.stringify(device));
+                $scope.deviceSelected = device;
+                var opts = {
+                    channel: device.channel,
+                    address: device.address
+                }
+                SettingsService.connectDevice(opts).then(function (data) {
+                    AlertService.success('settingmsg', data.message, 4000);
+                }).catch(function (error) {
+                    AlertService.error('settingmsg', error.message, 4000);
+                });
+            }
+            else {
+                localStorage.removeItem('selectedDevice');
+                $scope.deviceSelected = null;
+                $scope.getDevices();
+            }
+        };
     }
 })();
