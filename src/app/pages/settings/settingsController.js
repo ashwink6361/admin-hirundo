@@ -8,7 +8,8 @@
         .controller('SettingsController', SettingsController)
 
     /** @ngInject */
-    function SettingsController($scope, $state, $http, $timeout, SettingsService, AlertService) {
+    function SettingsController($scope, $state, $http, _, $timeout, SettingsService, AlertService) {
+        $scope._ = _;
         $scope.Settings = {
             seatCost: ''
         };
@@ -38,6 +39,7 @@
                 else{
                     $scope.devices = data.data;
                 }
+                $scope.devices = _.uniqBy($scope.devices, 'address');  
                 localStorage.setItem('devices',JSON.stringify($scope.devices));
                 $scope.deviceLoading = false;
             }).catch(function (error) {

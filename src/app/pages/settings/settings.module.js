@@ -6,6 +6,7 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.settings', []).config(routeConfig);
+    angular.module('BlurAdmin.pages.settings').constant('_', window._);
 
     /** @ngInject */
     function routeConfig($stateProvider) {
