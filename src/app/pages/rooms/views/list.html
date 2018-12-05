@@ -4,10 +4,10 @@
     <div class="row">
       <div class="col-lg-12 col-md-12">
         <div ba-panel ba-panel-class="table-panel mh-500">
-          <span class="add-btn" title="Add Room">
+          <!-- <span class="add-btn" title="Add Room">
             <button type="button" class="text-btn" data-toggle="modal" ng-click="openAddRoom('app/pages/rooms/views/add.html', 'md')">Add
               Room</button>
-          </span>
+          </span> -->
           <div>
             <div class="loader text-center" ng-if="loader"><img src="assets/img/loader.gif"></div>
             <div ng-if="!loader">
@@ -19,6 +19,9 @@
                         <input type="text" ng-model="editRoom.name" />
                         <button type="submit" class="btn bg-success" ng-click="updateRoom()">Update</button>
                       </div>
+                      <span class="add-room-btn" title="Add Room">
+                        <button type="button" class="btn btn-secondary btn-icon" data-toggle="modal" ng-click="openAddRoom('app/pages/rooms/views/add.html', 'md')"><i class="fa fa-plus"></button>
+                      </span>
                       <span class="add-btn pt-r-50" title="Edit Room">
                         <a ng-click="openEditRoom(room, $index)" class="btn btn-secondary btn-icon">
                           <i class="ion-edit"></i>
@@ -818,6 +821,7 @@
   </div>
 
 </div>
-<object id="pdfDoc" style="position:absolute;z-index:-1;" name="pdfDoc" classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" width="900px" height="100%">
-    <param name="SRC" value="{{pdf}}" />
+<object id="pdfDoc" style="position:absolute;z-index:-1;" name="pdfDoc" classid="clsid:CA8A9780-280D-11CF-A24D-444553540000"
+  width="900px" height="100%">
+  <param name="SRC" value="{{pdf}}" />
 </object>
