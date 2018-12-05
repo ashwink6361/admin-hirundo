@@ -1781,3 +1781,10 @@
 .modal-body{
     overflow-y: auto;
 }
+
+@media (max-width : 620px){
+    .table-container{
+        max-width: 100%;
+        width: 28%;
+    }
+}
