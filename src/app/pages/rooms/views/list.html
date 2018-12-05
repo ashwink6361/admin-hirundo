@@ -14,7 +14,7 @@
               <div ng-show="rooms&&rooms.length" ng-init="indextab = 0">
                 <uib-tabset active="indextab">
                   <uib-tab ng-repeat="room in rooms track by $index" heading="{{room.name}}">
-                    <div ba-panel ba-panel-title="{{room.name}}" ba-panel-class="table-panel-container mh-500">
+                    <div ba-panel ba-panel-title="" ba-panel-class="table-panel-container mh-500">
                       <div class="update-name" ng-show="editBtn === $index">
                         <input type="text" ng-model="editRoom.name" />
                         <button type="submit" class="btn bg-success" ng-click="updateRoom()">Update</button>
