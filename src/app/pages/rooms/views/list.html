@@ -20,19 +20,19 @@
                         <button type="submit" class="btn bg-success" ng-click="updateRoom()">Update</button>
                       </div>
                       <span class="add-room-btn" title="Add Room">
-                        <button type="button" class="btn btn-secondary btn-icon" data-toggle="modal" ng-click="openAddRoom('app/pages/rooms/views/add.html', 'md')"><i class="fa fa-plus"></button>
+                        <button type="button" class="btn btn-icon btn-transparent" data-toggle="modal" ng-click="openAddRoom('app/pages/rooms/views/add.html', 'md')"><i class="fa fa-plus"></button>
                       </span>
-                      <span class="add-btn pt-r-50" title="Edit Room">
-                        <a ng-click="openEditRoom(room, $index)" class="btn btn-secondary btn-icon">
+                      <span class="add-btn t-40 pt-r-50" title="Edit Room">
+                        <a ng-click="openEditRoom(room, $index)" class="btn btn-icon  btn-transparent">
                           <i class="ion-edit"></i>
                         </a>
                       </span>
                       <span class="delete-btn " title="Delete Room">
-                        <a ng-click="removeRoom(room._id)" class="btn bg-red btn-icon">
+                        <a ng-click="removeRoom(room._id)" class="btn btn-icon  btn-transparent">
                           <i class="ion-trash-b"></i>
                         </a>
                       </span>
-                      <div class="room-container" ng-init="tableIndex = ($index+1)-1">
+                      <div class="room-container" ng-class="{'mt-45' : editBtn == tableIndex}" ng-init="tableIndex = ($index+1)-1">
                         <div ng-repeat="table in room.tables" class="table-container" ng-style="table.orderId.length ? {'background-color':'#add278'} : {'background-color':'#c5c8cd'}">
                           <div class="room-table" ng-click="openCreateOrder(table,room)">
                             <div class="table-name">
@@ -649,10 +649,10 @@
                 </span>
                 <span ng-if="item.notes" class="d-flex added-variand-name">{{item.notes}}</span>
               </div>
-              <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="editOrderItem(order._id,item)">
+              <button type="button" class="btn btn-icon btn-transparent mr-5" ng-click="editOrderItem(order._id,item)">
                 <i class="ion-edit">
               </button>
-              <button type="button" class="btn bg-red btn-icon" ng-click="deleteOrderItem(order._id,item._id,$index)">
+              <button type="button" class="btn btn-icon btn-transparent" ng-click="deleteOrderItem(order._id,item._id,$index)">
                 <i class="ion-trash-b">
               </button>
             </div>
@@ -681,10 +681,10 @@
               </span>
               <span ng-if="item.ordernote" class="d-flex added-variand-name">{{item.ordernote}}</span>
             </div>
-            <button type="button" class="btn btn-secondary btn-icon mr-5" ng-click="viewVarient1(item)">
+            <button type="button" class="btn btn-transparent btn-icon mr-5" ng-click="viewVarient1(item)">
               <i class="ion-edit">
             </button>
-            <button type="button" class="btn bg-red btn-icon" ng-click="deleteItemFromCart(item)">
+            <button type="button" class="btn btn-transparent btn-icon" ng-click="deleteItemFromCart(item)">
               <i class="ion-trash-b">
             </button>
           </div>
@@ -822,6 +822,6 @@
 
 </div>
 <object id="pdfDoc" style="position:absolute;z-index:-1;" name="pdfDoc" classid="clsid:CA8A9780-280D-11CF-A24D-444553540000"
-  width="900px" height="100%">
+  width="1px" height="1px">
   <param name="SRC" value="{{pdf}}" />
 </object>
