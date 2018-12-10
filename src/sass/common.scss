@@ -24,6 +24,20 @@
     flex-wrap: wrap;
 }
 
+.mt-45{
+    margin-top: 45px;
+}
+
+.btn-transparent{
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i{
+        font-size : 22px;
+    }
+}
+
 .mb-10 {
     margin-bottom: 10px;
 }
@@ -239,6 +253,9 @@
     &:hover {
         color: #fff !important;
     }
+    &.t-40{
+        top: -40px !important; 
+    }
 }
 
 .back-btn {
@@ -259,7 +276,7 @@
 // Delete-btn
 .delete-btn {
     position: absolute;
-    top: 5px;
+    top: -40px;
     right: 5px;
     z-index: 10;
     &:hover {
@@ -325,7 +342,7 @@
 
 .add-room-btn{
     right: 97px !important;
-    top: 6px;
+    top: -40px;
     position: absolute;
 }
 
@@ -937,6 +954,7 @@
 .categories {
     .nav.nav-tabs {
         background-color: transparent !important;
+        max-width: calc(100% - 150px);
         li {
             a {
                 color: $primary;
@@ -979,7 +997,6 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin-top: 45px;
     .add-room {
         border: 2px dashed $primary;
         padding: 20px;
@@ -1459,7 +1476,7 @@
     padding: 20px;
     left: 179px;
     width: calc(100% - 572px);
-    padding: 8px 32px 8px 40px;
+    padding: 8px 15px 8px 15px;
     z-index: 999;
     overflow-y: hidden;
     .content-top{
@@ -1543,19 +1560,19 @@
 }
 
 .order-sidebar {
-    margin-right: 390px;
+    margin-right: 350px;
 }
 
 .leftorder-sidebar{
     left: 52px;
-    width: calc(100% - 442px);
+    width: calc(100% - 402px);
 }
 
 .admin-order {
     position: fixed;
     right: -100%;
     transition: 0.3s;
-    width: 390px;
+    width: 350px;
     height: calc(100% - 66px);
     top: 66px;
     background-color: #fff;
