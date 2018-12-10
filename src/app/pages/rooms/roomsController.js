@@ -35,7 +35,7 @@
         $scope.showLedtSideBar = false;
         $scope.showCheckoutCart = false;
         $scope.variantData = {
-            quantity: 0,
+            quantity: 1,
             variant: [],
             notes: ''
         };
@@ -44,7 +44,7 @@
         $scope.variantList1 = [];
         $scope.noteList1 = [];
         $scope.variantData1 = {
-            quantity: 0,
+            quantity: 1,
             variant: [],
             notes: '',
             price: ''
@@ -63,7 +63,7 @@
         $scope.variantList2 = [];
         $scope.noteList2 = [];
         $scope.variantData2 = {
-            quantity: 0,
+            quantity: 1,
             variant: [],
             notes: '',
             price: ''
@@ -865,7 +865,7 @@
         $scope.hideVarient = function () {
             $scope.changeTab(2);
             $scope.variantData = {
-                quantity: 0,
+                quantity: 1,
                 variant: [],
                 notes: ''
             };
@@ -884,30 +884,99 @@
         }
 
         $scope.addRemoveVariant = function (variant, status) {
-            if (status == 0) {
-                variant.status = 0;
-            } else {
-                variant.status = 1;
-            }
-            for (var i = 0; i < $scope.variantData.variant.length; i++) {
+            var varIds = [];
+            if ($scope.variantData.variant.length) {
+              for (var i = 0; i < $scope.variantData.variant.length; i++) {
+                varIds.push($scope.variantData.variant[i]._id);
                 if ($scope.variantData.variant[i]._id == variant._id) {
+                  if ($scope.variantData.variant[i].status == status) {
+                    delete variant.status;
                     $scope.variantData.variant.splice(i, 1);
+                  }
+                  else {
+                    variant.status = status;
+                    $scope.variantData.variant[i].status = status;
+                  }
                 }
+              }
+              if (varIds.length == $scope.variantData.variant.length) {
+                if (varIds.indexOf(variant._id) < 0) {
+                  variant.status = status;
+                  $scope.variantData.variant.push(variant);
+                }
+              }
             }
-            $scope.variantData.variant.push(variant);
-        }
+            else {
+              variant.status = status;
+              $scope.variantData.variant.push(variant);
+            }
+
+            // var arr = [];
+            // console.log('variant, status', variant, status, $scope.variantData);
+            // if ($scope.variantData.variant.length == 0) {
+            //     variant.status = angular.copy(status);
+            //     $scope.variantData.variant.push(variant);
+            //     arr.push(variant._id);
+            // }
+            // else {
+            //     for (var i = 0; i < $scope.variantData.variant.length; i++) {
+            //         if (arr.indexOf($scope.variantData.variant[i]._id) == -1) {
+            //             arr.push($scope.variantData.variant[i]._id);
+            //         }
+            //     }
+            //     console.log('arr', arr);
+            //     if (arr.length == $scope.variantData.variant.length) {
+            //         if (arr.indexOf(variant._id) > -1) {
+            //             console.log("if")
+            //             for (var i = 0; i < $scope.variantData.variant.length; i++) {
+            //                 if ($scope.variantData.variant[i]._id == variant._id) {
+            //                     if ($scope.variantData.variant[i].status == status) {
+            //                         $scope.variantData.variant.splice(i, 1);
+            //                         delete variant.status;
+            //                     }
+            //                     else {
+            //                         variant.status = angular.copy(status);
+            //                         $scope.variantData.variant[i].status = angular.copy(status);
+            //                     }
+            //                 }
+            //                 console.log('if $scope.variantData', $scope.variantData);
+            //             }
+            //         }
+            //         else {
+            //             console.log("else")
+            //             arr.push(variant._id);
+            //             variant.status = angular.copy(status);
+            //             $scope.variantData.variant.push(variant);
+            //             console.log('else $scope.variantData', $scope.variantData);
+            //         }
+            //     }
+            // }
+
+
+        // if (status == 0) {
+        //     variant.status = 0;
+        // } else {
+        //     variant.status = 1;
+        // }
+        // for (var i = 0; i < $scope.variantData.variant.length; i++) {
+        //     if ($scope.variantData.variant[i]._id == variant._id) {
+        //         $scope.variantData.variant.splice(i, 1);
+        //     }
+        // }
+        // $scope.variantData.variant.push(variant);
+    }
 
         $scope.decreaseQty = function () {
             var value = $scope.variantData.quantity;
-            value = isNaN(value) ? 0 : value;
-            value < 1 ? value = 1 : '';
+            value = isNaN(value) ? 2 : value;
+            value < 2 ? value = 2 : '';
             value--;
             $scope.variantData.quantity = value;
         }
 
         $scope.increaseQty = function () {
             var value = $scope.variantData.quantity;
-            value = isNaN(value) ? 0 : value;
+            value = isNaN(value) ? 1 : value;
             value++;
             $scope.variantData.quantity = value;
         }
@@ -1011,7 +1080,7 @@
             $scope.changeTab(1);
             $scope.nonVariantData = false;
             $scope.variantData1 = {
-                quantity: 0,
+                quantity: 1,
                 variant: [],
                 notes: '',
                 price: ''
@@ -1031,30 +1100,98 @@
         }
 
         $scope.addRemoveVariant1 = function (variant, status) {
-            if (status == 0) {
-                variant.status = 0;
-            } else {
-                variant.status = 1;
-            }
-            for (var i = 0; i < $scope.variantData1.variant.length; i++) {
+            var varIds = [];
+            if ($scope.variantData1.variant.length) {
+              for (var i = 0; i < $scope.variantData1.variant.length; i++) {
+                varIds.push($scope.variantData1.variant[i]._id);
                 if ($scope.variantData1.variant[i]._id == variant._id) {
+                  if ($scope.variantData1.variant[i].status == status) {
+                    delete variant.status;
                     $scope.variantData1.variant.splice(i, 1);
+                  }
+                  else {
+                    variant.status = status;
+                    $scope.variantData1.variant[i].status = status;
+                  }
                 }
+              }
+              if (varIds.length == $scope.variantData1.variant.length) {
+                if (varIds.indexOf(variant._id) < 0) {
+                  variant.status = status;
+                  $scope.variantData1.variant.push(variant);
+                }
+              }
             }
-            $scope.variantData1.variant.push(variant);
+            else {
+              variant.status = status;
+              $scope.variantData1.variant.push(variant);
+            }
+
+            // var arr = [];
+            // console.log('variant, status', variant, status);
+            // if ($scope.variantData1.variant.length == 0) {
+            //     variant.status = angular.copy(status);
+            //     $scope.variantData1.variant.push(variant);
+            //     arr.push(variant._id);
+            // }
+            // else {
+            //     for (var i = 0; i < $scope.variantData1.variant.length; i++) {
+            //         if (arr.indexOf($scope.variantData1.variant[i]._id) == -1) {
+            //             arr.push($scope.variantData1.variant[i]._id);
+            //         }
+            //     }
+            //     console.log('arr', arr);
+            //     if (arr.length == $scope.variantData1.variant.length) {
+            //         if (arr.indexOf(variant._id) > -1) {
+            //             console.log("if")
+            //             for (var i = 0; i < $scope.variantData1.variant.length; i++) {
+            //                 if ($scope.variantData1.variant[i]._id == variant._id) {
+            //                     if ($scope.variantData1.variant[i].status == status) {
+            //                         $scope.variantData1.variant.splice(i, 1);
+            //                         delete variant.status;
+            //                     }
+            //                     else {
+            //                         variant.status = angular.copy(status);
+            //                         $scope.variantData1.variant[i].status = angular.copy(status);
+            //                     }
+            //                 }
+            //                 console.log('if $scope.variantData1', $scope.variantData1);
+            //             }
+            //         }
+            //         else {
+            //             console.log("else")
+            //             arr.push(variant._id);
+            //             variant.status = angular.copy(status);
+            //             $scope.variantData1.variant.push(variant);
+            //             console.log('else $scope.variantData1', $scope.variantData1);
+            //         }
+            //     }
+            // }
+
+            // if (status == 0) {
+            //     variant.status = 0;
+            // } else {
+            //     variant.status = 1;
+            // }
+            // for (var i = 0; i < $scope.variantData1.variant.length; i++) {
+            //     if ($scope.variantData1.variant[i]._id == variant._id) {
+            //         $scope.variantData1.variant.splice(i, 1);
+            //     }
+            // }
+            // $scope.variantData1.variant.push(variant);
         }
 
         $scope.decreaseQty1 = function () {
             var value = $scope.variantData1.quantity;
-            value = isNaN(value) ? 0 : value;
-            value < 1 ? value = 1 : '';
+            value = isNaN(value) ? 2 : value;
+            value < 2 ? value = 2 : '';
             value--;
             $scope.variantData1.quantity = value;
         }
 
         $scope.increaseQty1 = function () {
             var value = $scope.variantData1.quantity;
-            value = isNaN(value) ? 0 : value;
+            value = isNaN(value) ? 1 : value;
             value++;
             $scope.variantData1.quantity = value;
         }
@@ -1461,7 +1598,7 @@
             $scope.editNonVariantData = false;
             $scope.showLedtSideBar1 = false;
             $scope.variantData2 = {
-                quantity: 0,
+                quantity: 1,
                 variant: [],
                 notes: '',
                 price: ''
@@ -1481,31 +1618,101 @@
         }
 
         $scope.addRemoveVariant2 = function (variant, status) {
-            if (status == 0) {
-                variant.status = 0;
-            } else {
-                variant.status = 1;
-            }
-            for (var i = 0; i < $scope.variantData2.variant.length; i++) {
+            var varIds = [];
+            if ($scope.variantData2.variant.length) {
+              for (var i = 0; i < $scope.variantData2.variant.length; i++) {
+                varIds.push($scope.variantData2.variant[i].id);
                 if ($scope.variantData2.variant[i].id == variant._id) {
+                  if ($scope.variantData2.variant[i].status == status) {
+                    delete variant.status;
                     $scope.variantData2.variant.splice(i, 1);
+                  }
+                  else {
+                    variant.status = status;
+                    $scope.variantData2.variant[i].status = status;
+                  }
                 }
+              }
+              if (varIds.length == $scope.variantData2.variant.length) {
+                if (varIds.indexOf(variant._id) < 0) {
+                  variant.status = status;
+                  $scope.variantData2.variant.push(variant);
+                }
+              }
+            }
+            else {
+              variant.status = status;
+              $scope.variantData2.variant.push(variant);
             }
             variant.id = variant._id;
-            $scope.variantData2.variant.push(variant);
+
+            // var arr = [];
+            // console.log('variant, status', variant, status);
+            // if ($scope.variantData2.variant.length == 0) {
+            //     variant.status = angular.copy(status);
+            //     $scope.variantData2.variant.push(variant);
+            //     arr.push(variant._id);
+            // }
+            // else {
+            //     for (var i = 0; i < $scope.variantData2.variant.length; i++) {
+            //         if (arr.indexOf($scope.variantData2.variant[i].id) == -1) {
+            //             arr.push($scope.variantData2.variant[i].id);
+            //         }
+            //     }
+            //     console.log('arr', arr);
+            //     if (arr.length == $scope.variantData2.variant.length) {
+            //         if (arr.indexOf(variant._id) > -1) {
+            //             console.log("if")
+            //             for (var i = 0; i < $scope.variantData2.variant.length; i++) {
+            //                 if ($scope.variantData2.variant[i].id == variant._id) {
+            //                     if ($scope.variantData2.variant[i].status == status) {
+            //                         $scope.variantData2.variant.splice(i, 1);
+            //                         delete variant.status;
+            //                     }
+            //                     else {
+            //                         variant.status = angular.copy(status);
+            //                         $scope.variantData2.variant[i].status = angular.copy(status);
+            //                     }
+            //                 }
+            //                 console.log('if $scope.variantData2', $scope.variantData2);
+            //             }
+            //         }
+            //         else {
+            //             console.log("else")
+            //             arr.push(variant._id);
+            //             variant.status = angular.copy(status);
+            //             $scope.variantData2.variant.push(variant);
+            //             console.log('else $scope.variantData2', $scope.variantData2);
+            //         }
+            //     }
+            // }
+            // variant.id = variant._id;
+
+            // if (status == 0) {
+            //     variant.status = 0;
+            // } else {
+            //     variant.status = 1;
+            // }
+            // for (var i = 0; i < $scope.variantData2.variant.length; i++) {
+            //     if ($scope.variantData2.variant[i].id == variant._id) {
+            //         $scope.variantData2.variant.splice(i, 1);
+            //     }
+            // }
+            // variant.id = variant._id;
+            // $scope.variantData2.variant.push(variant);
         }
 
         $scope.decreaseQty2 = function () {
             var value = $scope.variantData2.quantity;
-            value = isNaN(value) ? 0 : value;
-            value < 1 ? value = 1 : '';
+            value = isNaN(value) ? 2 : value;
+            value < 2 ? value = 2 : '';
             value--;
             $scope.variantData2.quantity = value;
         }
 
         $scope.increaseQty2 = function () {
             var value = $scope.variantData2.quantity;
-            value = isNaN(value) ? 0 : value;
+            value = isNaN(value) ? 1 : value;
             value++;
             $scope.variantData2.quantity = value;
         }
@@ -1839,7 +2046,7 @@
                 price: '',
                 category: '',
                 subCategory: '',
-                quantity: 0,
+                quantity: 1,
                 variant: [],
                 notes: '',
                 isDeleted: true
@@ -1857,7 +2064,7 @@
                 price: '',
                 category: '',
                 subCategory: '',
-                quantity: 0,
+                quantity: 1,
                 variant: [],
                 notes: '',
                 isDeleted: true
@@ -1876,30 +2083,99 @@
         }
 
         $scope.addRemoveArticleVariant = function (variant, status) {
-            if (status == 0) {
-                variant.status = 0;
-            } else {
-                variant.status = 1;
-            }
-            for (var i = 0; i < $scope.AddDataArticle.variant.length; i++) {
-                if ($scope.AddDataArticle.variant[i]._id == variant._id) {
-                    $scope.AddDataArticle.variant.splice(i, 1);
+            var varIds = [];
+            if ($scope.AddDataArticle.variant.length) {
+                for (var i = 0; i < $scope.AddDataArticle.variant.length; i++) {
+                    varIds.push($scope.AddDataArticle.variant[i]._id);
+                    if ($scope.AddDataArticle.variant[i]._id == variant._id) {
+                        if ($scope.AddDataArticle.variant[i].status == status) {
+                            delete variant.status;
+                            $scope.AddDataArticle.variant.splice(i, 1);
+                        }
+                        else {
+                            variant.status = status;
+                            $scope.AddDataArticle.variant[i].status = status;
+                        }
+                    }
+                }
+                if (varIds.length == $scope.AddDataArticle.variant.length) {
+                    if (varIds.indexOf(variant._id) < 0) {
+                        variant.status = status;
+                        $scope.AddDataArticle.variant.push(variant);
+                    }
                 }
             }
-            $scope.AddDataArticle.variant.push(variant);
+            else {
+                variant.status = status;
+                $scope.AddDataArticle.variant.push(variant);
+            }
+
+
+            // var arr = [];
+            // console.log('variant, status', variant, status);
+            // if ($scope.AddDataArticle.variant.length == 0) {
+            //     variant.status = angular.copy(status);
+            //     $scope.AddDataArticle.variant.push(variant);
+            //     arr.push(variant._id);
+            // }
+            // else {
+            //     for (var i = 0; i < $scope.AddDataArticle.variant.length; i++) {
+            //         if (arr.indexOf($scope.AddDataArticle.variant[i]._id) == -1) {
+            //             arr.push($scope.AddDataArticle.variant[i]._id);
+            //         }
+            //     }
+            //     console.log('arr', arr);
+            //     if (arr.length == $scope.AddDataArticle.variant.length) {
+            //         if (arr.indexOf(variant._id) > -1) {
+            //             console.log("if")
+            //             for (var i = 0; i < $scope.AddDataArticle.variant.length; i++) {
+            //                 if ($scope.AddDataArticle.variant[i]._id == variant._id) {
+            //                     if ($scope.AddDataArticle.variant[i].status == status) {
+            //                         $scope.AddDataArticle.variant.splice(i, 1);
+            //                         delete variant.status;
+            //                     }
+            //                     else {
+            //                         variant.status = angular.copy(status);
+            //                         $scope.AddDataArticle.variant[i].status = angular.copy(status);
+            //                     }
+            //                 }
+            //                 console.log('if $scope.AddDataArticle', $scope.AddDataArticle);
+            //             }
+            //         }
+            //         else {
+            //             console.log("else")
+            //             arr.push(variant._id);
+            //             variant.status = angular.copy(status);
+            //             $scope.AddDataArticle.variant.push(variant);
+            //             console.log('else $scope.AddDataArticle', $scope.AddDataArticle);
+            //         }
+            //     }
+            // }
+
+            // if (status == 0) {
+            //     variant.status = 0;
+            // } else {
+            //     variant.status = 1;
+            // }
+            // for (var i = 0; i < $scope.AddDataArticle.variant.length; i++) {
+            //     if ($scope.AddDataArticle.variant[i]._id == variant._id) {
+            //         $scope.AddDataArticle.variant.splice(i, 1);
+            //     }
+            // }
+            // $scope.AddDataArticle.variant.push(variant);
         }
 
         $scope.decreaseArticleQty = function () {
             var value = $scope.AddDataArticle.quantity;
-            value = isNaN(value) ? 0 : value;
-            value < 1 ? value = 1 : '';
+            value = isNaN(value) ? 2 : value;
+            value < 2 ? value = 2 : '';
             value--;
             $scope.AddDataArticle.quantity = value;
         }
 
         $scope.increaseArticleQty = function () {
             var value = $scope.AddDataArticle.quantity;
-            value = isNaN(value) ? 0 : value;
+            value = isNaN(value) ? 1 : value;
             value++;
             $scope.AddDataArticle.quantity = value;
         }
