@@ -10,9 +10,14 @@
     function OrderController($scope, $uibModal, $state, $http, $timeout, $interval, OrderService, AlertService) {
         $scope.ordersList = [];
         $scope.showItemDetail = false;
+        $scope.loader = true;
+        
         OrderService.getOrders().then(function(data) {
             $scope.ordersList = OrderService.listOrder();
+            $scope.loader = false;            
         }).catch(function(error) {
+            $scope.ordersList = [];
+            $scope.loader = false;            
         });
 
         $scope.getOrderStatus = function(status) {
