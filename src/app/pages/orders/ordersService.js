@@ -28,13 +28,13 @@
       });
     }
     socket.on('neworderAdmin', function (data) {
-      if (data.restro == this.authGuard.getCurrentUser()._id) {
+      if (data.restro == user._id) {
         console.log('neworderAdmin', data);
         _orders.push(data);
       }
     });
     socket.on('orderstatus', function (data) {
-      if (data.restro == this.authGuard.getCurrentUser()._id) {
+      if (data.restro == user._id) {
         for (var i = 0; i < _orders.length; i++) {
           if (data._id === _orders[i]._id) {
             _orders[i] = data;

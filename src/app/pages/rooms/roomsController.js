@@ -820,6 +820,11 @@
                             $scope.activeTab = [true, false, false, false, false, false, false, false];
                         }
                         $scope.showOrder = true;
+                        var tabadata = {
+                            tab: 0,
+                            step: "Uscita 1"
+                        }
+                        baRoomService.setTabData(tabadata);
                     }).catch(function (error) {
                     });
                 })
