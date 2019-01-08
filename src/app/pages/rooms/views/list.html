@@ -762,12 +762,16 @@
                   </td>
                 </tr>
                 <tr ng-repeat="order in tableData.orderId">
-                  <td colspan="2" class="order-item-table">
+                  <td colspan="2" style="padding: 0 !important;" class="order-item-table">
                     <table class="table">
                       <tbody>
                         <tr ng-repeat="item in order.item track by $index">
-                          <td>X {{item.quantity}} {{item.id.name}}</td>
-                          <td class="btn-quantity">
+                          <td style="    8px 0 8px 8px !important
+                          border-top: 1px solid #dddd;
+                          border-bottom: 1px solid #ddd;">X {{item.quantity}} {{item.id.name}}</td>
+                          <td style="    padding: 8px 0!important;
+                          border-top: 1px solid #dddd;
+                          border-bottom: 1px solid #ddd;" class="btn-quantity">
                             <button type="submit" ng-click="decreaseItemQty(item)">
                               <i class="icon-minus"></i>
                             </button>
