@@ -6,8 +6,8 @@
 const path = require('path');
 const projectName = 'MVP Hirundo';
 const port = 5050;
-// const apiUrl = 'http://localhost:5051';
-const apiUrl = 'http://52.209.187.183:5051';
+const apiUrl = 'http://localhost:5051';
+// const apiUrl = 'http://52.209.187.183:5051';
 
 module.exports = {
     env: 'development',
