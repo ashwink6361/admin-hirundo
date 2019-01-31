@@ -132,5 +132,14 @@
         "Update": "Aggiornare",
         "Add": "Inserisci",
         "Cancel": "Annulla"
-    }  
+    },
+    "People": "Persone",
+    "Averagespending": "Spesa media",
+    "Sales": "Vendite",
+    "Foodcost": "Costo del cibo",
+    "startDate": "Data d'inizio",
+    "endDate": "Data di fine",
+    "startDateReq": "La data di inizio è obbligatoria.",
+    "endDateReq": "La data di fine è obbligatoria.",
+    "filter": "Filtro"
 }

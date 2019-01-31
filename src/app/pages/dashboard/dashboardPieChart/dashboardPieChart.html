@@ -1,13 +1,148 @@
-<div class="row pie-charts">
-  <div class="pie-chart-item-container" ng-repeat="chart in charts">
+<!-- <div class="row">
+    <div class="col-sm-4">
+        <h3>Todays Orders</h3>
+    </div>
+    <div class="col-sm-4 mt-10 fw-bold">
+        Current Time: {{ clock | date:'HH:mm:ss'}}
+    </div>
+    <div class="col-sm-4">
+        <div class="form-group row" ng-controller="datepickerpopupCtrl">
+            <label class="col-sm-2 mt-10" for="date">Filter</label>
+            <div class="col-sm-10">
+                <div class="uib-datepicker-wrap">
+                    <div class="input-group disable-color">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default calender-btn" ng-click="open1()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                        <input type="text" class="form-control" id="date" ng-model="filter.date" name="date"
+                            uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options" is-open="popup1.opened"
+                            close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" ng-click="open1()"
+                            ng-change="changeDate(filter.date)" readonly />
+                        <span class="input-group-btn">
+                            <button ng-show="filter.date" type="button" class="btn btn-default clear-date" ng-click="cleardate()">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<form ng-if="userDetails.adminType == 2" name="Form.pieForm" id="Form" novalidate>
+  <div class="row">
+    <div class="col-sm-3">
+        <h3>{{userDetails.firstName}}<span ng-if="userDetails.lastName">&nbsp;{{userDetails.lastName}}</span></h3>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group row" ng-controller="datepickerpopupCtrl1">
+        <label class="col-sm-4 mt-10" for="startDate">{{'startDate' | translate}}</label>
+        <div class="col-sm-8">
+          <div class="uib-datepicker-wrap">
+            <div class="input-group disable-color">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default calender-btn" ng-click="open1()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+              <input type="text" class="form-control" id="startDate" ng-model="pieDate.startDate" name="startDate"
+                uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options" is-open="popup1.opened" close-text="Close"
+                alt-input-formats="altInputFormats" show-button-bar="false" ng-click="open1()" ng-change="checkErr(pieDate.startDate,pieDate.endDate)"
+                ng-required="true" readonly />
+              <span class="input-group-btn">
+                <button ng-show="pieDate.startDate" type="button" class="btn btn-default clear-date" ng-click="clearStartDate()">
+                  <i class="fa fa-times-circle"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+          <!-- <span class="color-red" ng-show="Form.pieForm.startDate.$dirty &&  Form.pieForm.startDate.$error.required">{{'startDateReq'
+            | translate}}</span> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group row" ng-controller="datepickerpopupCtrl1">
+        <label class="col-sm-4 mt-10" for="endDate">{{'endDate' | translate}}</label>
+        <div class="col-sm-8">
+          <div class="uib-datepicker-wrap">
+            <div class="input-group disable-color">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default calender-btn" ng-click="open2()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+              <input type="text" class="form-control" id="endDate" ng-model="pieDate.endDate" name="endDate"
+                uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options" is-open="popup2.opened"
+                close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" ng-click="open2()" ng-change="checkErr(pieDate.startDate,pieDate.endDate)"
+                ng-required="true" readonly />
+              <span class="input-group-btn">
+                <button ng-show="pieDate.endDate" type="button" class="btn btn-default clear-date" ng-click="clearEndDate()">
+                  <i class="fa fa-times-circle"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+          <!-- <span class="color-red" ng-show="Form.pieForm.endDate.$dirty && Form.pieForm.endDate.$error.required">{{'endDateReq'
+            | translate}}</span> -->
+          <span class="color-red" ng-if="dateError">{{dateError}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1">
+      <div class="form-group">
+        <button type="submit" class="btn bg-success text-uppercase" ng-click="filterData(pieDate.startDate,pieDate.endDate)"
+          ng-disabled="dateError || !pieDate.endDate || !pieDate.startDate">{{'filter' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="row pie-charts" ng-if="userDetails.adminType == 2 && pieData">
+  <div class="pie-chart-item-container">
     <div ba-panel>
       <div class="pie-chart-item">
-        <div class="chart" rel="{{ ::chart.color }}" data-percent="60"> <span class="percent"></span> </div>
         <div class="description">
-          <div>{{ ::chart.description }}</div>
-          <div class="description-stats">{{ ::chart.stats }}</div>
+          <div>{{'People' | translate}}</div>
+          <div class="description-stats">{{ pieData.noOfPeople }}</div>
         </div>
-        <i class="chart-icon i-{{ ::chart.icon }}"></i>
+        <i class="chart-icon i-person"></i>
+      </div>
+    </div>
+  </div>
+  <div class="pie-chart-item-container">
+    <div ba-panel>
+      <div class="pie-chart-item">
+        <div class="description">
+          <div>{{'Averagespending' | translate}}</div>
+          <div class="description-stats">{{ pieData.averageCost }}</div>
+        </div>
+        <i class="chart-icon i-money"></i>
+      </div>
+    </div>
+  </div>
+  <div class="pie-chart-item-container">
+    <div ba-panel>
+      <div class="pie-chart-item">
+        <div class="description">
+          <div>{{'Sales' | translate}}</div>
+          <div class="description-stats">{{ pieData.totalSale }}</div>
+        </div>
+        <i class="chart-icon i-face"></i>
+      </div>
+    </div>
+  </div>
+  <div class="pie-chart-item-container">
+    <div ba-panel>
+      <div class="pie-chart-item">
+        <div class="description">
+          <div>{{'Foodcost' | translate}}</div>
+          <div class="description-stats">{{ pieData.totalFoodCost }}</div>
+        </div>
+        <i class="chart-icon i-refresh"></i>
       </div>
     </div>
   </div>

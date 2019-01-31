@@ -30,6 +30,7 @@
                 }
                 $scope.changeLanguage = function (langKey) {
                     $scope.currentlan = langKey;
+                    $rootScope.$broadcast('currentlan');        
                     $translate.use(langKey);
                 };
             }

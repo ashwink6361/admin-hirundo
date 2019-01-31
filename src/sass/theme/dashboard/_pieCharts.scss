@@ -1,9 +1,11 @@
 .pie-charts {
   color: $default-text;
+  margin-left: auto !important;
+  margin-right: auto !important;
 
   .pie-chart-item-container {
     position: relative;
-    padding: 0 15px;
+    padding: 0 5px;
     float: left;
     box-sizing: border-box;
 
@@ -18,7 +20,7 @@
   }
   @media screen and (min-width: 700px) and (max-width: 1325px)  {
     .pie-chart-item-container {
-      width: 50%;
+      width: 25%;
     }
   }
   @media screen and (max-width: 700px)  {
@@ -71,7 +73,7 @@
   }
   .description {
     display: inline-block;
-    padding: 20px 0 0 20px;
+    padding: 20px 0 0 10px;
     font-size: 18px;
     opacity: 0.9;
     .description-stats {

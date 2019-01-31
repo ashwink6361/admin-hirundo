@@ -132,5 +132,14 @@
         "Update": "Update",
         "Add": "Add",
         "Cancel": "Cancel"
-    } 
+    } ,
+    "People": "People",
+    "Averagespending": "Average spending",
+    "Sales": "Sales",
+    "Foodcost": "Food cost",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "startDateReq": "Start date is required.",
+    "endDateReq": "End date is required.",
+    "filter": "Filter"
 }

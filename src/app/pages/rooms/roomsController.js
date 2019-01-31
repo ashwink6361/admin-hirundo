@@ -1869,7 +1869,9 @@
         $rootScope.$on('tablestatus', function (){
             RoomService.getRooms().then(function (data) {
                 $scope.rooms = RoomService.listRoom();
-                if($scope.rooms && $scope.rooms.length && $scope.roomData && $scope.roomData["_id"]){
+                $scope.roomData = angular.copy($scope.roomData);
+                $rootScope.tableData = angular.copy($rootScope.tableData);
+                if($scope.rooms && $scope.rooms.length && typeof $scope.roomData != "undefined" && $scope.roomData["_id"] && typeof $rootScope.tableData != "undefined"){
                     for (var i = 0; i < $scope.rooms.length; i++) {
                         if ($scope.rooms[i]._id == $scope.roomData["_id"]) {
                             for (var j = 0; j < $scope.rooms[i].tables.length; j++) {
@@ -1896,8 +1898,8 @@
                     $scope.checkoutPeoplePrice = 0;
                     $scope.checkoutTotalPrice = 0;
                     $scope.stepArray = [];
-                    $scope.roomData = angular.copy($scope.roomData);
-                    $rootScope.tableData = angular.copy($rootScope.tableData);
+                    // $scope.roomData = angular.copy($scope.roomData);
+                    // $rootScope.tableData = angular.copy($rootScope.tableData);
                     baRoomService.setCreateModalCollapsed(true);
                     if ($rootScope.tableData.orderId.length) {
                         $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
@@ -1954,8 +1956,11 @@
         $rootScope.$on('orderstatus', function (){
             RoomService.getRooms().then(function (data) {
                 $scope.rooms = RoomService.listRoom();
+                $scope.roomData = angular.copy($scope.roomData);
+                $rootScope.tableData = angular.copy($rootScope.tableData);
+                if($scope.rooms && $scope.rooms.length && typeof $scope.roomData != "undefined" && $scope.roomData["_id"] && typeof $rootScope.tableData != "undefined"){
                 for (var i = 0; i < $scope.rooms.length; i++) {
-                    if ($scope.rooms[i]._id == $scope.roomData["_id"]) {
+                    if (typeof $scope.roomData != "undefined" && $scope.rooms[i]._id == $scope.roomData["_id"] && typeof $rootScope.tableData != "undefined") {
                         for (var j = 0; j < $scope.rooms[i].tables.length; j++) {
                             if ($scope.rooms[i].tables[j]._id == $rootScope.tableData["_id"]) {
                                 $scope.roomData = angular.copy($scope.rooms[i]);
@@ -1980,8 +1985,8 @@
                 $scope.checkoutPeoplePrice = 0;
                 $scope.checkoutTotalPrice = 0;
                 $scope.stepArray = [];
-                $scope.roomData = angular.copy($scope.roomData);
-                $rootScope.tableData = angular.copy($rootScope.tableData);
+                // $scope.roomData = angular.copy($scope.roomData);
+                // $rootScope.tableData = angular.copy($rootScope.tableData);
                 baRoomService.setCreateModalCollapsed(true);
                 if ($rootScope.tableData.orderId.length) {
                     $rootScope.Order.noOfPeople = $rootScope.tableData.orderId[0].noOfPeople;
@@ -2029,6 +2034,7 @@
                     $scope.activeTab = [true, false, false, false, false, false, false, false];
                 }
                 $scope.showOrder = true;
+            }
             }).catch(function (error) {
             });
         });
