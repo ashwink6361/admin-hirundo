@@ -11,7 +11,6 @@
 
     /** @ngInject */
     function RoomsController($scope, $rootScope, baRoomService, baSidebarService, $uibModal, $state, $http, $translate, $timeout, RoomService, CategoryService, AlertService, ItemService, $q, OrderService) {
-        console.log($translate.instant('Rooms'));
         $scope.tableModal = false;
         $scope.editTableModal = false;
         $scope.isMultiple = false;

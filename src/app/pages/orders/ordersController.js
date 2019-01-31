@@ -1,16 +1,21 @@
 /**
- * @author p.baboo@huulke.com
+ * @author s.gautam@huulke.com
  * created on 26.03.2018
  */
 (function () {
     'use strict';
-    angular.module('BlurAdmin.pages.orders').controller('OrderController', OrderController);
+    angular.module('BlurAdmin.pages.orders')
+    .controller('OrderController', OrderController)
+    .controller('datepickerpopupCtrl', datepickerpopupCtrl);
 
     /** @ngInject */
     function OrderController($scope, $uibModal, $state, $http, $timeout, $interval, OrderService, AlertService) {
         $scope.ordersList = [];
         $scope.showItemDetail = false;
         $scope.loader = true;
+        $scope.filter = {
+            date: null
+        };
         
         OrderService.getOrders().then(function(data) {
             $scope.ordersList = OrderService.listOrder();
@@ -69,14 +74,9 @@
 
         $scope.updateItem = function(item, order, status) {
             item.status = status;
-            // var items = [];
             var ids = [];                        
-            // items.push(item.id._id);
             ids.push(item._id);            
             var opts = {
-                // step: item.step,
-                // status: status,
-                // itemId: items,
                 id: ids
             };
             OrderService.updateOrder(order, opts).then(function(data) {
@@ -96,5 +96,38 @@
             }).catch(function(error) {
             });
         }
+
+        $scope.changeDate = function (date) {
+            OrderService.getOrders(date).then(function(data) {
+                $scope.ordersList = OrderService.listOrder();
+            }).catch(function(error) {
+                $scope.ordersList = [];
+            });
+        }
+        
+        $scope.cleardate = function () {
+            $scope.filter.date = null;
+            OrderService.getOrders().then(function(data) {
+                $scope.ordersList = OrderService.listOrder();
+            }).catch(function(error) {
+                $scope.ordersList = [];
+            });
+        }
+    }
+
+    function datepickerpopupCtrl($scope) {
+        $scope.open = open;
+        $scope.popup1 = {
+            opened: false
+        };
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
+        $scope.options = {
+            showWeeks: false
+        };
+    
+        $scope.open1 = function() {
+            $scope.popup1.opened = true;
+        };
     }
 })();

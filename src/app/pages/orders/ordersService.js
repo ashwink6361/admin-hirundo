@@ -1,5 +1,5 @@
 /**
- * @author p.baboo@huulke.com
+ * @author s.gautam@huulke.com
  * created on 26.03.2018
  */
 (function () {
@@ -14,22 +14,18 @@
     var user = JSON.parse(localStorage.getItem('adminUser'));
     if (user) {
       socket.emit('connection');
-      console.log('user', user);
       socket.on('connected', function (data) {
-        console.log('connected', data);
         if (data && socket.id == data.socketId) {
           socket.emit('userAuth', {
             userId: user._id
           });
           socket.on('authConnected', function (data) {
-            console.log('authConnected', data);
           });
         }
       });
     }
     socket.on('neworderAdmin', function (data) {
       if (data.restro == user._id) {
-        console.log('neworderAdmin', data);
         _orders.push(data);
       }
     });
@@ -43,9 +39,19 @@
       }
     });
     return {
-      getOrders: function (id) {
+      getOrders: function (date) {
         var def = $q.defer();
-        var url = '/api/orders'
+        var dateToISO = null;
+        if(date){
+          var dateNow = new Date(date);
+          dateNow.setUTCHours(0, 0, 0, 0);
+          dateNow.setDate(dateNow.getDate() + 1);
+          dateToISO = dateNow.toISOString();
+        }
+        var url = '/api/orders';
+        if (dateToISO) {
+          url += '?date=' + dateToISO;
+        }
         doGet($q, $http, url).then(function (data) {
           _orders = data.data;
           def.resolve(data);

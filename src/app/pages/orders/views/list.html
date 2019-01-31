@@ -1,8 +1,42 @@
 <div class="widgets">
     <div class="row">
         <div class="col-lg-12 col-md-12">
-            <div ba-panel ba-panel-title="Todays Orders" ba-panel-class="with-scroll table-panel mh-500">
-                <div class="" style="right: 21px;margin-top: -42px;position: absolute;">Current Time: {{ clock | date:'HH:mm:ss'}}</div>
+            <div ba-panel ba-panel-class="with-scroll table-panel mh-500">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h3>Todays Orders</h3>
+                    </div>
+                    <div class="col-sm-4 mt-10 fw-bold">
+                        Current Time: {{ clock | date:'HH:mm:ss'}}
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row" ng-controller="datepickerpopupCtrl">
+                            <label class="col-sm-2 mt-10" for="date">Filter</label>
+                            <div class="col-sm-10">
+                                <div class="uib-datepicker-wrap">
+                                    <div class="input-group disable-color">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default calender-btn" ng-click="open1()">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </button>
+                                        </span>
+                                        <input type="text" class="form-control" id="date" ng-model="filter.date" name="date"
+                                            uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options" is-open="popup1.opened"
+                                            close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" ng-click="open1()"
+                                            ng-change="changeDate(filter.date)" readonly />
+                                        <span class="input-group-btn">
+                                            <button ng-show="filter.date" type="button" class="btn btn-default clear-date" ng-click="cleardate()">
+                                                <i class="fa fa-times-circle"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <!-- <div class="" style="right: 21px;margin-top: -42px;position: absolute;">Current Time: {{ clock | date:'HH:mm:ss'}}</div> -->
                 <div class="loader text-center" ng-if="loader"><img src="assets/img/loader.gif"></div>
                 <div ng-if="!loader">
                     <div ng-show="ordersList.length<1" class="text-center">
@@ -12,12 +46,12 @@
                         <thead>
                             <tr>
                                 <th class="w-50"></th>
-                                <th>#Orderid </th>
-                                <th>Waiter</th>
-                                <th>Room</th>
-                                <th>Table</th>
-                                <th>Order Time</th>
-                                <th>Status</th>
+                                <th class="fw-bold">Table</th>
+                                <th class="fw-bold">#Orderid </th>
+                                <th class="fw-bold">Waiter</th>
+                                <th class="fw-bold">Room</th>
+                                <th class="fw-bold">Order Time</th>
+                                <th class="fw-bold">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,10 +64,10 @@
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </td>
+                                <td>{{order.tableName}}</td>
                                 <td>N.{{order.orderId}}</td>                            
                                 <td>{{order.waiter.firstName}}</td>
                                 <td>{{order.room.name}}</td>
-                                <td>{{order.tableName}}</td>
                                 <td>{{order.created_at | date:'hh:mm a'}}</td>
                                 <td>{{getOrderStatus(order.status)}}</td>
                             </tr>
@@ -42,12 +76,12 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Item Name</th>
-                                                <th>Step</th>                                            
-                                                <th>Item Price</th>
-                                                <th>Item Quantity</th>
-                                                <th>Status</th>
-                                                <th class="w-310">Action</th>
+                                                <th class="fw-bold">Item Name</th>
+                                                <th class="fw-bold">Step</th>                                            
+                                                <th class="fw-bold">Item Price</th>
+                                                <th class="fw-bold">Item Quantity</th>
+                                                <th class="fw-bold">Status</th>
+                                                <!-- <th class="w-310">Action</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,12 +95,9 @@
                                                 <td>&euro; {{item.price}}</td>
                                                 <td>{{item.quantity}}</td>
                                                 <td>{{getOrderStatus(item.status)}}</td>
-                                                <td>
-                                                    <!-- <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 4)">In prepare</button> -->
-                                                    <!-- <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 2)">Prepared</button> -->
+                                                <!-- <td>
                                                     <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 1)">Delivered</button>
-                                                    <!-- <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 3)">Cancel</button> -->
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>

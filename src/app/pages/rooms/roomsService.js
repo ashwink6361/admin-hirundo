@@ -57,23 +57,18 @@ function RoomService($q, $http, $rootScope) {
     var _rooms = [];
     var socket = io.connect(SOCKETURL);
     if (socket.connected)
-        console.log("Socket Connection Done");
         var user = JSON.parse(localStorage.getItem('adminUser'));
         if(user){
             socket.emit('connection');  
-            console.log('user',user);                               
             socket.on('connected', function (data) {
-                console.log('connected',data);            
                 if(data && socket.id == data.socketId){
                 socket.emit('userAuth', {userId: user._id});           
                 socket.on('authConnected', function (data) {
-                        console.log('authConnected',data);            
                 });
             }
             });
         }
     socket.on('tablestatus', function (data) {
-        console.log('tablestatus data',data);
         for (var i = 0; i < _rooms.length; i++) {
             if (data.room._id == _rooms[i]._id) {
                 for (var j = 0; j < _rooms[i].tables.length; j++) {
@@ -87,7 +82,6 @@ function RoomService($q, $http, $rootScope) {
     });
 
     socket.on('orderstatus', function (data) {
-        console.log('orderstatus',data);
         for (var i = 0; i < _rooms.length; i++) {
             if (data.room._id === _rooms[i]._id) {
                 for (var j = 0; j < _rooms[i].tables.length; j++) {
