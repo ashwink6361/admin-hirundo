@@ -45,13 +45,6 @@
         dateNow2.setUTCHours(23, 59, 0, 0);
         dateNow2.setDate(dateNow2.getDate() + 1);
         opts.endDate = dateNow2.toISOString();
-
-        // $scope.pieDate.startDate.setUTCHours(0, 0, 0, 0);
-        // $scope.pieDate.startDate.setDate($scope.pieDate.startDate.getDate() + 1);
-        // $scope.pieDate.endDate.setUTCHours(23, 59, 0, 0);
-        // $scope.pieDate.endDate.setDate($scope.pieDate.endDate.getDate() + 1);
-        // opts.startDate = $scope.pieDate.startDate.toISOString();
-        // opts.endDate = $scope.pieDate.endDate.toISOString();
         DashboardPieChartService.getPieChartData(opts).then(function (data) {
           $scope.pieData = data.data;
         }).catch(function (error) {
@@ -61,55 +54,7 @@
     }
     
     $scope.getPieData();
-    // console.log('$scope.currentlan', $scope.currentlan);
-
-    // $scope.charts = [{
-    //   color: pieColor,
-    //   description: $scope.currentlan == 'en'? 'People':'Persone',
-    //   stats: '57,820',
-    //   icon: 'person',
-    // }, {
-    //   color: pieColor,
-    //   description: $scope.currentlan == 'en'? 'Average spending':'Spesa media',
-    //   stats: '$ 89,745',
-    //   icon: 'money',
-    // }, {
-    //   color: pieColor,
-    //   description: $scope.currentlan == 'en'? 'Sales':'Vendite',
-    //   stats: '178,391',
-    //   icon: 'face',
-    // }, {
-    //   color: pieColor,
-    //   description: $scope.currentlan == 'en'? 'Food cost':'Costo del cibo',
-    //   stats: '32,592',
-    //   icon: 'refresh',
-    // }
-    // ];
-    // $rootScope.$on('currentlan', function () {
-    //   console.log('$scope.currentlan++++++++++++++', $scope.currentlan);
-    //   $scope.charts = [{
-    //     color: pieColor,
-    //     description: $scope.currentlan == 'en'? 'People':'Persone',
-    //     stats: '57,820',
-    //     icon: 'person',
-    //   }, {
-    //     color: pieColor,
-    //     description: $scope.currentlan == 'en'? 'Average spending':'Spesa media',
-    //     stats: '$ 89,745',
-    //     icon: 'money',
-    //   }, {
-    //     color: pieColor,
-    //     description: $scope.currentlan == 'en'? 'Sales':'Vendite',
-    //     stats: '178,391',
-    //     icon: 'face',
-    //   }, {
-    //     color: pieColor,
-    //     description: $scope.currentlan == 'en'? 'Food cost':'Costo del cibo',
-    //     stats: '32,592',
-    //     icon: 'refresh',
-    //   }
-    //   ];
-    // });
+  
     function getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;
     }
