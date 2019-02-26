@@ -13,6 +13,9 @@
   function DashboardPieChartCtrl($scope, $timeout, baConfig, baUtil, DashboardPieChartService, colorHelper) {
     $scope.pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
     $scope.pieData = {};
+    $scope.searchitem = {
+      text: ''
+    };
     $scope.categoryData = [];
     $scope.categoryDetails = [];
     $scope.labels = [];
@@ -306,6 +309,7 @@
     }, 1000);
 
     $scope.filterData = function (startDate, endDate) {
+      $scope.searchitem.text = '';
       $scope.pieDate.startDate = startDate;
       $scope.pieDate.endDate = endDate;
       $scope.getCategoryData();
@@ -313,6 +317,7 @@
     }
 
     $scope.clearStartDate = function () {
+      $scope.searchitem.text = '';
       $scope.pieDate.startDate = null;
       $scope.dateError = "";
       $scope.getCategoryData();
@@ -320,6 +325,7 @@
     }
 
     $scope.clearEndDate = function () {
+      $scope.searchitem.text = '';
       $scope.pieDate.endDate = null;
       $scope.dateError = "";
       $scope.getCategoryData();
@@ -335,6 +341,7 @@
     };
 
     $scope.selectCategory = function (category) {
+      $scope.searchitem.text = '';
       $scope.selectedCategory = angular.copy(category);
       var opts = {};
       if ($scope.pieDate.startDate == null && $scope.pieDate.endDate == null) {

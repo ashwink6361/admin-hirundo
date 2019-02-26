@@ -122,7 +122,8 @@
           </div>
         </div>
         <div ng-if="categoryData.length">
-          <div ng-repeat="category in categoryData" ng-click="selectCategory(category)">
+            <input class="form-control" ng-model="searchcategory" type="text" placeholder="Search Category" />
+          <div ng-repeat="category in categoryData | filter : searchcategory track by $index" ng-click="selectCategory(category)">
             {{category.category}} +{{category.percentage}}%
           </div>
         </div>
@@ -163,7 +164,8 @@
         </select>
         </div>
         <div ng-if="categoryDetails.length">
-          <div ng-repeat="data in categoryDetails track by $index">
+            <input class="form-control" ng-model="searchitem.text" type="text" placeholder="Search Item" />
+          <div ng-repeat="data in categoryDetails | filter : searchitem.text track by $index">
             {{data.item}} {{data.count}}
           </div>
         </div>
