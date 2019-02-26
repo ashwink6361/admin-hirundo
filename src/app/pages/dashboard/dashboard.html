@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-lg-6 col-md-12 col-sm-12"
        ba-panel
-       ba-panel-title="Acquisition Channels"
+       ba-panel-title="{{'categories' | translate}}"
        ba-panel-class="medium-panel traffic-panel">
     <traffic-chart></traffic-chart>
   </div>
@@ -15,19 +15,19 @@
   </div>
 </div>
 
-<div class="row pie-charts" ng-controller="DashboardPieChartCtrl" ng-if="pieData.waiter.length">
+<!-- <div class="row pie-charts" ng-controller="DashboardPieChartCtrl" ng-if="userDetails.adminType == 2 && pieData.waiter.length">
   <div class="pie-chart-item-container" ng-repeat="waiter in pieData.waiter">
     <div ba-panel>
       <div class="pie-chart-item">
         <div class="description">
           <div>{{waiter.firstName}}</div>
-          <div class="description-stats">{{waiter.totalSales}}</div>
+          <div class="description-stats">€{{waiter.totalSales}}</div>
         </div>
         <i class="chart-icon i-person"></i>
       </div>
     </div>
   </div> 
-</div>
+</div> -->
 
 <div class="row">
   <div class="col-xlg-9 col-lg-6 col-md-6 col-sm-12 col-xs-12">

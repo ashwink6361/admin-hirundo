@@ -16,6 +16,26 @@ function DashboardPieChartService($q, $http) {
                 def.reject(error);
             });
             return def.promise;
+        },
+        getCategoryData: function(opts) {
+            var def = $q.defer();
+            var url = '/api/dashboard/category?startDate=' + opts.startDate + '&endDate=' + opts.endDate;
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+        getCategoryDetails: function(id, opts) {
+            var def = $q.defer();
+            var url = '/api/dashboard/item?startDate=' + opts.startDate + '&endDate=' + opts.endDate+ '&category=' + id;
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
         }
     };
 }

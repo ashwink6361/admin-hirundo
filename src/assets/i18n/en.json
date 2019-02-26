@@ -141,5 +141,7 @@
     "endDate": "End Date",
     "startDateReq": "Start date is required.",
     "endDateReq": "End date is required.",
-    "filter": "Filter"
+    "filter": "Filter",
+    "categories": "Categories",
+    "categoryVolumes": "Category volumes"
 }

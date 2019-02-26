@@ -141,5 +141,7 @@
     "endDate": "Data di fine",
     "startDateReq": "La data di inizio è obbligatoria.",
     "endDateReq": "La data di fine è obbligatoria.",
-    "filter": "Filtro"
+    "filter": "Filtro",
+    "categories": "Categorie",
+    "categoryVolumes": "Volumi categoria"
 }

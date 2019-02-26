@@ -1,41 +1,7 @@
-<!-- <div class="row">
-    <div class="col-sm-4">
-        <h3>Todays Orders</h3>
-    </div>
-    <div class="col-sm-4 mt-10 fw-bold">
-        Current Time: {{ clock | date:'HH:mm:ss'}}
-    </div>
-    <div class="col-sm-4">
-        <div class="form-group row" ng-controller="datepickerpopupCtrl">
-            <label class="col-sm-2 mt-10" for="date">Filter</label>
-            <div class="col-sm-10">
-                <div class="uib-datepicker-wrap">
-                    <div class="input-group disable-color">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default calender-btn" ng-click="open1()">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                        </span>
-                        <input type="text" class="form-control" id="date" ng-model="filter.date" name="date"
-                            uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options" is-open="popup1.opened"
-                            close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" ng-click="open1()"
-                            ng-change="changeDate(filter.date)" readonly />
-                        <span class="input-group-btn">
-                            <button ng-show="filter.date" type="button" class="btn btn-default clear-date" ng-click="cleardate()">
-                                <i class="fa fa-times-circle"></i>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <form ng-if="userDetails.adminType == 2" name="Form.pieForm" id="Form" novalidate>
   <div class="row">
     <div class="col-sm-3">
-        <h3>{{userDetails.firstName}}<span ng-if="userDetails.lastName">&nbsp;{{userDetails.lastName}}</span></h3>
+      <h3>{{userDetails.firstName}}<span ng-if="userDetails.lastName">&nbsp;{{userDetails.lastName}}</span></h3>
     </div>
     <div class="col-sm-4">
       <div class="form-group row" ng-controller="datepickerpopupCtrl1">
@@ -59,8 +25,6 @@
               </span>
             </div>
           </div>
-          <!-- <span class="color-red" ng-show="Form.pieForm.startDate.$dirty &&  Form.pieForm.startDate.$error.required">{{'startDateReq'
-            | translate}}</span> -->
         </div>
       </div>
     </div>
@@ -76,8 +40,8 @@
                 </button>
               </span>
               <input type="text" class="form-control" id="endDate" ng-model="pieDate.endDate" name="endDate"
-                uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options" is-open="popup2.opened"
-                close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" ng-click="open2()" ng-change="checkErr(pieDate.startDate,pieDate.endDate)"
+                uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options" is-open="popup2.opened" close-text="Close"
+                alt-input-formats="altInputFormats" show-button-bar="false" ng-click="open2()" ng-change="checkErr(pieDate.startDate,pieDate.endDate)"
                 ng-required="true" readonly />
               <span class="input-group-btn">
                 <button ng-show="pieDate.endDate" type="button" class="btn btn-default clear-date" ng-click="clearEndDate()">
@@ -86,8 +50,6 @@
               </span>
             </div>
           </div>
-          <!-- <span class="color-red" ng-show="Form.pieForm.endDate.$dirty && Form.pieForm.endDate.$error.required">{{'endDateReq'
-            | translate}}</span> -->
           <span class="color-red" ng-if="dateError">{{dateError}}</span>
         </div>
       </div>
@@ -148,4 +110,91 @@
   </div>
 </div>
 
+<div class="row" ng-if="userDetails.adminType == 2">
+  <div ng-if="doughnutData" class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="{{'categories' | translate}}"
+    ba-panel-class="medium-panel traffic-panel">
+    <div class="channels-block" ng-class="{'transparent': transparent}">
+      <div class="chart-bg"></div>
+      <div class="traffic-chart" id="trafficChart1">
+        <div class="canvas-holder">
+          <canvas id="chart-area1" width="280" height="280"></canvas>
+          <div class="traffic-text">
+          </div>
+        </div>
+        <div ng-if="categoryData.length">
+          <div ng-repeat="category in categoryData" ng-click="selectCategory(category)">
+            {{category.category}} +{{category.percentage}}%
+          </div>
+        </div>
+      </div>
+      <div class="channels-info">
+        <div>
+          <div class="channels-info-item" ng-repeat="label in doughnutData.labels" ng-init="i = $index; data = doughnutData.datasets[0]">
+            <div class="legend-color" style="background-color: {{data.backgroundColor}}"></div>
+            <p>{{label}}<span class="channel-number">+{{data.percentage[i]}}%</span></p>
+            <div class="progress progress-sm channel-progress">
+              <div class="progress-bar " role="progressbar" aria-valuenow="{{data.percentage[i]}}" aria-valuemin="0"
+                aria-valuemax="100" style="width: {{item.percentage}}%">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="doughnutData2" class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="{{'categoryVolumes' | translate}}"
+    ba-panel-class="medium-panel traffic-panel">
+    <div class="channels-block" ng-class="{'transparent': transparent}">
+      <div class="chart-bg"></div>
+      <div class="traffic-chart" id="trafficChart2">
+        <div class="canvas-holder">
+          <canvas id="chart-area2" width="280" height="280"></canvas>
+          <div class="traffic-text">
+            <span>{{selectedCategory.category}}</span>
+          </div>
+        </div>
+        <div class="form-group" ng-if="categoryData.length">
+          <!-- <select class="form-control select-filter classic" ng-model="selectedCategory" ng-change="selectCategory(selectedCategory)"
+            ng-options="category as category.category for category in categoryData">
+            <option value="?"></option>
+          </select> -->
+          <select class="form-control select-filter classic" ng-model="selectedCategory" ng-change="selectCategory(selectedCategory)"
+            ng-options="selectedCategory as selectedCategory.category for selectedCategory in categoryData track by selectedCategory._id">
+        </select>
+        </div>
+        <div ng-if="categoryDetails.length">
+          <div ng-repeat="data in categoryDetails track by $index">
+            {{data.item}} {{data.count}}
+          </div>
+        </div>
+      </div>
+      <div class="channels-info">
+        <div>
+          <div class="channels-info-item" ng-repeat="label in doughnutData2.labels track by $index" ng-init="i = $index; data = doughnutData2.datasets[0]">
+            <div class="legend-color" style="background-color: {{data.backgroundColor}}"></div>
+            <p>{{label}}<span class="channel-number">+{{data.percentage[i]}}%</span></p>
+            <div class="progress progress-sm channel-progress">
+              <div class="progress-bar " role="progressbar" aria-valuenow="{{data.percentage[i]}}" aria-valuemin="0"
+                aria-valuemax="100" style="width: {{item.percentage}}%">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="row pie-charts" ng-if="userDetails.adminType == 2 && pieData.waiter.length">
+  <div class="pie-chart-item-container" ng-repeat="waiter in pieData.waiter">
+    <div ba-panel>
+      <div class="pie-chart-item">
+        <div class="description">
+          <div>{{waiter.firstName}}</div>
+          <div class="description-stats">€{{waiter.totalSales}}</div>
+        </div>
+        <i class="chart-icon i-person"></i>
+      </div>
+    </div>
+  </div>
+</div>

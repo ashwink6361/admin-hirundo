@@ -9,9 +9,15 @@ function doGet($q, $http, url) {
         headers : { 'Content-Type': 'application/json; charset=UTF-8' }
     })
     .success( function(data, status, headers, config) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.resolve(data);
     })
     .error(function(data, status, headers, config) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.reject(data);
     });
     return def.promise;
@@ -25,9 +31,15 @@ function doDelete($q, $http, url) {
         headers : { 'Content-Type': 'application/json; charset=UTF-8' }
     })
     .success( function(data, status, headers, config) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.resolve(data);
     })
     .error(function(data, status, headers, config) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.reject(data);
     });
     return def.promise;
@@ -42,9 +54,15 @@ function doPost($q, $http, url, opts) {
         headers : { 'Content-Type': 'application/json; charset=UTF-8' }
     })
     .success( function(data) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.resolve(data);
     })
     .error(function(data, status, headers, config) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.reject(data);
     });
     return def.promise;
@@ -58,9 +76,15 @@ function doPut($q, $http, url, opts) {
         headers : { 'Content-Type': 'application/json; charset=UTF-8' }
     })
     .success( function(data) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.resolve(data);
     })
     .error(function(data, status, headers, config) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.reject(data);
     });
     return def.promise;
@@ -82,8 +106,14 @@ function doPostWithImage($q, $http, url, opts) {
         transformRequest: angular.identity,
         headers: {'Authorization': 'Bearer '+getCookie('session'), 'privatekey': APIKEY, 'Content-Type': undefined}
     }).success( function(data) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.resolve(data);
     }).error(function(error) {
+        if (error.statusCode == 401) {
+            logout();
+        }
         def.reject(error);
     });
     return def.promise;
@@ -99,13 +129,24 @@ function doPutWithImage($q, $http, url, opts) {
         transformRequest: angular.identity,
         headers: {'Authorization': 'Bearer '+getCookie('session'), 'privatekey': APIKEY, 'Content-Type': undefined}
     }).success( function(data) {
+        if (data.statusCode == 401) {
+            logout();
+        }
         def.resolve(data);
     }).error(function(error) {
+        if (error.statusCode == 401) {
+            logout();
+        }
         def.reject(error);
     });
     return def.promise;
 }
-
+function logout() {
+    localStorage.removeItem('adminUser');
+    localStorage.removeItem('token');
+    window.localStorage.clear();
+    window.location = '/';
+}
 //Define the Global Namespace
 angular.module('BlurAdmin', [
   'ngAnimate',
