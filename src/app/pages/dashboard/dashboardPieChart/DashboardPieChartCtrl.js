@@ -10,10 +10,13 @@
     .controller('datepickerpopupCtrl1', datepickerpopupCtrl1);
 
   /** @ngInject */
-  function DashboardPieChartCtrl($scope, $timeout, baConfig, baUtil, DashboardPieChartService, colorHelper) {
+  function DashboardPieChartCtrl($scope, $timeout,$state, baConfig, baUtil, DashboardPieChartService, colorHelper) {
     $scope.pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
     $scope.pieData = {};
     $scope.searchitem = {
+      text: ''
+    };
+    $scope.searchcategory = {
       text: ''
     };
     $scope.categoryData = [];
@@ -27,10 +30,29 @@
     $scope.data2 = [];
     $scope.percentage2 = [];
     $scope.backgroundColor2 = [];
-    $scope.pieDate = {
-      startDate: null,
-      endDate: null
-    };
+    var dates = JSON.parse(localStorage.getItem('pieDate'));
+    if (dates) {
+      if(dates.reload){
+        $scope.pieDate = {
+          startDate: dates.startDate ? new Date(dates.startDate) : null,
+          endDate: dates.endDate ? new Date(dates.endDate) : null,
+          reload: false
+        };
+      }
+      else{
+        $scope.pieDate = {
+          startDate: null,
+          endDate: null,
+          reload: false
+        };
+      } 
+    } else {
+      $scope.pieDate = {
+        startDate: null,
+        endDate: null,
+        reload: false
+      };
+    }
     $scope.Form = {};
     $scope.dateError = "";
     $scope.selectedCategory = {};
@@ -45,9 +67,9 @@
       }
       return color;
     }
-    // function isBelowThreshold(currentValue) {
-    //   return parseFloat(currentValue) == 0;
-    // };
+    function isBelowThreshold(currentValue) {
+      return parseFloat(currentValue) == 0;
+    };
     $scope.userDetails = JSON.parse(localStorage.getItem('adminUser'));
     $scope.getPieData = function () {
       var opts = {};
@@ -81,6 +103,8 @@
       }
     }
     $scope.getCategoryData = function () {
+      $scope.pieDate.reload = false;
+      localStorage.setItem('pieDate', JSON.stringify($scope.pieDate));
       $scope.categoryData = [];
       $scope.categoryDetails = [];
       var opts = {};
@@ -103,18 +127,32 @@
             $scope.labels.push($scope.categoryData[i].category);
             $scope.data.push($scope.categoryData[i].count);
             $scope.percentage.push($scope.categoryData[i].percentage);
-            $scope.backgroundColor.push(getRandomColor());
+            var color = getRandomColor();
+            $scope.backgroundColor.push(color);
+            $scope.categoryData[i].color = color;
           }
           if ($scope.labels.length) {
-            $scope.doughnutData = {
-              labels: $scope.labels,
-              datasets: [{
-                data: $scope.data,
-                backgroundColor: $scope.backgroundColor,
-                hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
-                percentage: $scope.percentage
-              }]
-            };
+            if ($scope.percentage.every(isBelowThreshold)) {
+              $scope.doughnutData = {
+                labels: ['data'],
+                datasets: [{
+                  data: [100],
+                  backgroundColor: [dashboardColors.surfieGreen],
+                  hoverBackgroundColor: [colorHelper.shade(dashboardColors.surfieGreen, 15)],
+                  percentage: [100]
+                }]
+              };
+            } else {
+              $scope.doughnutData = {
+                labels: $scope.labels,
+                datasets: [{
+                  data: $scope.data,
+                  backgroundColor: $scope.backgroundColor,
+                  hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
+                  percentage: $scope.percentage
+                }]
+              };
+            }
             DashboardPieChartService.getCategoryDetails($scope.selectedCategory._id, opts).then(function (data) {
               $scope.labels2 = [];
               $scope.data2 = [];
@@ -125,18 +163,33 @@
                 $scope.labels2.push($scope.categoryDetails[j].item);
                 $scope.data2.push($scope.categoryDetails[j].count);
                 $scope.percentage2.push($scope.categoryDetails[j].percentage);
-                $scope.backgroundColor2.push(getRandomColor());
+                // $scope.backgroundColor2.push(getRandomColor());
+                var color = getRandomColor();
+                $scope.backgroundColor2.push(color);
+                $scope.categoryDetails[j].color = color;
               }
               if ($scope.labels2.length) {
-                $scope.doughnutData2 = {
-                  labels: $scope.labels2,
-                  datasets: [{
-                    data: $scope.data2,
-                    backgroundColor: $scope.backgroundColor2,
-                    hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
-                    percentage: $scope.percentage2
-                  }]
-                };
+                if ($scope.percentage2.every(isBelowThreshold)) {
+                  $scope.doughnutData2 = {
+                    labels: ['data'],
+                    datasets: [{
+                      data: [100],
+                      backgroundColor: [dashboardColors.surfieGreen],
+                      hoverBackgroundColor: [colorHelper.shade(dashboardColors.surfieGreen, 15)],
+                      percentage: [100]
+                    }]
+                  };
+                } else {
+                  $scope.doughnutData2 = {
+                    labels: $scope.labels2,
+                    datasets: [{
+                      data: $scope.data2,
+                      backgroundColor: $scope.backgroundColor2,
+                      hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
+                      percentage: $scope.percentage2
+                    }]
+                  };
+                }
                 $(document).ready(function () {
                   if ($scope.doughnutData2) {
                     var ctx2 = document.getElementById('chart-area2').getContext('2d');
@@ -187,18 +240,33 @@
             $scope.labels.push($scope.categoryData[i].category);
             $scope.data.push($scope.categoryData[i].count);
             $scope.percentage.push($scope.categoryData[i].percentage);
-            $scope.backgroundColor.push(getRandomColor());
+            // $scope.backgroundColor.push(getRandomColor());
+            var color = getRandomColor();
+            $scope.backgroundColor.push(color);
+            $scope.categoryData[i].color = color;
           }
           if ($scope.labels.length) {
-            $scope.doughnutData = {
-              labels: $scope.labels,
-              datasets: [{
-                data: $scope.data,
-                backgroundColor: $scope.backgroundColor,
-                hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
-                percentage: $scope.percentage
-              }]
-            };
+            if ($scope.percentage.every(isBelowThreshold)) {
+              $scope.doughnutData = {
+                labels: ['data'],
+                datasets: [{
+                  data: [100],
+                  backgroundColor: [dashboardColors.surfieGreen],
+                  hoverBackgroundColor: [colorHelper.shade(dashboardColors.surfieGreen, 15)],
+                  percentage: [100]
+                }]
+              };
+            } else {
+              $scope.doughnutData = {
+                labels: $scope.labels,
+                datasets: [{
+                  data: $scope.data,
+                  backgroundColor: $scope.backgroundColor,
+                  hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
+                  percentage: $scope.percentage
+                }]
+              };
+            }
             DashboardPieChartService.getCategoryDetails($scope.selectedCategory._id, opts).then(function (data) {
               $scope.labels2 = [];
               $scope.data2 = [];
@@ -209,18 +277,33 @@
                 $scope.labels2.push($scope.categoryDetails[j].item);
                 $scope.data2.push($scope.categoryDetails[j].count);
                 $scope.percentage2.push($scope.categoryDetails[j].percentage);
-                $scope.backgroundColor2.push(getRandomColor());
+                // $scope.backgroundColor2.push(getRandomColor());
+                var color = getRandomColor();
+                $scope.backgroundColor2.push(color);
+                $scope.categoryDetails[j].color = color;
               }
               if ($scope.labels2.length) {
-                $scope.doughnutData2 = {
-                  labels: $scope.labels2,
-                  datasets: [{
-                    data: $scope.data2,
-                    backgroundColor: $scope.backgroundColor2,
-                    hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
-                    percentage: $scope.percentage2
-                  }]
-                };
+                if ($scope.percentage2.every(isBelowThreshold)) {
+                  $scope.doughnutData2 = {
+                    labels: ['data'],
+                    datasets: [{
+                      data: [100],
+                      backgroundColor: [dashboardColors.surfieGreen],
+                      hoverBackgroundColor: [colorHelper.shade(dashboardColors.surfieGreen, 15)],
+                      percentage: [100]
+                    }]
+                  };
+                } else {
+                  $scope.doughnutData2 = {
+                    labels: $scope.labels2,
+                    datasets: [{
+                      data: $scope.data2,
+                      backgroundColor: $scope.backgroundColor2,
+                      hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
+                      percentage: $scope.percentage2
+                    }]
+                  };
+                }
                 $(document).ready(function () {
                   if ($scope.doughnutData2) {
                     var ctx2 = document.getElementById('chart-area2').getContext('2d');
@@ -314,26 +397,42 @@
 
     $scope.filterData = function (startDate, endDate) {
       $scope.searchitem.text = '';
+      $scope.searchcategory.text = '';
       $scope.pieDate.startDate = startDate;
       $scope.pieDate.endDate = endDate;
-      $scope.getCategoryData();
-      $scope.getPieData();
+      $scope.pieDate.reload = true;      
+      localStorage.setItem('pieDate', JSON.stringify($scope.pieDate));
+      $state.reload();
+      // $scope.getCategoryData();
+      // $scope.getPieData();
     }
 
     $scope.clearStartDate = function () {
       $scope.searchitem.text = '';
+      $scope.searchcategory.text = '';
       $scope.pieDate.startDate = null;
+      localStorage.setItem('pieDate', JSON.stringify($scope.pieDate));
       $scope.dateError = "";
-      $scope.getCategoryData();
-      $scope.getPieData();
+      if($scope.pieDate.startDate == null && $scope.pieDate.endDate == null){
+        $scope.pieDate.reload = true;      
+        $state.reload();
+      }
+      // $scope.getCategoryData();
+      // $scope.getPieData();
     }
 
     $scope.clearEndDate = function () {
       $scope.searchitem.text = '';
+      $scope.searchcategory.text = '';
       $scope.pieDate.endDate = null;
+      localStorage.setItem('pieDate', JSON.stringify($scope.pieDate));
       $scope.dateError = "";
-      $scope.getCategoryData();
-      $scope.getPieData();
+      if($scope.pieDate.startDate == null && $scope.pieDate.endDate == null){
+        $scope.pieDate.reload = true;      
+        $state.reload();
+      }
+      // $scope.getCategoryData();
+      // $scope.getPieData();
     }
 
     $scope.checkErr = function (startDate, endDate) {
@@ -366,18 +465,33 @@
             $scope.labels2.push($scope.categoryDetails[j].item);
             $scope.data2.push($scope.categoryDetails[j].count);
             $scope.percentage2.push($scope.categoryDetails[j].percentage);
-            $scope.backgroundColor2.push(getRandomColor());
+            // $scope.backgroundColor2.push(getRandomColor());
+            var color = getRandomColor();
+            $scope.backgroundColor2.push(color);
+            $scope.categoryDetails[j].color = color;
           }
           if ($scope.labels2.length) {
-            $scope.doughnutData2 = {
-              labels: $scope.labels2,
-              datasets: [{
-                data: $scope.data2,
-                backgroundColor: $scope.backgroundColor2,
-                hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
-                percentage: $scope.percentage2
-              }]
-            };
+            if ($scope.percentage2.every(isBelowThreshold)) {
+              $scope.doughnutData2 = {
+                labels: ['data'],
+                datasets: [{
+                  data: [100],
+                  backgroundColor: [dashboardColors.surfieGreen],
+                  hoverBackgroundColor: [colorHelper.shade(dashboardColors.surfieGreen, 15)],
+                  percentage: [100]
+                }]
+              };
+            } else {
+              $scope.doughnutData2 = {
+                labels: $scope.labels2,
+                datasets: [{
+                  data: $scope.data2,
+                  backgroundColor: $scope.backgroundColor2,
+                  hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
+                  percentage: $scope.percentage2
+                }]
+              };
+            }
             $(document).ready(function () {
               if ($scope.doughnutData2) {
                 var ctx2 = document.getElementById('chart-area2').getContext('2d');
@@ -422,18 +536,33 @@
             $scope.labels2.push($scope.categoryDetails[j].item);
             $scope.data2.push($scope.categoryDetails[j].count);
             $scope.percentage2.push($scope.categoryDetails[j].percentage);
-            $scope.backgroundColor2.push(getRandomColor());
+            // $scope.backgroundColor2.push(getRandomColor());
+            var color = getRandomColor();
+            $scope.backgroundColor2.push(color);
+            $scope.categoryDetails[j].color = color;
           }
           if ($scope.labels2.length) {
-            $scope.doughnutData2 = {
-              labels: $scope.labels2,
-              datasets: [{
-                data: $scope.data2,
-                backgroundColor: $scope.backgroundColor2,
-                hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
-                percentage: $scope.percentage2
-              }]
-            };
+            if ($scope.percentage2.every(isBelowThreshold)) {
+              $scope.doughnutData2 = {
+                labels: ['data'],
+                datasets: [{
+                  data: [100],
+                  backgroundColor: [dashboardColors.surfieGreen],
+                  hoverBackgroundColor: [colorHelper.shade(dashboardColors.surfieGreen, 15)],
+                  percentage: [100]
+                }]
+              };
+            } else {
+              $scope.doughnutData2 = {
+                labels: $scope.labels2,
+                datasets: [{
+                  data: $scope.data2,
+                  backgroundColor: $scope.backgroundColor2,
+                  hoverBackgroundColor: colorHelper.shade(dashboardColors.surfieGreen, 15),
+                  percentage: $scope.percentage2
+                }]
+              };
+            }
             $(document).ready(function () {
               if ($scope.doughnutData2) {
                 var ctx2 = document.getElementById('chart-area2').getContext('2d');
