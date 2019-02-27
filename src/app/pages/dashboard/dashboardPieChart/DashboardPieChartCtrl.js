@@ -45,7 +45,9 @@
       }
       return color;
     }
-
+    // function isBelowThreshold(currentValue) {
+    //   return parseFloat(currentValue) == 0;
+    // };
     $scope.userDetails = JSON.parse(localStorage.getItem('adminUser'));
     $scope.getPieData = function () {
       var opts = {};
@@ -79,6 +81,8 @@
       }
     }
     $scope.getCategoryData = function () {
+      $scope.categoryData = [];
+      $scope.categoryDetails = [];
       var opts = {};
       if ($scope.pieDate.startDate == null && $scope.pieDate.endDate == null) {
         var dateNow1 = new Date();
