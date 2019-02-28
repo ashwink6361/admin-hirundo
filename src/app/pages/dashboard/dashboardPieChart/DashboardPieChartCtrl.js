@@ -340,6 +340,7 @@
     $scope.getCategoryData();
     $(document).ready(function () {
       if ($scope.doughnutData) {
+        console.log("$scope.doughnutData",$scope.doughnutData);
         var ctx1 = document.getElementById('chart-area1').getContext('2d');
         window.myDoughnut1 = new Chart(ctx1, {
           type: 'doughnut',
