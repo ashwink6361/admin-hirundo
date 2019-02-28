@@ -120,7 +120,7 @@
       <div class="category-borderbtm c-p" ng-repeat="category in categoryData | filter : searchcategory.text track by $index"
         ng-click="selectCategory(category)">
         <i style="color: {{category.bgcolor}}" class="fa fa-circle" aria-hidden="true"></i>
-        <span class="cate-categoryitems"> {{category.category}}</span> <span class="perc-percentageitems">
+        <span class="cate-categoryitems" title="{{category.category}}"> {{category.category}}</span> <span class="perc-percentageitems">
           +{{category.percentage}}%</span>
       </div>
     </div>
@@ -170,7 +170,7 @@
       <div ng-if="categoryDetails.length" class="ngnewscope-categ itemsearch-catenwe">
         <div class="category-borderbtm" ng-repeat="data in categoryDetails | filter : searchitem.text track by $index">
           <i style="color: {{data.bgcolor}}" class="fa fa-circle" aria-hidden="true"></i>
-          <span class="cate-categoryitems"> {{data.item}}</span> <span class="perc-percentageitems">{{data.count}}</span>
+          <span class="cate-categoryitems" title="{{data.item}}"> {{data.item}}</span> <span class="perc-percentageitems">{{data.count}}</span>
         </div>
       </div>
     </div>
@@ -180,7 +180,7 @@
         <div class="canvas-holder new-canvasholderr">
           <canvas id="chart-area2" class="circlecolor0chart" width="280" height="280"></canvas>
           <div class="traffic-text trafficbackg-text">
-            <span class="textname0category">{{selectedCategory.category}}</span>
+            <span class="textname0category select-categitemscir" title="{{selectedCategory.category}}">{{selectedCategory.category}}</span>
             <div class="bg-text-colorimg" ng-style="{'background-color': !selectedCategory.isIcon ? '#ffffff' : selectedCategory.color}">
               <img class="imgtag-images" ng-if="!selectedCategory.isIcon" ng-src="{{selectedCategory.logo.small}}" alt="" />
               <img class="imgtag-iconimage" ng-if="selectedCategory.isIcon" ng-src="{{selectedCategory.icon}}" alt="" />

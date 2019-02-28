@@ -1943,8 +1943,11 @@ canvas.circlecolor0chart{
 span.textname0category{
     position: inherit;
     top: 32px;
-    left: 20px;
-    font-weight: 700;
+    left: 5px;
+    font-size: 16px !important;
+    font-family: Lato,sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
 }
 
 .imgtag-iconimage{
@@ -1962,4 +1965,22 @@ span.textname0category{
     left: 28%;
     border-radius: 50%;
     height: 46%;
+}
+
+span.cate-categoryitems{
+    width: 121px;
+    overflow: hidden;
+    margin-left: 5px;
+    display: inline-block;
+    position: absolute;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.select-categitemscir{
+    width: 119px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    z-index: 9;
 }
