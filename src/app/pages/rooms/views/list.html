@@ -102,7 +102,7 @@
       <div class="modal-body pt-0">
         <div class="row">
           <div class="col-sm-12 d-flex catogory-container mt-10 overflow-y">
-            <input class="form-control" ng-model="searchText" type="text" placeholder="Search Category" />
+            <input class="form-control" ng-model="searchText" type="text" placeholder="{{'SearchCategory' | translate}}" />
             <div class="overflow-leftsidebar-content d-flex flex-wrap align-content-start">
               <div class="category" ng-repeat="category in categories | filter : searchText" ng-click="showItems(category)"
                 ng-style="{'background-color' : category.color}">

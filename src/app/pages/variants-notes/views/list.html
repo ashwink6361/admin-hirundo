@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-6 mt-10 varient-container">
             <div class="panel-heading clearfix ph-0">
-                <h3 class="panel-title"><strong>Variant</strong></h3>
+                <h3 class="panel-title"><strong>{{'variant' | translate}}</strong></h3>
             </div>
             <span class="add-btn">
                 <a ui-sref="addvariant" class="btn btn-secondary btn-icon">
@@ -13,14 +13,14 @@
                 </a>
             </span>
             <div class="text-center" ng-show="!(variants && variants.length)" style="float:left;width: 100%;">
-                No Variant Created Yet
+                {{'NoVariantCreatedYet' | translate}}
             </div>
             <table class="table ingredient-table" ng-show="variants && variants.length">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th class="action-btn">Action</th>
+                        <th>{{'Name' | translate}}</th>
+                        <th>{{'Price' | translate}}</th>
+                        <th class="action-btn">{{'Action' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@
 
         <div class="col-sm-6 mt-10 varient-container">
             <div class="panel-heading clearfix ph-0">
-                <h3 class="panel-title"><strong>Notes</strong></h3>
+                <h3 class="panel-title"><strong>{{'notes' | translate}}</strong></h3>
             </div>
             <span class="add-btn">
                 <a ui-sref="addnote" class="btn btn-secondary btn-icon">
@@ -50,13 +50,13 @@
                 </a>
             </span>
             <div class="text-center" ng-show="!(notes && notes.length)" style="float:left;width: 100%;">
-                No Note Created Yet
+                {{'NoNoteCreatedYet' | translate}}
             </div>
             <table class="table ingredient-table" ng-show="notes && notes.length">
                 <thead>
                     <tr>
-                        <th>Notes</th>
-                        <th class="action-btn">Action</th>
+                        <th>{{'notes' | translate}}</th>
+                        <th class="action-btn">{{'Action' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>

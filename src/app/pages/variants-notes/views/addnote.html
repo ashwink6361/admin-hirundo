@@ -10,16 +10,16 @@
                     <form class="form-horizontal" name="form" novalidate>
                         <div class="form-group">
                             <label for="input01" class="col-sm-2 control-label">
-                                <strong>Note</strong>
+                                <strong>{{'notes' | translate}}</strong>
                             </label>
                             <div class="col-sm-5">
-                                <input type="text" name="notes" ng-model="Note.notes" class="form-control" placeholder="Notes" required />
-                                <span class="alert color-red" ng-show="form.notes.$dirty &&  form.notes.$error.required">Notes is required.</span>
+                                <input type="text" name="notes" ng-model="Note.notes" class="form-control" placeholder="{{'notes' | translate}}" required />
+                                <span class="alert color-red" ng-show="form.notes.$dirty &&  form.notes.$error.required">{{'Notesisrequired' | translate}}</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="input01" class="col-sm-2 control-label">
-                                <strong>Category</strong>
+                                <strong>{{'Category' | translate}}</strong>
                             </label>
                             <div class="col-sm-5">
                                 <div ng-show="itms.length">
@@ -30,7 +30,7 @@
                                 </div>
                                 <ui-select ng-model="category.selected" class="btn-group bootstrap-select form-control" ng-disabled="false" append-to-body="true"
                                     search-enabled="true" ng-change="selectCategory(category)">
-                                    <ui-select-match placeholder="Select Category">
+                                    <ui-select-match placeholder="{{'selectCategory' | translate}}">
                                     </ui-select-match>
                                     <ui-select-choices repeat="category in categories | filter: $select.search">
                                         <span ng-bind-html="category.name"></span>
@@ -42,9 +42,9 @@
                             <label for="input01" class="col-sm-2 control-label">
                             </label>
                             <div class="col-sm-5">
-                                <button type="button" ng-show="noteId" class="btn bg-success" ng-click="editNote()" ng-disabled="form.$invalid||noteAddRequest">Update</button>
-                                <button type="button" ng-show="!noteId" class="btn bg-success" ng-click="addNote()" ng-disabled="form.$invalid||noteAddRequest">Add</button>
-                                <button type="button" class="btn btn-default" ui-sref="variant">Cancel</button>
+                                <button type="button" ng-show="noteId" class="btn bg-success" ng-click="editNote()" ng-disabled="form.$invalid||noteAddRequest">{{'Update' | translate}}</button>
+                                <button type="button" ng-show="!noteId" class="btn bg-success" ng-click="addNote()" ng-disabled="form.$invalid||noteAddRequest">{{'Add' | translate}}</button>
+                                <button type="button" class="btn btn-default" ui-sref="variant">{{'Cancel' | translate}}</button>
                             </div>
                         </div>
                     </form>

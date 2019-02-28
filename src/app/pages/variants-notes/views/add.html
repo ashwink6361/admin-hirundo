@@ -10,28 +10,28 @@
                     <form class="form-horizontal" name="form" novalidate>
                         <div class="form-group">
                             <label for="input01" class="col-sm-2 control-label">
-                                <strong>Name</strong>
+                                <strong>{{'Name' | translate}}</strong>
                             </label>
                             <div class="col-sm-5">
-                                <input type="text" name="VariantName" ng-model="Variant.name" class="form-control" placeholder="Name" required />
-                                <span class="alert color-red" ng-show="form.VariantName.$dirty &&  form.VariantName.$error.required">Name is required.</span>
+                                <input type="text" name="VariantName" ng-model="Variant.name" class="form-control" placeholder="{{'Name' | translate}}" required />
+                                <span class="alert color-red" ng-show="form.VariantName.$dirty &&  form.VariantName.$error.required">{{'Nameisrequired' | translate}}</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="input01" class="col-sm-2 control-label">
-                                <strong>Price</strong>
+                                <strong>{{'Price' | translate}}</strong>
                             </label>
                             <div class="col-sm-5">
                                 <div class="input-group">
                                     <span class="input-group-addon addon-left input-group-addon-secondry">€</span>
-                                    <input type="text" float-number ng-model="Variant.price" class="form-control" name="price" placeholder="Price" required />
-                                    <span class="alert color-red" ng-show="form.price.$dirty &&  form.price.$error.required">Price is required.</span>
+                                    <input type="text" float-number ng-model="Variant.price" class="form-control" name="price" placeholder="{{'Price' | translate}}" required />
+                                    <span class="alert color-red" ng-show="form.price.$dirty &&  form.price.$error.required">{{'Priceisrequired' | translate}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="input01" class="col-sm-2 control-label">
-                                <strong>Category</strong>
+                                <strong>{{'Category' | translate}}</strong>
                             </label>
                             <div class="col-sm-5">
                                 <div ng-show="itms.length">
@@ -42,7 +42,7 @@
                                 </div>
                                 <ui-select ng-model="category.selected" class="btn-group bootstrap-select form-control" ng-disabled="false" append-to-body="true"
                                     search-enabled="true" ng-change="selectCategory(category)">
-                                    <ui-select-match placeholder="Select Category">
+                                    <ui-select-match placeholder="{{'selectCategory' | translate}}">
                                     </ui-select-match>
                                     <ui-select-choices repeat="category in categories | filter: $select.search">
                                         <span ng-bind-html="category.name"></span>
@@ -54,9 +54,9 @@
                             <label for="input01" class="col-sm-2 control-label">
                             </label>
                             <div class="col-sm-5">
-                                <button type="button" ng-show="variantId" class="btn bg-success" ng-click="editVariant()" ng-disabled="form.$invalid||variantAddRequest">Update</button>
-                                <button type="button" ng-show="!variantId" class="btn bg-success" ng-click="addVariant()" ng-disabled="form.$invalid||variantAddRequest">Add</button>
-                                <button type="button" class="btn btn-default" ui-sref="variant">Cancel</button>
+                                <button type="button" ng-show="variantId" class="btn bg-success" ng-click="editVariant()" ng-disabled="form.$invalid||variantAddRequest">{{'Update' | translate}}</button>
+                                <button type="button" ng-show="!variantId" class="btn bg-success" ng-click="addVariant()" ng-disabled="form.$invalid||variantAddRequest">{{'Add' | translate}}</button>
+                                <button type="button" class="btn btn-default" ui-sref="variant">{{'Cancel' | translate}}</button>
                             </div>
                         </div>
                     </form>

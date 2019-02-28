@@ -8,7 +8,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="name" class="col-sm-3 control-label">
-                        <strong>Name</strong>
+                        <strong>{{'Name' | translate}}</strong>
                     </label>
                     <div class="col-sm-8">
                         <label class="col-sm-8">{{variantDetail.name}}</label>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">
-                        <strong>Price</strong>
+                        <strong>{{'Price' | translate}}</strong>
                     </label>
                     <div class="col-sm-8">
                         <label class="col-sm-8">€{{variantDetail.price}}</label>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">
-                        <strong>Category</strong>
+                        <strong>{{'Category' | translate}}</strong>
                     </label>
                     <div class="col-sm-8">
                         <label class="col-sm-8">{{variantDetail.category.name}}</label>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">
-                        <strong>Sub Category</strong>
+                        <strong>{{'subCategory' | translate}}</strong>
                     </label>
                     <div class="col-sm-8">
                         <label class="col-sm-8">{{variantDetail.subCategory}}</label>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <label for="created_at" class="col-sm-3 control-label">
-                        <strong>Created At</strong>
+                        <strong>{{'createdAt' | translate}}</strong>
                     </label>
                     <div class="col-sm-8">
                         <label class="col-sm-8">{{variantDetail.created_at | date : 'dd/MM/yyyy'}}</label>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label for="updated_at" class="col-sm-3 control-label">
-                        <strong>Updated At</strong>
+                        <strong>{{'updatedAt' | translate}}</strong>
                     </label>
                     <div class="col-sm-8">
                         <label class="col-sm-8">{{variantDetail.updated_at | date : 'dd/MM/yyyy'}}</label>
@@ -58,7 +58,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10 text-right">
-                <a class="btn btn-success" ui-sref="variant">Back</a>
+                <a class="btn btn-success" ui-sref="variant">{{'Back' | translate}}</a>
             </div>
         </div>
     </form>

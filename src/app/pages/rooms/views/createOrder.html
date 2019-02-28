@@ -32,7 +32,7 @@
     <div class="modal-body pt-0">
         <div class="row">
             <div class="col-sm-12 d-flex catogory-container">
-                <input class="form-control" ng-model="searchText" type="text" placeholder="Search Category" />
+                <input class="form-control" ng-model="searchText" type="text" placeholder="{{'SearchCategory' | translate}}" />
                 <div class="category" ng-repeat="category in categories | filter : searchText" ng-click="showItems(category)" ng-style="{'background-color' : category.color}">
                     <img ng-src="{{category.icon}}">
                     <p class="name">{{category.name}}</p>

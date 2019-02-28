@@ -129,7 +129,7 @@
             $scope.percentage.push($scope.categoryData[i].percentage);
             var color = getRandomColor();
             $scope.backgroundColor.push(color);
-            $scope.categoryData[i].color = color;
+            $scope.categoryData[i].bgcolor = color;
           }
           if ($scope.labels.length) {
             if ($scope.percentage.every(isBelowThreshold)) {
@@ -166,7 +166,7 @@
                 // $scope.backgroundColor2.push(getRandomColor());
                 var color = getRandomColor();
                 $scope.backgroundColor2.push(color);
-                $scope.categoryDetails[j].color = color;
+                $scope.categoryDetails[j].bgcolor = color;
               }
               if ($scope.labels2.length) {
                 if ($scope.percentage2.every(isBelowThreshold)) {
@@ -243,7 +243,7 @@
             // $scope.backgroundColor.push(getRandomColor());
             var color = getRandomColor();
             $scope.backgroundColor.push(color);
-            $scope.categoryData[i].color = color;
+            $scope.categoryData[i].bgcolor = color;
           }
           if ($scope.labels.length) {
             if ($scope.percentage.every(isBelowThreshold)) {
@@ -280,7 +280,7 @@
                 // $scope.backgroundColor2.push(getRandomColor());
                 var color = getRandomColor();
                 $scope.backgroundColor2.push(color);
-                $scope.categoryDetails[j].color = color;
+                $scope.categoryDetails[j].bgcolor = color;
               }
               if ($scope.labels2.length) {
                 if ($scope.percentage2.every(isBelowThreshold)) {
@@ -468,7 +468,7 @@
             // $scope.backgroundColor2.push(getRandomColor());
             var color = getRandomColor();
             $scope.backgroundColor2.push(color);
-            $scope.categoryDetails[j].color = color;
+            $scope.categoryDetails[j].bgcolor = color;
           }
           if ($scope.labels2.length) {
             if ($scope.percentage2.every(isBelowThreshold)) {
@@ -539,7 +539,7 @@
             // $scope.backgroundColor2.push(getRandomColor());
             var color = getRandomColor();
             $scope.backgroundColor2.push(color);
-            $scope.categoryDetails[j].color = color;
+            $scope.categoryDetails[j].bgcolor = color;
           }
           if ($scope.labels2.length) {
             if ($scope.percentage2.every(isBelowThreshold)) {
