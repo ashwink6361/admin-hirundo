@@ -166,5 +166,17 @@
     "subCategory": "Sottocategoria",
     "createdAt": "Creato a",
     "updatedAt": "Aggiornato a",
-    "Back": "Indietro"
+    "Back": "Indietro",
+    "OldPassword": "Vecchia Password",
+    "NewPassword": "Nuova Password",
+    "ConfirmPassword": "Conferma Password",
+    "Submit": "Sottoscrivi",
+    "SelectUnit": "Seleziona Unità",
+    "EnterQuantity": "Inserisci quantità",
+    "NoFoodCost": "Nessun costo alimentare creato ancora",
+    "selectSubCategory": "Seleziona sottocategoria",
+    "UnitPrice": "Prezzo unitario",
+    "Quantity": "Quantità",
+    "Profit": "Profitto",
+    "FoodPrice": "Prezzo del cibo"
 }

@@ -166,5 +166,17 @@
     "subCategory": "Sub Category",
     "createdAt": "Created At",
     "updatedAt": "Updated At",
-    "Back": "Back"
+    "Back": "Back",
+    "OldPassword": "Old Password",
+    "NewPassword": "New Password",
+    "ConfirmPassword": "Confirm Password",
+    "Submit": "Submit",
+    "SelectUnit": "Select Unit",
+    "EnterQuantity": "Enter Quantity",
+    "NoFoodCost": "No Food Cost Created Yet",
+    "selectSubCategory": "Select Sub Category",
+    "UnitPrice": "Unit Price",
+    "Quantity": "Quantity",
+    "Profit": "Profit",
+    "FoodPrice": "Food Price"
 } 

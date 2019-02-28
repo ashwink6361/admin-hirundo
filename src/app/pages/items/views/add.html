@@ -114,7 +114,7 @@
                             <div class="col-sm-5">
                                 <select class="form-control" data-ng-options="category._id as category.name for category in categories" ng-model="Item.category"
                                     ng-change="categoryChanged(Item.category)">
-                                    <option value="?" selected="selected">Select Category</option>
+                                    <option value="?" selected="selected">{{'selectCategory' | translate}}</option>
                                 </select>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                             </label>
                             <div class="col-sm-5">
                                 <select class="form-control" data-ng-options="subcat for subcat in subCategories" ng-model="Item.subCategory">
-                                    <option value="?" selected="selected">Select Sub Category</option>
+                                    <option value="?" selected="selected">{{'selectSubCategory' | translate}}</option>
                                 </select>
                             </div>
                         </div>
@@ -145,14 +145,14 @@
                             <div class="col-sm-5">
                                 <div ng-show="itms.length">
                                     <span class="label-ingredient" ng-repeat="itm in itms">
-                                        <span class="ingredient-name"><strong>{{itm.id.name}}</strong><span ng-show="itm.id.quantity>1">(Qty - {{itm.id.quantity}})</span> <span>(Unit Price - €{{itm.priceOfQuantity}}/{{itm.id.unit}})</span></span>
-                                        <span><input type="text" float-number ng-change="getQuantity(itm)" ng-model="itm.ingredientQuantity" placeholder="Quantity" />({{itm.id.unit}})</span>
+                                        <span class="ingredient-name"><strong>{{itm.id.name}}</strong><span ng-show="itm.id.quantity>1">(Qty - {{itm.id.quantity}})</span> <span>({{'UnitPrice' | translate}} - €{{itm.priceOfQuantity}}/{{itm.id.unit}})</span></span>
+                                        <span><input type="text" float-number ng-change="getQuantity(itm)" ng-model="itm.ingredientQuantity" placeholder="{{'Quantity' | translate}}" />({{itm.id.unit}})</span>
                                         <label><span ng-show="itm.price">€</span>{{itm.price}}</label>
                                         <span class="label-remove" ng-click="removeIngredient($index, itm)">X</span>
                                     </span>
                                     <div class="total-count" ng-if="Item.foodCost && Item.foodCost>0">
-                                        <span >Food Price : <strong>€{{Item.foodCost}}</strong></span>
-                                        <span ng-show="profit && Item.foodCost && Item.foodCost>0">Profit : <strong>€{{profit}}</strong></span>
+                                        <span >{{'FoodPrice' | translate}} : <strong>€{{Item.foodCost}}</strong></span>
+                                        <span ng-show="profit && Item.foodCost && Item.foodCost>0">{{'Profit' | translate}} : <strong>€{{profit}}</strong></span>
                                     </div>
                                 </div>
                                 <ui-select ng-model="ingredient.selected" class="btn-group bootstrap-select form-control" ng-disabled="false" append-to-body="true"

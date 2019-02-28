@@ -46,7 +46,7 @@
                             </label>
                             <div class="col-sm-5">
                                 <select class="form-control" ng-model="Ingredient.unit" ng-change="unitChanged(Ingredient.unit)">
-                                    <option value="" selected hidden disabled>Select Unit</option>
+                                    <option value="" selected hidden disabled>{{'SelectUnit' | translate}}</option>
                                     <option value="KG" selected="selected">KG</option>
                                     <option value="L" selected="selected">L</option>
                                     <option value="Confezione" selected="selected">Confezione</option>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-group" >
                             <label for="input01" class="col-sm-2 control-label" >
-                                <strong ng-show="showConfezioneQty">Enter Quantity</strong>
+                                <strong ng-show="showConfezioneQty">{{'EnterQuantity' | translate}}</strong>
                             </label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" ng-show="showConfezioneQty" ng-model="Ingredient.quantity" />
