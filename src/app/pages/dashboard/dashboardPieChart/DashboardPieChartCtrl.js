@@ -153,6 +153,24 @@
                 }]
               };
             }
+            $(document).ready(function () {
+              if ($scope.doughnutData) {
+                var ctx1 = document.getElementById('chart-area1').getContext('2d');
+                window.myDoughnut1 = new Chart(ctx1, {
+                  type: 'doughnut',
+                  data: $scope.doughnutData,
+                  options: {
+                    cutoutPercentage: 64,
+                    responsive: true,
+                    elements: {
+                      arc: {
+                        borderWidth: 0
+                      }
+                    }
+                  }
+                });
+              }
+            });
             DashboardPieChartService.getCategoryDetails($scope.selectedCategory._id, opts).then(function (data) {
               $scope.labels2 = [];
               $scope.data2 = [];
@@ -267,6 +285,24 @@
                 }]
               };
             }
+            $(document).ready(function () {
+              if ($scope.doughnutData) {
+                var ctx1 = document.getElementById('chart-area1').getContext('2d');
+                window.myDoughnut1 = new Chart(ctx1, {
+                  type: 'doughnut',
+                  data: $scope.doughnutData,
+                  options: {
+                    cutoutPercentage: 64,
+                    responsive: true,
+                    elements: {
+                      arc: {
+                        borderWidth: 0
+                      }
+                    }
+                  }
+                });
+              }
+            });
             DashboardPieChartService.getCategoryDetails($scope.selectedCategory._id, opts).then(function (data) {
               $scope.labels2 = [];
               $scope.data2 = [];
@@ -338,25 +374,24 @@
     }
     $scope.getPieData();
     $scope.getCategoryData();
-    $(document).ready(function () {
-      if ($scope.doughnutData) {
-        console.log("$scope.doughnutData",$scope.doughnutData);
-        var ctx1 = document.getElementById('chart-area1').getContext('2d');
-        window.myDoughnut1 = new Chart(ctx1, {
-          type: 'doughnut',
-          data: $scope.doughnutData,
-          options: {
-            cutoutPercentage: 64,
-            responsive: true,
-            elements: {
-              arc: {
-                borderWidth: 0
-              }
-            }
-          }
-        });
-      }
-    });
+    // $(document).ready(function () {
+    //   if ($scope.doughnutData) {
+    //     var ctx1 = document.getElementById('chart-area1').getContext('2d');
+    //     window.myDoughnut1 = new Chart(ctx1, {
+    //       type: 'doughnut',
+    //       data: $scope.doughnutData,
+    //       options: {
+    //         cutoutPercentage: 64,
+    //         responsive: true,
+    //         elements: {
+    //           arc: {
+    //             borderWidth: 0
+    //           }
+    //         }
+    //       }
+    //     });
+    //   }
+    // });
 
     function getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;

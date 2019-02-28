@@ -9,6 +9,7 @@ const port = 5050;
 // const apiUrl = 'http://192.168.0.12:5051';
 // const apiUrl = 'http://52.209.187.183:5051';
 const apiUrl = 'http://localhost:5051';
+// const apiUrl = 'http://34.247.139.146:5051';
 
 module.exports = {
     env: 'development',
