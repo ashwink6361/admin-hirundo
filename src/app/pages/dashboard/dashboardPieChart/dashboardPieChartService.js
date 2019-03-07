@@ -36,6 +36,26 @@ function DashboardPieChartService($q, $http) {
                 def.reject(error);
             });
             return def.promise;
+        },
+        getSeatData: function(opts) {
+            var def = $q.defer();
+            var url = '/api/dashboard/seat?startDate=' + opts.startDate + '&endDate=' + opts.endDate;
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+        getRevenueData: function(opts) {
+            var def = $q.defer();
+            var url = '/api/dashboard/revenue?startDate=' + opts.startDate + '&endDate=' + opts.endDate;
+            doGet($q, $http, url).then(function(data) {
+                def.resolve(data);
+            }).catch(function(error) {
+                def.reject(error);
+            });
+            return def.promise;
         }
     };
 }

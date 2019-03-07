@@ -178,5 +178,6 @@
     "UnitPrice": "Prezzo unitario",
     "Quantity": "Quantità",
     "Profit": "Profitto",
-    "FoodPrice": "Prezzo del cibo"
+    "FoodPrice": "Prezzo del cibo",
+    "SeatCost": "COSTO DI SEDUTA"
 }

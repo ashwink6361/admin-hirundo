@@ -178,5 +178,6 @@
     "UnitPrice": "Unit Price",
     "Quantity": "Quantity",
     "Profit": "Profit",
-    "FoodPrice": "Food Price"
+    "FoodPrice": "Food Price",
+    "SeatCost": "Seat Cost"
 } 
