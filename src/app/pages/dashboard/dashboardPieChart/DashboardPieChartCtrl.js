@@ -59,8 +59,6 @@
     $scope.selectedCategory = {};
     $scope.transparent = baConfig.theme.blur;
     var dashboardColors = baConfig.colors.dashboard;
-    // var layoutColors = baConfig.colors;
-    // var graphColor = baConfig.theme.blur ? '#000000' : layoutColors.primary;
     function getRandomColor() {
       var letters = '0123456789ABCDEF';
       var color = '#';
@@ -78,9 +76,6 @@
       var d = (1 + (w - 1) * 7); // 1st of January + 7 days for each week
       return new Date(y, 0, d);
     };
-    // function zoomChart() {
-    //   $scope.chart.zoomToDates(new Date($scope.pieDate.startDate), new Date($scope.pieDate.endDate));
-    // }
     $scope.userDetails = JSON.parse(localStorage.getItem('adminUser'));
     $scope.getPieData = function () {
       var opts = {};
@@ -192,7 +187,6 @@
                 $scope.labels2.push($scope.categoryDetails[j].item);
                 $scope.data2.push($scope.categoryDetails[j].count);
                 $scope.percentage2.push($scope.categoryDetails[j].percentage);
-                // $scope.backgroundColor2.push(getRandomColor());
                 var color = getRandomColor();
                 $scope.backgroundColor2.push(color);
                 $scope.categoryDetails[j].bgcolor = color;
@@ -269,7 +263,6 @@
             $scope.labels.push($scope.categoryData[i].category);
             $scope.data.push($scope.categoryData[i].count);
             $scope.percentage.push($scope.categoryData[i].percentage);
-            // $scope.backgroundColor.push(getRandomColor());
             var color = getRandomColor();
             $scope.backgroundColor.push(color);
             $scope.categoryData[i].bgcolor = color;
@@ -324,7 +317,6 @@
                 $scope.labels2.push($scope.categoryDetails[j].item);
                 $scope.data2.push($scope.categoryDetails[j].count);
                 $scope.percentage2.push($scope.categoryDetails[j].percentage);
-                // $scope.backgroundColor2.push(getRandomColor());
                 var color = getRandomColor();
                 $scope.backgroundColor2.push(color);
                 $scope.categoryDetails[j].bgcolor = color;
@@ -399,27 +391,12 @@
           $scope.seatData = data.data;
           for (var i in $scope.seatData) {
             if ($scope.seatData[i].hasOwnProperty("year") && !$scope.seatData[i].hasOwnProperty("month")) {
-              // var dat = new Date($scope.seatData[i].year, 12, 0);
-              // if (i == 0) {
-              //   dat = new Date($scope.seatData[i].year, 0);
-              // }
               $scope.chartData.push({
                 x: new Date($scope.seatData[i].year, 0),
                 y: $scope.seatData[i].totalSeat
               })
             }
             if ($scope.seatData[i].hasOwnProperty("month") && !$scope.seatData[i].hasOwnProperty("week") && !$scope.seatData[i].hasOwnProperty("hour") && !$scope.seatData[i].hasOwnProperty("day")) {
-              // var day = 1;
-              // if(i==0){
-              //   day = new Date(opts.startDate).getDate();
-              // }
-              // if(i==$scope.seatData.length-1){
-              //   day = new Date(opts.endDate).getDate();
-              // }
-              // $scope.chartData.push({
-              //   x: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, day),
-              //   y: $scope.seatData[i].totalSeat
-              // });
               $scope.chartData.push({
                 x: new Date($scope.seatData[i].year, $scope.seatData[i].month - 1),
                 y: $scope.seatData[i].totalSeat
@@ -445,127 +422,21 @@
             }
           }
           if ($scope.seatData.length) {
-
             var chart = new CanvasJS.Chart("chartContainer1", {
               axisX: {
                 title: "Time",
               },
               axisY: {
-                title: "Seat Cost"
+                title: "Seat Cost",
+                gridThickness: 0
               },
               data: [{
                 type: "splineArea",
                 dataPoints: $scope.chartData
               }]
             });
-
             chart.render();
           }
-          // for(var i in $scope.seatData){
-          //   if($scope.seatData[i].hasOwnProperty("year") && !$scope.seatData[i].hasOwnProperty("month")){
-          //     var dat = new Date($scope.seatData[i].year, 12, 0);
-          //     if(i==0){
-          //       dat = new Date($scope.seatData[i].year, 0);
-          //     }
-          //     $scope.chartData.push({
-          //       date: dat,
-          //       value: $scope.seatData[i].totalSeat
-          //     })
-          //   }
-          //   if($scope.seatData[i].hasOwnProperty("month") && !$scope.seatData[i].hasOwnProperty("week") && !$scope.seatData[i].hasOwnProperty("hour") && !$scope.seatData[i].hasOwnProperty("day")){
-          //     var day = 1;
-          //     if(i==0){
-          //       day = new Date(opts.startDate).getDate();
-          //     }
-          //     if(i==$scope.seatData.length-1){
-          //       day = new Date(opts.endDate).getDate();
-          //     }
-          //     $scope.chartData.push({
-          //       date: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, day),
-          //       value: $scope.seatData[i].totalSeat
-          //     });
-          //   }
-          //   if($scope.seatData[i].hasOwnProperty("week") && !$scope.seatData[i].hasOwnProperty("day")){
-          //     $scope.chartData.push({
-          //       date: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, (1 + (w - 1) * 7)),
-          //       value: $scope.seatData[i].totalSeat
-          //     });
-          //   }
-          //   if($scope.seatData[i].hasOwnProperty("day") && !$scope.seatData[i].hasOwnProperty("hour")){
-          //     $scope.chartData.push({
-          //       date: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, $scope.seatData[i].day),
-          //       value: $scope.seatData[i].totalSeat
-          //     });
-          //   }
-          //   if($scope.seatData[i].hasOwnProperty("hour") && $scope.seatData[i].hasOwnProperty("month") && $scope.seatData[i].hasOwnProperty("day") && !$scope.seatData[i].hasOwnProperty("week")){
-          //     $scope.chartData.push({
-          //       date: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, $scope.seatData[i].day, $scope.seatData[i].hour),
-          //       value: $scope.seatData[i].totalSeat
-          //     });
-          //   }
-          // }
-          // $scope.chart = AmCharts.makeChart('amchart', {
-          //   type: 'serial',
-          //   theme: 'blur',
-          //   marginTop: 15,
-          //   marginRight: 15,
-          //   dataProvider: $scope.chartData,
-          //   categoryField: 'date',
-          //   categoryAxis: {
-          //     parseDates: true,
-          //     gridAlpha: 0,
-          //     color: layoutColors.defaultText,
-          //     axisColor: layoutColors.defaultText
-          //   },
-          //   valueAxes: [
-          //     {
-          //       minVerticalGap: 50,
-          //       gridAlpha: 0,
-          //       color: layoutColors.defaultText,
-          //       axisColor: layoutColors.defaultText
-          //     }
-          //   ],
-          //   graphs: [
-          //     {
-          //       id: 'g0',
-          //       bullet: 'none',
-          //       useLineColorForBulletBorder: true,
-          //       lineColor: baUtil.hexToRGB(graphColor, 0.3),
-          //       lineThickness: 1,
-          //       negativeLineColor: layoutColors.danger,
-          //       type: 'smoothedLine',
-          //       valueField: 'value',
-          //       fillAlphas: 1,
-          //       fillColorsField: 'lineColor'
-          //     }
-          //   ],
-          //   chartCursor: {
-          //     categoryBalloonDateFormat: 'DD MM YYYY',
-          //     categoryBalloonColor: '#4285F4',
-          //     categoryBalloonAlpha: 0.7,
-          //     cursorAlpha: 0,
-          //     valueLineEnabled: true,
-          //     valueLineBalloonEnabled: true,
-          //     valueLineAlpha: 0.5
-          //   },
-          //   dataDateFormat: 'DD MM YYYY',
-          //   export: {
-          //     enabled: true
-          //   },
-          //   creditsPosition: 'bottom-right',
-          //   zoomOutButton: {
-          //     backgroundColor: '#fff',
-          //     backgroundAlpha: 0
-          //   },
-          //   zoomOutText: '',
-          //   pathToImages: layoutPaths.images.amChart
-          // });
-
-          // $scope.chart.addListener('rendered', zoomChart);
-          // zoomChart();
-          // if ($scope.chart.zoomChart) {
-          //   $scope.chart.zoomChart();
-          // }
         }).catch(function (error) {
           $scope.seatData = [];
         });
@@ -582,27 +453,12 @@
           $scope.seatData = data.data;
           for (var i in $scope.seatData) {
             if ($scope.seatData[i].hasOwnProperty("year") && !$scope.seatData[i].hasOwnProperty("month")) {
-              // var dat = new Date($scope.seatData[i].year, 12, 0);
-              // if (i == 0) {
-              //   dat = new Date($scope.seatData[i].year, 0);
-              // }
               $scope.chartData.push({
                 x: new Date($scope.seatData[i].year, 0),
                 y: $scope.seatData[i].totalSeat
               })
             }
             if ($scope.seatData[i].hasOwnProperty("month") && !$scope.seatData[i].hasOwnProperty("week") && !$scope.seatData[i].hasOwnProperty("hour") && !$scope.seatData[i].hasOwnProperty("day")) {
-              // var day = 1;
-              // if(i==0){
-              //   day = new Date(opts.startDate).getDate();
-              // }
-              // if(i==$scope.seatData.length-1){
-              //   day = new Date(opts.endDate).getDate();
-              // }
-              // $scope.chartData.push({
-              //   x: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, day),
-              //   y: $scope.seatData[i].totalSeat
-              // });
               $scope.chartData.push({
                 x: new Date($scope.seatData[i].year, $scope.seatData[i].month - 1),
                 y: $scope.seatData[i].totalSeat
@@ -633,121 +489,16 @@
                 title: "Time",
               },
               axisY: {
-                title: "Seat Cost"
+                title: "Seat Cost",
+                gridThickness: 0
               },
               data: [{
                 type: "splineArea",
                 dataPoints: $scope.chartData
               }]
             });
-
             chart.render();
           }
-
-          // for(var i in $scope.seatData){
-          //   if($scope.seatData[i].hasOwnProperty("year") && !$scope.seatData[i].hasOwnProperty("month")){
-          //     var dat = new Date($scope.seatData[i].year, 12, 0);
-          //     if(i==0){
-          //       dat = new Date($scope.seatData[i].year, 0);
-          //     }
-          //     $scope.chartData.push({
-          //       date: dat,
-          //       value: $scope.seatData[i].totalSeat
-          //     })
-          //   }
-          //   if($scope.seatData[i].hasOwnProperty("month") && !$scope.seatData[i].hasOwnProperty("week") && !$scope.seatData[i].hasOwnProperty("hour") && !$scope.seatData[i].hasOwnProperty("day")){
-          //     var day = 1;
-          //     if(i==0){
-          //       day = new Date(opts.startDate).getDate();
-          //     }
-          //     if(i==$scope.seatData.length-1){
-          //       day = new Date(opts.endDate).getDate();
-          //     }
-          //     $scope.chartData.push({
-          //       date: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, day),
-          //       value: $scope.seatData[i].totalSeat
-          //     });
-          //   }
-          //   if($scope.seatData[i].hasOwnProperty("week") && !$scope.seatData[i].hasOwnProperty("day")){
-          //     $scope.chartData.push({
-          //       date: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, (1 + (w - 1) * 7)),
-          //       value: $scope.seatData[i].totalSeat
-          //     })
-          //   }
-          //   if($scope.seatData[i].hasOwnProperty("day") && !$scope.seatData[i].hasOwnProperty("hour")){
-          //     $scope.chartData.push({
-          //       date: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, $scope.seatData[i].day),
-          //       value: $scope.seatData[i].totalSeat
-          //     })
-          //   }
-          //   if($scope.seatData[i].hasOwnProperty("hour") && $scope.seatData[i].hasOwnProperty("month") && $scope.seatData[i].hasOwnProperty("day") && !$scope.seatData[i].hasOwnProperty("week")){
-          //     $scope.chartData.push({
-          //       date: new Date($scope.seatData[i].year, $scope.seatData[i].month-1, $scope.seatData[i].day, $scope.seatData[i].hour),
-          //       value: $scope.seatData[i].totalSeat
-          //     })
-          //   }
-          // }
-          //  $scope.chart = AmCharts.makeChart('amchart', {
-          //   type: 'serial',
-          //   theme: 'blur',
-          //   marginTop: 15,
-          //   marginRight: 15,
-          //   dataProvider: $scope.chartData,
-          //   categoryField: 'date',
-          //   categoryAxis: {
-          //     parseDates: true,
-          //     gridAlpha: 0,
-          //     color: layoutColors.defaultText,
-          //     axisColor: layoutColors.defaultText
-          //   },
-          //   valueAxes: [
-          //     {
-          //       minVerticalGap: 50,
-          //       gridAlpha: 0,
-          //       color: layoutColors.defaultText,
-          //       axisColor: layoutColors.defaultText
-          //     }
-          //   ],
-          //   graphs: [
-          //     {
-          //       id: 'g0',
-          //       bullet: 'none',
-          //       useLineColorForBulletBorder: true,
-          //       lineColor: baUtil.hexToRGB(graphColor, 0.3),
-          //       lineThickness: 1,
-          //       negativeLineColor: layoutColors.danger,
-          //       type: 'smoothedLine',
-          //       valueField: 'value',
-          //       fillAlphas: 1,
-          //       fillColorsField: 'lineColor'
-          //     }
-          //   ],
-          //   chartCursor: {
-          //     categoryBalloonDateFormat: 'DD MM YYYY',
-          //     categoryBalloonColor: '#4285F4',
-          //     categoryBalloonAlpha: 0.7,
-          //     cursorAlpha: 0,
-          //     valueLineEnabled: true,
-          //     valueLineBalloonEnabled: true,
-          //     valueLineAlpha: 0.5
-          //   },
-          //   dataDateFormat: 'DD MM YYYY',
-          //   export: {
-          //     enabled: true
-          //   },
-          //   creditsPosition: 'bottom-right',
-          //   zoomOutButton: {
-          //     backgroundColor: '#fff',
-          //     backgroundAlpha: 0
-          //   },
-          //   zoomOutText: '',
-          //   pathToImages: layoutPaths.images.amChart
-          // });
-          // $scope.chart.addListener('rendered', zoomChart);
-          // zoomChart();
-          // if ($scope.chart.zoomChart) {
-          //   $scope.chart.zoomChart();
-          // }
         }).catch(function (error) {
           $scope.seatData = [];
         });
@@ -769,27 +520,12 @@
           $scope.revenueData = data.data;
           for (var i in $scope.revenueData) {
             if ($scope.revenueData[i].hasOwnProperty("year") && !$scope.revenueData[i].hasOwnProperty("month")) {
-              // var dat = new Date($scope.revenueData[i].year, 12, 0);
-              // if (i == 0) {
-              //   dat = new Date($scope.revenueData[i].year, 0);
-              // }
               $scope.chartData1.push({
                 x: new Date($scope.revenueData[i].year, 0),
                 y: $scope.revenueData[i].totalSale
               })
             }
             if ($scope.revenueData[i].hasOwnProperty("month") && !$scope.revenueData[i].hasOwnProperty("week") && !$scope.revenueData[i].hasOwnProperty("hour") && !$scope.revenueData[i].hasOwnProperty("day")) {
-              // var day = 1;
-              // if(i==0){
-              //   day = new Date(opts.startDate).getDate();
-              // }
-              // if(i==$scope.revenueData.length-1){
-              //   day = new Date(opts.endDate).getDate();
-              // }
-              // $scope.chartData1.push({
-              //   x: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, day),
-              //   y: $scope.revenueData[i].totalSale
-              // });
               $scope.chartData1.push({
                 x: new Date($scope.revenueData[i].year, $scope.revenueData[i].month - 1),
                 y: $scope.revenueData[i].totalSale
@@ -820,7 +556,8 @@
                 title: "Time",
               },
               axisY: {
-                title: "Total Sale"
+                title: "Total Sale",
+                gridThickness: 0
               },
               data: [{
                 type: "splineArea",
@@ -829,111 +566,6 @@
             });
             chart.render();
           }
-          // for(var i in $scope.revenueData){
-          //   if($scope.revenueData[i].hasOwnProperty("year") && !$scope.revenueData[i].hasOwnProperty("month")){
-          //     var dat = new Date($scope.revenueData[i].year, 12, 0);
-          //     if(i==0){
-          //       dat = new Date($scope.revenueData[i].year, 0);
-          //     }
-          //     $scope.chartData1.push({
-          //       date: dat,
-          //       value: $scope.revenueData[i].totalSale
-          //     })
-          //   }
-          //   if($scope.revenueData[i].hasOwnProperty("month") && !$scope.revenueData[i].hasOwnProperty("week") && !$scope.revenueData[i].hasOwnProperty("hour") && !$scope.revenueData[i].hasOwnProperty("day")){
-          //     var day = 1;
-          //     if(i==0){
-          //       day = new Date(opts.startDate).getDate();
-          //     }
-          //     if(i==$scope.revenueData.length-1){
-          //       day = new Date(opts.endDate).getDate();
-          //     }
-          //     $scope.chartData1.push({
-          //       date: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, day),
-          //       value: $scope.revenueData[i].totalSale
-          //     });
-          //   }
-          //   if($scope.revenueData[i].hasOwnProperty("week") && !$scope.revenueData[i].hasOwnProperty("day")){
-          //     $scope.chartData1.push({
-          //       date: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, (1 + (w - 1) * 7)),
-          //       value: $scope.revenueData[i].totalSale
-          //     });
-          //   }
-          //   if($scope.revenueData[i].hasOwnProperty("day") && !$scope.revenueData[i].hasOwnProperty("hour")){
-          //     $scope.chartData1.push({
-          //       date: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, $scope.revenueData[i].day),
-          //       value: $scope.revenueData[i].totalSale
-          //     });
-          //   }
-          //   if($scope.revenueData[i].hasOwnProperty("hour") && $scope.revenueData[i].hasOwnProperty("month") && $scope.revenueData[i].hasOwnProperty("day") && !$scope.revenueData[i].hasOwnProperty("week")){
-          //     $scope.chartData1.push({
-          //       date: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, $scope.revenueData[i].day, $scope.revenueData[i].hour),
-          //       value: $scope.revenueData[i].totalSale
-          //     });
-          //   }
-          // }
-          // $scope.chart = AmCharts.makeChart('amchart', {
-          //   type: 'serial',
-          //   theme: 'blur',
-          //   marginTop: 15,
-          //   marginRight: 15,
-          //   dataProvider: $scope.chartData1,
-          //   categoryField: 'date',
-          //   categoryAxis: {
-          //     parseDates: true,
-          //     gridAlpha: 0,
-          //     color: layoutColors.defaultText,
-          //     axisColor: layoutColors.defaultText
-          //   },
-          //   valueAxes: [
-          //     {
-          //       minVerticalGap: 50,
-          //       gridAlpha: 0,
-          //       color: layoutColors.defaultText,
-          //       axisColor: layoutColors.defaultText
-          //     }
-          //   ],
-          //   graphs: [
-          //     {
-          //       id: 'g0',
-          //       bullet: 'none',
-          //       useLineColorForBulletBorder: true,
-          //       lineColor: baUtil.hexToRGB(graphColor, 0.3),
-          //       lineThickness: 1,
-          //       negativeLineColor: layoutColors.danger,
-          //       type: 'smoothedLine',
-          //       valueField: 'value',
-          //       fillAlphas: 1,
-          //       fillColorsField: 'lineColor'
-          //     }
-          //   ],
-          //   chartCursor: {
-          //     categoryBalloonDateFormat: 'DD MM YYYY',
-          //     categoryBalloonColor: '#4285F4',
-          //     categoryBalloonAlpha: 0.7,
-          //     cursorAlpha: 0,
-          //     valueLineEnabled: true,
-          //     valueLineBalloonEnabled: true,
-          //     valueLineAlpha: 0.5
-          //   },
-          //   dataDateFormat: 'DD MM YYYY',
-          //   export: {
-          //     enabled: true
-          //   },
-          //   creditsPosition: 'bottom-right',
-          //   zoomOutButton: {
-          //     backgroundColor: '#fff',
-          //     backgroundAlpha: 0
-          //   },
-          //   zoomOutText: '',
-          //   pathToImages: layoutPaths.images.amChart
-          // });
-
-          // $scope.chart.addListener('rendered', zoomChart);
-          // zoomChart();
-          // if ($scope.chart.zoomChart) {
-          //   $scope.chart.zoomChart();
-          // }
         }).catch(function (error) {
           $scope.revenueData = [];
         });
@@ -950,27 +582,12 @@
           $scope.revenueData = data.data;
           for (var i in $scope.revenueData) {
             if ($scope.revenueData[i].hasOwnProperty("year") && !$scope.revenueData[i].hasOwnProperty("month")) {
-              // var dat = new Date($scope.revenueData[i].year, 12, 0);
-              // if (i == 0) {
-              //   dat = new Date($scope.revenueData[i].year, 0);
-              // }
               $scope.chartData1.push({
                 x: new Date($scope.revenueData[i].year, 0),
                 y: $scope.revenueData[i].totalSale
               })
             }
             if ($scope.revenueData[i].hasOwnProperty("month") && !$scope.revenueData[i].hasOwnProperty("week") && !$scope.revenueData[i].hasOwnProperty("hour") && !$scope.revenueData[i].hasOwnProperty("day")) {
-              // var day = 1;
-              // if(i==0){
-              //   day = new Date(opts.startDate).getDate();
-              // }
-              // if(i==$scope.revenueData.length-1){
-              //   day = new Date(opts.endDate).getDate();
-              // }
-              // $scope.chartData1.push({
-              //   x: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, day),
-              //   y: $scope.revenueData[i].totalSale
-              // });
               $scope.chartData1.push({
                 x: new Date($scope.revenueData[i].year, $scope.revenueData[i].month - 1),
                 y: $scope.revenueData[i].totalSale
@@ -1001,7 +618,8 @@
                 title: "Time",
               },
               axisY: {
-                title: "Total Sale"
+                title: "Total Sale",
+                gridThickness: 0
               },
               data: [{
                 type: "splineArea",
@@ -1011,111 +629,6 @@
 
             chart.render();
           }
-
-          // for(var i in $scope.revenueData){
-          //   if($scope.revenueData[i].hasOwnProperty("year") && !$scope.revenueData[i].hasOwnProperty("month")){
-          //     var dat = new Date($scope.revenueData[i].year, 12, 0);
-          //     if(i==0){
-          //       dat = new Date($scope.revenueData[i].year, 0);
-          //     }
-          //     $scope.chartData1.push({
-          //       date: dat,
-          //       value: $scope.revenueData[i].totalSale
-          //     })
-          //   }
-          //   if($scope.revenueData[i].hasOwnProperty("month") && !$scope.revenueData[i].hasOwnProperty("week") && !$scope.revenueData[i].hasOwnProperty("hour") && !$scope.revenueData[i].hasOwnProperty("day")){
-          //     var day = 1;
-          //     if(i==0){
-          //       day = new Date(opts.startDate).getDate();
-          //     }
-          //     if(i==$scope.revenueData.length-1){
-          //       day = new Date(opts.endDate).getDate();
-          //     }
-          //     $scope.chartData1.push({
-          //       date: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, day),
-          //       value: $scope.revenueData[i].totalSale
-          //     });
-          //   }
-          //   if($scope.revenueData[i].hasOwnProperty("week") && !$scope.revenueData[i].hasOwnProperty("day")){
-          //     $scope.chartData1.push({
-          //       date: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, (1 + (w - 1) * 7)),
-          //       value: $scope.revenueData[i].totalSale
-          //     })
-          //   }
-          //   if($scope.revenueData[i].hasOwnProperty("day") && !$scope.revenueData[i].hasOwnProperty("hour")){
-          //     $scope.chartData1.push({
-          //       date: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, $scope.revenueData[i].day),
-          //       value: $scope.revenueData[i].totalSale
-          //     })
-          //   }
-          //   if($scope.revenueData[i].hasOwnProperty("hour") && $scope.revenueData[i].hasOwnProperty("month") && $scope.revenueData[i].hasOwnProperty("day") && !$scope.revenueData[i].hasOwnProperty("week")){
-          //     $scope.chartData1.push({
-          //       date: new Date($scope.revenueData[i].year, $scope.revenueData[i].month-1, $scope.revenueData[i].day, $scope.revenueData[i].hour),
-          //       value: $scope.revenueData[i].totalSale
-          //     })
-          //   }
-          // }
-          //  $scope.chart = AmCharts.makeChart('amchart', {
-          //   type: 'serial',
-          //   theme: 'blur',
-          //   marginTop: 15,
-          //   marginRight: 15,
-          //   dataProvider: $scope.chartData1,
-          //   categoryField: 'date',
-          //   categoryAxis: {
-          //     parseDates: true,
-          //     gridAlpha: 0,
-          //     color: layoutColors.defaultText,
-          //     axisColor: layoutColors.defaultText
-          //   },
-          //   valueAxes: [
-          //     {
-          //       minVerticalGap: 50,
-          //       gridAlpha: 0,
-          //       color: layoutColors.defaultText,
-          //       axisColor: layoutColors.defaultText
-          //     }
-          //   ],
-          //   graphs: [
-          //     {
-          //       id: 'g0',
-          //       bullet: 'none',
-          //       useLineColorForBulletBorder: true,
-          //       lineColor: baUtil.hexToRGB(graphColor, 0.3),
-          //       lineThickness: 1,
-          //       negativeLineColor: layoutColors.danger,
-          //       type: 'smoothedLine',
-          //       valueField: 'value',
-          //       fillAlphas: 1,
-          //       fillColorsField: 'lineColor'
-          //     }
-          //   ],
-          //   chartCursor: {
-          //     categoryBalloonDateFormat: 'DD MM YYYY',
-          //     categoryBalloonColor: '#4285F4',
-          //     categoryBalloonAlpha: 0.7,
-          //     cursorAlpha: 0,
-          //     valueLineEnabled: true,
-          //     valueLineBalloonEnabled: true,
-          //     valueLineAlpha: 0.5
-          //   },
-          //   dataDateFormat: 'DD MM YYYY',
-          //   export: {
-          //     enabled: true
-          //   },
-          //   creditsPosition: 'bottom-right',
-          //   zoomOutButton: {
-          //     backgroundColor: '#fff',
-          //     backgroundAlpha: 0
-          //   },
-          //   zoomOutText: '',
-          //   pathToImages: layoutPaths.images.amChart
-          // });
-          // $scope.chart.addListener('rendered', zoomChart);
-          // zoomChart();
-          // if ($scope.chart.zoomChart) {
-          //   $scope.chart.zoomChart();
-          // }
         }).catch(function (error) {
           $scope.revenueData = [];
         });

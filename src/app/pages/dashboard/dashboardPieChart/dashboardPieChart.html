@@ -151,12 +151,6 @@
           <div class="traffic-text">
           </div>
         </div>
-        <!-- <div ng-if="categoryData.length">
-            <input class="form-control" ng-model="searchcategory" type="text" placeholder="Search Category" />
-          <div ng-repeat="category in categoryData | filter : searchcategory track by $index" ng-click="selectCategory(category)">
-            {{category.category}} +{{category.percentage}}%
-          </div>
-        </div> -->
       </div>
       <div class="channels-info">
         <div>
@@ -176,10 +170,6 @@
   <div ng-if="doughnutData2 && categoryData.length && categoryDetails.length" class="col-lg-6 col-md-12 col-sm-12"
     ba-panel ba-panel-title="{{'categoryVolumes' | translate}}" ba-panel-class="medium-panel traffic-panel bgtrafficpanel">
     <div class="form-group" ng-if="categoryData.length">
-      <!-- <select class="form-control select-filter classic" ng-model="selectedCategory" ng-change="selectCategory(selectedCategory)"
-        ng-options="category as category.category for category in categoryData">
-        <option value="?"></option>
-      </select> -->
       <div class="newitem-forsearch" ng-if="categoryDetails.length">
         <input class="form-control newsearch-formarea" ng-model="searchitem.text" type="text" placeholder="{{'SearchItem' | translate}}" />
         <select class="form-control select-filter classic newselect-formgroup" ng-model="selectedCategory" ng-change="selectCategory(selectedCategory)"
@@ -207,21 +197,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="form-group" ng-if="categoryData.length"> -->
-        <!-- <select class="form-control select-filter classic" ng-model="selectedCategory" ng-change="selectCategory(selectedCategory)"
-            ng-options="category as category.category for category in categoryData">
-            <option value="?"></option>
-          </select> -->
-        <!-- <select class="form-control select-filter classic" ng-model="selectedCategory" ng-change="selectCategory(selectedCategory)"
-            ng-options="selectedCategory as selectedCategory.category for selectedCategory in categoryData track by selectedCategory._id">
-        </select>
-        </div> -->
-        <!-- <div ng-if="categoryDetails.length">
-            <input class="form-control" ng-model="searchitem.text" type="text" placeholder="Search Item" />
-          <div ng-repeat="data in categoryDetails | filter : searchitem.text track by $index">
-            {{data.item}} {{data.count}}
-          </div>
-        </div> -->
       </div>
       <div class="channels-info">
         <div>

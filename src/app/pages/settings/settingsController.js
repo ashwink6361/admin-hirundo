@@ -66,51 +66,6 @@
             });
         };
 
-        // $scope.deviceChanged = function (device) {
-        //     localStorage.removeItem('selectedDevice');            
-        //     console.log('device',device);
-        //     if (device) {
-        //         delete device.$$hashKey;
-        //         var temp = angular.copy(device);
-        //         localStorage.setItem('selectedDevice', JSON.stringify(temp));
-        //         $scope.deviceSelected = device;
-        //         console.log('$scope.deviceSelected+++++++++++', $scope.deviceSelected);
-        //         var opts = {
-        //             channel: device.channel,
-        //             address: device.address
-        //         }
-        //         SettingsService.connectDevice(opts).then(function (data) {
-        //             AlertService.success('settingmsg', data.message, 4000);
-        //         }).catch(function (error) {
-        //             AlertService.error('settingmsg', error.message, 4000);
-        //         });
-        //     }
-        //     else {
-        //         localStorage.removeItem('selectedDevice');
-        //         $scope.deviceSelected = null;
-        //         $scope.getDevices();
-        //     }
-        // };
-
-        // $scope.deviceChanged = function (device) {
-        //     console.log('device',device);
-        //     if(device){
-        //         SettingsService.connectDevice(device).then(function (data) {
-        //             localStorage.setItem('selectedDevice',JSON.stringify(device));
-        //             $scope.deviceSelected = device;
-        //             console.log('$scope.deviceSelected+++++++++++',$scope.deviceSelected);                    
-        //             AlertService.success('settingmsg', data.message, 4000);
-        //         }).catch(function (error) {
-        //             AlertService.error('settingmsg', error.message, 4000);
-        //         });
-        //     }
-        //     else{
-        //         localStorage.removeItem('selectedDevice');
-        //         $scope.deviceSelected = null;
-        //         $scope.getDevices();                
-        //     }
-        // };
-
         $scope.deviceChanged = function (device) {
             localStorage.removeItem('selectedDevice');            
             if (device) {
