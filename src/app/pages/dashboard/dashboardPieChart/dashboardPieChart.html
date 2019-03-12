@@ -111,17 +111,19 @@
 </div>
 
 <div class="row" ng-if="userDetails.adminType == 2">
-  <div class="col-xlg-9 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
     <div class="row">
-      <div class="col-xlg-8 col-lg-12 col-md-12 col-sm-7 col-xs-12" ba-panel ba-panel-title="{{'SeatCost' | translate}}" ba-panel-class="medium-panel">
+      <div class="col-sm-12" ba-panel ba-panel-title="{{'SeatCost' | translate}}"
+        ba-panel-class="medium-panel">
         <div id="chartContainer1" style="height: 300px; width: 100%;">
         </div>
       </div>
     </div>
   </div>
-  <div class="col-xlg-9 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
     <div class="row">
-      <div class="col-xlg-8 col-lg-12 col-md-12 col-sm-7 col-xs-12" ba-panel ba-panel-title="{{'Sales' | translate}}" ba-panel-class="medium-panel">
+      <div class="col-sm-12" ba-panel ba-panel-title="{{'Sales' | translate}}"
+        ba-panel-class="medium-panel">
         <div id="chartContainer2" style="height: 300px; width: 100%;">
         </div>
       </div>
@@ -129,41 +131,44 @@
   </div>
 </div>
 
-<div class="row" ng-if="userDetails.adminType == 2 && categoryData.length">
+<div class="row dashboard-statics-chart" ng-if="userDetails.adminType == 2 && categoryData.length">
   <div ng-if="doughnutData" class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="{{'categories' | translate}}"
     ba-panel-class="medium-panel traffic-panel bgtrafficpanel">
-    <div class="newitem-forsearch" ng-if="categoryData.length">
+    <div class="newitem-forsearch-category" ng-if="categoryData.length">
       <input class="form-control newinput-items" ng-model="searchcategory.text" type="text" placeholder="{{'SearchCategory' | translate}}" />
     </div>
-    <div ng-if="categoryData.length" class="ngnewscope-categ cate-cateitmnw">
-      <div class="category-borderbtm c-p" ng-repeat="category in categoryData | filter : searchcategory.text track by $index"
-        ng-click="selectCategory(category)">
-        <i style="color: {{category.bgcolor}}" class="fa fa-circle" aria-hidden="true"></i>
-        <span class="cate-categoryitems" title="{{category.category}}"> {{category.category}}</span> <span class="perc-percentageitems">
-          +{{category.percentage}}%</span>
-      </div>
-    </div>
-    <div class="channels-block newpanel-channels " ng-class="{'transparent': transparent}">
-      <div class="chart-bg"></div>
-      <div class="traffic-chart circler-trafficchart" id="trafficChart1">
-        <div class="canvas-holder new-canvasholderr">
-          <canvas id="chart-area1" width="280" height="280"></canvas>
-          <div class="traffic-text">
+    <div class="cart-list-container">
+      <div class="channels-block newpanel-channels " ng-class="{'transparent': transparent}">
+        <div class="chart-bg"></div>
+        <div class="traffic-chart circler-trafficchart" id="trafficChart1">
+          <div class="canvas-holder new-canvasholderr">
+            <canvas id="chart-area1"></canvas>
+            <div class="traffic-text">
+            </div>
           </div>
         </div>
-      </div>
-      <div class="channels-info">
-        <div>
-          <div class="channels-info-item" ng-repeat="label in doughnutData.labels" ng-init="i = $index; data = doughnutData.datasets[0]">
-            <div class="legend-color" style="background-color: {{data.backgroundColor}}"></div>
-            <p>{{label}}<span class="channel-number">+{{data.percentage[i]}}%</span></p>
-            <div class="progress progress-sm channel-progress">
-              <div class="progress-bar " role="progressbar" aria-valuenow="{{data.percentage[i]}}" aria-valuemin="0"
-                aria-valuemax="100" style="width: {{item.percentage}}%">
+        <div class="channels-info">
+          <div>
+            <div class="channels-info-item" ng-repeat="label in doughnutData.labels" ng-init="i = $index; data = doughnutData.datasets[0]">
+              <div class="legend-color" style="background-color: {{data.backgroundColor}}"></div>
+              <p>{{label}}<span class="channel-number">+{{data.percentage[i]}}%</span></p>
+              <div class="progress progress-sm channel-progress">
+                <div class="progress-bar " role="progressbar" aria-valuenow="{{data.percentage[i]}}" aria-valuemin="0"
+                  aria-valuemax="100" style="width: {{item.percentage}}%">
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div ng-if="categoryData.length" class="ngnewscope-categ cate-cateitmnw">
+        <ul class="category-list">
+          <li class="c-p" ng-repeat="category in categoryData | filter : searchcategory.text track by $index" ng-click="selectCategory(category)">
+            <i style="color: {{category.bgcolor}}" class="fa fa-circle" aria-hidden="true"></i>
+            <span class="cate-categoryitems" title="{{category.category}}"> {{category.category}}</span> <span class="perc-percentageitems">
+              +{{category.percentage}}%</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -176,42 +181,47 @@
           ng-options="selectedCategory as selectedCategory.category for selectedCategory in categoryData track by selectedCategory._id">
         </select>
       </div>
-      <div ng-if="categoryDetails.length" class="ngnewscope-categ itemsearch-catenwe">
-        <div class="category-borderbtm" ng-repeat="data in categoryDetails | filter : searchitem.text track by $index">
-          <i style="color: {{data.bgcolor}}" class="fa fa-circle" aria-hidden="true"></i>
-          <span class="cate-categoryitems" title="{{data.item}}"> {{data.item}}</span> <span class="perc-percentageitems">{{data.count}}</span>
-        </div>
-      </div>
     </div>
     <div class="channels-block itemsearch-cate" ng-class="{'transparent': transparent}">
-      <div class="chart-bg"></div>
-      <div class="traffic-chart" id="trafficChart2">
-        <div class="canvas-holder new-canvasholderr">
-          <canvas id="chart-area2" class="circlecolor0chart" width="280" height="280"></canvas>
-          <div class="traffic-text trafficbackg-text">
-            <span class="textname0category select-categitemscir" title="{{selectedCategory.category}}">{{selectedCategory.category}}</span>
-            <div class="bg-text-colorimg" ng-style="{'background-color': !selectedCategory.isIcon ? '#ffffff' : selectedCategory.color}">
-              <img class="imgtag-images" ng-if="!selectedCategory.isIcon" ng-src="{{selectedCategory.logo.small}}" alt="" />
-              <img class="imgtag-iconimage" ng-if="selectedCategory.isIcon" ng-src="{{selectedCategory.icon}}" alt="" />
+      <div class="cart-list-container">
+        <div class="chart-bg"></div>
+        <div class="traffic-chart" id="trafficChart2">
+          <div class="canvas-holder new-canvasholderr">
+            <canvas id="chart-area2" class="circlecolor0chart" width="280" height="280"></canvas>
+            <div class="traffic-text trafficbackg-text">
+              <span class="textname0category select-categitemscir" title="{{selectedCategory.category}}">{{selectedCategory.category}}</span>
+              <div class="bg-text-colorimg" ng-style="{'background-color': !selectedCategory.isIcon ? '#ffffff' : selectedCategory.color}">
+                <img class="imgtag-images" ng-if="!selectedCategory.isIcon" ng-src="{{selectedCategory.logo.small}}"
+                  alt="" />
+                <img class="imgtag-iconimage" ng-if="selectedCategory.isIcon" ng-src="{{selectedCategory.icon}}" alt="" />
 
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="channels-info">
-        <div>
-          <div class="channels-info-item" ng-repeat="label in doughnutData2.labels track by $index" ng-init="i = $index; data = doughnutData2.datasets[0]">
-            <div class="legend-color" style="background-color: {{data.backgroundColor}}"></div>
-            <p>{{label}}<span class="channel-number">+{{data.percentage[i]}}%</span></p>
-            <div class="progress progress-sm channel-progress">
-              <div class="progress-bar " role="progressbar" aria-valuenow="{{data.percentage[i]}}" aria-valuemin="0"
-                aria-valuemax="100" style="width: {{item.percentage}}%">
+          <div class="channels-info">
+            <div class="channels-info-item" ng-repeat="label in doughnutData2.labels track by $index" ng-init="i = $index; data = doughnutData2.datasets[0]">
+              <div class="legend-color" style="background-color: {{data.backgroundColor}}"></div>
+              <p>{{label}}<span class="channel-number">+{{data.percentage[i]}}%</span></p>
+              <div class="progress progress-sm channel-progress">
+                <div class="progress-bar " role="progressbar" aria-valuenow="{{data.percentage[i]}}" aria-valuemin="0"
+                  aria-valuemax="100" style="width: {{item.percentage}}%">
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div ng-if="categoryDetails.length" class="ngnewscope-categ itemsearch-catenwe newpanel-channels">
+          <ul class="category-list">
+            <li class="c-p" ng-repeat="data in categoryDetails | filter : searchitem.text track by $index">
+              <i style="color: {{data.bgcolor}}" class=" fa fa-circle" aria-hidden="true"></i>
+              <span class="cate-categoryitems" title="{{data.item}}"> {{data.item}}</span> <span class="perc-percentageitems">{{data.count}}</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
+
   </div>
 </div>
 
