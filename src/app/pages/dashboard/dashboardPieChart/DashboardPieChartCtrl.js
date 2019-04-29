@@ -421,7 +421,7 @@
               });
             }
           }
-          if ($scope.seatData.length) {
+          if ($scope.userDetails.adminType == 2 && $scope.seatData.length) {
             var chart = new CanvasJS.Chart("chartContainer1", {
               axisX: {
                 title: "Time",
@@ -483,7 +483,7 @@
               });
             }
           }
-          if ($scope.seatData.length) {
+          if ($scope.userDetails.adminType == 2 && $scope.seatData.length) {
             var chart = new CanvasJS.Chart("chartContainer1", {
               axisX: {
                 title: "Time",
@@ -550,7 +550,7 @@
               });
             }
           }
-          if ($scope.revenueData.length) {
+          if ($scope.userDetails.adminType == 2 && $scope.revenueData.length) {
             var chart = new CanvasJS.Chart("chartContainer2", {
               axisX: {
                 title: "Time",
@@ -612,7 +612,7 @@
               });
             }
           }
-          if ($scope.revenueData.length) {
+          if ($scope.userDetails.adminType == 2 && $scope.revenueData.length) {
             var chart = new CanvasJS.Chart("chartContainer2", {
               axisX: {
                 title: "Time",

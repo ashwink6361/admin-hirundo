@@ -246,6 +246,16 @@ function RoomService($q, $http, $rootScope) {
             });
             return def.promise;
         },
+        checkoutTable: function (roomid, tableid, status) {
+            var def = $q.defer();
+            var url = '/api/orders/checkout/' + roomid + '/' + tableid + '/' + status;
+            doGet($q, $http, url).then(function (data) {
+              def.resolve(data);
+            }).catch(function (error) {
+              def.reject(error);
+            });
+            return def.promise;
+          },
         updateNoOfPeople: function (roomId, tableId, opts) {
             var def = $q.defer();
             var url = '/api/room/noOfPeople/' + roomId + '/' + tableId;

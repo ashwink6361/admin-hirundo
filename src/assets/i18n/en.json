@@ -179,5 +179,14 @@
     "Quantity": "Quantity",
     "Profit": "Profit",
     "FoodPrice": "Food Price",
-    "SeatCost": "Seat Cost"
+    "SeatCost": "Seat Cost",
+    "saveOrderData": "Do you want to save order data ?",
+    "Yes": "Yes",
+    "UpdateOrder": "Update Order",
+    "TotalItem": "Total Item",
+    "TotalPrice": "Total Price",
+    "Clear": "Clear",
+    "Invoice": "Invoice",
+    "Receipt": "Receipt",
+    "Send@": "Send @"
 } 

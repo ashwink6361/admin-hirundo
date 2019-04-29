@@ -179,5 +179,14 @@
     "Quantity": "Quantità",
     "Profit": "Profitto",
     "FoodPrice": "Prezzo del cibo",
-    "SeatCost": "COSTO DI SEDUTA"
+    "SeatCost": "COSTO DI SEDUTA",
+    "saveOrderData": "Vuoi salvare i dati dell'ordine?",
+    "Yes": "Sì",
+    "UpdateOrder": "Ordine di aggiornamento",
+    "TotalItem": "Articolo totale",
+    "TotalPrice": "Prezzo totale",
+    "Clear": "Cancella",
+    "Invoice": "Fattura",
+    "Receipt": "Scontrino",
+    "Send@": "Invia @"
 }

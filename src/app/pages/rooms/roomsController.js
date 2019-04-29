@@ -1269,9 +1269,16 @@
                 $scope.checkoutTotalPrice = Number(Math.round($scope.checkoutTotalPrice + 'e2') + 'e-2');
             }
         }
-
-        $scope.checkout = function () {
-            OrderService.checkoutTable($scope.roomData["_id"], $rootScope.tableData["_id"]).then(function (data) {
+        $scope.openCheckoutModal = function (page, size) {
+            $scope.checkoutInstance = $uibModal.open({
+                scope: $scope,
+                animation: true,
+                templateUrl: page,
+                size: size
+            });
+        };
+        $scope.checkout = function (status) {
+            RoomService.checkoutTable($scope.roomData["_id"], $rootScope.tableData["_id"],status).then(function (data) {
                 $scope.showLedtSideBar = false;
                 $scope.showOrder = false;
                 $scope.showCheckoutCart = false;
@@ -1279,6 +1286,8 @@
                 $scope.checkoutPeoplePrice = 0;
                 $scope.checkoutTotalPrice = 0;
                 baRoomService.setCreateModalCollapsed(false);
+                $scope.checkoutInstance.dismiss('cancel');
+                $scope.editTableInstance1.dismiss('cancel');
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
@@ -1357,7 +1366,7 @@
 
         $scope.openPopup = function (order, page, size) {
             $scope.activeOrder = order;
-            $scope.editTableInstance = $uibModal.open({
+            $scope.editTableInstance1 = $uibModal.open({
                 scope: $scope,
                 animation: true,
                 templateUrl: page,
