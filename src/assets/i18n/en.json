@@ -188,5 +188,7 @@
     "Clear": "Clear",
     "Invoice": "Invoice",
     "Receipt": "Receipt",
-    "Send@": "Send @"
+    "Send": "Send",
+    "Emailrequired": "Email is required.",
+    "SendTo": "Send To"
 } 

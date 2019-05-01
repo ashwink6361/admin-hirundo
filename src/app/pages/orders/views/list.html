@@ -1,4 +1,4 @@
-<div class="widgets">
+<!-- <div class="widgets">
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div ba-panel ba-panel-class="with-scroll table-panel mh-500">
@@ -36,7 +36,6 @@
                     </div>
                 </div>
                
-                <!-- <div class="" style="right: 21px;margin-top: -42px;position: absolute;">Current Time: {{ clock | date:'HH:mm:ss'}}</div> -->
                 <div class="loader text-center" ng-if="loader"><img src="assets/img/loader.gif"></div>
                 <div ng-if="!loader">
                     <div ng-show="ordersList.length<1" class="text-center">
@@ -81,7 +80,6 @@
                                                 <th class="fw-bold">Item Price</th>
                                                 <th class="fw-bold">Item Quantity</th>
                                                 <th class="fw-bold">Status</th>
-                                                <!-- <th class="w-310">Action</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -95,9 +93,6 @@
                                                 <td>&euro; {{item.price}}</td>
                                                 <td>{{item.quantity}}</td>
                                                 <td>{{getOrderStatus(item.status)}}</td>
-                                                <!-- <td>
-                                                    <button type="button" ng-show="item.status != 1" class="text-btn" ng-click="updateItem(item, order._id, 1)">Delivered</button>
-                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -105,6 +100,267 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="widgets">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div ba-panel ba-panel-class="with-scroll table-panel mh-500">
+                <div ng-init="indextab = 0">
+                    <uib-tabset active="indextab">
+                        <uib-tab heading="ORDINI" ng-click="getOrdersList()">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Todays Orders</h3>
+                                </div>
+                                <div class="col-sm-4 mt-10 fw-bold">
+                                    Current Time: {{ clock | date:'HH:mm:ss'}}
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group row" ng-controller="datepickerpopupCtrl">
+                                        <label class="col-sm-2 mt-10" for="date">Filter</label>
+                                        <div class="col-sm-10">
+                                            <div class="uib-datepicker-wrap">
+                                                <div class="input-group disable-color">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default calender-btn"
+                                                            ng-click="open1()">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                    <input type="text" class="form-control" id="date"
+                                                        ng-model="filter.date" name="date"
+                                                        uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options"
+                                                        is-open="popup1.opened" close-text="Close"
+                                                        alt-input-formats="altInputFormats" show-button-bar="false"
+                                                        ng-click="open1()" ng-change="changeDate(filter.date)"
+                                                        readonly />
+                                                    <span class="input-group-btn">
+                                                        <button ng-show="filter.date" type="button"
+                                                            class="btn btn-default clear-date" ng-click="cleardate()">
+                                                            <i class="fa fa-times-circle"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="loader text-center" ng-if="loader"><img src="assets/img/loader.gif"></div>
+                            <div ng-if="!loader">
+                                <div ng-show="ordersList.length<1" class="text-center">
+                                    No order available
+                                </div>
+                                <table class="table" ng-show="ordersList.length">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-50"></th>
+                                            <th class="fw-bold">Table</th>
+                                            <th class="fw-bold">#Orderid </th>
+                                            <th class="fw-bold">Waiter</th>
+                                            <th class="fw-bold">Room</th>
+                                            <th class="fw-bold">Order Time</th>
+                                            <th class="fw-bold">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat-start="order in ordersList | orderBy: '-created_at'">
+                                            <td class="w-50">
+                                                <button ng-if="order.expanded" class="btn-expand"
+                                                    ng-click="order.expanded = false">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                                <button ng-if="!order.expanded" class="btn-expand"
+                                                    ng-click="order.expanded = true">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </td>
+                                            <td>{{order.tableName}}</td>
+                                            <td>N.{{order.orderId}}</td>
+                                            <td>{{order.waiter.firstName}}</td>
+                                            <td>{{order.room.name}}</td>
+                                            <td>{{order.created_at | date:'hh:mm a'}}</td>
+                                            <td>{{getOrderStatus(order.status)}}</td>
+                                        </tr>
+                                        <tr ng-if="order.expanded" ng-repeat-end="">
+                                            <td colspan="7" style="padding: 0">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="fw-bold">Item Name</th>
+                                                            <th class="fw-bold">Step</th>
+                                                            <th class="fw-bold">Item Price</th>
+                                                            <th class="fw-bold">Item Quantity</th>
+                                                            <th class="fw-bold">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in order.item">
+                                                            <td>
+                                                                {{item.id.name}}
+                                                                <span class="variant-container"
+                                                                    ng-repeat="varient in item.variant"><i
+                                                                        ng-show="varient.status == 1">+</i><i
+                                                                        ng-show="varient.status == 0">-</i>{{varient.name}}
+                                                                    &euro;{{varient.price}}</span>
+                                                                <span class="variant-container">{{item.notes}}</span>
+                                                            </td>
+                                                            <td>{{item.step}}</td>
+                                                            <td>&euro; {{item.price}}</td>
+                                                            <td>{{item.quantity}}</td>
+                                                            <td>{{getOrderStatus(item.status)}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="CONTI" ng-click="getTablesList()">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Totali Giornata</h3>
+                                </div>
+                                <div class="col-sm-4 mt-10 fw-bold">
+                                    Current Time: {{ clock | date:'HH:mm:ss'}}
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group row" ng-controller="datepickerpopupCtrl">
+                                        <label class="col-sm-2 mt-10" for="date">Filter</label>
+                                        <div class="col-sm-10">
+                                            <div class="uib-datepicker-wrap">
+                                                <div class="input-group disable-color">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default calender-btn"
+                                                            ng-click="open1()">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                    <input type="text" class="form-control" id="date"
+                                                        ng-model="tableFilter.date" name="date"
+                                                        uib-datepicker-popup="yyyy-MM-dd" datepicker-options="options"
+                                                        is-open="popup1.opened" close-text="Close"
+                                                        alt-input-formats="altInputFormats" show-button-bar="false"
+                                                        ng-click="open1()" ng-change="changeDate1(tableFilter.date)"
+                                                        readonly />
+                                                    <span class="input-group-btn">
+                                                        <button ng-show="tableFilter.date" type="button"
+                                                            class="btn btn-default clear-date" ng-click="cleardate1()">
+                                                            <i class="fa fa-times-circle"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="loader text-center" ng-if="loader"><img src="assets/img/loader.gif"></div>
+                            <div ng-if="!loader">
+                                <div ng-show="tableList.length<1" class="text-center">
+                                    No record found
+                                </div>
+                                <table class="table" ng-show="tableList.length">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-50"></th>
+                                            <th class="fw-bold"><strong>Table</strong></th>
+                                            <th class="fw-bold"><strong>Room</strong></th>
+                                            <th class="fw-bold"><strong>Total Cost</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat-start="table in tableList | orderBy: '-created_at'">
+                                            <td class="w-50">
+                                                <button ng-if="table.expanded" class="btn-expand"
+                                                    ng-click="table.expanded = false">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                                <button ng-if="!table.expanded" class="btn-expand"
+                                                    ng-click="table.expanded = true">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </td>
+                                            <td>{{table.table}}</td>
+                                            <td>{{table.room}}</td>
+                                            <td>&euro; {{table.totalCost}}</td>
+                                        </tr>
+                                        <tr ng-if="table.expanded" ng-repeat-end="">
+                                            <td colspan="7" style="padding: 0">
+                                                <table class="table" ng-show="table.orderData.length">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="w-50"></th>
+                                                            <th class="w-50"></th>
+                                                            <th class="fw-bold"><strong>#Orderid</strong></th>
+                                                            <th class="fw-bold"><strong>Waiter</strong></th>
+                                                            <th class="fw-bold"><strong>No. of people</strong></th>
+                                                            <th class="fw-bold"><strong>Seat cost</strong></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            ng-repeat-start="order in table.orderData | orderBy: '-created_at'">
+                                                            <td>&nbsp;</td>
+                                                            <td class="w-50">
+                                                                <button ng-if="order.expanded" class="btn-expand"
+                                                                    ng-click="order.expanded = false">
+                                                                    <i class="fa fa-minus"></i>
+                                                                </button>
+                                                                <button ng-if="!order.expanded" class="btn-expand"
+                                                                    ng-click="order.expanded = true">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>N.{{order.orderId}}</td>
+                                                            <td>{{order.waiter}}</td>
+                                                            <td>{{order.noOfPeople}}</td>
+                                                            <td>&euro; {{order.seatCost}}</td>
+                                                        </tr>
+                                                        <tr ng-if="order.expanded" ng-repeat-end="">
+                                                            <td colspan="7" style="padding: 0">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="w-50"></th>
+                                                                            <th class="w-50"></th>
+                                                                            <th class="fw-bold"><strong>Item
+                                                                                    Name</strong></th>
+                                                                            <th class="fw-bold"><strong>Item
+                                                                                    Price</strong></th>
+                                                                            <th class="fw-bold"><strong>Item
+                                                                                    Quantity</strong></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="item in order.itemData">
+                                                                            <td>&nbsp;</td>
+                                                                            <td>&nbsp;</td>
+                                                                            <td>
+                                                                                {{item.name}}
+                                                                            </td>
+                                                                            <td>&euro; {{item.price}}</td>
+                                                                            <td>{{item.quantity}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
                 </div>
             </div>
         </div>

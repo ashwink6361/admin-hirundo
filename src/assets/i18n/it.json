@@ -188,5 +188,7 @@
     "Clear": "Cancella",
     "Invoice": "Fattura",
     "Receipt": "Scontrino",
-    "Send@": "Invia @"
+    "Send": "Invia",
+    "Emailrequired": "L'email è richiesta",
+    "SendTo": "Inviare a"
 }

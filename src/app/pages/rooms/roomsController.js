@@ -1280,6 +1280,7 @@
         $scope.checkout = function (status) {
             RoomService.checkoutTable($scope.roomData["_id"], $rootScope.tableData["_id"],status).then(function (data) {
                 $scope.showLedtSideBar = false;
+                $scope.showLedtSideBar1 = false;
                 $scope.showOrder = false;
                 $scope.showCheckoutCart = false;
                 $scope.checkoutPeople = 0;
@@ -2158,6 +2159,48 @@
             WinPrint.close();
             document.getElementById('invoicePrint').style.visibility = "visible";
         }
+        $scope.openSendModal = function (page, size) {
+            $scope.Send = {};
+            $scope.sendInstance = $uibModal.open({
+                scope: $scope,
+                animation: true,
+                templateUrl: page,
+                size: size
+            });
+        };
+        $scope.cancelSendTo = function () {
+            $scope.sendInstance.dismiss('cancel');
+            $scope.Send = {};
+        };
+        $scope.sendMail = function () {
+            var opts = {
+                email: $scope.Send.email,
+                roomId: $scope.roomData["_id"],
+                tableId: $rootScope.tableData["_id"],
+                totalCost: $scope.orderItemsTotalPrice
+            };
+            $scope.sendRequest = true;
+            RoomService.sendMail(opts).then(function (data) {
+                $scope.sendRequest = false;
+                AlertService.success('sendmsg', data.message, 3000);
+                $timeout(function () {
+                    $scope.showLedtSideBar = false;
+                    $scope.showLedtSideBar1 = false;
+                    $scope.showOrder = false;
+                    $scope.showCheckoutCart = false;
+                    $scope.checkoutPeople = 0;
+                    $scope.checkoutPeoplePrice = 0;
+                    $scope.checkoutTotalPrice = 0;
+                    baRoomService.setCreateModalCollapsed(false);
+                    $scope.editTableInstance1.dismiss('cancel');
+                    $scope.cancelSendTo();
+                    $scope.getRoomList();
+                }, 3000);
+            }).catch(function (error) {
+                $scope.sendRequest = false;
+                AlertService.error('sendmsg', error.message, 4000);
+            });
+        };
     }
 
     function StepsController($scope, $rootScope, RoomService, AlertService, baRoomService) {

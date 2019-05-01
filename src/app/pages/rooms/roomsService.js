@@ -296,6 +296,16 @@ function RoomService($q, $http, $rootScope) {
             });
             return def.promise;
         },
+        sendMail: function (opts) {
+            var def = $q.defer();
+            var url = '/api/send/mail';
+            doPost($q, $http, url, opts).then(function (data) {
+                def.resolve(data);
+            }).catch(function (error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
         printInvoice: function(roomid,tableid,total){
             var def = $q.defer();
             var url = '/api/invoice/' + roomid + '/' + tableid + '/' + total;
