@@ -159,12 +159,12 @@
                                     <thead>
                                         <tr>
                                             <th class="w-50"></th>
-                                            <th class="fw-bold">Table</th>
-                                            <th class="fw-bold">#Orderid </th>
-                                            <th class="fw-bold">Waiter</th>
-                                            <th class="fw-bold">Room</th>
-                                            <th class="fw-bold">Order Time</th>
-                                            <th class="fw-bold">Status</th>
+                                            <th class="fw-bold"><strong>Table</strong></th>
+                                            <th class="fw-bold"><strong>#Orderid</strong></th>
+                                            <th class="fw-bold"><strong>Waiter</strong></th>
+                                            <th class="fw-bold"><strong>Room</strong></th>
+                                            <th class="fw-bold"><strong>Order Time</strong></th>
+                                            <th class="fw-bold"><strong>Status</strong></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -191,15 +191,17 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th class="fw-bold">Item Name</th>
-                                                            <th class="fw-bold">Step</th>
-                                                            <th class="fw-bold">Item Price</th>
-                                                            <th class="fw-bold">Item Quantity</th>
-                                                            <th class="fw-bold">Status</th>
+                                                            <th class="w-50"></th>
+                                                            <th class="fw-bold"><strong>Item Name</strong></th>
+                                                            <th class="fw-bold"><strong>Step</strong></th>
+                                                            <th class="fw-bold"><strong>Item Price</strong></th>
+                                                            <th class="fw-bold"><strong>Item Quantity</strong></th>
+                                                            <th class="fw-bold"><strong>Status</strong></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr ng-repeat="item in order.item">
+                                                            <td>&nbsp;</td>
                                                             <td>
                                                                 {{item.id.name}}
                                                                 <span class="variant-container"
