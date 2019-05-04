@@ -286,6 +286,35 @@ function RoomService($q, $http, $rootScope) {
             });
             return def.promise;
         },
+
+        printReceipt: function(roomid,tableid){
+            var def = $q.defer();
+            var url = '/api/print/' + roomid + '/' + tableid;
+            doGet($q, $http, url).then(function (data) {
+                def.resolve(data);
+            }).catch(function (error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+
+        printInvoiceAndSend: function(roomid,tableid,total,email){
+            var def = $q.defer();
+            var url = '/api/invoice';
+            var opts = {
+                "roomID": roomid,
+                "tableID": tableid,
+                "total": total,
+                "email": email
+            };
+            doPost($q, $http, url, opts).then(function (data) {
+                def.resolve(data);
+            }).catch(function (error) {
+                def.reject(error);
+            });
+            return def.promise;
+        },
+
         printInvoice: function(roomid,tableid,total){
             var def = $q.defer();
             var url = '/api/invoice/' + roomid + '/' + tableid + '/' + total;

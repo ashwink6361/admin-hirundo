@@ -10,20 +10,21 @@
             <h3>Total Item - {{orderItemsTotalItem}}</h3>
             <h3>Total Price - &euro;{{orderItemsTotalPrice}}</h3>
         </div>
-        <form class="form-inline d-flex justify-space-between" name="form" novalidate>
+        <form class="form-inline d-flex justify-space-between" name="form" ng-hide="invoice.buttonHide" novalidate>
             <div class="form-group">
-                <button type="button" class="btn btn-default">Invia @</button>
+                <button type="button" class="btn btn-default" ng-click="toggleEmail()">Invia @</button>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-default">Scontrino</button>
+                <button type="button" class="btn btn-default" ng-click="printReceipt()">Scontrino</button>
             </div>
             <div class="form-group">    
                 <button type="submit" class="btn btn-default" ng-click="printInvoice()">Fattura</button>
-                <!-- <button type="button" class="btn btn-default">Fattura</button> -->
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-default" ng-click="checkout();$dismiss()">Cancella</button>
             </div>
         </form>
+        <input type="email" name="invoiceEmail" placeholder="Email" ng-model="invoice.email" ng-show="invoice.buttonHide"/>
+        <button type="button" class="btn btn-default" ng-click="generateInvoiceAndSend()" ng-show="invoice.buttonHide">Invia</button>
     </div>
 </div>

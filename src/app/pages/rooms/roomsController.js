@@ -81,6 +81,11 @@
         $scope.variantError3 = '';
         $scope.subCategories = [];
 
+        $scope.invoice = {
+            buttonHide : false,
+            email : ''
+        };
+
         $q.all([
             RoomService.getCategories()
         ]).then(function (data) {
@@ -2123,6 +2128,32 @@
             }
         };
 
+        $scope.toggleEmail = function () {
+            $scope.invoice.buttonHide = !$scope.invoice.buttonHide;
+        };
+
+        $scope.generateInvoiceAndSend = function () {
+            
+            RoomService.printInvoiceAndSend($scope.roomData._id,$rootScope.tableData._id,$scope.orderItemsTotalPrice,$scope.invoice.email).then(function (data) {
+                $scope.pdf = data.data;
+                if($scope.pdf){
+                    console.log('email->', $scope.invoice.email);
+                    console.log("Got it!->", $scope.pdf);
+                    $scope.toggleEmail();
+                }
+            })
+            .catch(function (error) {
+            });
+        };
+
+        $scope.printReceipt = function () {            
+            RoomService.printReceipt($scope.roomData._id,$rootScope.tableData._id).then(function (data) {
+                console.log('response->', data);
+            })
+            .catch(function (error) {
+                console.error('Print Error -> ', error);
+            });            
+        };
        
         $scope.printInvoice = function () {
             $scope.pdf = '';
