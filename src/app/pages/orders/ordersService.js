@@ -93,6 +93,26 @@
           def.reject(error);
         });
         return def.promise;
+      },
+      getTables: function (date) {
+        var def = $q.defer();
+        var dateToISO = null;
+        if(date){
+          var dateNow = new Date(date);
+          dateNow.setUTCHours(0, 0, 0, 0);
+          dateNow.setDate(dateNow.getDate() + 1);
+          dateToISO = dateNow.toISOString();
+        }
+        var url = '/api/room/tables';
+        if (dateToISO) {
+          url += '?date=' + dateToISO;
+        }
+        doGet($q, $http, url).then(function (data) {
+          def.resolve(data);
+        }).catch(function (error) {
+          def.reject(error);
+        });
+        return def.promise;
       }
     };
   }

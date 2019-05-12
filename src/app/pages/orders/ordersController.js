@@ -9,14 +9,17 @@
     .controller('datepickerpopupCtrl', datepickerpopupCtrl);
 
     /** @ngInject */
-    function OrderController($scope, $uibModal, $state, $http, $timeout, $interval, OrderService, AlertService) {
+    function OrderController($scope, $uibModal, $interval, OrderService, AlertService) {
         $scope.ordersList = [];
+        $scope.tableList = [];
         $scope.showItemDetail = false;
         $scope.loader = true;
         $scope.filter = {
             date: null
         };
-        
+        $scope.tableFilter = {
+            date: null
+        };
         OrderService.getOrders().then(function(data) {
             $scope.ordersList = OrderService.listOrder();
             $scope.loader = false;            
@@ -24,7 +27,20 @@
             $scope.ordersList = [];
             $scope.loader = false;            
         });
-
+        $scope.getOrdersList = function (){
+            OrderService.getOrders().then(function(data) {
+                $scope.ordersList = data.data;
+            }).catch(function(error) {
+                $scope.ordersList = [];
+            });
+        }
+        $scope.getTablesList = function (){
+            OrderService.getTables().then(function(data) {
+                $scope.tableList = data.data;
+            }).catch(function(error) {
+                $scope.tableList = [];
+            });
+        }
         $scope.getOrderStatus = function(status) {
             var str = 'In progress';
             switch(status) {
@@ -111,6 +127,21 @@
                 $scope.ordersList = OrderService.listOrder();
             }).catch(function(error) {
                 $scope.ordersList = [];
+            });
+        }
+        $scope.changeDate1 = function (date) {
+            OrderService.getTables(date).then(function(data) {
+                $scope.tableList = data.data;
+            }).catch(function(error) {
+                $scope.tableList = [];
+            });
+        }
+        $scope.cleardate1 = function () {
+            $scope.tableFilter.date = null;
+            OrderService.getTables().then(function(data) {
+                $scope.tableList = data.data;
+            }).catch(function(error) {
+                $scope.tableList = [];
             });
         }
     }

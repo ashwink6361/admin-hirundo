@@ -3,28 +3,29 @@
         <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
             <em class="ion-ios-close-empty sn-link-close"></em>
         </button>
-        <h4 class="modal-title">Update Order</h4>
+        <h4 class="modal-title">{{'UpdateOrder' | translate}}</h4>
     </div>
     <div class="modal-body">
         <div class="d-flex justify-space-between mb-10">
-            <h3>Total Item - {{orderItemsTotalItem}}</h3>
-            <h3>Total Price - &euro;{{orderItemsTotalPrice}}</h3>
+            <h3>{{'TotalItem' | translate}} - {{orderItemsTotalItem}}</h3>
+            <h3>{{'TotalPrice' | translate}} - &euro;{{orderItemsTotalPrice}}</h3>
         </div>
         <form class="form-inline d-flex justify-space-between" name="form" ng-hide="invoice.buttonHide" novalidate>
             <div class="form-group">
-                <button type="button" class="btn btn-default" ng-click="toggleEmail()">Invia @</button>
+                <button type="button" class="btn btn-default" ng-click="openSendModal('app/pages/rooms/views/sendTo.html', 'md')">{{'Send' | translate}} @</button>
+                <!-- <button type="button" class="btn btn-default" ng-click="toggleEmail()">Invia @</button> -->
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-default" ng-click="printReceipt()">Scontrino</button>
+                <button type="button" class="btn btn-default" ng-click="printReceipt()">{{'Receipt' | translate}}</button>
             </div>
             <div class="form-group">    
-                <button type="submit" class="btn btn-default" ng-click="printInvoice()">Fattura</button>
+                <button type="submit" class="btn btn-default" ng-click="printInvoice()">{{'Invoice' | translate}}</button>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-default" ng-click="checkout();$dismiss()">Cancella</button>
+                <button type="button" class="btn btn-default" ng-click="openCheckoutModal('app/pages/rooms/views/checkout.html', 'md')">{{'Clear' | translate}}</button>
             </div>
         </form>
         <input type="email" name="invoiceEmail" placeholder="Email" ng-model="invoice.email" ng-show="invoice.buttonHide"/>
-        <button type="button" class="btn btn-default" ng-click="generateInvoiceAndSend()" ng-show="invoice.buttonHide">Invia</button>
+        <button type="button" class="btn btn-default" ng-click="generateInvoiceAndSend()" ng-show="invoice.buttonHide">{{'Send' | translate}}</button>
     </div>
 </div>
