@@ -14,6 +14,7 @@
         $scope.tableList = [];
         $scope.showItemDetail = false;
         $scope.loader = true;
+        $scope.loader1 = false;
         $scope.filter = {
             date: null
         };
@@ -28,17 +29,25 @@
             $scope.loader = false;            
         });
         $scope.getOrdersList = function (){
+            $scope.ordersList = [];
+            $scope.loader = true;
             OrderService.getOrders().then(function(data) {
                 $scope.ordersList = data.data;
+                $scope.loader = false;            
             }).catch(function(error) {
                 $scope.ordersList = [];
+                $scope.loader = false;            
             });
         }
         $scope.getTablesList = function (){
+            $scope.tableList = [];
+            $scope.loader1 = true;
             OrderService.getTables().then(function(data) {
                 $scope.tableList = data.data;
+                $scope.loader1 = false;            
             }).catch(function(error) {
                 $scope.tableList = [];
+                $scope.loader1 = false;            
             });
         }
         $scope.getOrderStatus = function(status) {

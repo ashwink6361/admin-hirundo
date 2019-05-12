@@ -152,10 +152,10 @@
                             </div>
                             <div class="loader text-center" ng-if="loader"><img src="assets/img/loader.gif"></div>
                             <div ng-if="!loader">
-                                <div ng-show="ordersList.length<1" class="text-center">
+                                <div ng-if="ordersList.length<1" class="text-center">
                                     No order available
                                 </div>
-                                <table class="table" ng-show="ordersList.length">
+                                <table class="table" ng-if="ordersList.length">
                                     <thead>
                                         <tr>
                                             <th class="w-50"></th>
@@ -168,7 +168,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat-start="order in ordersList | orderBy: '-created_at'">
+                                        <tr ng-repeat-start="order in ordersList track by $index">
                                             <td class="w-50">
                                                 <button ng-if="order.expanded" class="btn-expand"
                                                     ng-click="order.expanded = false">
@@ -200,7 +200,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr ng-repeat="item in order.item">
+                                                        <tr ng-repeat="item in order.item track by $index">
                                                             <td>&nbsp;</td>
                                                             <td>
                                                                 {{item.id.name}}
@@ -263,12 +263,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="loader text-center" ng-if="loader"><img src="assets/img/loader.gif"></div>
-                            <div ng-if="!loader">
-                                <div ng-show="tableList.length<1" class="text-center">
+                            <div class="loader text-center" ng-if="loader1"><img src="assets/img/loader.gif"></div>
+                            <div ng-if="!loader1">
+                                <div ng-if="tableList.length<1" class="text-center">
                                     No record found
                                 </div>
-                                <table class="table" ng-show="tableList.length">
+                                <table class="table" ng-if="tableList.length">
                                     <thead>
                                         <tr>
                                             <th class="w-50"></th>
@@ -278,7 +278,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat-start="table in tableList | orderBy: '-created_at'">
+                                        <tr ng-repeat-start="table in tableList track by $index">
                                             <td class="w-50">
                                                 <button ng-if="table.expanded" class="btn-expand"
                                                     ng-click="table.expanded = false">
@@ -308,7 +308,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr
-                                                            ng-repeat-start="order in table.orderData | orderBy: '-created_at'">
+                                                            ng-repeat-start="order in table.orderData track by $index">
                                                             <td>&nbsp;</td>
                                                             <td class="w-50">
                                                                 <button ng-if="order.expanded" class="btn-expand"
@@ -341,7 +341,7 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr ng-repeat="item in order.itemData">
+                                                                        <tr ng-repeat="item in order.itemData track by $index">
                                                                             <td>&nbsp;</td>
                                                                             <td>&nbsp;</td>
                                                                             <td>
