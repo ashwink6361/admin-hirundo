@@ -16,6 +16,7 @@
             $scope.itemsPerPage = 10;
             $scope.currentPage = 1;
             $scope.itemEditBtn = false;
+            
             //Fetch Item list
             $scope.getItemList = function (name, offset, itemsPerPage) {
                 ItemService.getItems(name, offset, itemsPerPage).then(function (data) {
@@ -88,6 +89,20 @@
             $scope.showAllergenIcon = false;
             $scope.Item = { allergens: [], foodCost: 0 };
             $scope.subCategories = [];
+            $scope.vats = [
+                {
+                    _id: "REP01",
+                    name: "10%"
+                },
+                {
+                    _id: "REP02",
+                    name: "4%"
+                },
+                {
+                    _id: "REP03",
+                    name: "22%"
+                }
+            ]
             var categoryData = CategoryService.getItemCategoryDetails();
             var subcategoryData = CategoryService.getSubCategoryDetails();
             if(categoryData && categoryData._id){
@@ -271,6 +286,7 @@
                     name: $scope.Item.name,
                     description: $scope.Item.description ? $scope.Item.description : '',
                     price: Number($scope.Item.price),
+                    vat: $scope.Item.vat,
                     ingredients: (fitems.length) ? JSON.stringify(fitems) : '',
                     preparationTime: $scope.Item.preparationTime ? $scope.Item.preparationTime : '',
                     category: $scope.Item.category,
@@ -318,6 +334,7 @@
                     price: Number($scope.Item.price),
                     ingredients: (fitems.length) ? JSON.stringify(fitems) : '',
                     preparationTime: $scope.Item.preparationTime ? $scope.Item.preparationTime : '',
+                    vat: $scope.Item.vat,
                     category: $scope.Item.category,
                     subCategory: $scope.Item.subCategory ? $scope.Item.subCategory : '',
                     allergens: $scope.selectedIconImage ? JSON.stringify($scope.selectedIconImage) : '',
