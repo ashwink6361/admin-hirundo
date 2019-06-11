@@ -133,7 +133,11 @@
         "Update": "Update",
         "Add": "Add",
         "Cancel": "Cancel"
-    } ,
+    },
+    "Orders": {
+        "closingDay": "Closing Day",
+        "closeDayConfirmation": "Are you sure to close the day?"
+    },
     "People": "People",
     "Averagespending": "Average spending",
     "Sales": "Sales",

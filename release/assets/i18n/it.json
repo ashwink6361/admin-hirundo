@@ -134,6 +134,10 @@
         "Add": "Inserisci",
         "Cancel": "Annulla"
     },
+    "Orders": {
+        "closingDay": "Chiusura Giornata",
+        "closeDayConfirmation": "Sei sicuro di voler chiudere fiscalmente la giornata?"
+    },
     "People": "Persone",
     "Averagespending": "Spesa media",
     "Sales": "Vendite",

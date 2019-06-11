@@ -79,6 +79,19 @@
             });
         };
 
+        $scope.openCloseDayModal = function (page, size) {
+            $scope.closeDayInstance = $uibModal.open({
+                scope: $scope,
+                animation: true,
+                templateUrl: page,
+                size: size
+            });
+        };
+
+        $scope.cancelCloseDay = function () {
+            $scope.closeDayInstance.dismiss('cancel');
+        };
+
         $scope.updateOrder = function(order, status) {
             order.status = status;
             var items = [];
@@ -94,6 +107,16 @@
             };
             OrderService.updateOrder(order._id, opts).then(function(data) {
             }).catch(function(error) {
+            });
+        };
+
+        $scope.closeDay = function() {
+            OrderService.closeDay().then(function(data){
+                AlertService.success('closedaymsg', data.message, 4000);
+                $scope.cancelCloseDay();
+            }).catch(function(error) {
+                AlertService.error(data.message);
+                $scope.cancelCloseDay();
             });
         };
 

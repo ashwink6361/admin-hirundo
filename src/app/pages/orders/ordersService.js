@@ -113,6 +113,34 @@
           def.reject(error);
         });
         return def.promise;
+      },
+      closeDay: function() {
+        var def = $q.defer();
+        var url = '/api/printer';
+        doGet($q, $http, url).then(function (data) {
+          var xml = '<Service><cmd>=C3</cmd><cmd>=C10</cmd><cmd>=C1</cmd><cmd>=C0</cmd></Service>';
+          $http({
+              method  : "POST",
+              url     : data.data,
+              data    : xml,
+              headers : { 'Content-Type': 'text/xml' }
+          })
+          .success( function(data) {
+              if (data.statusCode == 401) {
+                  logout();
+              }
+              def.resolve(data);
+          })
+          .error(function(data, status, headers, config) {
+              if (data.statusCode == 401) {
+                  logout();
+              }
+              def.reject(data);
+          });
+        }).catch(function (error) {
+          def.reject(error);
+        });
+        return def.promise;
       }
     };
   }
