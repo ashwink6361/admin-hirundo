@@ -136,7 +136,9 @@
     },
     "Orders": {
         "closingDay": "Chiusura Giornata",
-        "closeDayConfirmation": "Sei sicuro di voler chiudere fiscalmente la giornata?"
+        "printerUnreachable": "Stampante non raggiungibile",
+        "closeDayConfirmation": "Sei sicuro di voler chiudere fiscalmente la giornata?",
+        "printDone": "Stampato con successo"
     },
     "People": "Persone",
     "Averagespending": "Spesa media",

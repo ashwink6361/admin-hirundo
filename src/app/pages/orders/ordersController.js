@@ -9,7 +9,7 @@
     .controller('datepickerpopupCtrl', datepickerpopupCtrl);
 
     /** @ngInject */
-    function OrderController($scope, $uibModal, $interval, OrderService, AlertService) {
+    function OrderController($scope, $uibModal, $interval, OrderService, $translate, AlertService) {
         $scope.ordersList = [];
         $scope.tableList = [];
         $scope.showItemDetail = false;
@@ -111,12 +111,23 @@
         };
 
         $scope.closeDay = function() {
-            OrderService.closeDay().then(function(data){
-                AlertService.success('closedaymsg', data.message, 4000);
-                $scope.cancelCloseDay();
-            }).catch(function(error) {
+            OrderService.getPrinterConfigs().then(function(data){
+                if(data.data && data.data.length && data.data.length > 0) {
+                    OrderService.closeDay(data.data).then(function(data){
+                        $translate('Orders.printDone').then(function (translation) {
+                            AlertService.success('closedaymsg', translation, 4000);
+                        });
+                    }).catch(function(error) {
+                        $translate('Orders.printerUnreachable').then(function (translation) {
+                            AlertService.error('closedaymsg',translation, 4000);
+                        });
+                    });
+                } else {
+                    AlertService.error('closedaymsg', data.message, 4000);
+                }
+            }).catch(function(error){
                 AlertService.error(data.message);
-                $scope.cancelCloseDay();
+                // $scope.cancelCloseDay();
             });
         };
 

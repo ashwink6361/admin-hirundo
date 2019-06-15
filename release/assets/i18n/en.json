@@ -136,7 +136,9 @@
     },
     "Orders": {
         "closingDay": "Closing Day",
-        "closeDayConfirmation": "Are you sure to close the day?"
+        "printerUnreachable": "Printer not reachable",
+        "closeDayConfirmation": "Are you sure to close the day?",
+        "printDone": "Print successfully"
     },
     "People": "People",
     "Averagespending": "Average spending",
