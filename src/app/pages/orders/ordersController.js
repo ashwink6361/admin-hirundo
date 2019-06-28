@@ -126,7 +126,7 @@
                     AlertService.error('closedaymsg', data.message, 4000);
                 }
             }).catch(function(error){
-                AlertService.error(data.message);
+                AlertService.error('closedaymsg', data.message, 4000);
                 // $scope.cancelCloseDay();
             });
         };

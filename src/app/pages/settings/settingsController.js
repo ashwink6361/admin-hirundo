@@ -19,11 +19,13 @@
         $scope.devices = devicesData ? devicesData : [];
         $scope.deviceSelected = deviceData ? deviceData : null; 
         $scope.deviceLoading = false;
-        $scope.getSeatCost = function () {
-            SettingsService.getSeatCost().then(function (data) {
+        $scope.getSettings = function () {
+            SettingsService.getSettings().then(function (data) {
                 $scope.Settings.seatCost = data.data.seatCost;
+                $scope.Settings.printer = data.data.printer;
             }).catch(function (error) {
                 $scope.Settings.seatCost = '';
+                $scope.Settings.printer = '';
             });
         };
         $scope.getDevices = function () {
@@ -47,18 +49,20 @@
                 $scope.deviceLoading = false;
             });
         };
-        $scope.getSeatCost();
+        $scope.getSettings();
         $scope.getDevices();
 
         $scope.loader = false;
         $scope.save = function () {
             var opts = {
                 seatCost: $scope.Settings.seatCost,
+                printer: $scope.Settings.printer
             };
             $scope.loader = true;
-            SettingsService.saveSeatCost(opts).then(function (data) {
+            SettingsService.saveSettings(opts).then(function (data) {
                 AlertService.success('settingmsg', data.message, 4000);
-                $scope.Settings.seatCost = data.data.seatCost;                
+                $scope.Settings.seatCost = data.data.seatCost;
+                $scope.Settings.printer = data.data.printer;
                 $scope.loader = false;
             }).catch(function (error) {
                 $scope.loader = false;

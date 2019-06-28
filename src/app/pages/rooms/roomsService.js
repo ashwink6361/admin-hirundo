@@ -297,13 +297,19 @@ function RoomService($q, $http, $rootScope) {
             return def.promise;
         },
 
-        printReceipt: function(roomid,tableid){
+        printReceipt: function(url,xml){
             var def = $q.defer();
-            var url = '/api/print/' + roomid + '/' + tableid;
-            doGet($q, $http, url).then(function (data) {
+            $http({
+                method  : "POST",
+                url     : url,
+                data    : xml,
+                headers : { 'Content-Type': 'text/xml' }
+            })
+            .success( function(data) {
                 def.resolve(data);
-            }).catch(function (error) {
-                def.reject(error);
+            })
+            .error(function(data, status, headers, config) {
+                def.reject(data);
             });
             return def.promise;
         },

@@ -138,6 +138,7 @@
         "closingDay": "Closing Day",
         "printerUnreachable": "Printer not reachable",
         "closeDayConfirmation": "Are you sure to close the day?",
+        "service": "Service cost",
         "printDone": "Print successfully"
     },
     "People": "People",

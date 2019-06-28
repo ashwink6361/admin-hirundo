@@ -2165,13 +2165,52 @@
             });
         };
 
-        $scope.printReceipt = function () {            
-            RoomService.printReceipt($scope.roomData._id,$rootScope.tableData._id).then(function (data) {
-                console.log('response->', data);
-            })
-            .catch(function (error) {
-                console.error('Print Error -> ', error);
-            });            
+        $scope.printReceipt = function () {
+            OrderService.getPrinterConfigs().then(function(data){
+                if(data.data && data.data.length && data.data.length > 0) {
+                    var printerCommand = ['<Service>'];
+                    var fallbackVAT = 'R1';
+                    var seatCost = 0;
+                    var noOfPeople = 0;
+                    $rootScope.tableData.orderId.forEach(function (order) {
+                        console.log('ORDERS->', order);
+                        
+                        // =R1(reparto)/$150(prezzo)/*n(numero item)/(descr)
+                        order.item.forEach(function (item) {
+                            printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (item.price * 100) + '/*' + item.quantity + '/(' + item.id.name + ')</cmd>');
+                            console.log('ITEM->', item);
+                            item.variant.forEach(function (variant) {
+                                printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (variant.price * 100) + '/(' + variant.name + ')</cmd>');
+                                console.log('VARIANT->', variant);
+                            });
+                        });
+                        if (seatCost < order.seatCost) seatCost = order.seatCost;
+                        if (noOfPeople < order.noOfPeople) noOfPeople = order.noOfPeople;
+                    });
+                    printerCommand.push('<cmd>=' + fallbackVAT + '/$' + (seatCost * 100) + '/*' + noOfPeople + '/(' + $translate.instant('Orders.service') + ')</cmd>');
+                    // order.seatCost * order.noOfPeople
+                    //=T1(chiusura scontrino)
+                    printerCommand.push('<cmd>=T1</cmd>');
+                    printerCommand.push('</Service>');
+                    RoomService.printReceipt(data.data, printerCommand.join('')).then(function (rs) {
+                        console.log('printerResponse->', rs);
+                        $translate('Orders.printDone').then(function (translation) {
+                            AlertService.success('closedaymsg', translation, 4000);
+                        });
+                    }).catch(function(error) {
+                        console.log('printerError->', error);
+                        $translate('Orders.printerUnreachable').then(function (translation) {
+                            AlertService.error('closedaymsg',translation, 4000);
+                        });
+                    });
+                    console.log('----->', printerCommand.join(''))
+                } else {
+                    AlertService.error('closedaymsg', data.message, 4000);
+                }
+            }).catch(function(error){
+                AlertService.error('closedaymsg', data.message, 4000);
+                // $scope.cancelCloseDay();
+            });          
         };
        
         $scope.printInvoice = function () {

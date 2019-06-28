@@ -91,15 +91,15 @@
             $scope.subCategories = [];
             $scope.vats = [
                 {
-                    _id: "REP01",
+                    _id: "R1",
                     name: "10%"
                 },
                 {
-                    _id: "REP02",
+                    _id: "R2",
                     name: "4%"
                 },
                 {
-                    _id: "REP03",
+                    _id: "R3",
                     name: "22%"
                 }
             ]

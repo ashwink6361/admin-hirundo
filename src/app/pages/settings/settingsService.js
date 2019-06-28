@@ -8,9 +8,9 @@ angular.module('BlurAdmin.pages.settings').service('SettingsService', SettingsSe
 function SettingsService($q, $http) {
     var _variantDetails = {};
     return {
-        getSeatCost: function() {
+        getSettings: function() {
             var def = $q.defer();
-            var url = '/api/seatcost';
+            var url = '/api/settings';
             doGet($q, $http, url).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
@@ -18,9 +18,9 @@ function SettingsService($q, $http) {
             });
             return def.promise;
         },
-        saveSeatCost: function(opts) {
+        saveSettings: function(opts) {
             var def = $q.defer();
-            var url = '/api/seatcost';
+            var url = '/api/settings';
             doPut($q, $http, url, opts).then(function(data) {
                 def.resolve(data);
             }).catch(function(error) {
