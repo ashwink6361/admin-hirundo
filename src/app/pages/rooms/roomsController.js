@@ -2173,15 +2173,15 @@
                     var seatCost = 0;
                     var noOfPeople = 0;
                     $rootScope.tableData.orderId.forEach(function (order) {
-                        console.log('ORDERS->', order);
+                        // console.log('ORDERS->', order);
                         
                         // =R1(reparto)/$150(prezzo)/*n(numero item)/(descr)
                         order.item.forEach(function (item) {
-                            printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (item.price * 100) + '/*' + item.quantity + '/(' + item.id.name + ')</cmd>');
-                            console.log('ITEM->', item);
+                            printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (item.price * 100) + '/*' + item.quantity + '/(' + item.id.name.toUpperCase() + ')</cmd>');
+                            // console.log('ITEM->', item);
                             item.variant.forEach(function (variant) {
-                                printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (variant.price * 100) + '/(' + variant.name + ')</cmd>');
-                                console.log('VARIANT->', variant);
+                                printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (variant.price * 100) + '/(+ ' + variant.name.toLowerCase() + ')</cmd>');
+                                // console.log('VARIANT->', variant);
                             });
                         });
                         if (seatCost < order.seatCost) seatCost = order.seatCost;
@@ -2193,7 +2193,7 @@
                     printerCommand.push('<cmd>=T1</cmd>');
                     printerCommand.push('</Service>');
                     RoomService.printReceipt(data.data, printerCommand.join('')).then(function (rs) {
-                        console.log('printerResponse->', rs);
+                        // console.log('printerResponse->', rs);
                         $translate('Orders.printDone').then(function (translation) {
                             AlertService.success('closedaymsg', translation, 4000);
                         });
@@ -2203,7 +2203,7 @@
                             AlertService.error('closedaymsg',translation, 4000);
                         });
                     });
-                    console.log('----->', printerCommand.join(''))
+                    // console.log('----->', printerCommand.join(''))
                 } else {
                     AlertService.error('closedaymsg', data.message, 4000);
                 }
