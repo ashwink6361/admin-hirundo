@@ -2188,7 +2188,7 @@
                         if (noOfPeople < order.noOfPeople) noOfPeople = order.noOfPeople;
                     });
                     if(noOfPeople > 0) {
-                        printerCommand.push('<cmd>=' + fallbackVAT + '/$' + (seatCost * 100) + '/*' + noOfPeople + '/(' + $translate.instant('Orders.service') + ')</cmd>');
+                        printerCommand.push('<cmd>=' + fallbackVAT + '/$' + (seatCost * 100) + '/*' + noOfPeople + '/(' + $translate.instant('Order.service') + ')</cmd>');
                     }
                     // order.seatCost * order.noOfPeople
                     //=T1(chiusura scontrino)
@@ -2196,12 +2196,12 @@
                     printerCommand.push('</Service>');
                     RoomService.printReceipt(data.data, printerCommand.join('')).then(function (rs) {
                         // console.log('printerResponse->', rs);
-                        $translate('Orders.printDone').then(function (translation) {
+                        $translate('Order.printDone').then(function (translation) {
                             AlertService.success('closedaymsg', translation, 4000);
                         });
                     }).catch(function(error) {
                         console.log('printerError->', error);
-                        $translate('Orders.printerUnreachable').then(function (translation) {
+                        $translate('Order.printerUnreachable').then(function (translation) {
                             AlertService.error('closedaymsg',translation, 4000);
                         });
                     });
