@@ -2187,7 +2187,9 @@
                         if (seatCost < order.seatCost) seatCost = order.seatCost;
                         if (noOfPeople < order.noOfPeople) noOfPeople = order.noOfPeople;
                     });
-                    printerCommand.push('<cmd>=' + fallbackVAT + '/$' + (seatCost * 100) + '/*' + noOfPeople + '/(' + $translate.instant('Orders.service') + ')</cmd>');
+                    if(noOfPeople > 0) {
+                        printerCommand.push('<cmd>=' + fallbackVAT + '/$' + (seatCost * 100) + '/*' + noOfPeople + '/(' + $translate.instant('Orders.service') + ')</cmd>');
+                    }
                     // order.seatCost * order.noOfPeople
                     //=T1(chiusura scontrino)
                     printerCommand.push('<cmd>=T1</cmd>');
