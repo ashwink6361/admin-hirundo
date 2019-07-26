@@ -134,7 +134,7 @@
         "Add": "Inserisci",
         "Cancel": "Annulla"
     },
-    "Orders": {
+    "Order": {
         "closingDay": "Chiusura Giornata",
         "printerUnreachable": "Stampante non raggiungibile",
         "closeDayConfirmation": "Sei sicuro di voler chiudere fiscalmente la giornata?",

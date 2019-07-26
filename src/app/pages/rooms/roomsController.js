@@ -2180,8 +2180,10 @@
                             printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (item.price * 100) + '/*' + item.quantity + '/(' + item.id.name.toUpperCase() + ')</cmd>');
                             // console.log('ITEM->', item);
                             item.variant.forEach(function (variant) {
-                                printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (variant.price * 100) + '/(+ ' + variant.name.toLowerCase() + ')</cmd>');
-                                // console.log('VARIANT->', variant);
+                                if (variant.status > 0) {
+                                    printerCommand.push('<cmd>=' + (item.id.vat ? item.id.vat : fallbackVAT) + '/$' + (variant.price * 100) + '/(+ ' + variant.name.toLowerCase() + ')</cmd>');
+                                    // console.log('VARIANT->', variant);
+                                }
                             });
                         });
                         if (seatCost < order.seatCost) seatCost = order.seatCost;
