@@ -87,7 +87,7 @@
             $scope.selectedIngredients = [];
             $scope.selectedIconImage = [];
             $scope.showAllergenIcon = false;
-            $scope.Item = { allergens: [], foodCost: 0 };
+            $scope.Item = { allergens: [], foodCost: 0, vat: 'R1' };
             $scope.subCategories = [];
             $scope.vats = [
                 {
@@ -286,7 +286,7 @@
                     name: $scope.Item.name,
                     description: $scope.Item.description ? $scope.Item.description : '',
                     price: Number($scope.Item.price),
-                    vat: $scope.Item.vat,
+                    vat: $scope.Item.vat ? $scope.Item.vat : '',
                     ingredients: (fitems.length) ? JSON.stringify(fitems) : '',
                     preparationTime: $scope.Item.preparationTime ? $scope.Item.preparationTime : '',
                     category: $scope.Item.category,
