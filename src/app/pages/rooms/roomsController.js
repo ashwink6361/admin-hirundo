@@ -2171,7 +2171,7 @@
                     var printerCommand = ['<Service>'];
                     var fallbackVAT = 'R1';
                     var seatCost = 0;
-                    var noOfPeople = 0;
+                    var noOfPeople = $rootScope.Order.noOfPeople;
                     $rootScope.tableData.orderId.forEach(function (order) {
                         // console.log('ORDERS->', order);
                         
