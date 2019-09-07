@@ -45,9 +45,9 @@
                             </a>
                           </div>
 
-                          <a title="Delete Table" ng-show="editBtn == tableIndex" ng-click="removeTable(room._id, table._id)"
+                          <a title="Delete Table" ng-show="!table.orderId.length && editBtn == tableIndex" ng-click="removeTable(room._id, table._id)"
                             class="delete-table-btn">
-                            <i class="ion-trash-b"></i>
+                            <i class="ion-trash-b"></i> 
                           </a>
                         </div>
                         <div class="add-room" ng-click="openAddTable(room._id,'app/pages/rooms/views/addTable.html', 'md')">
