@@ -15,13 +15,14 @@
         $scope.showItemDetail = false;
         $scope.loader = true;
         $scope.loader1 = false;
+        var initialeDate = new Date();
         $scope.filter = {
-            date: null
+            date: initialeDate
         };
         $scope.tableFilter = {
-            date: null
+            date: initialeDate
         };
-        OrderService.getOrders().then(function(data) {
+        OrderService.getOrders($scope.filter.date).then(function(data) {
             $scope.ordersList = OrderService.listOrder();
             $scope.loader = false;            
         }).catch(function(error) {
@@ -31,7 +32,7 @@
         $scope.getOrdersList = function (){
             $scope.ordersList = [];
             $scope.loader = true;
-            OrderService.getOrders().then(function(data) {
+            OrderService.getOrders($scope.filter.date).then(function(data) {
                 $scope.ordersList = data.data;
                 $scope.loader = false;            
             }).catch(function(error) {
@@ -42,7 +43,7 @@
         $scope.getTablesList = function (){
             $scope.tableList = [];
             $scope.loader1 = true;
-            OrderService.getTables().then(function(data) {
+            OrderService.getTables($scope.tableFilter.date).then(function(data) {
                 $scope.tableList = data.data;
                 $scope.loader1 = false;            
             }).catch(function(error) {
