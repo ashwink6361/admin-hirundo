@@ -16,6 +16,7 @@
         $scope.loader = true;
         $scope.loader1 = false;
         var initialeDate = new Date();
+        initialeDate.setHours(0,0,0,0);
         $scope.filter = {
             date: initialeDate
         };
