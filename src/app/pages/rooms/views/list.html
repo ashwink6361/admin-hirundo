@@ -201,15 +201,17 @@
         </h4>
       </div>
       <div class="modal-body">
-        <h5>Quantity</h5>
-        <div class="input-group">
-          <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty()">
-            <i class="icon-minus"></i>
-          </span>
-          <div class="text-center input-value">{{variantData.quantity}}</div>
-          <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseQty()">
-            <i class="icon-plus"></i>
-          </span>
+        <div class="form-group">
+          <h5>Quantity</h5>
+          <div class="input-group">
+            <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty()">
+              <i class="icon-minus"></i>
+            </span>
+            <div class="text-center input-value">{{variantData.quantity}}</div>
+            <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseQty()">
+              <i class="icon-plus"></i>
+            </span>
+          </div>
         </div>
         <div *ngIf="variantError" class="color-red">{{variantError}}</div>
         <h5>Variant and Notes</h5>
@@ -277,15 +279,17 @@
       </div>
       <div class="modal-body">
         <div ng-if="variantError1" class="color-red">{{variantError1}}</div>
-        <h5>Quantity</h5>
-        <div class="input-group">
-          <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty1()">
-            <i class="icon-minus"></i>
-          </span>
-          <div class="text-center input-value">{{variantData1.quantity}}</div>
-          <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseQty1()">
-            <i class="icon-plus"></i>
-          </span>
+        <div class="form-group">
+          <h5>Quantity</h5>
+          <div class="input-group">
+            <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty1()">
+              <i class="icon-minus"></i>
+            </span>
+            <div class="text-center input-value">{{variantData1.quantity}}</div>
+            <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseQty1()">
+              <i class="icon-plus"></i>
+            </span>
+          </div>
         </div>
         <div class="form-group row" ng-if="articleData1.isDeleted">
           <label for="input01" class="col-sm-12 control-label">
@@ -383,15 +387,25 @@
       </div>
       <div class="modal-body">
         <div ng-if="variantError2" class="color-red">{{variantError2}}</div>
-        <h5>Quantity</h5>
-        <div class="input-group">
-          <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty2()">
-            <i class="icon-minus"></i>
-          </span>
-          <div class="text-center input-value">{{variantData2.quantity}}</div>
-          <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseQty2()">
-            <i class="icon-plus"></i>
-          </span>
+        <div class="form-group row">
+          <h5>Quantity</h5>
+          <div class="input-group">
+            <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseQty2()">
+              <i class="icon-minus"></i>
+            </span>
+            <div class="text-center input-value">{{variantData2.quantity}}</div>
+            <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseQty2()">
+              <i class="icon-plus"></i>
+            </span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input01" class="col-sm-12 control-label">
+              <strong>{{'ItemKey.VatTax' | translate}}</strong>
+          </label>
+          <div class="col-sm-12">
+              <select class="form-control" data-ng-options="vat._id as vat.name for vat in vats" ng-model="variantData2.vat"></select>
+          </div>
         </div>
         <div class="form-group row" ng-if="articleData2.id.isDeleted">
           <label for="input01" class="col-sm-12 control-label">
@@ -520,15 +534,27 @@
             <input type="text" name="name" ng-model="AddDataArticle.name" class="form-control" placeholder="Name" />
           </div>
         </div>
-        <h5>Quantity</h5>
-        <div class="input-group">
-          <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseArticleQty()">
-            <i class="icon-minus"></i>
-          </span>
-          <div class="text-center input-value">{{AddDataArticle.quantity}}</div>
-          <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseArticleQty()">
-            <i class="icon-plus"></i>
-          </span>
+        <div class="form-group row">
+          <label for="input01" class="col-sm-12 control-label">
+              <strong>{{'ItemKey.VatTax' | translate}}</strong>
+          </label>
+          <div class="col-sm-12">
+              <select class="form-control" data-ng-options="vat._id as vat.name for vat in vats" ng-model="AddDataArticle.vat"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="input01" class="col-sm-2 control-label">
+            <h5>Quantity</h5>
+          </label>
+          <div class="input-group">
+            <span class="input-group-addon addon-left input-group-addon-primary" ng-click="decreaseArticleQty()">
+              <i class="icon-minus"></i>
+            </span>
+            <div class="text-center input-value">{{AddDataArticle.quantity}}</div>
+            <span class="input-group-addon addon-right input-group-addon-primary" ng-click="increaseArticleQty()">
+              <i class="icon-plus"></i>
+            </span>
+          </div>
         </div>
         <div class="form-group row">
           <label for="input01" class="col-sm-12 control-label">

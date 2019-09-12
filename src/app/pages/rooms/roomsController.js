@@ -36,6 +36,7 @@
         $scope.variantData = {
             quantity: 1,
             variant: [],
+            vat: 'R1',
             notes: ''
         };
         $scope.variantError = '';
@@ -46,6 +47,7 @@
             quantity: 1,
             variant: [],
             notes: '',
+            vat: 'R1',
             price: ''
         }
         $scope.notes1 = [];
@@ -85,6 +87,21 @@
             buttonHide : false,
             email : ''
         };
+
+        $scope.vats = [
+            {
+                _id: "R1",
+                name: "10%"
+            },
+            {
+                _id: "R2",
+                name: "4%"
+            },
+            {
+                _id: "R3",
+                name: "22%"
+            }
+        ]
 
         $q.all([
             RoomService.getCategories()
@@ -1896,6 +1913,7 @@
                 category: '',
                 subCategory: '',
                 quantity: 1,
+                vat: 'R1',
                 variant: [],
                 notes: '',
                 isDeleted: true
@@ -2017,6 +2035,7 @@
                         name: $scope.AddDataArticle.name,
                         price: Number($scope.AddDataArticle.price),
                         category: $scope.AddDataArticle.category,
+                        vat: $scope.AddDataArticle.vat,
                         subCategory: $scope.AddDataArticle.subCategory,
                         isDeleted: $scope.AddDataArticle.isDeleted
                     }
@@ -2073,6 +2092,7 @@
                             name: $scope.AddDataArticle.name,
                             price: Number($scope.AddDataArticle.price),
                             category: $scope.AddDataArticle.category._id,
+                            vat: $scope.AddDataArticle.vat,
                             subCategory: $scope.AddDataArticle.subCategory ? $scope.AddDataArticle.subCategory : '',
                             isDeleted: $scope.AddDataArticle.isDeleted
                         }
