@@ -95,10 +95,10 @@
 
         $scope.departmentAddRequest = false;
         $scope.addDepartment = function () {
-            if (!$scope.selectedCategories.length) {
-                AlertService.error('departmentmsg', "Please select category", 4000);
-                return false;
-            }
+            // if (!$scope.selectedCategories.length) {
+            //     AlertService.error('departmentmsg', "Please select category", 4000);
+            //     return false; 
+            // }
             var opts = {
                 userName:  $scope.tempUserName +'-'+ $scope.Department.userName,
                 password: $scope.Department.password,
@@ -119,10 +119,10 @@
         };
 
         $scope.editDepartment = function () {
-            if (!$scope.selectedCategories.length) {
-                AlertService.error('departmentmsg', "Please select category", 4000);
-                return false;
-            }
+            // if (!$scope.selectedCategories.length) {
+            //     AlertService.error('departmentmsg', "Please select category", 4000);
+            //     return false;
+            // }
             var opts = {
                 name: $scope.Department.firstName,
                 category: ($scope.selectedCategories.length) ? $scope.selectedCategories : [],
