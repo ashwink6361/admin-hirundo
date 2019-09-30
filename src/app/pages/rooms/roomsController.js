@@ -2219,6 +2219,7 @@
                     RoomService.printReceipt(data.data, printerCommand.join('')).then(function (rs) {
                         // console.log('printerResponse->', rs);
                         $translate('Order.printDone').then(function (translation) {
+                            $scope.openCheckoutModal('app/pages/rooms/views/checkout.html', 'md');
                             AlertService.success('closedaymsg', translation, 4000);
                         });
                     }).catch(function(error) {
