@@ -1300,7 +1300,9 @@
             });
         };
         $scope.checkout = function (status) {
+            
             RoomService.checkoutTable($scope.roomData["_id"], $rootScope.tableData["_id"],status).then(function (data) {
+
                 $scope.showLedtSideBar = false;
                 $scope.showLedtSideBar1 = false;
                 $scope.showOrder = false;
@@ -1308,9 +1310,15 @@
                 $scope.checkoutPeople = 0;
                 $scope.checkoutPeoplePrice = 0;
                 $scope.checkoutTotalPrice = 0;
+
                 baRoomService.setCreateModalCollapsed(false);
-                $scope.checkoutInstance.dismiss('cancel');
-                $scope.editTableInstance1.dismiss('cancel');
+
+                if ($scope.checkoutInstance)
+                    $scope.checkoutInstance.dismiss('cancel');
+
+                if ($scope.editTableInstance1)
+                    $scope.editTableInstance1.dismiss('cancel');
+
                 RoomService.getRooms().then(function (data) {
                     $scope.rooms = RoomService.listRoom();
                 }).catch(function (error) {
@@ -2219,7 +2227,8 @@
                     RoomService.printReceipt(data.data, printerCommand.join('')).then(function (rs) {
                         // console.log('printerResponse->', rs);
                         $translate('Order.printDone').then(function (translation) {
-                            $scope.openCheckoutModal('app/pages/rooms/views/checkout.html', 'md');
+                            // $scope.openCheckoutModal('app/pages/rooms/views/checkout.html', 'md');
+                            $scope.checkout('yes');
                             AlertService.success('closedaymsg', translation, 4000);
                         });
                     }).catch(function(error) {
