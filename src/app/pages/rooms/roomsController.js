@@ -1605,13 +1605,13 @@
                 }
                 else {
                     $scope.articleData2.quantity = $scope.variantData2.quantity;
-                    if($scope.articleData2.id.isDeleted){
+                    // if($scope.articleData2.id.isDeleted){
                         $scope.articleData2.price = $scope.variantData2.price;  
                         $scope.variantData2.price = Number($scope.variantData2.price); 
-                    }
-                    else{
-                        delete $scope.variantData2.price;
-                    }                                     
+                    // }
+                    // else{
+                    //     delete $scope.variantData2.price;
+                    // }                                     
                     RoomService.editOrderItem($scope.orderid, $scope.articleData2._id, $scope.variantData2).then(function (data) {
                         if ($rootScope.tableData.orderId.length) {
                             for (var k = 0; k < $rootScope.tableData.orderId.length; k++) {
