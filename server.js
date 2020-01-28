@@ -154,7 +154,8 @@ app.use('/api/*', function (req, res, next) {    
 });
 
 app.post('/login', function (req, res, next) {    
-    var url = app.get('adminApiUrl') + 'login';    
+    var url = app.get('adminApiUrl') + 'login';  
+    console.log('api url' + url);  
     var body = req.body;
     body.secretKey = app.set('secretKey');    
     var headers = {        

@@ -19,7 +19,9 @@ angular.module('ThyAdmin', []).controller('LoginPageController', LoginPageContro
         $scope.login = function(AdminUser) {
             $scope.loginErrorMsg = "";
             $scope.activeRequest = true;
+            console.log('loginnnnnnnn');
             $http.post('/login', AdminUser).then(function (response) {
+                console.log('hererrerre jhjhj');
                 $scope.loginSuccessMsg = "Login success!";
                 localStorage.setItem('adminUser', JSON.stringify(response.data.data));
                 localStorage.setItem('token', response.data.token);
@@ -29,6 +31,7 @@ angular.module('ThyAdmin', []).controller('LoginPageController', LoginPageContro
                 }, 4000);
                 window.location = '/platform';
             }, function (error) {
+                console.log('errror hererrerre jhjhj');
                 $scope.activeRequest = false;
                 if(error.data.message == 'Please activate your account to continue. Check inbox for the activation email.'){
                     $scope.loginErrorMsgResend = error.data.message;
